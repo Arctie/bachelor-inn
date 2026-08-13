@@ -509,17 +509,6 @@ text = "Fen"
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="Title" type="Label" parent="UI/CreditsSelect/LevelSelectVBOX/HBoxContainer4" unique_id=327942803]
-layout_mode = 2
-size_flags_vertical = 5
-text = "Programming : "
-horizontal_alignment = 2
-
-[node name="Name" type="Label" parent="UI/CreditsSelect/LevelSelectVBOX/HBoxContainer4" unique_id=279302695]
-layout_mode = 2
-size_flags_vertical = 5
-text = "Alan"
-
 [node name="HBoxContainer5" type="HBoxContainer" parent="UI/CreditsSelect/LevelSelectVBOX" unique_id=410877668]
 layout_mode = 2
 size_flags_horizontal = 4
