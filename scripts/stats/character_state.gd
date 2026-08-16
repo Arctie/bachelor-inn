@@ -240,6 +240,7 @@ func save() -> Dictionary:
 		"current_health": current_health,
 		"current_sanity": current_sanity,
 		"weapon_id": weapon.weapon_id,
-		"skill_ids" : ids
+		"skill_ids" : ids,
+		"has_orb": orb != null
 	}
 #endregion
