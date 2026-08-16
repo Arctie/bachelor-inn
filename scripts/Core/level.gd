@@ -1291,6 +1291,7 @@ func cleanup_characters_before_load() -> void:
 	for c in characters:
 		if c is Orb:
 			characters.erase(c)
+			break
 	
 	for c in characters:
 		if c == null:
