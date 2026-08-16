@@ -21,6 +21,8 @@ var t : float = 0.0
 
 # Functions
 func transfer(to_character : Character) -> void:
+	state.skills.clear()
+	
 	if holder != null:
 		holder.state.orb = null
 		
