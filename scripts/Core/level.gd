@@ -9,6 +9,9 @@ class_name Level
 # TODO: camp?
 # TODO: Make enemies able to occopy several grid-tiles
 
+## Every level will have an orb which will be handed to one of the player characters.
+var orb : Orb = null#  preload("res://scenes/Characters/orb.tscn").instance()
+
 #### signals 
 
 signal character_selected(character: Character)
@@ -753,6 +756,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _ready() -> void:
+	orb = load("res://scenes/Characters/orb.tscn").instantiate()
+	
 	_level_complete = false
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	camera_controller = Main.camera_controller
