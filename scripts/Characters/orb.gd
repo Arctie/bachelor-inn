@@ -44,8 +44,7 @@ func soothe_in_radius(radius : int) -> void:
 	pass
 
 func _process(delta: float) -> void:
-	super(delta)
+	pass
 
 func _ready() -> void:
 	hide()
-	super()

@@ -762,6 +762,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _ready() -> void:
 	orb = load("res://scenes/Characters/orb.tscn").instantiate()
 	characters.append(orb)
+	add_child(orb)
 	
 	_level_complete = false
 	process_mode = Node.PROCESS_MODE_ALWAYS

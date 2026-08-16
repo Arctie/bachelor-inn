@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://wo1fe0qm5jjk" path="res://scenes/Characters/character.tscn" id="1_x60le"]
 [ext_resource type="Script" uid="uid://d3ug1411fvdxo" path="res://scripts/Characters/orb.gd" id="2_ay71r"]
+[ext_resource type="Script" uid="uid://72a2wb5ktw46" path="res://scripts/Other/TransformSin.gd" id="7_nj04f"]
 [ext_resource type="Texture2D" uid="uid://d0o3l0nn5g8ta" path="res://art/textures/Orb.png" id="8_lifiy"]
 [ext_resource type="Script" uid="uid://cfb66ehlpe84n" path="res://scripts/stats/character_data.gd" id="8_md62c"]
 [ext_resource type="Script" uid="uid://dnpndvvrnj26q" path="res://scripts/stats/character_state.gd" id="9_06si3"]
@@ -25,8 +26,10 @@ data = SubResource("Resource_eyb6t")
 state = SubResource("Resource_nj04f")
 
 [node name="Sprite3D" type="Sprite3D" parent="." index="0" unique_id=116919873]
-transform = Transform3D(4.9327965, 0, 0, 0, 2.4302247, 4.292609, 0, -4.292609, 2.4302247, 0, 0.32976973, 0)
+transform = Transform3D(6, 0, 0, 0, 2.9559999, 5.2213087, 0, -5.2213087, 2.9559999, 0, 1, 0)
+texture_filter = 2
 texture = ExtResource("8_lifiy")
+script = ExtResource("7_nj04f")
 
 [node name="Sprite" parent="." index="1" unique_id=1365623275]
 visible = false
