@@ -2,11 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://wo1fe0qm5jjk" path="res://scenes/Characters/character.tscn" id="1_x60le"]
 [ext_resource type="Script" uid="uid://d3ug1411fvdxo" path="res://scripts/Characters/orb.gd" id="2_ay71r"]
-[ext_resource type="Resource" uid="uid://hmuhlq8vtnc3" path="res://art/Animations/Characters/Alfred_Moving_L.tres" id="3_06si3"]
-[ext_resource type="Resource" uid="uid://cdrlwkgmox11n" path="res://art/Animations/Characters/Alfred_Moving_R.tres" id="4_ef6md"]
-[ext_resource type="Resource" uid="uid://80eyissy4tnr" path="res://art/Animations/Characters/Alfred/Alfred_Moving_U.tres" id="4_uupxu"]
-[ext_resource type="Resource" uid="uid://b5tfb3fssigcy" path="res://art/Animations/Characters/Alfred/Alfred_Moving_D.tres" id="5_8qwwm"]
-[ext_resource type="Resource" uid="uid://dg1jj5qvf04uy" path="res://art/Animations/Characters/Alfred/Alfred_Idle.tres" id="6_yhy2h"]
 [ext_resource type="Texture2D" uid="uid://d0o3l0nn5g8ta" path="res://art/textures/Orb.png" id="8_lifiy"]
 [ext_resource type="Script" uid="uid://cfb66ehlpe84n" path="res://scripts/stats/character_data.gd" id="8_md62c"]
 [ext_resource type="Script" uid="uid://dnpndvvrnj26q" path="res://scripts/stats/character_state.gd" id="9_06si3"]
@@ -25,14 +20,20 @@ metadata/_custom_type_script = "uid://dnpndvvrnj26q"
 
 [node name="Character" unique_id=516576733 instance=ExtResource("1_x60le")]
 script = ExtResource("2_ay71r")
-run_left_animation = ExtResource("3_06si3")
-run_right_animation = ExtResource("4_ef6md")
-run_up_animation = ExtResource("4_uupxu")
-run_down_animation = ExtResource("5_8qwwm")
-idle_animation = ExtResource("6_yhy2h")
 portrait = ExtResource("8_lifiy")
 data = SubResource("Resource_eyb6t")
 state = SubResource("Resource_nj04f")
 
-[node name="Sprite" parent="." index="0" unique_id=1365623275]
+[node name="Sprite3D" type="Sprite3D" parent="." index="0" unique_id=116919873]
+transform = Transform3D(4.9327965, 0, 0, 0, 2.4302247, 4.292609, 0, -4.292609, 2.4302247, 0, 0.32976973, 0)
+texture = ExtResource("8_lifiy")
+
+[node name="Sprite" parent="." index="1" unique_id=1365623275]
+visible = false
 no_depth_test = true
+
+[node name="Outline" parent="." index="2" unique_id=53410441]
+visible = false
+
+[node name="Shadow" parent="." index="3" unique_id=2091232362]
+visible = false

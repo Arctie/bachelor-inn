@@ -20,6 +20,12 @@ func transfer(to_character : Character) -> void:
 		# Remove ability to transfer orb
 		holder.state.skills.remove_at(0)
 	
+	# Hide orb and remove from map
+	if visible:
+		hide()
+		Main.level.occupancy_map.set_cell_item(state.grid_position, GridMap.INVALID_CELL_ITEM)
+		state.orb = null
+	
 	holder = to_character
 	to_character.state.orb = self
 	
@@ -30,13 +36,16 @@ func drop() -> void:
 	show()
 	state.grid_position = holder.state.grid_position
 	position = holder.position
+	state.skills.insert(0, SkillRegistry.get_skill("transfer_orb"))
+	state.orb = self
+	holder = null
 
 func soothe_in_radius(radius : int) -> void:
-	pass 
+	pass
 
 func _process(delta: float) -> void:
 	super(delta)
 
 func _ready() -> void:
-	super()
 	hide()
+	super()

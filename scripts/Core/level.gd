@@ -1422,7 +1422,7 @@ func _is_valid_target(unit: Character, skill: Skill, caster: Character) -> bool:
 
 	match skill.target_faction:
 		Skill.TargetFaction.FRIENDLY:
-			return unit.state.faction == caster.state.faction or unit == caster
+			return unit.state.faction == caster.state.faction or unit == caster or (caster.state.faction == CharacterState.Faction.NEUTRAL and unit.state.faction == CharacterState.Faction.PLAYER)
 		Skill.TargetFaction.ENEMY:
 			return unit.state.faction != caster.state.faction
 		Skill.TargetFaction.BOTH:

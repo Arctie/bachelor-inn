@@ -1,12 +1,7 @@
 [gd_resource type="Resource" script_class="Skill" format=3 uid="uid://2eo2q0wgj7vf"]
 
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="1_3noyw"]
-[ext_resource type="Script" uid="uid://gxmfi01jybou" path="res://scripts/commands/transfer_orb.gd" id="1_c07ae"]
 [ext_resource type="Texture2D" uid="uid://d0o3l0nn5g8ta" path="res://art/textures/Orb.png" id="1_xaj4u"]
-
-[sub_resource type="Resource" id="Resource_3a0lq"]
-script = ExtResource("1_c07ae")
-metadata/_custom_type_script = "uid://gxmfi01jybou"
 
 [resource]
 script = ExtResource("1_3noyw")
@@ -14,5 +9,4 @@ skill_id = "transfer_orb"
 skill_name = "Transfer Orb"
 tooltip = "Throw orb to nearby friendly"
 icon = ExtResource("1_xaj4u")
-command = SubResource("Resource_3a0lq")
 metadata/_custom_type_script = "uid://c3p07am3ababr"
