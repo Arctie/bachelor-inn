@@ -394,6 +394,8 @@ func die(simulate_only : bool) -> void:
 	state.is_alive = false
 	
 	if simulate_only == false:
+		if state.orb:
+			state.orb.drop()
 		Main.level.emit_signal("character_stats_changed", self)
 		if state.is_playable():
 			Main.characters.erase(self)

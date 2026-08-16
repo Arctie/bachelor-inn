@@ -25,6 +25,7 @@ signal party_updated(characters: Array[Character])
 @onready var combat_vfx : CombatVFXController = $CombatVFXController
 
 @export var level_name :String
+@export var spawn_orb : bool = true
 
 var terrain_grid : Grid
 var path_grid : Grid
@@ -823,6 +824,10 @@ func _ready() -> void:
 				if new_unit is Character:
 					new_unit.state.grid_position = pos
 					new_unit.sanity_flipped.connect(_on_character_sanity_flipped)
+					
+					# The first unit to spawn will hold the orb
+					if spawn_orb and orb.holder == null:
+						orb.transfer(new_unit)
 		else:
 			spawn_enemy(pos, unit_type, true)
 	

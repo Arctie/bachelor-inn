@@ -14,15 +14,21 @@ var holder : Character = null
 
 ## Functions
 func transfer(to_character : Character) -> void:
-	if (holder != null):
-		holder.orb = null
+	if holder != null:
+		holder.state.orb = null
+		
+		# Remove ability to transfer orb
+		holder.state.skills.remove_at(0)
 	
 	holder = to_character
-	to_character.orb = self
+	to_character.state.orb = self
+	
+	# Add ability to transfer orb
+	holder.state.skills.append(0)
 
 func drop() -> void:
-	# Spawn on character's position
-	pass 
+	show()
+	state.grid_position = holder.state.grid_position
 
 func soothe_in_radius(radius : int) -> void:
 	pass 
