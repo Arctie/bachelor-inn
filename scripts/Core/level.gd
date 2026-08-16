@@ -1289,6 +1289,10 @@ func cleanup_characters_before_load() -> void:
 
 	# Reset player units
 	for c in characters:
+		if c is Orb:
+			characters.erase(c)
+	
+	for c in characters:
 		if c == null:
 			continue
 		if c.state.is_enemy():
