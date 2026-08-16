@@ -449,7 +449,10 @@ func _handle_skill(pos : Vector3i) -> void:
 		emit_signal("ability_used")
 		emit_signal("character_stats_changed", skill_caster)
 		#print("Flag set, is_ability_used: ", caster.state.is_ability_used)
-		
+	
+	if used_skill.skill_id == "transfer_orb":
+		skill_caster.state.orb.transfer(target)
+	
 	## Take all the stuff and compile a list of the results as AttackResult! 
 	var result: AttackResult = AttackResult.new()
 	result.aggressor = skill_caster

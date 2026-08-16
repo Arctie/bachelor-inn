@@ -18,13 +18,13 @@ func transfer(to_character : Character) -> void:
 		holder.state.orb = null
 		
 		# Remove ability to transfer orb
-		holder.state.skills.remove_at(holder.state.skills.find(SkillRegistry.orb_transfer))
+		holder.state.skills.remove_at(0)
 	
 	holder = to_character
 	to_character.state.orb = self
 	
 	# Add ability to transfer orb
-	holder.state.skills.append(SkillRegistry.get_skill("transfer_orb"))
+	holder.state.skills.insert(0, SkillRegistry.get_skill("transfer_orb"))
 
 func drop() -> void:
 	show()
