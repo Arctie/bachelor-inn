@@ -38,11 +38,15 @@ func transfer(to_character : Character) -> void:
 
 func drop() -> void:
 	show()
+	if holder == null:
+		Main.level.trigger_game_over()
+		return
 	state.grid_position = holder.state.grid_position
 	position = holder.position
 	state.skills.insert(0, SkillRegistry.get_skill("transfer_orb"))
 	state.orb = self
 	holder = null
+	Main.level.game_state.units.append(self)
 
 func soothe_in_radius(radius : int) -> void:
 	pass
@@ -50,6 +54,7 @@ func soothe_in_radius(radius : int) -> void:
 func _process(delta: float) -> void:
 	if holder:
 		position = holder.position
+		state.grid_position = holder.state.grid_position
 		
 		# Animate
 		t += delta * speed
@@ -58,4 +63,6 @@ func _process(delta: float) -> void:
 		position.z += cos(t) * amp
 
 func _ready() -> void:
-	pass
+	super()
+	state.movement = 0
+	state.aggro_range = 0

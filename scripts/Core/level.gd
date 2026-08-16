@@ -1019,6 +1019,9 @@ func spawn_enemy(pos : Vector3i, unit_id : String, _on_ready : bool = false) -> 
 func get_unit(pos : Vector3i) -> Character:
 	for i in range(characters.size()):
 		if is_instance_valid(characters[i]):
+			if characters[i] is Orb:
+				if characters[i].holder != null:
+					continue
 			if characters[i] is Character:
 				var unit: Character = characters[i]
 				if unit.state.grid_position == pos:
