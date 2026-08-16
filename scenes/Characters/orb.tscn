@@ -21,6 +21,9 @@ metadata/_custom_type_script = "uid://dnpndvvrnj26q"
 
 [node name="Character" unique_id=516576733 instance=ExtResource("1_x60le")]
 script = ExtResource("2_ay71r")
+amp = 0.9
+speed = -2.0
+offset = Vector3(0, 0.2, -0.4)
 portrait = ExtResource("8_lifiy")
 data = SubResource("Resource_eyb6t")
 state = SubResource("Resource_nj04f")

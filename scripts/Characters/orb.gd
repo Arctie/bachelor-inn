@@ -9,20 +9,24 @@ class_name Orb
 ## TODO: Orb healing nearby player characters sanity
 ## TODO: Enemy characters turn to allies over time by being close to the orb
 
-## Variables
+# Variables
 var holder : Character = null
 
-## Functions
+# Orb animation variables
+var t : float = 0.0
+@export_category("Circling Character Animation")
+@export var amp : float = 0.9   
+@export var speed : float = -2.0
+@export var offset : Vector3 = Vector3(0,0.2,-0.4)
+
+# Functions
 func transfer(to_character : Character) -> void:
 	if holder != null:
 		holder.state.orb = null
 		
 		# Remove ability to transfer orb
 		holder.state.skills.remove_at(0)
-	
-	# Hide orb and remove from map
-	if visible:
-		hide()
+	else:
 		Main.level.occupancy_map.set_cell_item(state.grid_position, GridMap.INVALID_CELL_ITEM)
 		state.orb = null
 	
@@ -44,7 +48,14 @@ func soothe_in_radius(radius : int) -> void:
 	pass
 
 func _process(delta: float) -> void:
-	pass
+	if holder:
+		position = holder.position
+		
+		# Animate
+		t += delta * speed
+		position += offset
+		position.x += sin(t) * amp
+		position.z += cos(t) * amp
 
 func _ready() -> void:
-	hide()
+	pass
