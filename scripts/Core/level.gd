@@ -10,7 +10,7 @@ class_name Level
 # TODO: Make enemies able to occopy several grid-tiles
 
 ## Every level will have an orb which will be handed to one of the player characters.
-var orb : Orb = null#  preload("res://scenes/Characters/orb.tscn").instance()
+var orb : Orb = null
 
 #### signals 
 
@@ -761,6 +761,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _ready() -> void:
 	orb = load("res://scenes/Characters/orb.tscn").instantiate()
+	characters.append(orb)
 	
 	_level_complete = false
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -1014,14 +1015,14 @@ func spawn_enemy(pos : Vector3i, unit_id : String, _on_ready : bool = false) -> 
 	return new_enemy
 
 
-func get_unit(pos: Vector3i) -> Character:
+func get_unit(pos : Vector3i) -> Character:
 	for i in range(characters.size()):
 		if is_instance_valid(characters[i]):
 			if characters[i] is Character:
-				var unit: Character = characters[i];
+				var unit: Character = characters[i]
 				if unit.state.grid_position == pos:
-					return unit;
-	return null;
+					return unit
+	return null
 
 
 func create_path(start : Vector3i, end : Vector3i) -> void:
@@ -1030,7 +1031,7 @@ func create_path(start : Vector3i, end : Vector3i) -> void:
 	var foo0 : Command = moves_stack.front()
 	var foo1 : Vector3i = foo0.start_pos
 	var foo2 : Character = game_state.get_unit(foo1)
-	if(foo2.data.unit_name == "Tucy"):
+	if(foo2.data.unit_name == "Tucy"): # :)
 		pass
 	var foo3 : Array[Command] = MoveGenerator.generate(foo2, game_state)
 	movement_grid.fill_from_commands(foo3, game_state)

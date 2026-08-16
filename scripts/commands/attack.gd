@@ -7,9 +7,9 @@ var attack_pos : Vector3i;
 
 
 func _init(inStartPos : Vector3i, victimPos : Vector3i, attackFromPos : Vector3i) -> void:
-	start_pos = inStartPos;
-	end_pos = attackFromPos;
-	attack_pos = victimPos;
+	start_pos = inStartPos
+	end_pos = attackFromPos
+	attack_pos = victimPos
 
 
 

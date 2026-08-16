@@ -394,13 +394,14 @@ func die(simulate_only : bool) -> void:
 	state.is_alive = false
 	
 	if simulate_only == false:
-		if state.orb:
-			state.orb.drop()
 		Main.level.emit_signal("character_stats_changed", self)
 		if state.is_playable():
 			Main.characters.erase(self)
 		Main.level.game_state.units.erase(self)
-		Main.level.occupancy_map.set_cell_item(state.grid_position, GridMap.INVALID_CELL_ITEM)
+		if state.orb:
+			state.orb.drop()
+		else:
+			Main.level.occupancy_map.set_cell_item(state.grid_position, GridMap.INVALID_CELL_ITEM)
 		if get_parent() != null:
 			get_parent().remove_child(self)
 		queue_free.call_deferred()

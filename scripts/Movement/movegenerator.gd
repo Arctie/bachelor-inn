@@ -102,7 +102,7 @@ static func dijkstra(unit : Character, state : GameState, exclude_attacks : bool
 	#    (Temporary rule: weapon range == movement_range)
 	#    (Temporary rule: enemy must be on same y as origin)
 	# -------------------------
-	if !exclude_attacks:
+	if !exclude_attacks and unit.state.faction != CharacterState.Faction.NEUTRAL:
 		if not unit.state.is_ability_used:
 			# Include "attack from current position"
 			var attack_origins: Array[Vector3i] = [start_pos]

@@ -29,12 +29,14 @@ func transfer(to_character : Character) -> void:
 func drop() -> void:
 	show()
 	state.grid_position = holder.state.grid_position
+	position = holder.position
 
 func soothe_in_radius(radius : int) -> void:
 	pass 
 
 func _process(delta: float) -> void:
-	pass
+	super(delta)
 
 func _ready() -> void:
+	super()
 	hide()

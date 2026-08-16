@@ -93,8 +93,9 @@ func duplicate_data() -> CharacterState:
 
 
 func _set_sanity(value: int) -> void:
-	current_sanity = clamp(value, 0, max_sanity)
-	sanity_changed.emit(current_sanity)
+	if orb == null: # TODO: change? The person with the orb does not lose sanity
+		current_sanity = clamp(value, 0, max_sanity)
+		sanity_changed.emit(current_sanity)
 
 
 func _set_experience(value: int) -> void:

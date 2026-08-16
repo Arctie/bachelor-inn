@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SpriteAnim" load_steps=8 format=3 uid="uid://cdrlwkgmox11n"]
+[gd_resource type="Resource" script_class="SpriteAnim" format=3 uid="uid://cdrlwkgmox11n"]
 
 [ext_resource type="Texture2D" uid="uid://cyypk0qavkmjw" path="res://art/textures/Characters&Enemies/Animation_Alfred.png" id="1_o31ro"]
 [ext_resource type="Texture2D" uid="uid://b0pcemtg24k5r" path="res://art/textures/Characters&Enemies/Animation_Alfred_Mask4.png" id="2_7ehur"]
