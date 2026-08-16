@@ -30,6 +30,7 @@ signal level_changed(new_level: int)
 #endregion
 
 #region variables
+var orb : Orb = null
 @export var weapon : Weapon = WeaponRegistry.get_weapon("unarmed");
 
 @export var faction : Faction = Faction.PLAYER;

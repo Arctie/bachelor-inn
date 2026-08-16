@@ -1,5 +1,6 @@
 extends Node3D
 class_name Character
+
 ## This class has all the Character visuals
 ##
 ## Use this script with a new scene for
