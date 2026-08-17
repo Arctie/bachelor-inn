@@ -169,6 +169,8 @@ func is_free(pos : Vector3i) -> bool:
 				return false;
 	
 	for u in units:
+		if u == null:
+			continue
 		if u.state.is_alive:
 			if u.state.grid_position == pos:
 				return false;
