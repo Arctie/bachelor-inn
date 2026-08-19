@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cc2f7gp6w2q8o"]
 
 [ext_resource type="Texture2D" uid="uid://b0dxq6yt434jb" path="res://art/textures/healt_bar_enemy_background.png" id="1_7pabl"]
+[ext_resource type="PackedScene" uid="uid://b0rpwot0fbt6t" path="res://scenes/states/UnitCard.tscn" id="2_vhcqg"]
 
 [node name="HubScreen" type="Control" unique_id=1070308301]
 layout_mode = 3
@@ -19,6 +20,19 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_7pabl")
 stretch_mode = 6
+
+[node name="Label" type="Label" parent="Background" unique_id=1471621847]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -160.0
+offset_right = 160.0
+offset_bottom = 56.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 64
+text = "HUB WORLD"
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1789842128]
 custom_minimum_size = Vector2(1200, 200)
@@ -39,11 +53,21 @@ color = Color(0.2822526, 0, 0.12729862, 1)
 [node name="UnitRows" type="VBoxContainer" parent="PanelContainer" unique_id=906557925]
 layout_mode = 2
 
+[node name="Label" type="Label" parent="PanelContainer/UnitRows" unique_id=870894649]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "GARRISON"
+
 [node name="GarrisonRow" type="HBoxContainer" parent="PanelContainer/UnitRows" unique_id=1847708169]
 custom_minimum_size = Vector2(0, 90)
 layout_mode = 2
 theme_override_constants/separation = 12
 alignment = 1
+
+[node name="Label2" type="Label" parent="PanelContainer/UnitRows" unique_id=1197554971]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "ROSTER"
 
 [node name="RosterRow" type="HBoxContainer" parent="PanelContainer/UnitRows" unique_id=37820832]
 custom_minimum_size = Vector2(0, 110)
@@ -79,14 +103,33 @@ horizontal_alignment = 1
 [node name="ProgressButton" type="Button" parent="PanelContainer2/VBoxContainer" unique_id=1572212170]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
+theme_override_font_sizes/font_size = 32
 text = "STORY"
 
 [node name="ProgressButton2" type="Button" parent="PanelContainer2/VBoxContainer" unique_id=1629006100]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
+theme_override_font_sizes/font_size = 32
 text = "SIDE QUEST"
 
 [node name="ProgressButton3" type="Button" parent="PanelContainer2/VBoxContainer" unique_id=78865178]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
-text = "SAVE AND QUIT"
+theme_override_font_sizes/font_size = 32
+text = "SAVE AND QUIT
+TO MAIN MENU"
+
+[node name="UnitCard" parent="." unique_id=535593357 instance=ExtResource("2_vhcqg")]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -351.5
+offset_right = 100.0
+offset_bottom = 351.5
+grow_horizontal = 2
+grow_vertical = 2
