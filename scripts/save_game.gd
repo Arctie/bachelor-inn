@@ -175,17 +175,15 @@ func read(save_slot: int) -> bool:
 		
 		var character := packed_scene.instantiate();
 		
-		
+		# --- DATA and STATE ---
 		var state_dict : Dictionary = unit_dict["state"]
 		var data_dict : Dictionary = unit_dict["data"]
 		if data_dict.is_empty() or state_dict.is_empty():
 			push_error("Malformed unit entry in save data")
 			continue
 			
-		# --- DATA ---
+		# DATA
 		var data := CharacterData.new()
-		#var data_dict : Dictionary = unit_dict["data"]
-
 		data.unit_name = data_dict["unit_name"]
 		data.speciality = data_dict["speciality"]
 		data.personality = data_dict["personality"]
@@ -195,22 +193,22 @@ func read(save_slot: int) -> bool:
 		data.focus = data_dict["focus"]
 		data.endurance = data_dict["endurance"]
 
-		# --- STATE ---
+		# STATE
 		var state := CharacterState.new()
-		#var state_dict : Dictionary = unit_dict["state"]
 		var gp : Array = state_dict["grid_position"]
 		state.grid_position = Vector3i(gp[0], gp[1], gp[2])
 		state.faction = state_dict["faction"]
 		state.experience = state_dict["experience"]
 		state.level = state_dict["level"]
+		## Commented out code below can probably be deleted.
 		## Need to do this atm to avoid UI signal overwriting current_sanity on load/read
-		var endurance := int(data_dict["endurance"])
-		var focus := int(data_dict["focus"])
-		var mind := int(data_dict["mind"])
-		var strength := int(data_dict["strength"])
-		var resistance := int(4 + floor(float(focus) / 2.0) + floor(float(endurance) / 2.0))
-		state.max_health = int(4 + endurance + floor(float(strength) / 2.0))
-		state.max_sanity = 20 + resistance + mind
+		#var endurance := int(data_dict["endurance"])
+		#var focus := int(data_dict["focus"])
+		#var mind := int(data_dict["mind"])
+		#var strength := int(data_dict["strength"])
+		#var resistance := int(4 + floor(float(focus) / 2.0) + floor(float(endurance) / 2.0))
+		#state.max_health = int(4 + endurance + floor(float(strength) / 2.0))
+		#state.max_sanity = 20 + resistance + mind
 		
 		state.current_health = int(state_dict["current_health"])
 		state.current_sanity = int(state_dict["current_sanity"])
@@ -227,15 +225,10 @@ func read(save_slot: int) -> bool:
 		
 		character.data = data
 		character.state = state
-		#character.calc_derived_stats()
-		#print("DEBUG LOADED unit:", data.unit_name, " skills:", state.skills.size(), " ids:", state_dict.get("skill_ids", []))
-		#print("LOADED ", data.unit_name, " skill_ids=", state_dict.get("skill_ids", []))
-		#print("RESOLVED ", data.unit_name, " skills=", state.skills.map(func(s: Skill) -> String: return s.skill_id if s else "NULL"))
-		
 		Main.characters.append(character)
-	#var level_name : String = Main.levels[level].scene_path.get_file().get_basename()
-	print("read() called. slot: ", save_slot)
-	print("Units found in save file: ", units.size())
+		
+	#print("read() called. slot: ", save_slot)
+	#print("Units found in save file: ", units.size())
 	Main.load_level(level)
 	return true
 

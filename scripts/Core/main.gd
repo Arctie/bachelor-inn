@@ -185,6 +185,38 @@ func load_level(index: int) -> void:
 	#var next_name := parts[0] + "_" + str(parts[1].to_int() + 1)
 	#load_level_by_name(next_name)
 
+func load_single_level(index: int) -> void:
+	if index < 0 or index >= levels.size():
+		push_error("Level index out of range: %d" % index)
+		return
+	
+	# Set up a default test party if none exists
+	if Main.characters.is_empty():
+		# TODO: populate with default test characters
+		pass
+	
+	current_level_index = index
+	Main.unload_level()
+	
+	var entry: LevelEntry = levels[index]
+	var packed := load(entry.scene_path)
+	if packed == null:
+		push_error("Failed to load level: " + entry.scene_path)
+		return
+	
+	level = packed.instantiate()
+	level.level_name = entry.display_name
+	world.add_child(level)
+	
+	await get_tree().process_frame
+
+	var ui := get_tree().get_first_node_in_group("ui_controller")
+	if ui:
+		ui._connect_to_level(level)
+	
+	var menu := get_tree().get_first_node_in_group("main_menu")
+	if is_instance_valid(menu):
+		menu.queue_free()
 
 func get_next_level_index() -> int:
 	for i in levels.size():

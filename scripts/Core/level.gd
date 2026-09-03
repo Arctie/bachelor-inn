@@ -33,7 +33,8 @@ var movement_grid : MovementGrid
 var movement_weights_grid : Grid
 
 @onready var battle_log: Label = $BattleLog
-@onready var state_machine: StateMachine = $StateMachine
+#@onready var state_machine: StateMachine = $StateMachine
+var state_machine: StateMachine
 
 #cursor testing
 #const CURSOR_SWORD = preload("uid://ddogsq0mua2ft")
@@ -736,10 +737,11 @@ func _input(event: InputEvent) -> void:
 
 
 func _ready() -> void:
+	print("state_machine node: ", state_machine)
 	_level_complete = false
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	camera_controller = Main.camera_controller
-
+	
 	cursor.hide()
 	trigger_map.hide()
 	movement_map.clear()
@@ -805,6 +807,10 @@ func _ready() -> void:
 		else:
 			spawn_enemy(pos, unit_type, true)
 	
+	state_machine = StateMachine.new()
+	state_machine.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(state_machine)
+	state_machine.owner = self
 	## POP UPS INSTANTIATED
 	#move_popup = MOVE_POPUP.instantiate()
 	#move_popup.hide()
@@ -848,6 +854,8 @@ func _ready() -> void:
 	_register_patrol_paths()
 	check_aggro()
 	hide_inactive_characters()
+	
+	await get_tree().process_frame
 	state_machine.transition_to(StateTurnTransition.new(true))
 	
 	#print("Current level index: ", Main.get_current_level_index(), " level name: ", Main.current_level_name)

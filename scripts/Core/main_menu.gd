@@ -260,7 +260,7 @@ func _fill_grid_with_levels() -> void:
 
 func _on_level_button_pressed(index: int) -> void:
 	$UI.visible = false
-	Main.go_to_level_by_index(index)
+	Main.load_single_level(index)
 	
 func _on_back_button_level_select_pressed() -> void:
 	$UI/SelectLevelGrid.visible = false;
