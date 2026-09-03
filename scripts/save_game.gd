@@ -174,10 +174,17 @@ func read(save_slot: int) -> bool:
 		var packed_scene: PackedScene = def.scene
 		
 		var character := packed_scene.instantiate();
-
+		
+		
+		var state_dict : Dictionary = unit_dict["state"]
+		var data_dict : Dictionary = unit_dict["data"]
+		if data_dict.is_empty() or state_dict.is_empty():
+			push_error("Malformed unit entry in save data")
+			continue
+			
 		# --- DATA ---
 		var data := CharacterData.new()
-		var data_dict : Dictionary = unit_dict["data"]
+		#var data_dict : Dictionary = unit_dict["data"]
 
 		data.unit_name = data_dict["unit_name"]
 		data.speciality = data_dict["speciality"]
@@ -190,7 +197,7 @@ func read(save_slot: int) -> bool:
 
 		# --- STATE ---
 		var state := CharacterState.new()
-		var state_dict : Dictionary = unit_dict["state"]
+		#var state_dict : Dictionary = unit_dict["state"]
 		var gp : Array = state_dict["grid_position"]
 		state.grid_position = Vector3i(gp[0], gp[1], gp[2])
 		state.faction = state_dict["faction"]
@@ -225,10 +232,10 @@ func read(save_slot: int) -> bool:
 		#print("RESOLVED ", data.unit_name, " skills=", state.skills.map(func(s: Skill) -> String: return s.skill_id if s else "NULL"))
 		
 		Main.characters.append(character)
-	var level_name : String = Main.levels[level].scene_path.get_file().get_basename()
+	#var level_name : String = Main.levels[level].scene_path.get_file().get_basename()
 	print("read() called. slot: ", save_slot)
 	print("Units found in save file: ", units.size())
-	Main.load_level(level_name)
+	Main.load_level(level)
 	return true
 
 

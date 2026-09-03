@@ -153,12 +153,12 @@ func load_level(index: int) -> void:
 	#Main.show_flavor_screen()
 
 
-func load_level_by_name(level_name: String) -> void:
+#func load_level_by_name(level_name: String) -> void:
 	#current_level_name = level_name
-	for entry: LevelEntry in levels:
-		if entry.scene_path.get_file().get_basename() == level.name:
-			load_level(level.name)
-			return
+	#for entry: LevelEntry in levels:
+		#if entry.scene_path.get_file().get_basename() == level.name:
+			#load_level(level.display_name.name)
+			#return
 	#for path : String in levels:
 		#if path.get_file().get_basename() == level_name:
 			#load_level(level_name)
@@ -167,14 +167,14 @@ func load_level_by_name(level_name: String) -> void:
 
 
 ## Not in use atm
-func load_next_level() -> void:
-	# This splits "tutorial_1" into ["tutorial", "1"] from the right
-	var parts := current_level_name.rsplit("_", true, 1)
-	if parts.size() < 2 or not parts[1].is_valid_int():
-		push_error("Cannot increment level name: " + current_level_name)
-		return
-	var next_name := parts[0] + "_" + str(parts[1].to_int() + 1)
-	load_level_by_name(next_name)
+#func load_next_level() -> void:
+	## This splits "tutorial_1" into ["tutorial", "1"] from the right
+	#var parts := current_level_name.rsplit("_", true, 1)
+	#if parts.size() < 2 or not parts[1].is_valid_int():
+		#push_error("Cannot increment level name: " + current_level_name)
+		#return
+	#var next_name := parts[0] + "_" + str(parts[1].to_int() + 1)
+	#load_level_by_name(next_name)
 
 
 func get_next_level_index() -> int:
@@ -187,12 +187,7 @@ func go_to_level_by_index(index: int) -> void:
 	if index < 0 or index >= levels.size():
 		push_error("Level index out of range: %d" % index)
 		return
-	current_level_index = index
-	var entry: LevelEntry = levels[index]
-	var level_name: String = entry.scene_path.get_file().get_basename()
-	load_level(entry.scene_path.get_file().get_basename()) ## NOTE: This is unfinished.
-	#go_to_level(_registry.levels[index].scene_path)
-
+	load_level(index)
 
 func get_current_level_index() -> int:
 	## Replaced by get_current_entry(). See below.
@@ -205,7 +200,6 @@ func get_current_entry() -> LevelEntry:
 	if current_level_index < 0 or current_level_index >= levels.size():
 		return null
 	return levels[current_level_index]
-
 
 func go_to_transition_screen() -> void:
 	if is_instance_valid(Main.level):
