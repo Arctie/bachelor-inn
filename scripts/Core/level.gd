@@ -850,10 +850,10 @@ func _ready() -> void:
 	hide_inactive_characters()
 	state_machine.transition_to(StateTurnTransition.new(true))
 	
-	print("Current level index: ", Main.get_current_level_index(), " level name: ", Main.current_level_name)
-	print("Main.characters size: ", Main.characters.size())
-	if Main.get_current_level_index() > 2:
-		Main.save.save_progress(Main.current_save_slot, Main.get_current_level_index())
+	#print("Current level index: ", Main.get_current_level_index(), " level name: ", Main.current_level_name)
+	#print("Main.characters size: ", Main.characters.size())
+	if Main.current_level_index > 2:
+		Main.save.save_progress(Main.current_save_slot, Main.current_level_index)	
 	else:
 		print("Skipping save - tutorial level")
 	#SaveGame.new().save_progress(Main.current_save_slot, Main.current_level_index)

@@ -94,7 +94,7 @@ func _on_start_tutorial_pressed() -> void:
 
 
 func _on_start_new_game_pressed() -> void:
-	#_update_create_save_buttons()
+	print("_on_start_new_game_pressed was pressed.")
 	_update_save_buttons()
 
 func _on_load_game_pressed() -> void:
@@ -211,6 +211,9 @@ func _update_load_buttons() -> void:
 
 
 func _update_save_buttons() -> void:
+	$UI/LevelSelect.visible = false
+	$UI/CreateNewSaveFileSelect.visible = true
+	
 	var save_buttons := [		
 		$UI/CreateNewSaveFileSelect/LevelSelectVBOX/SelectSaveFile0,
 		$UI/CreateNewSaveFileSelect/LevelSelectVBOX/SelectSaveFile1,
@@ -253,6 +256,7 @@ func _fill_grid_with_levels() -> void:
 	pass
 
 func _on_level_button_pressed(index: int) -> void:
+	$UI.visible = false
 	Main.go_to_level_by_index(index)
 	
 func _on_back_button_level_select_pressed() -> void:

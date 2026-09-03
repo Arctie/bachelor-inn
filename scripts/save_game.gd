@@ -243,23 +243,19 @@ func load_tutorial() -> void:
 	print("load_tutorial() pressed.")
 	Main.current_save_slot = TUTORIAL_SAVE_SLOT
 	Main.characters.clear()
-	
+
 	var chosen_char_id := Main.selected_starting_character
-	var chardef : CharacterDefinition = registry.characters.get(chosen_char_id, null)
+	var chardef: CharacterDefinition = registry.characters.get(chosen_char_id, null)
 	if chardef == null:
 		push_error("No definition found for " + chosen_char_id + ".")
 		return
-	
-	#for id: String in registry.characters.keys():
-		#var chardef : CharacterDefinition = registry.characters[id]
 		
 	var character := chardef.scene.instantiate()
 	character.data = chardef.base_data.duplicate()
 	character.state = chardef.base_state.duplicate()
 	Main.characters.append(character)
 	
-	Main.current_level_name = "tutorialDesignedLevel"
-	Main.load_level("tutorialDesignedLevel")
+	Main.load_level(0) 
 	
 	#Main.current_level_name = "tutorialDesignedLevel"
 	#var level := Main.current_level_name if Main.current_level_name != "" else "tutorialDesignedLevel"

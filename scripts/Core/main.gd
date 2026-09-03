@@ -5,6 +5,7 @@ extends Node
 ## Loads settings and saves for the game.
 
 # TODO:
+# Should own World.tscn, main_menu.tscn, hub.tscn and level.tscn.
 # load settings
 
 #region Props
