@@ -65,62 +65,92 @@ func unload_level() -> void:
 	level = null
 
 func next_level() -> void:
-	print("current_level_name: '", current_level_name, "'")
-	var current_index := -1
-	for i in levels.size():
-		var basename : String = levels[i].scene_path.get_file().get_basename()
-		print("levels[", i, "] raw: '", levels[i], "' basename: '", basename, "'")
-		if levels[i].scene_path.get_file().get_basename() == current_level_name:
-			current_index = i
-			break
-	print("current_index: ", current_index)
-
-	if current_index == -1:
-		push_error("Current level not found: ", current_level_name)
-		return
-	
-	var next_index := current_index + 1
+	var next_index := current_level_index + 1
 	if next_index >= levels.size():
 		get_tree().change_scene_to_file("res://scenes/states/victory.tscn")
 	else:
-		load_level_by_name(levels[next_index].get_file().get_basename())
-#func next_level() -> void:
-#	current_level_index += 1;
-#	if current_level_index > levels.size():
-#		get_tree().change_scene_to_file("res://scenes/states/victory.tscn");
-#	else:
-#		load_level(levels[current_level_index]);
+		load_level(next_index)
+	#print("current_level_name: '", current_level_name, "'")
+	#var current_index := -1
+	#for i in levels.size():
+		#var basename : String = levels[i].scene_path.get_file().get_basename()
+		#print("levels[", i, "] raw: '", levels[i], "' basename: '", basename, "'")
+		#if levels[i].scene_path.get_file().get_basename() == current_level_name:
+			#current_index = i
+			#break
+	#print("current_index: ", current_index)
+#
+	#if current_index == -1:
+		#push_error("Current level not found: ", current_level_name)
+		#return
+	#
+	#var next_index := current_index + 1
+	#if next_index >= levels.size():
+		#get_tree().change_scene_to_file("res://scenes/states/victory.tscn")
+	#else:
+		#load_level_by_name(levels[next_index].get_file().get_basename())
 
 ## Loads a new level and cleanup previously loaded level
 ##
 ## @param level_name: New level name to load
-func load_level(level_name: String) -> void:
-	print("world valid: ", is_instance_valid(world))
-	print("world: ", world)
+func load_level(index: int) -> void:
+	if index < 0 or index >= levels.size():
+		push_error("Level index out or range: %" % index)
+		return
+	
+	current_level_index = index
+	var entry: LevelEntry = levels[index]
+	
 	if OS.has_feature("mobile"):
 		Dialogic.VAR.PLATFORM = "MOBILE";
 	else:
 		Dialogic.VAR.PLATFORM = "DESKTOP";
-	unload_level(); ## TODO: Called too early?
-	current_level_name = level_name
-	current_level_index = levels.find_custom(func(e: LevelEntry) -> bool: return e.scene_path.get_file().get_basename() == level_name)	#var level_path: String = "res://scenes/levels/%sLevel.tscn" % level_name;
-	var level_path: String = "res://scenes/levels/%s.tscn" % level_name;
-	print("Attempting to load level path: '", level_path, "'")
-	var packed := load(level_path)
+	
+	unload_level()
+	
+	var packed := load(entry.scene_path)
 	if packed == null:
-		push_error("Failed to load level at path: " + level_path)
+		push_error("Failed to load level at path: " + entry.scene_path)
 		return
+	
 	level = packed.instantiate()
-	#level = load(level_path).instantiate();
-	level.level_name = level_name;	
-	world.add_child(level) # Add the new level to the World node
+	level.level_name = entry.display_name
+	world.add_child(level)
 	
 	await get_tree().process_frame
-	#SaveGame.new().save_progress(current_save_slot, current_level_index)
+	
 	var ui := get_tree().get_first_node_in_group("ui_controller")
 	if ui:
 		ui._connect_to_level(level)
-	Main.show_flavor_screen()
+	
+	show_flavor_screen()
+	#print("world valid: ", is_instance_valid(world))
+	#print("world: ", world)
+	#if OS.has_feature("mobile"):
+		#Dialogic.VAR.PLATFORM = "MOBILE";
+	#else:
+		#Dialogic.VAR.PLATFORM = "DESKTOP";
+	#unload_level(); ## TODO: Called too early?
+	#
+	#current_level_name = level_name
+	#current_level_index = levels.find_custom(func(e: LevelEntry) -> bool: return e.scene_path.get_file().get_basename() == level_name)	#var level_path: String = "res://scenes/levels/%sLevel.tscn" % level_name;
+	#var level_path: String = "res://scenes/levels/%s.tscn" % level_name;
+	#print("Attempting to load level path: '", level_path, "'")
+	#var packed := load(level_path)
+	#if packed == null:
+		#push_error("Failed to load level at path: " + level_path)
+		#return
+	#level = packed.instantiate()
+	##level = load(level_path).instantiate();
+	#level.level_name = level_name;	
+	#world.add_child(level) # Add the new level to the World node
+	#
+	#await get_tree().process_frame
+	##SaveGame.new().save_progress(current_save_slot, current_level_index)
+	#var ui := get_tree().get_first_node_in_group("ui_controller")
+	#if ui:
+		#ui._connect_to_level(level)
+	#Main.show_flavor_screen()
 
 
 func load_level_by_name(level_name: String) -> void:
@@ -155,10 +185,11 @@ func get_next_level_index() -> int:
 
 func go_to_level_by_index(index: int) -> void:
 	if index < 0 or index >= levels.size():
-		push_error("Level index out of range: " + str(index))
+		push_error("Level index out of range: %d" % index)
 		return
 	current_level_index = index
 	var entry: LevelEntry = levels[index]
+	var level_name: String = entry.scene_path.get_file().get_basename()
 	load_level(entry.scene_path.get_file().get_basename()) ## NOTE: This is unfinished.
 	#go_to_level(_registry.levels[index].scene_path)
 
