@@ -12,7 +12,7 @@ extends Node3D
 
 ## Names of levels in the order they will be played
 @export var levels_order: LevelOrder
-const REGISTRY_PATH := "res://Data/level_order.tres"
+const REGISTRY_PATH := "res://Data/levels_for_grid_select.tres"
 var _registry: LevelOrder = preload(REGISTRY_PATH)
 var current_level_index: int = -1
 @onready var grid_container: GridContainer = $UI/SelectLevelGrid/VBoxContainer/GridContainer
@@ -27,7 +27,7 @@ var _slot_pending_overwrite: int = -1
 func _ready() -> void:
 	print(OS.get_data_dir())
 	Main.world = world;
-	Main.levels = levels_order.levels;
+	#Main.levels = levels_order.levels; <-- Done in main.gd _ready()
 	Main.camera_controller = camera_controller;
 	
 	#$UI/LevelSelect.visible = false;

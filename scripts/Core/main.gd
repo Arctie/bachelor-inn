@@ -45,8 +45,9 @@ var transition_screen: Control = null
 
 #region Methods
 func _ready() -> void:
-	## Fill level array 
-	pass
+	var registry: LevelOrder = preload("res://Data/levels_for_grid_select.tres")
+	#var registry: LevelOrder = preload("res://Data/level_order.tres")
+	levels = registry.levels
 	
 ## Unloads the current level instance
 func unload_level() -> void:
@@ -102,8 +103,7 @@ func load_level(level_name: String) -> void:
 		Dialogic.VAR.PLATFORM = "DESKTOP";
 	unload_level(); ## TODO: Called too early?
 	current_level_name = level_name
-	current_level_index = levels.find_custom(func(p: String) -> bool: return p.get_file().get_basename() == level_name)
-	#var level_path: String = "res://scenes/levels/%sLevel.tscn" % level_name;
+	current_level_index = levels.find_custom(func(e: LevelEntry) -> bool: return e.scene_path.get_file().get_basename() == level_name)	#var level_path: String = "res://scenes/levels/%sLevel.tscn" % level_name;
 	var level_path: String = "res://scenes/levels/%s.tscn" % level_name;
 	print("Attempting to load level path: '", level_path, "'")
 	var packed := load(level_path)
@@ -154,16 +154,26 @@ func get_next_level_index() -> int:
 	return 0
 
 func go_to_level_by_index(index: int) -> void:
+	if index < 0 or index >= levels.size():
+		push_error("Level index out of range: " + str(index))
+		return
 	current_level_index = index
-	load_level("") ## NOTE: This is unfinished.
+	var entry: LevelEntry = levels[index]
+	load_level(entry.scene_path.get_file().get_basename()) ## NOTE: This is unfinished.
 	#go_to_level(_registry.levels[index].scene_path)
 
 
 func get_current_level_index() -> int:
+	## Replaced by get_current_entry(). See below.
 	for i in levels.size():
 		if levels[i].get_file().get_basename() == current_level_name:
 			return i
 	return 0
+
+func get_current_entry() -> LevelEntry:
+	if current_level_index < 0 or current_level_index >= levels.size():
+		return null
+	return levels[current_level_index]
 
 
 func go_to_transition_screen() -> void:
