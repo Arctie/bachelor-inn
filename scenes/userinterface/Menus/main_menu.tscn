@@ -11,8 +11,6 @@
 [ext_resource type="StyleBox" uid="uid://7btdlsimck4p" path="res://scenes/userinterface/button_normal_style.tres" id="9_0r8c7"]
 [ext_resource type="StyleBox" uid="uid://dcptgtrri5psh" path="res://scenes/userinterface/button_pressed_style.tres" id="10_5hqp6"]
 [ext_resource type="StyleBox" uid="uid://bxg7htv4vn5rw" path="res://scenes/userinterface/button_hover_style.tres" id="11_xe483"]
-[ext_resource type="AudioStream" uid="uid://b67e003o351lb" path="res://audio/Music/260216themeWIP.wav" id="12_e4x0b"]
-[ext_resource type="PackedScene" uid="uid://cnagni7ikbg16" path="res://scenes/utilities/CameraScene.tscn" id="13_40ob2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gkqwp"]
 shader = ExtResource("3_qqcna")
@@ -804,14 +802,6 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_beadd")
 theme_override_styles/hover = SubResource("StyleBoxTexture_huha7")
 theme_override_styles/focus = ExtResource("8_oa3rt")
 text = "Back"
-
-[node name="World" type="Node3D" parent="." unique_id=1857862226]
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="World" unique_id=904918254]
-stream = ExtResource("12_e4x0b")
-autoplay = true
-
-[node name="CameraScene" parent="World" unique_id=1082997309 instance=ExtResource("13_40ob2")]
 
 [connection signal="pressed" from="UI/MainMenu/Selector/StartGameButton" to="." method="_on_start_game_button_pressed"]
 [connection signal="pressed" from="UI/MainMenu/Selector/OptionsButton" to="." method="_on_options_button_pressed"]

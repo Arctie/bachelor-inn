@@ -36,7 +36,8 @@ func play_skill(result : AttackResult) -> void:
 		return
 	
 	var vfx : Node3D = effect.instantiate()
-	get_tree(). current_scene.add_child(vfx)
+	#get_tree().current_scene.add_child(vfx)
+	Main.level.add_child(vfx)
 	
 	## TODO: Effect plays twice if AoE ability is cast directly on enemy
 	if dmg > 0:
@@ -80,7 +81,8 @@ func _spawn_dmg_number_scene(result : AttackResult) -> void:
 		return
 
 	var dmg : Node3D = damage_number_scene.instantiate()
-	get_tree().current_scene.add_child(dmg)
+	#get_tree().current_scene.add_child(dmg)
+	Main.level.add_child(dmg)
 	dmg.global_position = result.victim.global_position + Vector3(0,1,0)
 	
 	dmg.set_value(
@@ -93,7 +95,8 @@ func spawn_damage_number(amount: int, position: Vector3, is_critical: bool = fal
 	if not damage_number_scene:
 		return
 	var dmg: Node3D = damage_number_scene.instantiate()
-	get_tree().current_scene.add_child(dmg)
+	#get_tree().current_scene.add_child(dmg)
+	Main.level.add_child(dmg)
 	dmg.global_position = position + Vector3(0, 1, 0)
 	dmg.set_value(amount, is_critical)
 
@@ -145,7 +148,8 @@ func _spawn_blood_splatter(target : Character, attacker : Character) -> void:
 		
 		if "bloodColor" in target:
 			splatter.bloodCol = target.bloodColor
-		get_tree().current_scene.add_child(splatter)
+		#get_tree().current_scene.add_child(splatter)
+		Main.level.add_child(splatter)
 		splatter.global_position = result.position + Vector3(0, 0.01, 0)
 
 		var look_target: Vector3 = splatter.global_position + splash_dir
@@ -155,7 +159,8 @@ func _spawn_melee_attack(attacker : Character, target : Character, result: Attac
 	if not melee_attack_scene:
 		return
 	var slice := melee_attack_scene.instantiate()
-	get_tree().current_scene.add_child(slice)
+	#get_tree().current_scene.add_child(slice)
+	Main.level.add_child(slice)
 	
 	var start_pos: = attacker.global_position + Vector3(0, 0, 0)
 	var end_pos: = target.global_position + Vector3(0, 0, 0)
@@ -189,7 +194,8 @@ func _spawn_ranged_attack(attacker : Character, target : Character, result: Atta
 	
 	#var projectile := ranged_attack_scene.instantiate()
 	var projectile := projectile_scene.instantiate()
-	get_tree().current_scene.add_child(projectile)
+	#get_tree().current_scene.add_child(projectile)
+	Main.level.add_child(projectile) 
 	
 	var start_pos: = attacker.global_position + Vector3(0, 1, 0)
 	var end_pos: = target.global_position + Vector3(0, 1, 0)

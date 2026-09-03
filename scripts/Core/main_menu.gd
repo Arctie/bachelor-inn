@@ -1,7 +1,8 @@
 extends Node3D
 
 ## Reference to the World node
-@onready var world: Node3D = $World;
+## Doing this in main.gd
+#@onready var world: Node3D = $World;
 
 ## Reference to the GUI
 @onready var gui: Control = $UI;
@@ -26,9 +27,11 @@ var _slot_pending_overwrite: int = -1
 ## Called when the node enters the scene tree for the first time
 func _ready() -> void:
 	print(OS.get_data_dir())
-	Main.world = world;
+	add_to_group("main_menu")
+	
+	#Main.world = world;
 	#Main.levels = levels_order.levels; <-- Done in main.gd _ready()
-	Main.camera_controller = camera_controller;
+	#Main.camera_controller = camera_controller;
 	
 	#$UI/LevelSelect.visible = false;
 	_fill_grid_with_levels()

@@ -24,6 +24,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+World="*uid://1u3o5wupb481"
 Main="*res://scripts/Core/main.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 Tutorial="*res://scripts/tutorial.gd"

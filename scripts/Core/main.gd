@@ -15,6 +15,7 @@ var current_level_name: String = ""
 
 ## Reference to the World node
 var world: Node3D;
+const WORLD = preload("res://scenes/World/world.tscn")
 
 ## Character Units held by the gaming session 
 var selected_starting_character: String = "alfred" ## Default as alfred, if something goes wrong. 
@@ -49,6 +50,9 @@ func _ready() -> void:
 	var registry: LevelOrder = preload("res://Data/levels_for_grid_select.tres")
 	#var registry: LevelOrder = preload("res://Data/level_order.tres")
 	levels = registry.levels
+	
+	world = World
+	camera_controller = world.get_node("CameraScene")
 	
 ## Unloads the current level instance
 func unload_level() -> void:
@@ -125,6 +129,9 @@ func load_level(index: int) -> void:
 		ui._connect_to_level(level)
 	
 	show_flavor_screen()
+	var menu := get_tree().get_first_node_in_group("main_menu")
+	if is_instance_valid(menu):
+		menu.queue_free()
 	#print("world valid: ", is_instance_valid(world))
 	#print("world: ", world)
 	#if OS.has_feature("mobile"):
