@@ -20,7 +20,7 @@ var selected_starting_character: String = "alfred" ## Default as alfred, if some
 var characters: Array[Character];
 
 ## All levels
-var levels: Array[String];
+var levels: Array[LevelEntry];
 
 ## Level index into levels array
 var current_level_index: int = 0;
@@ -44,6 +44,10 @@ var transition_screen: Control = null
 #endregion
 
 #region Methods
+func _ready() -> void:
+	## Fill level array 
+	pass
+	
 ## Unloads the current level instance
 func unload_level() -> void:
 	#if is_instance_valid(level):
@@ -63,9 +67,9 @@ func next_level() -> void:
 	print("current_level_name: '", current_level_name, "'")
 	var current_index := -1
 	for i in levels.size():
-		var basename := levels[i].get_file().get_basename()
+		var basename : String = levels[i].scene_path.get_file().get_basename()
 		print("levels[", i, "] raw: '", levels[i], "' basename: '", basename, "'")
-		if levels[i].get_file().get_basename() == current_level_name:
+		if levels[i].scene_path.get_file().get_basename() == current_level_name:
 			current_index = i
 			break
 	print("current_index: ", current_index)
@@ -121,11 +125,15 @@ func load_level(level_name: String) -> void:
 
 func load_level_by_name(level_name: String) -> void:
 	#current_level_name = level_name
-	for path : String in levels:
-		if path.get_file().get_basename() == level_name:
-			load_level(level_name)
+	for entry: LevelEntry in levels:
+		if entry.scene_path.get_file().get_basename() == level.name:
+			load_level(level.name)
 			return
-	push_error("No level found matching name: " + level_name)
+	#for path : String in levels:
+		#if path.get_file().get_basename() == level_name:
+			#load_level(level_name)
+			#return
+	#push_error("No level found matching name: " + level_name)
 
 
 ## Not in use atm
@@ -144,6 +152,11 @@ func get_next_level_index() -> int:
 		if levels[i].get_file().get_basename() == current_level_name:
 			return i
 	return 0
+
+func go_to_level_by_index(index: int) -> void:
+	current_level_index = index
+	load_level("") ## NOTE: This is unfinished.
+	#go_to_level(_registry.levels[index].scene_path)
 
 
 func get_current_level_index() -> int:

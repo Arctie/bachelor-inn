@@ -12,6 +12,10 @@ extends Node3D
 
 ## Names of levels in the order they will be played
 @export var levels_order: LevelOrder
+const REGISTRY_PATH := "res://Data/level_order.tres"
+var _registry: LevelOrder = preload(REGISTRY_PATH)
+var current_level_index: int = -1
+@onready var grid_container: GridContainer = $UI/SelectLevelGrid/VBoxContainer/GridContainer
 
 @onready var camera_controller: CameraController = $World/CameraScene
 
@@ -27,6 +31,7 @@ func _ready() -> void:
 	Main.camera_controller = camera_controller;
 	
 	#$UI/LevelSelect.visible = false;
+	_fill_grid_with_levels()
 	
 	print(OS.get_data_dir());
 	
@@ -89,8 +94,6 @@ func _on_start_tutorial_pressed() -> void:
 
 
 func _on_start_new_game_pressed() -> void:
-	$UI/LevelSelect.visible = false
-	$UI/CreateNewSaveFileSelect.visible = true
 	#_update_create_save_buttons()
 	_update_save_buttons()
 
@@ -229,3 +232,29 @@ var credits: Dictionary = {
 	"Programming 3" : "Andreas",
 	"Music" : "Han fyren"
 }
+
+
+func _on_level_select_pressed() -> void:
+	print("Level Selection Pressed.")
+	## Hide current UI
+	$UI/LevelSelect.visible = false
+	## Show grid with level nodes
+	$UI/SelectLevelGrid.visible = true
+
+func _fill_grid_with_levels() -> void:
+	# Iterate over level_order.tres and fill grid with buttons to start each level
+	# Will only play scene, not use save game system
+	for i in range(_registry.levels.size()):
+		var entry: LevelEntry = _registry.levels[i]
+		var button:= Button.new()
+		button.text = entry.display_name
+		button.pressed.connect(_on_level_button_pressed.bind(i))
+		grid_container.add_child(button)
+	pass
+
+func _on_level_button_pressed(index: int) -> void:
+	Main.go_to_level_by_index(index)
+	
+func _on_back_button_level_select_pressed() -> void:
+	$UI/SelectLevelGrid.visible = false;
+	$UI/LevelSelect.visible = true;

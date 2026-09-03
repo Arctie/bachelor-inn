@@ -225,7 +225,7 @@ func read(save_slot: int) -> bool:
 		#print("RESOLVED ", data.unit_name, " skills=", state.skills.map(func(s: Skill) -> String: return s.skill_id if s else "NULL"))
 		
 		Main.characters.append(character)
-	var level_name : String = Main.levels[level].get_file().get_basename()
+	var level_name : String = Main.levels[level].scene_path.get_file().get_basename()
 	print("read() called. slot: ", save_slot)
 	print("Units found in save file: ", units.size())
 	Main.load_level(level_name)
