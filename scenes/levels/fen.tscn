@@ -243,7 +243,7 @@ turbulence_noise_strength = 4.95
 turbulence_noise_scale = 3.673
 turbulence_influence_max = 0.18800001
 
-[node name="Map3d" unique_id=1364062222 instance=ExtResource("1_6w1qc")]
+[node name="FenLevel" unique_id=1364062222 instance=ExtResource("1_6w1qc")]
 level_name = "first fen edition"
 
 [node name="TerrainGrid" parent="." index="0" unique_id=1846160155]

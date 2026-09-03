@@ -210,10 +210,11 @@ func read(save_slot: int) -> bool:
 		var strength := int(data_dict["strength"])
 		var resistance := int(4 + floor(float(focus) / 2.0) + floor(float(endurance) / 2.0))
 		state.max_health = int(4 + endurance + floor(float(strength) / 2.0))
-		state.max_sanity = resistance + mind
+		state.max_sanity = 20 + resistance + mind
 		
 		state.current_health = int(state_dict["current_health"])
 		state.current_sanity = int(state_dict["current_sanity"])
+		print("READ: ", data.unit_name, " current_sanity: ", state.current_sanity, " max_sanity: ", state.max_sanity)
 		
 		state.weapon = WeaponRegistry.get_weapon(state_dict["weapon_id"])
 		state.skills.clear()
@@ -226,7 +227,7 @@ func read(save_slot: int) -> bool:
 		
 		character.data = data
 		character.state = state
-		
+		#character.calc_derived_stats()
 		#print("DEBUG LOADED unit:", data.unit_name, " skills:", state.skills.size(), " ids:", state_dict.get("skill_ids", []))
 		#print("LOADED ", data.unit_name, " skill_ids=", state_dict.get("skill_ids", []))
 		#print("RESOLVED ", data.unit_name, " skills=", state.skills.map(func(s: Skill) -> String: return s.skill_id if s else "NULL"))

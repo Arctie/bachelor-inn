@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://d00tnaxafw4ia" path="res://scenes/states/game_over.tscn" id="9_h66jy"]
 [ext_resource type="PackedScene" uid="uid://dfpe4abv63jnd" path="res://scenes/userinterface/Level/SkillPopUp.tscn" id="9_htkxo"]
 
-[node name="Map3d2" unique_id=656823534 instance=ExtResource("1_nhemk")]
+[node name="TutorialLevel2" unique_id=656823534 instance=ExtResource("1_nhemk")]
 
 [node name="TerrainGrid" parent="." index="0" unique_id=1846160155]
 data = {
