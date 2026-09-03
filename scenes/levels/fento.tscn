@@ -15,7 +15,7 @@ albedo = Color(0, 0, 0, 1)
 height_falloff = 0.0030443608
 edge_fade = 0.42870885
 
-[node name="Map3d" unique_id=557424311 instance=ExtResource("1_bwofp")]
+[node name="FentoLevel" unique_id=557424311 instance=ExtResource("1_bwofp")]
 level_name = "first fen edition"
 
 [node name="TerrainGrid2" type="GridMap" parent="." index="0" unique_id=1919496315]
