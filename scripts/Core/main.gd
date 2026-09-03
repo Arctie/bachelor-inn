@@ -39,6 +39,7 @@ var camera_controller: CameraController;
 ## Save file
 @onready var save: SaveGame = SaveGame.new();
 var current_save_slot: int = 0
+var is_standalone_test: bool = false
 
 ## UI
 var flavor_screen: Control = null
@@ -189,11 +190,20 @@ func load_single_level(index: int) -> void:
 	if index < 0 or index >= levels.size():
 		push_error("Level index out of range: %d" % index)
 		return
+	is_standalone_test = true
 	
-	# Set up a default test party if none exists
-	if Main.characters.is_empty():
-		# TODO: populate with default test characters
-		pass
+	 # Populate with default test party from registry
+	Main.characters.clear()
+	var test_ids := ["alfred", "emil", "lucy"]  # or whatever your default party IDs are
+	for id : String in test_ids:
+		var chardef: CharacterDefinition = save.registry.characters.get(id, null)
+		if chardef == null:
+			push_error("No definition found for: " + id)
+			continue
+		var character := chardef.scene.instantiate()
+		character.data = chardef.base_data.duplicate()
+		character.state = chardef.base_state.duplicate()
+		Main.characters.append(character)
 	
 	current_level_index = index
 	Main.unload_level()
@@ -209,7 +219,8 @@ func load_single_level(index: int) -> void:
 	world.add_child(level)
 	
 	await get_tree().process_frame
-
+	is_standalone_test = false ## Reset flag after test scene is loaded
+	
 	var ui := get_tree().get_first_node_in_group("ui_controller")
 	if ui:
 		ui._connect_to_level(level)

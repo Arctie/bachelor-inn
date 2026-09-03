@@ -860,11 +860,13 @@ func _ready() -> void:
 	
 	#print("Current level index: ", Main.get_current_level_index(), " level name: ", Main.current_level_name)
 	#print("Main.characters size: ", Main.characters.size())
-	if Main.current_level_index > 2:
+	if not Main.is_standalone_test and Main.current_level_index > 2:
 		for c in Main.characters:
 			if is_instance_valid(c):
 				c.calc_derived_stats()
 		Main.save.save_progress(Main.current_save_slot, Main.current_level_index)	
+	elif Main.is_standalone_test:
+		print("Skipping save - standalone test level")
 	else:
 		print("Skipping save - tutorial level")
 	#SaveGame.new().save_progress(Main.current_save_slot, Main.current_level_index)
