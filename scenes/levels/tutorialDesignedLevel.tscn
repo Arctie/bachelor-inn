@@ -11,8 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://d00tnaxafw4ia" path="res://scenes/states/game_over.tscn" id="7_rtseb"]
 [ext_resource type="PackedScene" uid="uid://btap5oojesi27" path="res://scenes/states/pause_menu.tscn" id="9_gldne"]
 
-[node name="Map3d2" unique_id=1972183518 instance=ExtResource("1_gwuxj")]
-script = ExtResource("2_u672c")
+[node name="TutorialLevel1" unique_id=1972183518 instance=ExtResource("1_gwuxj")]
 
 [node name="StateMachine" type="Node" parent="." index="0" unique_id=215846265]
 script = ExtResource("2_u672c")

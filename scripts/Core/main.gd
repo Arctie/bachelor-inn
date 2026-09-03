@@ -100,7 +100,7 @@ func next_level() -> void:
 ## @param level_name: New level name to load
 func load_level(index: int) -> void:
 	if index < 0 or index >= levels.size():
-		push_error("Level index out or range: %" % index)
+		push_error("Level index out or range: %d" % index)
 		return
 	
 	current_level_index = index
@@ -112,6 +112,7 @@ func load_level(index: int) -> void:
 		Dialogic.VAR.PLATFORM = "DESKTOP";
 	
 	unload_level()
+	print("Loading entry: ", entry.display_name, " path: ", entry.scene_path)
 	
 	var packed := load(entry.scene_path)
 	if packed == null:
