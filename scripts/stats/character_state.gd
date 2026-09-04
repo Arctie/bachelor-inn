@@ -6,6 +6,9 @@ class_name CharacterState
 #region enums
 enum Faction { PLAYER, ENEMY, NEUTRAL }
 
+enum AIMode { BEHAVIOUR_TREE, MINIMAX }
+enum BTProfile { DEFAULT, BRUTE, SNIPER }
+
 enum SanityState
 {
 	CALM, # clear-minded

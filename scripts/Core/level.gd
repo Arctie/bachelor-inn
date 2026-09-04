@@ -1231,6 +1231,7 @@ func next_level() -> void:
 	cleanup_characters_before_load()
 	
 	## TODO: Decide this?
+	## NOTE: Note
 	# Healing units between levels
 	#for i in Main.characters.size():
 		#Main.characters[i].state.current_health = Main.characters[i].state.max_health;
@@ -1798,6 +1799,7 @@ func _on_dialogic_signal(argument: String) -> void:
 		Tutorial.advance_timeline()
 ## DIALOGIC AND INTERACTION END
 
+## Not in use
 func _register_patrol_paths() -> void:
 	for child in get_children():
 		if child is PatrolPath:
