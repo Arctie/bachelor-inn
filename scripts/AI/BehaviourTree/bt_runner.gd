@@ -13,9 +13,9 @@ static func run(unit: Character, state: GameState, context: MissionContext) -> C
 			return Wait.new(unit.state.grid_position)
 
 static func _get_profile(profile: int) -> BTNode:
-	#match profile:
-		#CharacterState.BTProfile.BRUTE:
-			#return BTBrute.build()
+	match profile:
+		CharacterState.BTProfile.BRUTE:
+			return BTBrute.build()
 		#CharacterState.BTProfile.SNIPER:
 			#return BTSniper.build()
 		#_:

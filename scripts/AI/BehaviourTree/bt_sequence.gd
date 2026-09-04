@@ -1,9 +1,9 @@
-extends RefCounted
+extends BTNode
 class_name BTSequence
 
 var children: Array[BTNode] = []
 
-func add_children(child: BTNode) -> BTSequence:
+func add_children(child: BTNode) -> BTNode:
 	children.append(child)
 	return self
 

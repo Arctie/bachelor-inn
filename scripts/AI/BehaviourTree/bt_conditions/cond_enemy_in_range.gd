@@ -1,5 +1,6 @@
 extends BTNode
 class_name ConditionEnemyInRange
+## Leaf Node
 
 func tick(blackboard: BTBlackboard) -> BTNode.Status:
 	var unit := blackboard.unit

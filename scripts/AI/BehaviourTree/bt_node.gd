@@ -7,3 +7,6 @@ enum Status { SUCCESS, FAILURE, RUNNING }
 func tick(blackboard: BTBlackboard) -> Status:
 	#return Status.SUCCESS
 	return Status.FAILURE
+
+func add_child(child: BTNode) -> BTNode:
+	return self

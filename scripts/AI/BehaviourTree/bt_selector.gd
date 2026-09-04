@@ -3,7 +3,7 @@ class_name BTSelector
 
 var children: Array[BTNode] = []
 
-func add_child(child: BTNode) -> BTSelector:
+func add_child(child: BTNode) -> BTNode:
 	children.append(child)
 	return self
 
