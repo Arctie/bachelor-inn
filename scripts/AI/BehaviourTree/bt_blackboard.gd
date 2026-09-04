@@ -1,5 +1,7 @@
 extends RefCounted
 class_name BTBlackboard
+## A BTBlackboard is created for each enemy's turn
+## Then it is destructed when finished
 
 var unit: Character
 var state: GameState

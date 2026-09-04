@@ -27,8 +27,8 @@ func tick(blackboard: BTBlackboard) -> BTNode.Status:
 	blackboard.target = closest_target
 	return BTNode.Status.SUCCESS
 
-## SPELL RANGE CHECK
-	
+## If we want to add spells to enemies
+## range chack for spells
 	# for skill in unit.state.skills:
 	#     for other in state.units:
 	#         if not _is_valid_skill_target(other, skill, unit):

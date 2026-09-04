@@ -8,7 +8,7 @@ func add_child(child: BTNode) -> BTSelector:
 	return self
 
 # --- NOTE: Oposite of BTSequence
-func tick(blackboard: Dictionary) -> Status:
+func tick(blackboard: BTBlackboard) -> Status:
 	for child in children:
 		var result := child.tick(blackboard)
 		match result:
