@@ -16,7 +16,7 @@ static func _get_profile(profile: int) -> BTNode:
 	match profile:
 		CharacterState.BTProfile.BRUTE:
 			return BTBrute.build()
-		#CharacterState.BTProfile.SNIPER:
-			#return BTSniper.build()
-		#_:
-			#return BTDefault.build()
+		CharacterState.BTProfile.SNIPER:
+			return BTSniper.build()
+		_:
+			return BTDefault.build()
