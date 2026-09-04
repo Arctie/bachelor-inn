@@ -3,7 +3,7 @@ class_name BTBlackboard
 
 var unit: Character
 var state: GameState
-var context: MissionContext # For objectives
+var context: MissionContext # For mission objectives
 var chosen_command: Command = null
 var target: Character = null
 var target_pos: Vector3i = Vector3i.ZERO
