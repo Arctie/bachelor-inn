@@ -1,19 +1,19 @@
-extends Node
-# class_name BTSequence
-#extends "res://path/to/bt_node.gd" # Replace with your actual path
-#
-#func tick(actor: Node, blackboard: Dictionary) -> Status:
-	#for child in get_children():
-		#if child is not BTNode:
-			#continue
-			#
-		#var response = child.tick(actor, blackboard)
-		#match response:
-			#Status.FAILURE:
-				#return Status.FAILURE
-			#Status.RUNNING:
-				#return Status.RUNNING
-			#Status.SUCCESS:
-				#continue # Move to the next child
-				#
-	#return Status.SUCCESS
+extends RefCounted
+class_name BTSequence
+
+var children: Array[BTNode] = []
+
+func add_children(child: BTNode) -> BTSequence:
+	children.append(child)
+	return self
+
+# --- NOTE: Oposite of BTSelector
+func tick(blackboard: Dictionary) -> BTNode.Status:
+	for child in children:
+		var result := child.tick(blackboard)
+		match result:
+			BTNode.Status.FAILURE:
+				return BTNode.Status.FAILURE
+			BTNode.Status.RUNNING:
+				return BTNode.Status.RUNNING
+	return BTNode.Status.SUCCESS
