@@ -31,6 +31,7 @@ func tick(blackboard: BTBlackboard) -> BTNode.Status:
 			best_origin = origin
 	
 	blackboard.chosen_command = Attack.new(unit.state.grid_position, target.state.grid_position, best_origin)
+	print("Action fired: ", get_script().resource_path, " command: ", blackboard.chosen_command)
 	return BTNode.Status.SUCCESS
 
 ## If we want to add spells to enemies

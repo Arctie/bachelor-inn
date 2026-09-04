@@ -3,6 +3,7 @@ class_name ConditionEnemyInRange
 ## Leaf Node
 
 func tick(blackboard: BTBlackboard) -> BTNode.Status:
+	print("Condition checking: ", get_script().resource_path)
 	var unit := blackboard.unit
 	var state := blackboard.state
 	
@@ -12,7 +13,9 @@ func tick(blackboard: BTBlackboard) -> BTNode.Status:
 	var closest_target: Character = null
 	var closest_dist := 99999
 	
+	print("BT Condition - unit: ", unit.data.unit_name, " checking ", state.units.size(), " units")
 	for other in state.units:
+		print("  - ", other.data.unit_name, " is_enemy: ", other.state.is_enemy(), " is_alive: ", other.state.is_alive)
 		if other.state.is_enemy():
 			continue
 		if not other.state.is_alive:

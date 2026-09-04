@@ -12,6 +12,7 @@ static func choose_move(enemy: Character, state: GameState, context: MissionCont
 			return Wait.new(enemy.state.grid_position)
 
 static func _run_bt(enemy: Character, state: GameState, context: MissionContext) -> Command:
+	print("Running BT for: ", enemy.data.unit_name, " profile: ", enemy.state.bt_profile)
 	var cmd := BTRunner.run(enemy, state, context)
 	if cmd == null:
 		print("Running BT failed. Initiating Wait at Position.")

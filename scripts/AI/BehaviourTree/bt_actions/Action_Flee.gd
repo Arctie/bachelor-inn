@@ -27,4 +27,5 @@ func tick(blackboard: BTBlackboard) -> BTNode.Status:
 		return BTNode.Status.FAILURE
 
 	blackboard.chosen_command = best_move
+	print("Action fired: ", get_script().resource_path, " command: ", blackboard.chosen_command)
 	return BTNode.Status.SUCCESS
