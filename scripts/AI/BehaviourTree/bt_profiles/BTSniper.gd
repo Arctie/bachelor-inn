@@ -7,7 +7,7 @@ static func build() -> BTNode:
 	attack_sequence.add_child(ActionAttackClosest.new())
 
 	var flee_sequence: BTSequence = BTSequence.new()
-	flee_sequence.add_child(ConditionPlayerTooClose.new())
+	flee_sequence.add_child(ConditionPlayerIsClose.new())
 	flee_sequence.add_child(ActionFlee.new())
 
 	var root: BTNode = BTSelector.new()

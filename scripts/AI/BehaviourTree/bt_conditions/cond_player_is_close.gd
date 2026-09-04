@@ -1,5 +1,5 @@
 extends BTNode
-class_name ConditionPlayerTooClose
+class_name ConditionPlayerIsClose
 
 const SAFE_DISTANCE: int = 3
 
