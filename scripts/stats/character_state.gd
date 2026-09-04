@@ -5,25 +5,10 @@ class_name CharacterState
 
 #region enums
 enum Faction { PLAYER, ENEMY, NEUTRAL }
-
 enum AIMode { BEHAVIOUR_TREE, MINIMAX }
 enum BTProfile { DEFAULT, BRUTE, SNIPER }
-
-enum SanityState
-{
-	CALM, # clear-minded
-	UNEASY, # doubt
-	DISTORTED, # focus
-	OBSESSED, # fear
-	DISSOCIATED # delusion
-}
-
-enum AggroState {
-	FROZEN,
-	PATROL_RANDOM,
-	PATROL_PATH,
-	AGGRESSIVE
-}
+enum SanityState { CALM, UNEASY, DISTORTED, OBSESSED, DISSOCIATED }
+enum AggroState { FROZEN, PATROL_RANDOM, PATROL_PATH, AGGRESSIVE }
 #endregion
 
 #region signals
@@ -34,28 +19,30 @@ signal level_changed(new_level: int)
 
 #region variables
 @export var weapon : Weapon = WeaponRegistry.get_weapon("unarmed");
-
 @export var faction : Faction = Faction.PLAYER;
 @export var connections : Array[int] = [];
+@export var grid_position: Vector3i;					# NOTE: Does not need to be an export
+@export var next_level_experience: int = 1;				# NOTE: Does not need to be an export
+@export var is_alive: bool = true;						# NOTE: Does not need to be an export
+@export var is_moved :bool = false;						# NOTE: Does not need to be an export
+@export var has_preformed_action :bool = false;			# NOTE: Does not need to be an export
+@export var is_ability_used :bool = false;				# NOTE: Does not need to be an export
+@export var experience := 0 : set = _set_experience		# NOTE: Does not need to be an export
+@export var level := 1									# NOTE: Does not need to be an export
+@export var attribute_points_per_level : = 3			# NOTE: Does not need to be an export
+@export var unspent_attribute_points : int = 0			# NOTE: Does not need to be an export
 
-@export var grid_position: Vector3i;
-@export var next_level_experience: int = 1;
-@export var is_alive: bool = true;
-@export var is_moved :bool = false;
-@export var has_preformed_action :bool = false;
-@export var is_ability_used :bool = false;
-@export var experience := 0 : set = _set_experience
-@export var level := 1
-@export var attribute_points_per_level : = 3
-@export var unspent_attribute_points : int = 0
-
+# --- SKILLS ---
 @export var skills: Array[Skill] = []
-@export var active_effects: Array[Dictionary] = []
-## Default state is FROZEN. All states: FROZEN, PATROL_RANDOM, PATROL_PATH, AGGRESSIVE
-## Patrol not implemented, and probably will not be - due to game play design
+@export var active_effects: Array[Dictionary] = []		# NOTE: Does not need to be an export
+
+# --- AI / BEHAVIOUR TREE ---
+@export var ai_mode: AIMode = AIMode.BEHAVIOUR_TREE
+@export var bt_profile: BTProfile = BTProfile.DEFAULT
+@export var search_depth: int = 2
 @export var aggro_state: AggroState = AggroState.FROZEN
 @export var aggro_range : int = 10
-@export var patrol_index: int = 0
+@export var patrol_index: int = 0 # Patrol not implemented, and probably will not be due to game play design
 #endregion
 
 #region inferred vars calculated from CharacterData on spawn
@@ -77,42 +64,32 @@ signal level_changed(new_level: int)
 func is_ally(in_faction: Faction = Faction.PLAYER) -> bool:
 	return faction == in_faction;
 
-
 func is_enemy() -> bool:
 	return faction == Faction.ENEMY;
-
 
 func is_playable() -> bool:
 	return faction == Faction.PLAYER;
 
-
 func is_neutral() -> bool:
 	return faction == Faction.NEUTRAL;
 
-
 func duplicate_data() -> CharacterState:
 	return duplicate(true);
-
 
 func _set_sanity(value: int) -> void:
 	current_sanity = clamp(value, 0, max_sanity)
 	sanity_changed.emit(current_sanity)
 
-
 func _set_experience(value: int) -> void:
 	experience = max(value, 0)
-
 	if experience >= next_level_experience:
 		experience -= next_level_experience
 		level += 1
 		level_changed.emit(level)
-
 	experience_changed.emit(experience)
-
 
 func get_sanity_state() -> SanityState:
 	var sanity := (float(current_sanity) / max_sanity) * 100.0
-	
 	if sanity >= 80:
 		return SanityState.CALM
 	elif sanity >= 60:
@@ -124,11 +101,9 @@ func get_sanity_state() -> SanityState:
 	else:
 		return SanityState.DISSOCIATED
 
-
 func apply_skill_effect(skill: Skill) -> void:
 	if skill == null:
 		return
-	
 	var mods: Dictionary = {}
 	if skill.effect_mods != null:
 		for k:String in skill.effect_mods.keys():
@@ -136,7 +111,7 @@ func apply_skill_effect(skill: Skill) -> void:
 				continue
 			mods[k] = skill.effect_mods[k]
 	
-	## Direct friendly effects
+	# -- Direct friendly effects
 	if skill.duration_turns <= 0 and mods.size() > 0:
 		for k: String in mods.keys():
 			match k:
@@ -144,9 +119,8 @@ func apply_skill_effect(skill: Skill) -> void:
 					current_sanity = min(current_sanity + int(mods[k]), max_sanity)
 				"current_health":
 					current_health = min(current_health + int(mods[k]), max_health)
-
 	
-	## Passive mods effect, if any
+	# -- Passive mods effect, if any
 	if mods.size() > 0 and skill.duration_turns > 0:
 		var effect := {
 			"id": skill.skill_id,
@@ -156,8 +130,8 @@ func apply_skill_effect(skill: Skill) -> void:
 			"tooltip" : skill.effect_tooltip
 		}
 		active_effects.append(effect)
-
-	## DoT effect if skill have one
+	
+	# -- DoT effect if skill have one
 	if skill.effect_mods != null and skill.effect_mods.has("dot_tick_damage"):
 		var dot := {
 			"id": str(skill.skill_id) + "_dot",
@@ -166,13 +140,12 @@ func apply_skill_effect(skill: Skill) -> void:
 		}
 
 		
-		## If we want stacking effects instead of refresh duration, uncomment this:
+		# NOTE: This refreshes DoT duretion. If we want stacking effects instead of refresh duration, uncomment this:
 		for i in range(active_effects.size() - 1, -1, -1):
 			if active_effects[i].get("id", "") == dot["id"]:
 				active_effects.remove_at(i)
 
 		active_effects.append(dot)
-
 
 func get_effective_movement() -> int:
 	var base: int = movement
@@ -185,7 +158,7 @@ func get_effective_movement() -> int:
 
 	return max(0, base + bonus)
 
-## Use signal?
+# NOTE: Use signal?
 #func apply_damage(amount: int) -> void:
 #	amount = int(amount)
 #	if amount <= 0:
