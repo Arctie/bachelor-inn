@@ -22,7 +22,9 @@ func tick(blackboard: BTBlackboard) -> BTNode.Status:
 	
 	if closest == null:
 		return BTNode.Status.FAILURE
-
+	
+	# -- Pathfinding goes here
+	
 	# Find reachable move tile closest to the target
 	var moves := MoveGenerator.generate(unit, state)
 	var best_move: Move = null
