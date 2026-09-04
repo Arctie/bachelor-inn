@@ -72,7 +72,7 @@ var pause_menu: PauseMenu
 var _level_complete : bool = false
 var level_has_victory_trigger: bool = false
 var has_window_open : bool = false
-
+var mission_context: MissionContext = MissionContext.new()
 
 var selected_unit: Character = null
 var last_selected_unit: Character = null
@@ -1109,7 +1109,8 @@ func MoveSingleAI() -> void:
 	if currentEnemy != null:
 		var curEnemyPos : NullablePosition = NullablePosition.new(currentEnemy.state.grid_position)
 		if current_state.has_enemy_moves(curEnemyPos):
-			var move : Command = ai.choose_best_move(current_state, 3, currentEnemy);
+			#var move : Command = ai.choose_best_move(current_state, 3, currentEnemy); ## Old AI move gen
+			var move: Command = AIController.choose_move(currentEnemy, current_state, mission_context)
 			moves_stack.append(move);
 			current_state = current_state.apply_move(move, true);
 					
