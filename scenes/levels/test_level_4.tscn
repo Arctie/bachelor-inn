@@ -95,6 +95,7 @@ region_rect = Rect2(0, 0, 32, 32)
 mouse_filter = 2
 
 [node name="BattleLog" type="Label" parent="." unique_id=840436049]
+visible = false
 offset_left = 902.0
 offset_top = 20.0
 offset_right = 1144.0

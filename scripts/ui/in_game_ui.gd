@@ -92,11 +92,11 @@ func _update_objective_label() -> void:
 	if objectives == null:
 		objective_label.text = ""
 		return
-	var lines: Array[String] =[]
+	#var lines: Array[String] =[]
 	for o in objectives:
-		var prefix: String = "V" if o.is_complete else "."
-		lines.append(prefix + o.display_text)
-	objective_label.text = "\n".join(lines)
+		var prefix: String = " - V" if o.is_complete else ""
+		#lines.append(prefix + o.display_text)
+		objective_label.text = ("Objective: " + o.display_text + prefix)
 
 #adds character preview scene to Vbox
 func add_character_preview(character: Character) -> void:

@@ -82,15 +82,6 @@ region_rect = Rect2(0, 0, 32, 32)
 [node name="TurnTransition" parent="." unique_id=2040840352 instance=ExtResource("7_ygto3")]
 mouse_filter = 2
 
-[node name="BattleLog" type="Label" parent="." unique_id=840436049]
-offset_left = 902.0
-offset_top = 20.0
-offset_right = 1144.0
-offset_bottom = 660.0
-text = "Objective: Defeat all enemies
-"
-autowrap_mode = 2
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1468916992]
 environment = ExtResource("9_85lyy")
 

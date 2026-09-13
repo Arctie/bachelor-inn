@@ -40,6 +40,9 @@ data = {
 "cells": PackedInt32Array(2, 2, 1048576, 2, 3, 1048576, 3, 3, 1048576, 3, 2, 1048576)
 }
 
+[node name="BattleLog" parent="." index="9" unique_id=840436049]
+visible = false
+
 [node name="Lamp" parent="Lights" parent_id_path=PackedInt32Array(38605441) index="0" unique_id=286206317]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.315441, 4.1101394, -19.744253)
 visible = true
