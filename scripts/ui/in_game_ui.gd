@@ -8,7 +8,8 @@ const RIBBON: PackedScene = preload("res://scenes/userinterface/Level/ribbon.tsc
 @onready var enemy_stats: EnemyStatsUI = %Enemy_Stats
 var previews: Dictionary[Character, CharacterPreview] = {}
 @onready var ribbon: Ribbon = %Ribbon
-
+@onready var objective_label: Label = $ObjectiveLabel
+var mission_text: String = ""
 
 #build all stats into a dictionary for use in the sub UI items
 func build_character_stats(character: Character) -> Dictionary:
@@ -47,7 +48,6 @@ func build_enemy_Stats(character: Character) -> Dictionary:
 func _ready() -> void:
 	add_to_group("ui_controller")
 
-
 func _clear_previews() -> void:
 	print("cleared previews")
 	for p: CharacterPreview in previews.values():
@@ -84,8 +84,19 @@ func _connect_to_level(level: Node) -> void:
 	ribbon.skill_pressed.connect(level._on_ribbon_skill_pressed)
 	#level.enemy_deselected.connect(_on_enemy_deselected)
 	_on_party_updated(level.characters)
+	_update_objective_label()
 	ribbon.hide()
 
+func _update_objective_label() -> void:
+	var objectives := get_tree().get_nodes_in_group("objectives")
+	if objectives == null:
+		objective_label.text = ""
+		return
+	var lines: Array[String] =[]
+	for o in objectives:
+		var prefix: String = "V" if o.is_complete else "."
+		lines.append(prefix + o.display_text)
+	objective_label.text = "\n".join(lines)
 
 #adds character preview scene to Vbox
 func add_character_preview(character: Character) -> void:

@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://dnpndvvrnj26q" path="res://scripts/stats/character_state.gd" id="11_rqvaf"]
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="12_h4l6e"]
 [ext_resource type="PackedScene" uid="uid://cirnwlc7so3aq" path="res://scenes/Characters/Enemy/Ghost_Enemy2.tscn" id="13_rfi1q"]
+[ext_resource type="PackedScene" uid="uid://c5b1wt1vdugfg" path="res://scenes/MissionObjectives/objective_kill_all.tscn" id="14_rqvaf"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_2lct5"]
 density = 8.0
@@ -99,7 +100,8 @@ data = {
 visible = true
 
 [node name="BattleLog" parent="." index="10" unique_id=840436049]
-text = "Objective: Kill the monsters
+visible = false
+text = "Objective: Do the thing
 "
 
 [node name="Lamp" parent="Lights" parent_id_path=PackedInt32Array(38605441) index="0" unique_id=286206317]
@@ -187,3 +189,5 @@ state = SubResource("Resource_rfi1q")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0.5, 3)
 data = SubResource("Resource_rqvaf")
 state = SubResource("Resource_h4l6e")
+
+[node name="ObjectiveKillAll" parent="MissionObjective" parent_id_path=PackedInt32Array(327276810) index="0" unique_id=1411412953 instance=ExtResource("14_rqvaf")]
