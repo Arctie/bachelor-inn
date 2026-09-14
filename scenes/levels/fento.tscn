@@ -15,12 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://cirnwlc7so3aq" path="res://scenes/Characters/Enemy/Ghost_Enemy2.tscn" id="13_rfi1q"]
 [ext_resource type="PackedScene" uid="uid://c5b1wt1vdugfg" path="res://scenes/MissionObjectives/objective_kill_all.tscn" id="14_rqvaf"]
 
-[sub_resource type="FogMaterial" id="FogMaterial_2lct5"]
-density = 8.0
-albedo = Color(0, 0, 0, 1)
-height_falloff = 0.0030443608
-edge_fade = 0.42870885
-
 [sub_resource type="Resource" id="Resource_n5yy2"]
 script = ExtResource("10_rfi1q")
 unit_name = "Bird"
@@ -50,6 +44,12 @@ metadata/_custom_type_script = "uid://cfb66ehlpe84n"
 script = ExtResource("11_rqvaf")
 faction = 1
 metadata/_custom_type_script = "uid://dnpndvvrnj26q"
+
+[sub_resource type="FogMaterial" id="FogMaterial_2lct5"]
+density = 8.0
+albedo = Color(0, 0, 0, 1)
+height_falloff = 0.0030443608
+edge_fade = 0.42870885
 
 [node name="FentoLevel" unique_id=557424311 instance=ExtResource("1_bwofp")]
 level_name = "first fen edition"
@@ -99,11 +99,6 @@ data = {
 [node name="Cursor" parent="." index="8" unique_id=791973269]
 visible = true
 
-[node name="BattleLog" parent="." index="10" unique_id=840436049]
-visible = false
-text = "Objective: Do the thing
-"
-
 [node name="Lamp" parent="Lights" parent_id_path=PackedInt32Array(38605441) index="0" unique_id=286206317]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.662776, 0.81837225, 0.08767605)
 light_color = Color(1, 0.8392157, 0.5529412, 1)
@@ -136,8 +131,23 @@ spot_angle = 15.399274
 [node name="FireParticle" parent="Particles" parent_id_path=PackedInt32Array(194722830) index="0" unique_id=597087587 instance=ExtResource("2_4unoq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0176532, 0.5142578, -1.3080425)
 
-[node name="CameraSettings" parent="." index="17" unique_id=2146881514]
+[node name="CameraSettings" parent="." index="16" unique_id=2146881514]
 visible = false
+
+[node name="Character" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="0" unique_id=159367408 instance=ExtResource("9_bgqgo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8467233, 0.5, -7.381399)
+data = SubResource("Resource_n5yy2")
+state = SubResource("Resource_8n3l6")
+
+[node name="Character2" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="1" unique_id=1710656175 instance=ExtResource("9_bgqgo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.153276, 0.5, -11.381399)
+data = SubResource("Resource_bgqgo")
+state = SubResource("Resource_rfi1q")
+
+[node name="Ghost_Enemy" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="2" unique_id=1339368304 instance=ExtResource("13_rfi1q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0.5, 3)
+data = SubResource("Resource_rqvaf")
+state = SubResource("Resource_h4l6e")
 
 [node name="HouseTest" parent="." index="19" unique_id=644969375 instance=ExtResource("3_37ajb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.406776, 0, 1.0393695)
@@ -174,20 +184,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.6081, -2.1946487, -8.23557
 [node name="StateMachine" type="Node" parent="." index="22" unique_id=299474275]
 script = ExtResource("8_baojg")
 metadata/_custom_type_script = "uid://bik6shmmal220"
-
-[node name="Character" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="0" unique_id=159367408 instance=ExtResource("9_bgqgo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8467233, 0.5, -7.381399)
-data = SubResource("Resource_n5yy2")
-state = SubResource("Resource_8n3l6")
-
-[node name="Character2" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="1" unique_id=1710656175 instance=ExtResource("9_bgqgo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.153276, 0.5, -11.381399)
-data = SubResource("Resource_bgqgo")
-state = SubResource("Resource_rfi1q")
-
-[node name="Ghost_Enemy" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="2" unique_id=1339368304 instance=ExtResource("13_rfi1q")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0.5, 3)
-data = SubResource("Resource_rqvaf")
-state = SubResource("Resource_h4l6e")
 
 [node name="ObjectiveKillAll" parent="MissionObjective" parent_id_path=PackedInt32Array(327276810) index="0" unique_id=1411412953 instance=ExtResource("14_rqvaf")]
