@@ -30,7 +30,7 @@ var levels: Array[LevelEntry];
 var current_level_index: int = 0;
 
 ## Level index into levels array
-var battle_log: Label;
+#var battle_log: Label;
 
 ## Global UI Scale
 var ui_scale: float = 1.0;#2.4;

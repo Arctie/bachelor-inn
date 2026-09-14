@@ -56,6 +56,7 @@ func _move_along_path(level: Node, delta: float) -> void:
 		level.selected_unit.position = target
 		level.animation_path.pop_front()
 		if level.animation_path.is_empty():
+			AudioManager2d.stop_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
 			_move_sound_playing = false
 	else:
 		level.selected_unit.position += dir.normalized() * step
@@ -82,6 +83,7 @@ func _process_next_move(level: Node) -> void:
 		var cast: CastSkill = level.active_move
 		if cast.skill != null and cast.skill.audio_cast != null:
 			level.selected_unit.audio_player.stream = cast.skill.audio_cast
+			AudioManager2d.stop_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
 			level.selected_unit.audio_player.play()
 		await level.combat_vfx.play_skill(level.active_move.result)
 		if _cancelled:
@@ -93,6 +95,7 @@ func _process_next_move(level: Node) -> void:
 			print("Weapon audio check - weapon: ", weapon, " audio: ", weapon.audio_attack if weapon else "null")
 			if weapon != null and weapon.audio_attack != null:
 				level.selected_unit.audio_player.stream = weapon.audio_attack
+				AudioManager2d.stop_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
 				level.selected_unit.audio_player.play()
 				print("Playing weapon audio")
 		else:

@@ -49,7 +49,7 @@ func prepare(state : GameState, simulate_only: bool = false) -> void:
 	if simulate_only == false:
 		@warning_ignore("integer_division")
 		if (randi_range(0,100) < (aggressor.data.focus / 2) + weapon_crit):
-			Main.battle_log.text = ("Critical hit!\n") + Main.battle_log.text;
+			#Main.battle_log.text = ("Critical hit!\n") + Main.battle_log.text;
 			print("Critical hit!");
 			result.was_critical = true;
 			attack_strength *= 2;
