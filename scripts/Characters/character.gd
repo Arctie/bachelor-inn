@@ -104,6 +104,7 @@ func play(anim : SpriteAnim) -> void:
 
 
 func pause_anim() -> void:
+	audio_player.stop()
 	play(idle_animation)
 
 
@@ -271,7 +272,11 @@ func _process(delta: float) -> void:
 func move_to(pos: Vector3i, simulate_only: bool = false) -> void:
 	if simulate_only == false:
 		Main.level.occupancy_map.set_cell_item(state.grid_position, GridMap.INVALID_CELL_ITEM);
-	
+		if data.audio_move != null:
+			print("Playing move_to audio.")
+			audio_player.stream = data.audio_move
+			audio_player.play()
+		
 	state.is_alive = true;
 	state.grid_position = pos;
 	state.is_moved = true;
@@ -302,6 +307,12 @@ func reset() -> void:
 func apply_damage(amount: int, simulate_only: bool = false, 
 	_source: Character = null, _label: String = "") -> bool:
 	amount = int(amount)
+	#var c: Character = _source
+	#if c.state.weapon.audio_attack != null:
+			#c.audio_player.stream = c.state.weapon.audio_attack
+			#print("Playing weapon audio: ", c.state.weapon.audio_attack)
+			##level.selected_unit.audio_player.stop()
+			#c.audio_player.play()
 	if amount <= 0:
 		return false
 	

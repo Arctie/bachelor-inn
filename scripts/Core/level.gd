@@ -24,6 +24,8 @@ signal character_died(character: Character)
 @onready var battle_log: Label = $BattleLog
 @onready var combat_vfx : CombatVFXController = $CombatVFXController
 @export var level_name :String
+@export var level_music: AudioStream
+
 var ai_controller: AIController = AIController.new()
 var terrain_grid : Grid
 var path_grid : Grid

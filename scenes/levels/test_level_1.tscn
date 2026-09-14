@@ -2,9 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://bu3kvc2qxcq2w" path="res://scenes/levels/LevelTemplate.tscn" id="1_mq16p"]
 [ext_resource type="PackedScene" uid="uid://bajx21wdflkf8" path="res://scenes/grid_items/chest.tscn" id="2_lw4g3"]
-[ext_resource type="AudioStream" uid="uid://coi7gb4k867j2" path="res://audio/Effects/Characters/Bird_take_hit.wav" id="3_mxmev"]
+[ext_resource type="AudioStream" uid="uid://b67e003o351lb" path="res://audio/Music/260216themeWIP.wav" id="2_ruqf1"]
 [ext_resource type="PackedScene" uid="uid://drpd1d805rfy5" path="res://scenes/Characters/Enemy/bird2.tscn" id="3_vbfgb"]
-[ext_resource type="AudioStream" uid="uid://d1ncrot3vanmj" path="res://audio/Effects/Characters/Bird_on_death.wav" id="4_0sxqw"]
 [ext_resource type="Script" uid="uid://cfb66ehlpe84n" path="res://scripts/stats/character_data.gd" id="4_g58ai"]
 [ext_resource type="Script" uid="uid://dnpndvvrnj26q" path="res://scripts/stats/character_state.gd" id="5_vbfgb"]
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="6_lxfn4"]
@@ -36,6 +35,7 @@ bt_profile = 1
 metadata/_custom_type_script = "uid://dnpndvvrnj26q"
 
 [node name="TestLevel1" unique_id=656823534 instance=ExtResource("1_mq16p")]
+level_music = ExtResource("2_ruqf1")
 
 [node name="TerrainGrid" parent="." index="0" unique_id=1846160155]
 data = {
@@ -63,8 +63,6 @@ visible = true
 
 [node name="Bird" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="0" unique_id=159367408 instance=ExtResource("3_vbfgb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.5, -5)
-audio_hurt = ExtResource("3_mxmev")
-audio_death = ExtResource("4_0sxqw")
 data = SubResource("Resource_lxfn4")
 state = SubResource("Resource_e2q1c")
 
@@ -72,7 +70,6 @@ state = SubResource("Resource_e2q1c")
 
 [node name="Ghost_Enemy" parent="MissionObjective" parent_id_path=PackedInt32Array(327276810) index="1" unique_id=1339368304 instance=ExtResource("8_e2q1c")]
 transform = Transform3D(1, 0, 0, 0, 0.9996193, 0.027590154, 0, -0.027590154, 0.9996193, 13, 0.5, -5)
-audio_move = null
 data = SubResource("Resource_ruqf1")
 state = SubResource("Resource_ckkav")
 

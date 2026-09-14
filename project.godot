@@ -32,6 +32,7 @@ Event="*res://scripts/Unused/event.gd"
 WeaponRegistry="*res://scripts/stats/weapon_registry.gd"
 SkillRegistry="*res://scripts/stats/skillregistry.gd"
 MonsterNames="*uid://duran11dt4kk1"
+AudioManager2d="*uid://c8lofxbttw74k"
 
 [debug]
 

@@ -2,7 +2,7 @@ extends Node3D
 
 ## Reference to the World node
 ## Doing this in main.gd
-#@onready var world: Node3D = $World;
+@export var main_menu_music: AudioStream
 
 ## Reference to the GUI
 @onready var gui: Control = $UI;
@@ -28,7 +28,7 @@ var _slot_pending_overwrite: int = -1
 func _ready() -> void:
 	print(OS.get_data_dir())
 	add_to_group("main_menu")
-	
+	AudioManager2d.play_music(MusicTrack.TRACK_TYPE.MAIN_MENU_THEME, 1.0)
 	#Main.world = world;
 	#Main.levels = levels_order.levels; <-- Done in main.gd _ready()
 	#Main.camera_controller = camera_controller;

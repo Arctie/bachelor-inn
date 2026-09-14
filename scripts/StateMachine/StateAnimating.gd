@@ -71,22 +71,20 @@ func _process_next_move(level: Node) -> void:
 	level.active_move.prepare(level.game_state)
 	
 	if level.active_move is CastSkill:
-		var cast: CastSkill = level.active_move
-		if cast.skill != null and cast.skill.audio_cast != null:
-			level.selected_unit.audio_player.stream = cast.skill.audio_cast
-			print("Playign skill audio: ", cast.skill.audio_cast)
-			#level.selected_unit.audio_player.stop()
-			level.selected_unit.audio_player.play()
+		# play used skill sound here
 		await level.combat_vfx.play_skill(level.active_move.result)
 		if _cancelled:
 			return
 	else:
-		# NOTE: Audio attack plays here regardless of attack or movement - not good
-		if level.selected_unit.state.weapon.audio_attack != null:
-			level.selected_unit.audio_player.stream = level.selected_unit.state.weapon.audio_attack
-			print("Playing weapon audio: ", level.selected_unit.state.weapon.audio_attack)
-			#level.selected_unit.audio_player.stop()
-			level.selected_unit.audio_player.play()
+		# Play weapon sound here
+		if level.active_move is Attack:
+			var weapon: Weapon = level.selected_unit.state.weapon
+			if weapon != null and weapon.audio_attack != null:
+				level.selected_unit.audio_player.stream = weapon.audio_attack
+				level.selected_unit.audio_player.play()
+		else:
+			AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
+			#AudioManager2d.play_music(MusicTrack.TRACK_TYPE.MAIN_MENU_THEME, 1.0)
 		await level.combat_vfx.play_attack(level.active_move.result)
 		if _cancelled:
 			return

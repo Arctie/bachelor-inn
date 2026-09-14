@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://c8lofxbttw74k"]
+
+[ext_resource type="Script" uid="uid://nfowf4ddst6x" path="res://scripts/Audio/audio_manager_2d.gd" id="1_6jxb6"]
+[ext_resource type="Script" uid="uid://w5q38ao5gqii" path="res://scripts/Audio/sound_effect_settings.gd" id="2_5frf8"]
+[ext_resource type="AudioStream" uid="uid://m1ijwg4l7qht" path="res://audio/Effects/Weapons/SwordAttack.wav" id="3_ggfqn"]
+[ext_resource type="AudioStream" uid="uid://cp4i5p8iueiig" path="res://audio/Effects/Weapons/BowAttack.wav" id="4_2w1uh"]
+[ext_resource type="Script" uid="uid://5e6oipqm2ai3" path="res://scripts/Audio/music_settings.gd" id="4_887uv"]
+[ext_resource type="AudioStream" uid="uid://b67e003o351lb" path="res://audio/Music/260216themeWIP.wav" id="5_2w1uh"]
+[ext_resource type="AudioStream" uid="uid://dhh0v4l6b2lfn" path="res://audio/Effects/Characters/Footsteps_ running.wav" id="5_p8gr7"]
+
+[sub_resource type="Resource" id="Resource_887uv"]
+script = ExtResource("2_5frf8")
+type = 1
+sound_effect = ExtResource("3_ggfqn")
+metadata/_custom_type_script = "uid://w5q38ao5gqii"
+
+[sub_resource type="Resource" id="Resource_riki2"]
+script = ExtResource("2_5frf8")
+type = 2
+sound_effect = ExtResource("4_2w1uh")
+metadata/_custom_type_script = "uid://w5q38ao5gqii"
+
+[sub_resource type="Resource" id="Resource_vvn5r"]
+script = ExtResource("2_5frf8")
+type = 6
+sound_effect = ExtResource("5_p8gr7")
+metadata/_custom_type_script = "uid://w5q38ao5gqii"
+
+[sub_resource type="Resource" id="Resource_p8gr7"]
+script = ExtResource("4_887uv")
+track_type = 1
+stream = ExtResource("5_2w1uh")
+metadata/_custom_type_script = "uid://5e6oipqm2ai3"
+
+[node name="AudioManager" type="Node2D" unique_id=400505289]
+script = ExtResource("1_6jxb6")
+sound_effects = Array[ExtResource("2_5frf8")]([SubResource("Resource_887uv"), SubResource("Resource_riki2"), SubResource("Resource_vvn5r")])
+music_tracks = Array[ExtResource("4_887uv")]([SubResource("Resource_p8gr7")])
