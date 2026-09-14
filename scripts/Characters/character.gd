@@ -12,6 +12,11 @@ class_name Character
 @export var run_down_animation : SpriteAnim
 @export var idle_animation : SpriteAnim
 
+@export_category("Audio")
+@export var audio_hurt: AudioStream
+@export var audio_death: AudioStream
+@export var audio_move: AudioStream
+
 @export_category("UI")
 @export var portrait : Texture2D
 @export var portrait_big : Texture2D

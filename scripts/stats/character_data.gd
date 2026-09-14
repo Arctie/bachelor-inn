@@ -62,7 +62,10 @@ enum Personality
 @export var speed : int = 4
 @export var focus : int = 4
 @export var endurance : int = 4
-
+#region end
+@export var audio_voice_selected: AudioStream
+@export var audio_voice_attacking: AudioStream
+@export var audio_voice_spawned_in: AudioStream
 
 func duplicate_data() -> CharacterData:
 	return duplicate(true);
