@@ -16,6 +16,7 @@ class_name Character
 @export var audio_hurt: AudioStream
 @export var audio_death: AudioStream
 @export var audio_move: AudioStream
+@onready var audio_player: AudioStreamPlayer3D = $AudioPlayer
 
 @export_category("UI")
 @export var portrait : Texture2D
@@ -386,3 +387,21 @@ func get_default_weapon_id() -> String:
 			return "bow_basic";
 		_:
 			return "unarmed"
+
+func play_audio_hurt() -> void:
+	if audio_hurt == null:
+		return
+	audio_player.stream = audio_hurt
+	audio_player.play()
+
+func play_audio_death() -> void:
+	if audio_death == null:
+		return
+	audio_player.stream = audio_death
+	audio_player.play()
+
+func play_audio_move() -> void:
+	if audio_move == null:
+		return
+	audio_player.stream = audio_move
+	audio_player.play()

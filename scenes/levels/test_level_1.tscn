@@ -2,8 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://bu3kvc2qxcq2w" path="res://scenes/levels/LevelTemplate.tscn" id="1_mq16p"]
 [ext_resource type="PackedScene" uid="uid://bajx21wdflkf8" path="res://scenes/grid_items/chest.tscn" id="2_lw4g3"]
+[ext_resource type="AudioStream" uid="uid://coi7gb4k867j2" path="res://audio/Effects/Characters/Bird_take_hit.wav" id="3_mxmev"]
 [ext_resource type="PackedScene" uid="uid://drpd1d805rfy5" path="res://scenes/Characters/Enemy/bird2.tscn" id="3_vbfgb"]
+[ext_resource type="AudioStream" uid="uid://d1ncrot3vanmj" path="res://audio/Effects/Characters/Bird_on_death.wav" id="4_0sxqw"]
 [ext_resource type="Script" uid="uid://cfb66ehlpe84n" path="res://scripts/stats/character_data.gd" id="4_g58ai"]
+[ext_resource type="AudioStream" uid="uid://m5rsyo1o2ulq" path="res://audio/Effects/Characters/Footsteps_walking.wav" id="5_r6cmx"]
 [ext_resource type="Script" uid="uid://dnpndvvrnj26q" path="res://scripts/stats/character_state.gd" id="5_vbfgb"]
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="6_lxfn4"]
 [ext_resource type="Resource" uid="uid://dn2eahj1aq85s" path="res://Data/Weapons/bow_basic.tres" id="7_vbfgb"]
@@ -61,6 +64,9 @@ visible = true
 
 [node name="Bird" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="0" unique_id=159367408 instance=ExtResource("3_vbfgb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.5, -5)
+audio_hurt = ExtResource("3_mxmev")
+audio_death = ExtResource("4_0sxqw")
+audio_move = ExtResource("5_r6cmx")
 data = SubResource("Resource_lxfn4")
 state = SubResource("Resource_e2q1c")
 

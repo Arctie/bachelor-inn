@@ -23,6 +23,7 @@ enum AoEShape { NONE, SQUARE, CROSS, DIAMOND, LINE, WALL }
 
 @export var should_play_vfx : bool = true
 @export var Vfx_Scene : PackedScene
+@export var audio_cast: AudioStream
 
 
 @export_subgroup("Stats")

@@ -80,4 +80,4 @@ texture = ExtResource("5_1qt5x")
 [node name="PlaceholderSprite" type="Sprite3D" parent="." unique_id=166425312]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0662484, 0)
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1204318081]
+[node name="AudioPlayer" type="AudioStreamPlayer3D" parent="." unique_id=1204318081]
