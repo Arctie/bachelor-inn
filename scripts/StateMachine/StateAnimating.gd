@@ -60,8 +60,6 @@ func _move_along_path(level: Node, delta: float) -> void:
 			level.selected_unit.play(level.selected_unit.run_right_animation)
 		elif dir.x < 0:
 			level.selected_unit.play(level.selected_unit.run_left_animation)
-	
-	level.selected_unit.play_audio_move()
 
 
 func _process_next_move(level: Node) -> void:
@@ -77,15 +75,17 @@ func _process_next_move(level: Node) -> void:
 		if cast.skill != null and cast.skill.audio_cast != null:
 			level.selected_unit.audio_player.stream = cast.skill.audio_cast
 			print("Playign skill audio: ", cast.skill.audio_cast)
+			#level.selected_unit.audio_player.stop()
 			level.selected_unit.audio_player.play()
 		await level.combat_vfx.play_skill(level.active_move.result)
 		if _cancelled:
 			return
 	else:
-		# NOTE: Play attack audio here
+		# NOTE: Audio attack plays here regardless of attack or movement - not good
 		if level.selected_unit.state.weapon.audio_attack != null:
 			level.selected_unit.audio_player.stream = level.selected_unit.state.weapon.audio_attack
 			print("Playing weapon audio: ", level.selected_unit.state.weapon.audio_attack)
+			#level.selected_unit.audio_player.stop()
 			level.selected_unit.audio_player.play()
 		await level.combat_vfx.play_attack(level.active_move.result)
 		if _cancelled:

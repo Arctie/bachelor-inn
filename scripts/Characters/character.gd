@@ -12,10 +12,6 @@ class_name Character
 @export var run_down_animation : SpriteAnim
 @export var idle_animation : SpriteAnim
 
-@export_category("Audio")
-@export var audio_hurt: AudioStream
-@export var audio_death: AudioStream
-@export var audio_move: AudioStream
 @onready var audio_player: AudioStreamPlayer3D = $AudioPlayer
 
 @export_category("UI")
@@ -390,20 +386,20 @@ func get_default_weapon_id() -> String:
 			return "unarmed"
 
 func play_audio_hurt() -> void:
-	if audio_hurt == null:
+	if data.audio_hurt == null:
 		return
-	audio_player.stream = audio_hurt
+	audio_player.stream = data.audio_hurt
 	audio_player.play()
 
 func play_audio_death() -> void:
-	if audio_death == null:
+	if data.audio_death == null:
 		return
-	audio_player.stream = audio_death
+	audio_player.stream = data.audio_death
 	audio_player.play()
 
 func play_audio_move() -> void:
-	if audio_move == null:
+	if data.audio_move == null:
 		return
-	audio_player.stream = audio_move
-	print("Playing audio: ", audio_move)
+	audio_player.stream = data.audio_move
+	print("Playing audio: ", data.audio_move)
 	audio_player.play()
