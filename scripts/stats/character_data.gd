@@ -66,6 +66,7 @@ enum Personality
 @export var audio_voice_selected: AudioStream
 @export var audio_voice_attacking: AudioStream
 @export var audio_voice_spawned_in: AudioStream
+#@export var audio_move: AudioStream
 
 func duplicate_data() -> CharacterData:
 	return duplicate(true);

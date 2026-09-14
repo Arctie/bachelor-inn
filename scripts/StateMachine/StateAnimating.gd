@@ -60,6 +60,8 @@ func _move_along_path(level: Node, delta: float) -> void:
 			level.selected_unit.play(level.selected_unit.run_right_animation)
 		elif dir.x < 0:
 			level.selected_unit.play(level.selected_unit.run_left_animation)
+	
+	level.selected_unit.play_audio_move()
 
 
 func _process_next_move(level: Node) -> void:

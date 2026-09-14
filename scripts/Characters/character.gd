@@ -326,6 +326,7 @@ func apply_damage(amount: int, simulate_only: bool = false,
 	if not simulate_only and not killed:
 		Main.level.emit_signal("character_stats_changed", self)
 	if killed:
+		# NOTE: play_audio_death()
 		die(simulate_only)
 
 	return killed
@@ -404,4 +405,5 @@ func play_audio_move() -> void:
 	if audio_move == null:
 		return
 	audio_player.stream = audio_move
+	print("Playing audio: ", audio_move)
 	audio_player.play()
