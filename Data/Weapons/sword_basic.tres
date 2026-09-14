@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="Weapon" load_steps=2 format=3 uid="uid://cegp3wmw3wytm"]
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://cegp3wmw3wytm"]
 
 [ext_resource type="Script" uid="uid://hhe2ydney01y" path="res://scripts/stats/weapon.gd" id="1_ni1nj"]
+[ext_resource type="AudioStream" uid="uid://m1ijwg4l7qht" path="res://audio/Effects/Weapons/SwordAttack.wav" id="1_qvaoj"]
 
 [resource]
 script = ExtResource("1_ni1nj")
 weapon_id = "sword_basic"
 weapon_name = "Basic Training Sword"
 weapon_tooltip = "A fairly ok sword that fits ok in the hand."
+auido_attack = ExtResource("1_qvaoj")
 damage_modifier = 4
 is_melee = true
 metadata/_custom_type_script = "uid://hhe2ydney01y"
