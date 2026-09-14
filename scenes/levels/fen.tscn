@@ -22,6 +22,7 @@
 [ext_resource type="Script" uid="uid://dnpndvvrnj26q" path="res://scripts/stats/character_state.gd" id="20_cpycw"]
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="21_0o4ye"]
 [ext_resource type="PackedScene" uid="uid://cirnwlc7so3aq" path="res://scenes/Characters/Enemy/Ghost_Enemy2.tscn" id="22_b35ld"]
+[ext_resource type="PackedScene" uid="uid://dr3w65v4wgubf" path="res://scenes/MissionObjectives/objective_reach_tile.tscn" id="23_cpycw"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_2ubu0"]
 density = 8.0
@@ -250,7 +251,7 @@ turbulence_influence_max = 0.18800001
 
 [sub_resource type="Resource" id="Resource_eksy4"]
 script = ExtResource("19_b35ld")
-unit_name = "Bird"
+unit_name = "Bird2"
 metadata/_custom_type_script = "uid://cfb66ehlpe84n"
 
 [sub_resource type="Resource" id="Resource_rxrsm"]
@@ -261,7 +262,7 @@ metadata/_custom_type_script = "uid://dnpndvvrnj26q"
 
 [sub_resource type="Resource" id="Resource_b35ld"]
 script = ExtResource("19_b35ld")
-unit_name = "Ghost"
+unit_name = "Ghost2"
 metadata/_custom_type_script = "uid://cfb66ehlpe84n"
 
 [sub_resource type="Resource" id="Resource_cpycw"]
@@ -271,6 +272,7 @@ metadata/_custom_type_script = "uid://dnpndvvrnj26q"
 
 [node name="FenLevel" unique_id=1364062222 instance=ExtResource("1_6w1qc")]
 level_name = "first fen edition"
+level_music = 3
 
 [node name="TerrainGrid" parent="." index="0" unique_id=1846160155]
 data = {
@@ -308,10 +310,6 @@ data = {
 transform = Transform3D(5, 0, 0, 0, -2.1855695e-07, -5, 0, 5, -2.1855695e-07, -4.908, 0.5490399, -1.017)
 visible = true
 no_depth_test = false
-
-[node name="BattleLog" parent="." index="9" unique_id=840436049]
-text = "Objective: Find the orb
-"
 
 [node name="Lamp" parent="Lights" parent_id_path=PackedInt32Array(38605441) index="0" unique_id=286206317]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.670338, 2.7036004, 2.237699)
@@ -510,7 +508,7 @@ visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.024162, 0.32331276, 5.5933323)
 visible = false
 
-[node name="CameraSettings" parent="." index="16" unique_id=2146881514]
+[node name="CameraSettings" parent="." index="15" unique_id=2146881514]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 0.34202012, 0.93969256, 0, -0.93969256, 0.34202012, 36.935585, 0, -1)
 
@@ -584,3 +582,5 @@ state = SubResource("Resource_cpycw")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0.5, -1)
 data = SubResource("Resource_b35ld")
 state = SubResource("Resource_cpycw")
+
+[node name="ObjectiveReachTile" parent="MissionObjective" parent_id_path=PackedInt32Array(327276810) index="0" unique_id=324799803 instance=ExtResource("23_cpycw")]
