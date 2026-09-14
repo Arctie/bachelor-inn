@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dus5b35y6hpwv"
+path="res://.godot/imported/Boss_Room_Action 1.wav-ed80c12ff72e574570e49bc7f2987b7a.sample"
+
+[deps]
+
+source_file="res://audio/Music/Boss_Room_Action 1.wav"
+dest_files=["res://.godot/imported/Boss_Room_Action 1.wav-ed80c12ff72e574570e49bc7f2987b7a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

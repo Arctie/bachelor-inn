@@ -3,11 +3,13 @@ class_name StateAnimating
 
 var _is_processing: bool = false
 var _cancelled: bool = false
+var _move_sound_playing: bool = false
 
 func enter(level: Node) -> void:
 	print("ENTER STATE: StateAnimating.")
 	#_cancelled = false
 	_is_processing = false
+	_move_sound_playing = false
 
 func exit(level: Node) -> void:
 	print("EXIT STATE: StateAnimating.")
@@ -42,6 +44,9 @@ func update(level: Node, delta: float) -> void:
 		_finish_animation(level)
 
 func _move_along_path(level: Node, delta: float) -> void:
+	if not _move_sound_playing:
+		AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
+		_move_sound_playing = true
 	var movement_speed: float = 8.0
 	var target: Vector3 = level.animation_path.front()
 	var dir: Vector3 = target - level.selected_unit.position
@@ -50,6 +55,8 @@ func _move_along_path(level: Node, delta: float) -> void:
 	if dir.length() <= step:
 		level.selected_unit.position = target
 		level.animation_path.pop_front()
+		if level.animation_path.is_empty():
+			_move_sound_playing = false
 	else:
 		level.selected_unit.position += dir.normalized() * step
 		if dir.z > 0:
@@ -71,7 +78,11 @@ func _process_next_move(level: Node) -> void:
 	level.active_move.prepare(level.game_state)
 	
 	if level.active_move is CastSkill:
-		# play used skill sound here
+		# Play skill sound here
+		var cast: CastSkill = level.active_move
+		if cast.skill != null and cast.skill.audio_cast != null:
+			level.selected_unit.audio_player.stream = cast.skill.audio_cast
+			level.selected_unit.audio_player.play()
 		await level.combat_vfx.play_skill(level.active_move.result)
 		if _cancelled:
 			return
@@ -79,12 +90,14 @@ func _process_next_move(level: Node) -> void:
 		# Play weapon sound here
 		if level.active_move is Attack:
 			var weapon: Weapon = level.selected_unit.state.weapon
+			print("Weapon audio check - weapon: ", weapon, " audio: ", weapon.audio_attack if weapon else "null")
 			if weapon != null and weapon.audio_attack != null:
 				level.selected_unit.audio_player.stream = weapon.audio_attack
 				level.selected_unit.audio_player.play()
+				print("Playing weapon audio")
 		else:
-			AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
-			#AudioManager2d.play_music(MusicTrack.TRACK_TYPE.MAIN_MENU_THEME, 1.0)
+			pass
+			#AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
 		await level.combat_vfx.play_attack(level.active_move.result)
 		if _cancelled:
 			return

@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="Weapon" load_steps=2 format=3 uid="uid://b3csctruxawhd"]
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://b3csctruxawhd"]
 
+[ext_resource type="AudioStream" uid="uid://cp4i5p8iueiig" path="res://audio/Effects/Weapons/BowAttack.wav" id="1_1u34p"]
 [ext_resource type="Script" uid="uid://hhe2ydney01y" path="res://scripts/stats/weapon.gd" id="1_xfdln"]
 
 [resource]
@@ -7,6 +8,7 @@ script = ExtResource("1_xfdln")
 weapon_id = "scepter_basic"
 weapon_name = "Rusty Scepter"
 weapon_tooltip = "Poorly passed down for.. some generations."
+audio_attack = ExtResource("1_1u34p")
 damage_modifier = 5
 max_range = 3
 metadata/_custom_type_script = "uid://hhe2ydney01y"

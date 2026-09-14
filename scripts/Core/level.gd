@@ -21,10 +21,10 @@ signal party_updated(characters: Array[Character])
 signal character_died(character: Character)
 #region end
 
-@onready var battle_log: Label = $BattleLog
 @onready var combat_vfx : CombatVFXController = $CombatVFXController
-@export var level_name :String
-@export var level_music: AudioStream
+@export var level_name: String
+@export var level_music: MusicTrack.TRACK_TYPE = MusicTrack.TRACK_TYPE.LEVEL_DEFAULT
+#@export var level_music: AudioStream
 
 var ai_controller: AIController = AIController.new()
 var terrain_grid : Grid
@@ -158,6 +158,7 @@ func _ready() -> void:
 	_register_patrol_paths()
 	check_aggro()
 	hide_inactive_characters()
+	_play_level_theme_music()
 	
 	await get_tree().process_frame
 	_debug_terrain()
@@ -181,8 +182,6 @@ func _set_up_grids() -> void:
 	fog_grid = Grid.new(fog_map)
 
 	Dialogic.signal_event.connect(_on_dialogic_signal)
-	Main.battle_log = battle_log
-
 
 func _place_player_units() -> void:
 	var spawn_points: Array[Vector3i] = occupancy_map.get_used_cells()
@@ -1602,3 +1601,8 @@ func _execute_teleport(portal: Teleporter, unit: Character) -> void:
 
 	select_unit(unit)
 	state_machine.transition_to(StateSelectingMove.new())
+
+
+func _play_level_theme_music() -> void:
+	AudioManager2d.stop_all_music(1.0)
+	AudioManager2d.play_music(level_music, 1.0)

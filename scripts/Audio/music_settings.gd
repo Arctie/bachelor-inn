@@ -22,7 +22,8 @@ enum TRACK_TYPE {
 	UNASSIGNED_MUSIC_TRACK,
 	MAIN_MENU_THEME,
 	LEVEL_DEFAULT,
-	LEVEL_ACTION_BOSSROOM # Add new tracks below this line, separated by commas
+	LEVEL_ACTION_BOSSROOM,
+	DARK_AMBIENT_4 # Add new tracks below this line, separated by commas
 
 }
 
