@@ -8,12 +8,16 @@
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="3_h7w2w"]
 [ext_resource type="AudioStream" uid="uid://dhh0v4l6b2lfn" path="res://audio/Effects/Footsteps_ running.wav" id="3_s6mqk"]
 [ext_resource type="PackedScene" uid="uid://b10bf6hwaqddg" path="res://scenes/Characters/Player/alfred.tscn" id="4_jwc02"]
+[ext_resource type="AudioStream" uid="uid://dow7wohp1kjyd" path="res://audio/CharacterSounds/Unit_on_selected.wav" id="4_s6mqk"]
+[ext_resource type="AudioStream" uid="uid://cm3hqys15xllp" path="res://audio/CharacterSounds/Unit_on_spawned_in.wav" id="5_wcow1"]
 
 [sub_resource type="Resource" id="Resource_d8tgh"]
 script = ExtResource("1_5gw8k")
 audio_hurt = ExtResource("2_d8tgh")
 audio_death = ExtResource("1_jwc02")
 audio_move = ExtResource("3_s6mqk")
+audio_selected = ExtResource("4_s6mqk")
+audio_spawned_in = ExtResource("5_wcow1")
 metadata/_custom_type_script = "uid://cfb66ehlpe84n"
 
 [sub_resource type="Resource" id="Resource_s6mqk"]

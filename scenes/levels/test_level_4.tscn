@@ -18,7 +18,7 @@
 
 [node name="test_level_4" type="Node3D" unique_id=656823534]
 script = ExtResource("1_us3k0")
-level_music = 4
+level_music = 3
 
 [node name="TerrainGrid" type="GridMap" parent="." unique_id=1846160155]
 unique_name_in_owner = true

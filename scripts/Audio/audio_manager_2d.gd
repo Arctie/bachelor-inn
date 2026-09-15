@@ -183,9 +183,14 @@ func stop_character_loop() -> void:
 		return
 	var loop_player: Node = active_looping_sounds["character_move"].player
 	if is_instance_valid(loop_player):
-		loop_player.stop()
-		loop_player.queue_free()
-		active_looping_sounds.erase("character_move")
+		var tween: Tween = create_tween().set_ease(Tween.EASE_IN_OUT)
+		tween.tween_property(loop_player, "volume_db", -80.0, 0.5)
+		tween.finished.connect(func() -> void:
+			if is_instance_valid(loop_player):
+				loop_player.stop()
+				loop_player.queue_free()
+				)
+	active_looping_sounds.erase("character_move")
 
 ## Changes a specific sound effect loop to a different clip index, if supported by the stream type (AudioStreamInteractive). Pass [param loop_type] for the loop to change, [param clip_index] for the target clip, and optionally [param is_final_clip] to mark this as the last clip. If is_final_clip is true, the loop will automatically stop after the clip finishes (auto-calculates duration). Follows transition rules set in the AudioStreamInteractive resource.
 func change_loop_to_clip(loop_type: SoundEffect.SOUND_EFFECT_TYPE, clip_index: int, is_final_clip: bool = false) -> void:

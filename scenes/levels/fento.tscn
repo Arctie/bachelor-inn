@@ -71,6 +71,7 @@ edge_fade = 0.42870885
 
 [node name="FentoLevel" unique_id=557424311 instance=ExtResource("1_bwofp")]
 level_name = "first fen edition"
+level_music = 4
 
 [node name="TerrainGrid2" type="GridMap" parent="." index="0" unique_id=1919496315]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
