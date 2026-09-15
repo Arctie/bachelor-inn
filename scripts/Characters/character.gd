@@ -307,12 +307,6 @@ func reset() -> void:
 func apply_damage(amount: int, simulate_only: bool = false, 
 	_source: Character = null, _label: String = "") -> bool:
 	amount = int(amount)
-	#var c: Character = _source
-	#if c.state.weapon.audio_attack != null:
-			#c.audio_player.stream = c.state.weapon.audio_attack
-			#print("Playing weapon audio: ", c.state.weapon.audio_attack)
-			##level.selected_unit.audio_player.stop()
-			#c.audio_player.play()
 	if amount <= 0:
 		return false
 	
@@ -326,6 +320,11 @@ func apply_damage(amount: int, simulate_only: bool = false,
 			#Main.level.game_state = GameState.from_level(Main.level) 	#<-- This is more robust
 			Main.level.game_state.units.append(self) 					#<-- This is cheaper
 			Main.level.occupancy_map.set_cell_item(state.grid_position, Main.level.enemy_code)
+	
+	#AudioManager2d.play_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_HURT)
+	#if data.audio_hurt != null:
+		#audio_player.stream = data.audio_hurt
+		#audio_player.play()
 	
 	## Health reduced here 
 	state.current_health = max(0, state.current_health - amount)
@@ -358,6 +357,10 @@ func flash_hit(crit : bool) -> void:
 func die(simulate_only : bool) -> void:
 	state.is_alive = false
 	if simulate_only == false:
+		#if data.audio_death != null:
+			#audio_player.stream = data.audio_death
+			#audio_player.play()
+		AudioManager2d.play_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_DEATH)
 		Main.level.emit_signal("character_stats_changed", self)
 		Main.level.emit_signal("character_died", self)
 		if state.is_playable():

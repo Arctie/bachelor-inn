@@ -7,6 +7,8 @@
 [ext_resource type="Script" uid="uid://5e6oipqm2ai3" path="res://scripts/Audio/music_settings.gd" id="4_887uv"]
 [ext_resource type="AudioStream" uid="uid://b67e003o351lb" path="res://audio/Music/260216themeWIP.wav" id="5_2w1uh"]
 [ext_resource type="AudioStream" uid="uid://dhh0v4l6b2lfn" path="res://audio/Effects/Footsteps_ running.wav" id="5_p8gr7"]
+[ext_resource type="AudioStream" uid="uid://3u8o3ahy2dfq" path="res://audio/CharacterSounds/Injured.wav" id="6_3ew24"]
+[ext_resource type="AudioStream" uid="uid://btlak07m7wp37" path="res://audio/CharacterSounds/Death_character.wav" id="7_p2pea"]
 [ext_resource type="AudioStream" uid="uid://dus5b35y6hpwv" path="res://audio/Music/Boss_Room_Action 1.wav" id="8_riki2"]
 [ext_resource type="AudioStream" uid="uid://bkeusev5jfi3" path="res://audio/Music/Dark Ambient 4.wav" id="9_vvn5r"]
 
@@ -26,6 +28,18 @@ metadata/_custom_type_script = "uid://w5q38ao5gqii"
 script = ExtResource("2_5frf8")
 type = 6
 sound_effect = ExtResource("5_p8gr7")
+metadata/_custom_type_script = "uid://w5q38ao5gqii"
+
+[sub_resource type="Resource" id="Resource_feixq"]
+script = ExtResource("2_5frf8")
+type = 4
+sound_effect = ExtResource("6_3ew24")
+metadata/_custom_type_script = "uid://w5q38ao5gqii"
+
+[sub_resource type="Resource" id="Resource_t12x6"]
+script = ExtResource("2_5frf8")
+type = 5
+sound_effect = ExtResource("7_p2pea")
 metadata/_custom_type_script = "uid://w5q38ao5gqii"
 
 [sub_resource type="Resource" id="Resource_p8gr7"]
@@ -55,5 +69,5 @@ metadata/_custom_type_script = "uid://5e6oipqm2ai3"
 
 [node name="AudioManager" type="Node2D" unique_id=400505289]
 script = ExtResource("1_6jxb6")
-sound_effects = Array[ExtResource("2_5frf8")]([SubResource("Resource_887uv"), SubResource("Resource_riki2"), SubResource("Resource_vvn5r")])
+sound_effects = Array[ExtResource("2_5frf8")]([SubResource("Resource_887uv"), SubResource("Resource_riki2"), SubResource("Resource_vvn5r"), SubResource("Resource_feixq"), SubResource("Resource_t12x6")])
 music_tracks = Array[ExtResource("4_887uv")]([SubResource("Resource_p8gr7"), SubResource("Resource_3ew24"), SubResource("Resource_p2pea"), SubResource("Resource_q5npp")])

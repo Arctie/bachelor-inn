@@ -2,7 +2,9 @@
 
 [ext_resource type="AudioStream" uid="uid://dhh0v4l6b2lfn" path="res://audio/Effects/Footsteps_ running.wav" id="1_kwl3d"]
 [ext_resource type="Script" uid="uid://cfb66ehlpe84n" path="res://scripts/stats/character_data.gd" id="1_v3n7i"]
+[ext_resource type="AudioStream" uid="uid://btlak07m7wp37" path="res://audio/CharacterSounds/Death_character.wav" id="1_wpk1a"]
 [ext_resource type="Script" uid="uid://dnpndvvrnj26q" path="res://scripts/stats/character_state.gd" id="2_fxf6a"]
+[ext_resource type="AudioStream" uid="uid://3u8o3ahy2dfq" path="res://audio/CharacterSounds/Injured.wav" id="2_mg1lp"]
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="3_kwl3d"]
 [ext_resource type="Resource" uid="uid://c8qah7yiks0t" path="res://Data/Abilities/heal_basic.tres" id="4_3b8gc"]
 [ext_resource type="Resource" uid="uid://cokhndg82vc8h" path="res://Data/Abilities/bomb_basic.tres" id="5_wpk1a"]
@@ -19,6 +21,8 @@ mind = 3
 speed = 2
 focus = 3
 endurance = 2
+audio_hurt = ExtResource("2_mg1lp")
+audio_death = ExtResource("1_wpk1a")
 audio_move = ExtResource("1_kwl3d")
 metadata/_custom_type_script = "uid://cfb66ehlpe84n"
 

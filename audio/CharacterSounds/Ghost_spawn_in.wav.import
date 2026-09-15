@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dajuikwey1t8d"
-path="res://.godot/imported/Ghost_spawn_in.wav-eb40cf1e555f7ee463f79465a157da4b.sample"
+path="res://.godot/imported/Ghost_spawn_in.wav-5db98562c38d322e6205844e31c3f002.sample"
 
 [deps]
 
-source_file="res://audio/Characters/Ghost_spawn_in.wav"
-dest_files=["res://.godot/imported/Ghost_spawn_in.wav-eb40cf1e555f7ee463f79465a157da4b.sample"]
+source_file="res://audio/CharacterSounds/Ghost_spawn_in.wav"
+dest_files=["res://.godot/imported/Ghost_spawn_in.wav-5db98562c38d322e6205844e31c3f002.sample"]
 
 [params]
 

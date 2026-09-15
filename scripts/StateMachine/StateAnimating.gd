@@ -105,6 +105,8 @@ func _process_next_move(level: Node) -> void:
 		await level.combat_vfx.play_attack(level.active_move.result)
 		if _cancelled:
 			return
+			
+	AudioManager2d.play_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_HURT)
 	level.active_move.apply_damage(level.game_state)
 	if _cancelled:
 		return

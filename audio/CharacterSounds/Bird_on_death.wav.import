@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://d1ncrot3vanmj"
-path="res://.godot/imported/Bird_on_death.wav-542e67f4f025ace79b85bd440ba698c1.sample"
+path="res://.godot/imported/Bird_on_death.wav-fa0ad4eeb8f5eef4a68bd30a57aa9bad.sample"
 
 [deps]
 
-source_file="res://audio/Characters/Bird_on_death.wav"
-dest_files=["res://.godot/imported/Bird_on_death.wav-542e67f4f025ace79b85bd440ba698c1.sample"]
+source_file="res://audio/CharacterSounds/Bird_on_death.wav"
+dest_files=["res://.godot/imported/Bird_on_death.wav-fa0ad4eeb8f5eef4a68bd30a57aa9bad.sample"]
 
 [params]
 

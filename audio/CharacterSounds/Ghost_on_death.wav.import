@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://guqkydnjqy4v"
-path="res://.godot/imported/Ghost_on_death.wav-939680660e9245ee60bf2473fa8c7fd2.sample"
+path="res://.godot/imported/Ghost_on_death.wav-7bc735505beebf3ad00c2ec238dde015.sample"
 
 [deps]
 
-source_file="res://audio/Characters/Ghost_on_death.wav"
-dest_files=["res://.godot/imported/Ghost_on_death.wav-939680660e9245ee60bf2473fa8c7fd2.sample"]
+source_file="res://audio/CharacterSounds/Ghost_on_death.wav"
+dest_files=["res://.godot/imported/Ghost_on_death.wav-7bc735505beebf3ad00c2ec238dde015.sample"]
 
 [params]
 
