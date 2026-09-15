@@ -96,6 +96,7 @@ const GAME_OVER = preload("res://scenes/states/game_over.tscn")
 const FADE_OVERLAY = preload("res://scenes/userinterface/Level/fade_to_black.tscn")
 const PAUSE_MENU = preload("res://scenes/states/pause_menu.tscn")
 const HEALTH_BAR_ENEMY := preload("res://scenes/userinterface/Level/health_bar_enemy_overhead.tscn")
+var enemy_registry: EnemyRegistry = load("res://Data/Characters/CurrentEnemyRegistry.tres")
 var portrait_pop_up: PortraitPopup
 var loot_popup : LootPopup
 var skill_loot_popup : SkillPopup
@@ -186,8 +187,8 @@ func _set_up_grids() -> void:
 func _place_player_units() -> void:
 	var spawn_points: Array[Vector3i] = occupancy_map.get_used_cells()
 	var characters_placed := 0
-	print("Loading new level, number of playable characters: ", Main.characters.size())
-	print("Level name: ", Main.level.name)
+	#print("Loading new level, number of playable characters: ", Main.characters.size())
+	#print("Level name: ", Main.level.name)
 	
 	for pos in spawn_points:
 		if get_unit_name(pos) != "00_Unit":
@@ -214,6 +215,12 @@ func _register_enemies() -> void:
 	for child in find_children("*", "Character", true, false):
 		if not child is Character or child.state == null:
 			continue
+		if child.scene_id != "":
+			if enemy_registry.enemies.has(child.scene_id):
+				var char_def: EnemyDefinitions = enemy_registry.enemies[child.scene_id]
+				if char_def != null:
+					child.data = char_def.base_data.duplicate()
+					child.state = char_def.base_state.duplicate()
 		child.camera = get_viewport().get_camera_3d()
 		child.state.grid_position = world_to_grid(child.position)
 		if not child.sanity_flipped.is_connected(_on_character_sanity_flipped):

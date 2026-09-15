@@ -6,18 +6,28 @@
 [ext_resource type="MeshLibrary" uid="uid://d1p1bflduhst1" path="res://scenes/libraries/LIB_GridMapMeshLibrary.gltf" id="2_t8ckx"]
 [ext_resource type="PackedScene" uid="uid://4qhd45gbklo" path="res://art/meshes/HouseTest.fbx" id="3_37ajb"]
 [ext_resource type="ArrayMesh" uid="uid://bw8vrn7u0v5x5" path="res://art/meshes/Grass_Mesh.res" id="5_fcqlb"]
+[ext_resource type="AudioStream" uid="uid://coi7gb4k867j2" path="res://audio/CharacterSounds/Bird_on_death.wav" id="6_04ned"]
 [ext_resource type="PackedScene" uid="uid://k7pqwlthd0ri" path="res://scenes/Development/Particles/smaller_fire.tscn" id="7_baojg"]
+[ext_resource type="AudioStream" uid="uid://d1ncrot3vanmj" path="res://audio/CharacterSounds/Bird_on_hurt.wav" id="7_q0lvr"]
 [ext_resource type="Script" uid="uid://bik6shmmal220" path="res://scripts/StateMachine/state_machine.gd" id="8_baojg"]
+[ext_resource type="AudioStream" uid="uid://dhh0v4l6b2lfn" path="res://audio/Effects/Footsteps_ running.wav" id="8_wudub"]
 [ext_resource type="PackedScene" uid="uid://drpd1d805rfy5" path="res://scenes/Characters/Enemy/bird2.tscn" id="9_bgqgo"]
+[ext_resource type="Resource" uid="uid://cegp3wmw3wytm" path="res://Data/Weapons/sword_basic.tres" id="9_h4l6e"]
 [ext_resource type="Script" uid="uid://cfb66ehlpe84n" path="res://scripts/stats/character_data.gd" id="10_rfi1q"]
 [ext_resource type="Script" uid="uid://dnpndvvrnj26q" path="res://scripts/stats/character_state.gd" id="11_rqvaf"]
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="12_h4l6e"]
 [ext_resource type="PackedScene" uid="uid://cirnwlc7so3aq" path="res://scenes/Characters/Enemy/Ghost_Enemy2.tscn" id="13_rfi1q"]
+[ext_resource type="AudioStream" uid="uid://guqkydnjqy4v" path="res://audio/CharacterSounds/Ghost_on_death.wav" id="14_k8445"]
 [ext_resource type="PackedScene" uid="uid://c5b1wt1vdugfg" path="res://scenes/MissionObjectives/objective_kill_all.tscn" id="14_rqvaf"]
+[ext_resource type="AudioStream" uid="uid://c2xfstym7vcb" path="res://audio/CharacterSounds/Ghost_on_hurt.wav" id="15_oa73t"]
+[ext_resource type="AudioStream" uid="uid://dajuikwey1t8d" path="res://audio/CharacterSounds/Ghost_spawn_in.wav" id="16_gygk5"]
 
 [sub_resource type="Resource" id="Resource_n5yy2"]
 script = ExtResource("10_rfi1q")
 unit_name = "Bird"
+audio_hurt = ExtResource("7_q0lvr")
+audio_death = ExtResource("6_04ned")
+audio_move = ExtResource("8_wudub")
 metadata/_custom_type_script = "uid://cfb66ehlpe84n"
 
 [sub_resource type="Resource" id="Resource_8n3l6"]
@@ -28,16 +38,24 @@ metadata/_custom_type_script = "uid://dnpndvvrnj26q"
 [sub_resource type="Resource" id="Resource_bgqgo"]
 script = ExtResource("10_rfi1q")
 unit_name = "Bird"
+audio_hurt = ExtResource("7_q0lvr")
+audio_death = ExtResource("6_04ned")
+audio_move = ExtResource("8_wudub")
 metadata/_custom_type_script = "uid://cfb66ehlpe84n"
 
 [sub_resource type="Resource" id="Resource_rfi1q"]
 script = ExtResource("11_rqvaf")
+weapon = ExtResource("9_h4l6e")
 faction = 1
 metadata/_custom_type_script = "uid://dnpndvvrnj26q"
 
 [sub_resource type="Resource" id="Resource_rqvaf"]
 script = ExtResource("10_rfi1q")
 unit_name = "Ghost"
+audio_hurt = ExtResource("15_oa73t")
+audio_death = ExtResource("14_k8445")
+audio_move = ExtResource("16_gygk5")
+audio_spawned_in = ExtResource("16_gygk5")
 metadata/_custom_type_script = "uid://cfb66ehlpe84n"
 
 [sub_resource type="Resource" id="Resource_h4l6e"]

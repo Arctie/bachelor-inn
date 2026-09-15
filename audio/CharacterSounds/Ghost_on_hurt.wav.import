@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://c2xfstym7vcb"
-path="res://.godot/imported/Ghost_take_hit.wav-d6d40d7b99dffaff29dc399aae6d6144.sample"
+path="res://.godot/imported/Ghost_on_hurt.wav-c94d68b4a434a6ea976938e30ace3013.sample"
 
 [deps]
 
-source_file="res://audio/CharacterSounds/Ghost_take_hit.wav"
-dest_files=["res://.godot/imported/Ghost_take_hit.wav-d6d40d7b99dffaff29dc399aae6d6144.sample"]
+source_file="res://audio/CharacterSounds/Ghost_on_hurt.wav"
+dest_files=["res://.godot/imported/Ghost_on_hurt.wav-c94d68b4a434a6ea976938e30ace3013.sample"]
 
 [params]
 

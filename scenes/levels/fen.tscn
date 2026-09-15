@@ -19,10 +19,18 @@
 [ext_resource type="ArrayMesh" uid="uid://27ji5g5op1n3" path="res://art/meshes/Vine_1_Mesh.res" id="17_pu2tq"]
 [ext_resource type="PackedScene" uid="uid://drpd1d805rfy5" path="res://scenes/Characters/Enemy/bird2.tscn" id="18_ms6rl"]
 [ext_resource type="Script" uid="uid://cfb66ehlpe84n" path="res://scripts/stats/character_data.gd" id="19_b35ld"]
+[ext_resource type="AudioStream" uid="uid://coi7gb4k867j2" path="res://audio/CharacterSounds/Bird_on_death.wav" id="19_vudcu"]
 [ext_resource type="Script" uid="uid://dnpndvvrnj26q" path="res://scripts/stats/character_state.gd" id="20_cpycw"]
+[ext_resource type="AudioStream" uid="uid://d1ncrot3vanmj" path="res://audio/CharacterSounds/Bird_on_hurt.wav" id="20_mvhwv"]
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="21_0o4ye"]
+[ext_resource type="AudioStream" uid="uid://dajuikwey1t8d" path="res://audio/CharacterSounds/Ghost_spawn_in.wav" id="21_grt2m"]
 [ext_resource type="PackedScene" uid="uid://cirnwlc7so3aq" path="res://scenes/Characters/Enemy/Ghost_Enemy2.tscn" id="22_b35ld"]
-[ext_resource type="PackedScene" uid="uid://dr3w65v4wgubf" path="res://scenes/MissionObjectives/objective_reach_tile.tscn" id="23_cpycw"]
+[ext_resource type="PackedScene" uid="uid://uwkg1mydmaxl" path="res://scenes/Characters/Enemy/bird.tscn" id="23_0o4ye"]
+[ext_resource type="PackedScene" path="res://scenes/MissionObjectives/objective_reach_tile.tscn" id="23_cpycw"]
+[ext_resource type="Resource" uid="uid://dn2eahj1aq85s" path="res://Data/Weapons/bow_basic.tres" id="26_grt2m"]
+[ext_resource type="AudioStream" uid="uid://guqkydnjqy4v" path="res://audio/CharacterSounds/Ghost_on_death.wav" id="26_hwceo"]
+[ext_resource type="AudioStream" uid="uid://dhh0v4l6b2lfn" path="res://audio/Effects/Footsteps_ running.wav" id="26_mvhwv"]
+[ext_resource type="AudioStream" uid="uid://c2xfstym7vcb" path="res://audio/CharacterSounds/Ghost_on_hurt.wav" id="27_vra1y"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_2ubu0"]
 density = 8.0
@@ -252,6 +260,9 @@ turbulence_influence_max = 0.18800001
 [sub_resource type="Resource" id="Resource_eksy4"]
 script = ExtResource("19_b35ld")
 unit_name = "Bird2"
+audio_hurt = ExtResource("20_mvhwv")
+audio_death = ExtResource("19_vudcu")
+audio_move = ExtResource("26_mvhwv")
 metadata/_custom_type_script = "uid://cfb66ehlpe84n"
 
 [sub_resource type="Resource" id="Resource_rxrsm"]
@@ -263,11 +274,44 @@ metadata/_custom_type_script = "uid://dnpndvvrnj26q"
 [sub_resource type="Resource" id="Resource_b35ld"]
 script = ExtResource("19_b35ld")
 unit_name = "Ghost2"
+audio_hurt = ExtResource("27_vra1y")
+audio_death = ExtResource("26_hwceo")
+audio_move = ExtResource("21_grt2m")
 metadata/_custom_type_script = "uid://cfb66ehlpe84n"
 
 [sub_resource type="Resource" id="Resource_cpycw"]
 script = ExtResource("20_cpycw")
+weapon = ExtResource("26_grt2m")
 faction = 1
+bt_profile = 2
+metadata/_custom_type_script = "uid://dnpndvvrnj26q"
+
+[sub_resource type="Resource" id="Resource_0o4ye"]
+script = ExtResource("19_b35ld")
+unit_name = "Bird3"
+audio_hurt = ExtResource("20_mvhwv")
+audio_death = ExtResource("19_vudcu")
+audio_move = ExtResource("26_mvhwv")
+metadata/_custom_type_script = "uid://cfb66ehlpe84n"
+
+[sub_resource type="Resource" id="Resource_vudcu"]
+script = ExtResource("20_cpycw")
+faction = 1
+bt_profile = 1
+metadata/_custom_type_script = "uid://dnpndvvrnj26q"
+
+[sub_resource type="Resource" id="Resource_mvhwv"]
+script = ExtResource("19_b35ld")
+unit_name = "Bird4"
+audio_hurt = ExtResource("20_mvhwv")
+audio_death = ExtResource("19_vudcu")
+audio_move = ExtResource("26_mvhwv")
+metadata/_custom_type_script = "uid://cfb66ehlpe84n"
+
+[sub_resource type="Resource" id="Resource_grt2m"]
+script = ExtResource("20_cpycw")
+faction = 1
+bt_profile = 1
 metadata/_custom_type_script = "uid://dnpndvvrnj26q"
 
 [node name="FenLevel" unique_id=1364062222 instance=ExtResource("1_6w1qc")]
@@ -287,7 +331,7 @@ data = {
 
 [node name="OccupancyOverlay" parent="." index="2" unique_id=1662628409]
 data = {
-"cells": PackedInt32Array(65529, 65534, 4, 65529, 65533, 5, 65532, 65534, 0, 65532, 65535, 0, 65533, 65535, 0, 65533, 65534, 0)
+"cells": PackedInt32Array(65532, 65534, 0, 65532, 65535, 0, 65533, 65535, 0, 65533, 65534, 0)
 }
 
 [node name="TriggerOverlay" parent="." index="3" unique_id=1471713088]
@@ -568,19 +612,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.5, 1)
 data = SubResource("Resource_eksy4")
 state = SubResource("Resource_rxrsm")
 
-[node name="Character2" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="1" unique_id=699185836 instance=ExtResource("18_ms6rl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0.5, -1)
-data = SubResource("Resource_eksy4")
-state = SubResource("Resource_rxrsm")
-
-[node name="Ghost_Enemy" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="2" unique_id=1339368304 instance=ExtResource("22_b35ld")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0.5, -5)
+[node name="Ghost_Enemy" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="1" unique_id=1339368304 instance=ExtResource("22_b35ld")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0.5, -1)
 data = SubResource("Resource_b35ld")
 state = SubResource("Resource_cpycw")
 
-[node name="Ghost_Enemy2" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="3" unique_id=874109436 instance=ExtResource("22_b35ld")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0.5, -1)
-data = SubResource("Resource_b35ld")
-state = SubResource("Resource_cpycw")
+[node name="Character2" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="2" unique_id=82646688 instance=ExtResource("18_ms6rl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.5, 1)
+data = SubResource("Resource_0o4ye")
+state = SubResource("Resource_vudcu")
+
+[node name="Character3" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="3" unique_id=27506441 instance=ExtResource("23_0o4ye")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.5, 1)
+data = SubResource("Resource_mvhwv")
+state = SubResource("Resource_grt2m")
 
 [node name="ObjectiveReachTile" parent="MissionObjective" parent_id_path=PackedInt32Array(327276810) index="0" unique_id=324799803 instance=ExtResource("23_cpycw")]

@@ -46,6 +46,7 @@ func update(level: Node, delta: float) -> void:
 func _move_along_path(level: Node, delta: float) -> void:
 	if not _move_sound_playing:
 		AudioManager2d.play_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
+		#level.selected_unit.play_audio_move()
 		_move_sound_playing = true
 	var movement_speed: float = 8.0
 	var target: Vector3 = level.animation_path.front()
@@ -80,33 +81,30 @@ func _process_next_move(level: Node) -> void:
 	level.active_move.prepare(level.game_state)
 	
 	if level.active_move is CastSkill:
-		# Play skill sound here
 		var cast: CastSkill = level.active_move
 		if cast.skill != null and cast.skill.audio_cast != null:
 			level.selected_unit.audio_player.stream = cast.skill.audio_cast
-			AudioManager2d.stop_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
 			level.selected_unit.audio_player.play()
+		AudioManager2d.stop_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
 		await level.combat_vfx.play_skill(level.active_move.result)
 		if _cancelled:
 			return
-	else:
-		# Play weapon sound here
-		if level.active_move is Attack:
-			var weapon: Weapon = level.selected_unit.state.weapon
-			print("Weapon audio check - weapon: ", weapon, " audio: ", weapon.audio_attack if weapon else "null")
-			if weapon != null and weapon.audio_attack != null:
-				level.selected_unit.audio_player.stream = weapon.audio_attack
-				AudioManager2d.stop_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
-				level.selected_unit.audio_player.play()
-				print("Playing weapon audio")
-		else:
-			pass
-			#AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
+		#AudioManager2d.play_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_HURT)
+	elif level.active_move is Attack:
+		var weapon: Weapon = level.selected_unit.state.weapon
+		if weapon != null and weapon.audio_attack != null:
+			level.selected_unit.audio_player.stream = weapon.audio_attack
+			level.selected_unit.audio_player.play()
+		AudioManager2d.stop_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
 		await level.combat_vfx.play_attack(level.active_move.result)
 		if _cancelled:
 			return
-			
-	AudioManager2d.play_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_HURT)
+		#print("Playing weapon audio")
+	else:
+		AudioManager2d.stop_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
+
+	
+	#AudioManager2d.play_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_HURT)
 	level.active_move.apply_damage(level.game_state)
 	if _cancelled:
 		return
@@ -170,7 +168,6 @@ func _finish_animation(level: Node) -> void:
 			if not is_instance_valid(c):
 				continue
 			print("  checking: ", c.data.unit_name, " at: ", c.state.grid_position)
-			#if c.state.grid_position == portal_grid:
 			if c.state.grid_position == portal_grid and not c.state.just_teleported:
 				c.state.just_teleported = true
 				await level._execute_teleport(portal, c)

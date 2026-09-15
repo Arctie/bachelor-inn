@@ -3,7 +3,10 @@
 [ext_resource type="PackedScene" uid="uid://bu3kvc2qxcq2w" path="res://scenes/levels/LevelTemplate.tscn" id="1_oujqn"]
 [ext_resource type="PackedScene" uid="uid://drpd1d805rfy5" path="res://scenes/Characters/Enemy/bird2.tscn" id="2_jy5l0"]
 [ext_resource type="Script" uid="uid://cfb66ehlpe84n" path="res://scripts/stats/character_data.gd" id="3_jb8y0"]
+[ext_resource type="AudioStream" uid="uid://coi7gb4k867j2" path="res://audio/CharacterSounds/Bird_on_death.wav" id="3_v38ux"]
+[ext_resource type="AudioStream" uid="uid://d1ncrot3vanmj" path="res://audio/CharacterSounds/Bird_on_hurt.wav" id="4_4huy8"]
 [ext_resource type="Script" uid="uid://dnpndvvrnj26q" path="res://scripts/stats/character_state.gd" id="4_avy4j"]
+[ext_resource type="AudioStream" uid="uid://dhh0v4l6b2lfn" path="res://audio/Effects/Footsteps_ running.wav" id="5_drkq3"]
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="5_w3k0o"]
 [ext_resource type="Resource" uid="uid://dn2eahj1aq85s" path="res://Data/Weapons/bow_basic.tres" id="6_avy4j"]
 [ext_resource type="PackedScene" uid="uid://c5b1wt1vdugfg" path="res://scenes/MissionObjectives/objective_kill_all.tscn" id="7_w3k0o"]
@@ -11,6 +14,9 @@
 [sub_resource type="Resource" id="Resource_ssoav"]
 script = ExtResource("3_jb8y0")
 unit_name = "Bird"
+audio_hurt = ExtResource("4_4huy8")
+audio_death = ExtResource("3_v38ux")
+audio_move = ExtResource("5_drkq3")
 metadata/_custom_type_script = "uid://cfb66ehlpe84n"
 
 [sub_resource type="Resource" id="Resource_wwjoj"]
@@ -18,6 +24,19 @@ script = ExtResource("4_avy4j")
 weapon = ExtResource("6_avy4j")
 faction = 1
 bt_profile = 2
+metadata/_custom_type_script = "uid://dnpndvvrnj26q"
+
+[sub_resource type="Resource" id="Resource_w3k0o"]
+script = ExtResource("3_jb8y0")
+audio_hurt = ExtResource("4_4huy8")
+audio_death = ExtResource("3_v38ux")
+audio_move = ExtResource("5_drkq3")
+metadata/_custom_type_script = "uid://cfb66ehlpe84n"
+
+[sub_resource type="Resource" id="Resource_v38ux"]
+script = ExtResource("4_avy4j")
+faction = 1
+bt_profile = 1
 metadata/_custom_type_script = "uid://dnpndvvrnj26q"
 
 [node name="test_level_5" unique_id=656823534 instance=ExtResource("1_oujqn")]
@@ -43,5 +62,10 @@ data = {
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 4.5, -5)
 data = SubResource("Resource_ssoav")
 state = SubResource("Resource_wwjoj")
+
+[node name="Character2" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="1" unique_id=1226599113 instance=ExtResource("2_jy5l0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.5, 1)
+data = SubResource("Resource_w3k0o")
+state = SubResource("Resource_v38ux")
 
 [node name="ObjectiveKillAll" parent="MissionObjective" parent_id_path=PackedInt32Array(327276810) index="0" unique_id=1411412953 instance=ExtResource("7_w3k0o")]

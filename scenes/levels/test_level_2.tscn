@@ -2,10 +2,14 @@
 
 [ext_resource type="PackedScene" uid="uid://bu3kvc2qxcq2w" path="res://scenes/levels/LevelTemplate.tscn" id="1_48led"]
 [ext_resource type="PackedScene" uid="uid://cs3ahspmvkfod" path="res://scenes/Development/Particles/fire_particle.tscn" id="2_5idrc"]
+[ext_resource type="AudioStream" uid="uid://coi7gb4k867j2" path="res://audio/CharacterSounds/Bird_on_death.wav" id="3_cmsp8"]
 [ext_resource type="PackedScene" uid="uid://drpd1d805rfy5" path="res://scenes/Characters/Enemy/bird2.tscn" id="3_goahl"]
 [ext_resource type="Script" uid="uid://cfb66ehlpe84n" path="res://scripts/stats/character_data.gd" id="4_qd2ch"]
+[ext_resource type="AudioStream" uid="uid://d1ncrot3vanmj" path="res://audio/CharacterSounds/Bird_on_hurt.wav" id="4_yc8cd"]
+[ext_resource type="AudioStream" uid="uid://dhh0v4l6b2lfn" path="res://audio/Effects/Footsteps_ running.wav" id="5_4yywq"]
 [ext_resource type="Script" uid="uid://dnpndvvrnj26q" path="res://scripts/stats/character_state.gd" id="5_nwrgp"]
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="6_g3mff"]
+[ext_resource type="AudioStream" uid="uid://cid4ftyh5ubox" path="res://audio/CharacterSounds/Bird_spawn_in.wav" id="6_wpby6"]
 [ext_resource type="Resource" uid="uid://c1b3txa4fyxec" path="res://Data/Weapons/axe_basic.tres" id="7_rfcif"]
 [ext_resource type="PackedScene" uid="uid://c4ugjunruadqr" path="res://scenes/MissionObjectives/objective_kill_specific.tscn" id="8_nwrgp"]
 
@@ -13,6 +17,10 @@
 script = ExtResource("4_qd2ch")
 unit_name = "Boss"
 endurance = 10
+audio_hurt = ExtResource("4_yc8cd")
+audio_death = ExtResource("3_cmsp8")
+audio_move = ExtResource("5_4yywq")
+audio_spawned_in = ExtResource("6_wpby6")
 metadata/_custom_type_script = "uid://cfb66ehlpe84n"
 
 [sub_resource type="Resource" id="Resource_cmsp8"]

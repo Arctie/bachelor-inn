@@ -309,6 +309,9 @@ func apply_damage(amount: int, simulate_only: bool = false,
 	amount = int(amount)
 	if amount <= 0:
 		return false
+	if simulate_only == false:
+		print("apply_damage - audio_player: ", audio_player, " audio_hurt: ", data.audio_hurt)
+		play_audio_hurt()
 	
 	# Turn hostile if attacked
 	if not simulate_only and state.hostile_when_attacked:
@@ -357,10 +360,8 @@ func flash_hit(crit : bool) -> void:
 func die(simulate_only : bool) -> void:
 	state.is_alive = false
 	if simulate_only == false:
-		#if data.audio_death != null:
-			#audio_player.stream = data.audio_death
-			#audio_player.play()
-		AudioManager2d.play_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_DEATH)
+		#AudioManager2d.play_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_DEATH)
+		play_audio_death()
 		Main.level.emit_signal("character_stats_changed", self)
 		Main.level.emit_signal("character_died", self)
 		if state.is_playable():
@@ -400,20 +401,41 @@ func get_default_weapon_id() -> String:
 			return "unarmed"
 
 func play_audio_hurt() -> void:
-	if data.audio_hurt == null:
-		return
-	audio_player.stream = data.audio_hurt
-	audio_player.play()
+	if data.audio_hurt != null and audio_player != null:
+		audio_player.stream = data.audio_hurt
+		print("Playing audio: ", data.audio_hurt)
+		audio_player.play()
+	else:
+		AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_HURT)
 
 func play_audio_death() -> void:
-	if data.audio_death == null:
-		return
-	audio_player.stream = data.audio_death
-	audio_player.play()
+	if data.audio_death != null and audio_player != null:
+		audio_player.stream = data.audio_death
+		print("Playing audio: ", data.audio_death)
+		audio_player.play()
+	else:
+		AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_DEATH)
 
 func play_audio_move() -> void:
-	if data.audio_move == null:
-		return
-	audio_player.stream = data.audio_move
-	print("Playing audio: ", data.audio_move)
-	audio_player.play()
+	if data.audio_move != null and audio_player != null:
+		audio_player.stream = data.audio_move
+		print("Playing audio: ", data.audio_move)
+		audio_player.play()
+	else:
+		AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
+
+func play_audio_spawned_in() -> void:
+	if data.audio_spawned_in != null and audio_player != null:
+		audio_player.stream = data.audio_spawned_in
+		print("Playing audio: ", data.audio_spawned_in)
+		audio_player.play()
+	else:
+		AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
+
+func play_audio_selected() -> void:
+	if data.audio_selected != null and audio_player != null:
+		audio_player.stream = data.audio_selected
+		print("Playing audio: ", data.audio_selected)
+		audio_player.play()
+	else:
+		AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
