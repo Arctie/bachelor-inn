@@ -272,10 +272,10 @@ func _process(delta: float) -> void:
 func move_to(pos: Vector3i, simulate_only: bool = false) -> void:
 	if simulate_only == false:
 		Main.level.occupancy_map.set_cell_item(state.grid_position, GridMap.INVALID_CELL_ITEM);
-		if data.audio_move != null:
-			print("Playing move_to audio.")
-			audio_player.stream = data.audio_move
-			audio_player.play()
+		#if data.audio_move != null:
+			#print("Playing move_to audio.")
+			#audio_player.stream = data.audio_move
+			#audio_player.play()
 		
 	state.is_alive = true;
 	state.grid_position = pos;
@@ -335,7 +335,7 @@ func apply_damage(amount: int, simulate_only: bool = false,
 	if not simulate_only and not killed:
 		Main.level.emit_signal("character_stats_changed", self)
 	if killed:
-		# NOTE: play_audio_death()
+		play_audio_death()
 		die(simulate_only)
 
 	return killed
@@ -418,10 +418,12 @@ func play_audio_death() -> void:
 
 func play_audio_move() -> void:
 	if data.audio_move != null and audio_player != null:
+		print("play_audio_move called from: ", get_stack())
 		audio_player.stream = data.audio_move
 		print("Playing audio: ", data.audio_move)
 		audio_player.play()
 	else:
+		print("Playing FALLBACK audio SOUND_EFFECT_TYPE.UNIT_MOVE")
 		AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
 
 func play_audio_spawned_in() -> void:
@@ -430,6 +432,7 @@ func play_audio_spawned_in() -> void:
 		print("Playing audio: ", data.audio_spawned_in)
 		audio_player.play()
 	else:
+		print("Play Audio Spawned In: Playing FALLBACK audio SOUND_EFFECT_TYPE.UNIT_MOVE")
 		AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
 
 func play_audio_selected() -> void:
@@ -438,4 +441,5 @@ func play_audio_selected() -> void:
 		print("Playing audio: ", data.audio_selected)
 		audio_player.play()
 	else:
+		print("Play Audio Select: Playing FALLBACK audio SOUND_EFFECT_TYPE.UNIT_MOVE")
 		AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)

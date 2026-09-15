@@ -6,13 +6,13 @@ var _cancelled: bool = false
 var _move_sound_playing: bool = false
 
 func enter(level: Node) -> void:
-	print("ENTER STATE: StateAnimating.")
+	print("ENTER STATE: StateAnimating. instance: ", get_instance_id())
 	#_cancelled = false
 	_is_processing = false
 	_move_sound_playing = false
 
 func exit(level: Node) -> void:
-	print("EXIT STATE: StateAnimating.")
+	print("EXIT STATE: StateAnimating. instance: ", get_instance_id())	
 	_cancelled = true
 	_is_processing = false
 	#level.moves_stack.clear()
@@ -25,9 +25,12 @@ func handle_input(level: Node, event: InputEvent) -> void:
 	pass 
 
 func update(level: Node, delta: float) -> void:
+	#print("update - wait_for_camera: ", level.wait_for_camera)
 	if _cancelled:
 		return
 	if level._level_complete:
+		return
+	if level.wait_for_camera:
 		return
 		
 	if not level.animation_path.is_empty():
@@ -44,8 +47,10 @@ func update(level: Node, delta: float) -> void:
 		_finish_animation(level)
 
 func _move_along_path(level: Node, delta: float) -> void:
-	if not _move_sound_playing:
-		AudioManager2d.play_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
+	#print("_move_along_path from instance: ", get_instance_id())
+	if not _move_sound_playing:# and not level.animation_path.is_empty():
+		pass
+		AudioManager2d.play_character_loop(level.selected_unit.data.audio_move)
 		#level.selected_unit.play_audio_move()
 		_move_sound_playing = true
 	var movement_speed: float = 8.0
@@ -57,8 +62,9 @@ func _move_along_path(level: Node, delta: float) -> void:
 		level.selected_unit.position = target
 		level.animation_path.pop_front()
 		if level.animation_path.is_empty():
-			print("Stopping audio becuase animation path is emppty.")
-			AudioManager2d.stop_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
+			#print("Stopping audio becuase animation path is emppty.")
+			AudioManager2d.stop_character_loop()
+			#level.selected_unit.audio_player.stop()
 			_move_sound_playing = false
 	else:
 		level.selected_unit.position += dir.normalized() * step
@@ -85,7 +91,7 @@ func _process_next_move(level: Node) -> void:
 		if cast.skill != null and cast.skill.audio_cast != null:
 			level.selected_unit.audio_player.stream = cast.skill.audio_cast
 			level.selected_unit.audio_player.play()
-		AudioManager2d.stop_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
+		#AudioManager2d.stop_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
 		await level.combat_vfx.play_skill(level.active_move.result)
 		if _cancelled:
 			return
@@ -95,16 +101,13 @@ func _process_next_move(level: Node) -> void:
 		if weapon != null and weapon.audio_attack != null:
 			level.selected_unit.audio_player.stream = weapon.audio_attack
 			level.selected_unit.audio_player.play()
-		AudioManager2d.stop_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
+		#AudioManager2d.stop_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
 		await level.combat_vfx.play_attack(level.active_move.result)
 		if _cancelled:
 			return
-		#print("Playing weapon audio")
 	else:
-		AudioManager2d.stop_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
-
-	
-	#AudioManager2d.play_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_HURT)
+		pass
+		
 	level.active_move.apply_damage(level.game_state)
 	if _cancelled:
 		return

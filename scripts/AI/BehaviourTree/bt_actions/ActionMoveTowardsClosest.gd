@@ -26,7 +26,7 @@ func tick(blackboard: BTBlackboard) -> BTNode.Status:
 		#print("FAIL: no closest found")
 		return BTNode.Status.FAILURE
 		
-	print("Closest: ", closest.data.unit_name, " at ", closest.state.grid_position)
+	#print("Closest: ", closest.data.unit_name, " at ", closest.state.grid_position)
 	# -- Pathfinding --
 	#var path: Array[Vector3i] = blackboard.movement_grid.get_path(unit.state.grid_position, closest.state.grid_position)
 	var path: Array[Vector3i] = MovementGrid.find_path(
@@ -56,10 +56,10 @@ func tick(blackboard: BTBlackboard) -> BTNode.Status:
 			break
 			
 	if best_move == null:        
-		print("FAIL: no path tile in reachable set")
+		#print("FAIL: no path tile in reachable set")
 		return BTNode.Status.FAILURE
 	
 	blackboard.target = closest
 	blackboard.chosen_command = best_move
-	print("Action fired: ", get_script().resource_path, " command: ", blackboard.chosen_command)
+	#print("Action fired: ", get_script().resource_path, " command: ", blackboard.chosen_command)
 	return BTNode.Status.SUCCESS

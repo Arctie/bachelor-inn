@@ -9,12 +9,15 @@
 [ext_resource type="AudioStream" uid="uid://dhh0v4l6b2lfn" path="res://audio/Effects/Footsteps_ running.wav" id="5_mxmev"]
 [ext_resource type="Script" uid="uid://dnpndvvrnj26q" path="res://scripts/stats/character_state.gd" id="5_vbfgb"]
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="6_lxfn4"]
+[ext_resource type="AudioStream" uid="uid://1rnnmw5e1873" path="res://audio/CharacterSounds/Bird_on_selected.wav" id="6_x6vjx"]
+[ext_resource type="AudioStream" uid="uid://cid4ftyh5ubox" path="res://audio/CharacterSounds/Bird_spawn_in.wav" id="7_livni"]
 [ext_resource type="Resource" uid="uid://dn2eahj1aq85s" path="res://Data/Weapons/bow_basic.tres" id="7_vbfgb"]
 [ext_resource type="PackedScene" uid="uid://cirnwlc7so3aq" path="res://scenes/Characters/Enemy/Ghost_Enemy2.tscn" id="8_e2q1c"]
 [ext_resource type="PackedScene" uid="uid://c5b1wt1vdugfg" path="res://scenes/MissionObjectives/objective_kill_all.tscn" id="8_lxfn4"]
 [ext_resource type="AudioStream" uid="uid://guqkydnjqy4v" path="res://audio/CharacterSounds/Ghost_on_death.wav" id="12_ilafv"]
 [ext_resource type="AudioStream" uid="uid://c2xfstym7vcb" path="res://audio/CharacterSounds/Ghost_on_hurt.wav" id="13_pw4rf"]
 [ext_resource type="AudioStream" uid="uid://dajuikwey1t8d" path="res://audio/CharacterSounds/Ghost_spawn_in.wav" id="14_x6vjx"]
+[ext_resource type="AudioStream" uid="uid://b3u1qfdfbts4x" path="res://audio/CharacterSounds/Ghost_on_selected.wav" id="16_livni"]
 
 [sub_resource type="Resource" id="Resource_lxfn4"]
 script = ExtResource("4_g58ai")
@@ -22,6 +25,8 @@ unit_name = "Bird"
 audio_hurt = ExtResource("4_mxmev")
 audio_death = ExtResource("3_ckkav")
 audio_move = ExtResource("5_mxmev")
+audio_selected = ExtResource("6_x6vjx")
+audio_spawned_in = ExtResource("7_livni")
 metadata/_custom_type_script = "uid://cfb66ehlpe84n"
 
 [sub_resource type="Resource" id="Resource_e2q1c"]
@@ -37,6 +42,8 @@ unit_name = "Ghost"
 audio_hurt = ExtResource("13_pw4rf")
 audio_death = ExtResource("12_ilafv")
 audio_move = ExtResource("14_x6vjx")
+audio_selected = ExtResource("16_livni")
+audio_spawned_in = ExtResource("14_x6vjx")
 metadata/_custom_type_script = "uid://cfb66ehlpe84n"
 
 [sub_resource type="Resource" id="Resource_ckkav"]

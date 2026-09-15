@@ -7,7 +7,9 @@
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="3_mf64f"]
 [ext_resource type="AudioStream" uid="uid://dhh0v4l6b2lfn" path="res://audio/Effects/Footsteps_ running.wav" id="3_uxtlp"]
 [ext_resource type="PackedScene" uid="uid://uwkg1mydmaxl" path="res://scenes/Characters/Enemy/bird.tscn" id="4_1csds"]
+[ext_resource type="AudioStream" uid="uid://1rnnmw5e1873" path="res://audio/CharacterSounds/Bird_on_selected.wav" id="4_dkhm6"]
 [ext_resource type="Script" uid="uid://de2j0apfdotrf" path="res://scripts/Characters/EnemyDefinition.gd" id="5_0ykxy"]
+[ext_resource type="AudioStream" uid="uid://cid4ftyh5ubox" path="res://audio/CharacterSounds/Bird_spawn_in.wav" id="5_xtvyj"]
 
 [sub_resource type="Resource" id="Resource_esgda"]
 script = ExtResource("1_4ifjk")
@@ -15,6 +17,8 @@ unit_name = ""
 audio_hurt = ExtResource("2_uxtlp")
 audio_death = ExtResource("1_f2ojy")
 audio_move = ExtResource("3_uxtlp")
+audio_selected = ExtResource("4_dkhm6")
+audio_spawned_in = ExtResource("5_xtvyj")
 metadata/_custom_type_script = "uid://cfb66ehlpe84n"
 
 [sub_resource type="Resource" id="Resource_egese"]

@@ -227,7 +227,16 @@ func read(save_slot: int) -> bool:
 		data.speed = data_dict["speed"]
 		data.focus = data_dict["focus"]
 		data.endurance = data_dict["endurance"]
-
+		
+		# Load audio from registry base_data
+		var base_data: CharacterData = def.base_data
+		if base_data != null:
+			data.audio_hurt = base_data.audio_hurt
+			data.audio_death = base_data.audio_death
+			data.audio_move = base_data.audio_move
+			data.audio_selected = base_data.audio_selected
+			data.audio_spawned_in = base_data.audio_spawned_in
+			
 		# STATE
 		var state := CharacterState.new()
 		var gp : Array = state_dict["grid_position"]

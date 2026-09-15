@@ -6,9 +6,11 @@
 [ext_resource type="AudioStream" uid="uid://3u8o3ahy2dfq" path="res://audio/CharacterSounds/Unit_on_hurt.wav" id="2_8me3j"]
 [ext_resource type="Script" uid="uid://dnpndvvrnj26q" path="res://scripts/stats/character_state.gd" id="2_bbets"]
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="3_dn4p7"]
+[ext_resource type="AudioStream" uid="uid://dow7wohp1kjyd" path="res://audio/CharacterSounds/Unit_on_selected.wav" id="4_8me3j"]
 [ext_resource type="Resource" uid="uid://x7mbefo655v8" path="res://Data/Abilities/fireball_basic.tres" id="4_bbets"]
 [ext_resource type="Resource" uid="uid://b3csctruxawhd" path="res://Data/Weapons/scepter_basic.tres" id="5_bbets"]
 [ext_resource type="PackedScene" uid="uid://b10bf6hwaqddg" path="res://scenes/Characters/Player/alfred.tscn" id="5_bfdei"]
+[ext_resource type="AudioStream" uid="uid://cm3hqys15xllp" path="res://audio/CharacterSounds/Unit_on_spawned_in.wav" id="5_njq3j"]
 [ext_resource type="Script" uid="uid://csv21vgg7ba7q" path="res://scripts/Characters/CharacterDefinition.gd" id="6_8me3j"]
 
 [sub_resource type="Resource" id="Resource_wepu0"]
@@ -23,6 +25,8 @@ endurance = 5
 audio_hurt = ExtResource("2_8me3j")
 audio_death = ExtResource("1_bfdei")
 audio_move = ExtResource("1_dn4p7")
+audio_selected = ExtResource("4_8me3j")
+audio_spawned_in = ExtResource("5_njq3j")
 metadata/_custom_type_script = "uid://cfb66ehlpe84n"
 
 [sub_resource type="Resource" id="Resource_p06qf"]

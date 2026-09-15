@@ -9,9 +9,9 @@ func add_child(child: BTNode) -> BTNode:
 
 # --- NOTE: Oposite of BTSelector
 func tick(blackboard: BTBlackboard) -> BTNode.Status:
-	print("BTSequence ticking, children count: ", children.size())
+	#print("BTSequence ticking, children count: ", children.size())
 	for child in children:
-		print("BTSequence child: ", child.get_script())
+		#print("BTSequence child: ", child.get_script())
 		var result := child.tick(blackboard)
 		match result:
 			BTNode.Status.FAILURE:

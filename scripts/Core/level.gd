@@ -210,9 +210,18 @@ func _place_player_units() -> void:
 			new_unit.sanity_flipped.connect(_on_character_sanity_flipped)
 		player_characters.append(new_unit)
 		characters.append(new_unit)
+		
+	for c in player_characters:
+		print("Player audio check - ", c.data.unit_name, 
+			  " audio_player: ", c.audio_player,
+			  " audio_hurt: ", c.data.audio_hurt)
 
 func _register_enemies() -> void:
 	for child in find_children("*", "Character", true, false):
+		print("Enemy found: ", child.name, 
+		  " scene_id: ", child.scene_id,
+		  " data: ", child.data,
+		  " audio_hurt: ", child.data.audio_hurt if child.data else "no data")
 		if not child is Character or child.state == null:
 			continue
 		if child.scene_id != "":
@@ -654,6 +663,8 @@ func select_unit(unit: Character) -> void:
 	
 	last_selected_unit = unit
 	selected_unit = unit
+	#if unit != null and unit.state.is_playable():
+		#unit.play_audio_selected()
 	camera_controller.set_pivot_target_translate(unit.position)
 	
 	unit_pos = unit.state.grid_position
@@ -812,7 +823,7 @@ func get_unit(pos: Vector3i) -> Character:
 
 
 func create_path(start : Vector3i, end : Vector3i) -> void:
-	print("create_path() called")
+	#print("create_path() called")
 	animation_path.clear()
 	path_map.clear()
 	var foo0 : Command = moves_stack.front()
@@ -833,10 +844,10 @@ func create_path(start : Vector3i, end : Vector3i) -> void:
 		animation_path.append(anim_pos)
 
 	#print("Looking for unit at: ", start)
-	for c in characters:
-		if is_instance_valid(c):
-			print(" - ", c.data.unit_name, " at ", c.state.grid_position)
-			selected_unit = get_unit(start)
+	#for c in characters:
+		#if is_instance_valid(c):
+			#print(" - ", c.data.unit_name, " at ", c.state.grid_position)
+			#selected_unit = get_unit(start)
 			
 	selected_unit = get_unit(start)
 

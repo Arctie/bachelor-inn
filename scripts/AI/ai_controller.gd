@@ -12,10 +12,10 @@ static func choose_move(enemy: Character, state: GameState, context: MissionCont
 			return Wait.new(enemy.state.grid_position)
 
 static func _run_bt(enemy: Character, state: GameState, context: MissionContext) -> Command:
-	print("Running BT for: ", enemy.data.unit_name, " profile: ", enemy.state.bt_profile)
+	#print("Running BT for: ", enemy.data.unit_name, " profile: ", enemy.state.bt_profile)
 	var cmd := BTRunner.run(enemy, state, context)
 	if cmd == null:
-		print("Running BT failed. Initiating Wait at Position.")
+		#print("Running BT failed. Initiating Wait at Position.")
 		return Wait.new(enemy.state.grid_position)
 	return cmd
 
@@ -23,7 +23,7 @@ static func _run_minimax(enemy: Character, state: GameState) -> Command:
 	var ai := MinimaxAI.new()
 	var cmd := ai.choose_best_move(state, enemy.state.search_depth, enemy)
 	if cmd == null:
-		print("Running MiniMax failed. Initiating Wait at Position.")
+		#print("Running MiniMax failed. Initiating Wait at Position.")
 		return Wait.new(enemy.state.grid_position)
 	return cmd
 # func run_minimax()
@@ -73,20 +73,17 @@ static func run_enemy_turn(level: Level) -> void:
 	if currentEnemy != null:
 		var curEnemyPos : NullablePosition = NullablePosition.new(currentEnemy.state.grid_position)
 		if current_state.has_enemy_moves(curEnemyPos):
-			#var move : Command = ai.choose_best_move(current_state, 3, currentEnemy); ## Old AI move gen
 			var move: Command = AIController.choose_move(currentEnemy, current_state, level.mission_context)
-			print("Move chosen: ", move, " is_moved before: ", currentEnemy.state.is_moved)
+			#print("Move chosen: ", move, " is_moved before: ", currentEnemy.state.is_moved)
 			level.moves_stack.append(move);
 			current_state = current_state.apply_move(move, true);
-			#currentEnemy.state.is_moved = true
 	
 	if not level.moves_stack.is_empty():
+		#level.selected_unit = level.get_unit(level.moves_stack.front().start_pos)
+		level.wait_for_camera = true
 		level.create_path(level.moves_stack.front().start_pos, level.moves_stack.front().end_pos); # a-star for pathfinding AI
-		print("After create_path - animation_path size: ", level.animation_path.size())
-		print("Next line is transtion to new() StateAnimating.")
 		level.state_machine.transition_to(StateAnimating.new())
 		level.camera_controller.focus_camera(level.selected_unit)
-		level.wait_for_camera = true
 		level.timer.start(level.pre_enemy_turn_wait)
 		await level.timer.timeout
 		level.wait_for_camera = false

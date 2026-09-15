@@ -119,8 +119,8 @@ static func dijkstra(unit : Character, state : GameState, exclude_attacks : bool
 			for u in state.get_neutral_objects():
 				opponents.append(u)
 			#print("Total opponents including neutrals: ", opponents.size())
-			for o in opponents:
-				print("  opponent: ", o.data.unit_name, " at: ", o.state.grid_position)
+			#for o in opponents:
+				#print("  opponent: ", o.data.unit_name, " at: ", o.state.grid_position)
 			for opponent : Character in opponents:
 				if opponent == null:
 					continue

@@ -16,5 +16,5 @@ func tick(blackboard: BTBlackboard) -> BTNode.Status:
 		target.state.grid_position,
 		origin
 	)
-	print("Action fired: ", get_script().resource_path, " command: ", blackboard.chosen_command)
+	#print("Action fired: ", get_script().resource_path, " command: ", blackboard.chosen_command)
 	return BTNode.Status.SUCCESS

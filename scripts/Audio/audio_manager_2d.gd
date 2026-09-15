@@ -34,6 +34,8 @@ extends Node2D
 ## HELPER METHODS
 ##		stop_all_audio(music_fade_time) - Stop all active sounds and music. Music can make use of fade out, with looping sounds stopping instantly.
 
+@export var character_sounds: Dictionary[String, CharacterAudio] = {}
+
 func _ready() -> void:
 	#Create the sound_effect and music track dictionaries for quick lookup, and validate that all enum values have assigned resources.
 	for sound_effect: SoundEffect in sound_effects:
@@ -162,6 +164,28 @@ func stop_loop(loop_type: SoundEffect.SOUND_EFFECT_TYPE) -> void:
 		loop_player.queue_free()
 	
 	active_looping_sounds.erase(loop_type)
+
+func play_character_loop(stream: AudioStream) -> void:
+	if stream == null:
+		return
+	if active_looping_sounds.has("character_move"):
+		return
+	var loop_audio: AudioStreamPlayer = AudioStreamPlayer.new()
+	add_child(loop_audio)
+	loop_audio.stream = stream
+	loop_audio.play()
+	active_looping_sounds["character_move"] = {
+	"player": loop_audio
+	}
+
+func stop_character_loop() -> void:
+	if not active_looping_sounds.has("character_move"):
+		return
+	var loop_player: Node = active_looping_sounds["character_move"].player
+	if is_instance_valid(loop_player):
+		loop_player.stop()
+		loop_player.queue_free()
+		active_looping_sounds.erase("character_move")
 
 ## Changes a specific sound effect loop to a different clip index, if supported by the stream type (AudioStreamInteractive). Pass [param loop_type] for the loop to change, [param clip_index] for the target clip, and optionally [param is_final_clip] to mark this as the last clip. If is_final_clip is true, the loop will automatically stop after the clip finishes (auto-calculates duration). Follows transition rules set in the AudioStreamInteractive resource.
 func change_loop_to_clip(loop_type: SoundEffect.SOUND_EFFECT_TYPE, clip_index: int, is_final_clip: bool = false) -> void:
