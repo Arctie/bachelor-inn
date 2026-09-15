@@ -51,7 +51,6 @@ func _move_along_path(level: Node, delta: float) -> void:
 	if not _move_sound_playing:# and not level.animation_path.is_empty():
 		pass
 		AudioManager2d.play_character_loop(level.selected_unit.data.audio_move)
-		#level.selected_unit.play_audio_move()
 		_move_sound_playing = true
 	var movement_speed: float = 8.0
 	var target: Vector3 = level.animation_path.front()
@@ -62,9 +61,7 @@ func _move_along_path(level: Node, delta: float) -> void:
 		level.selected_unit.position = target
 		level.animation_path.pop_front()
 		if level.animation_path.is_empty():
-			#print("Stopping audio becuase animation path is emppty.")
 			AudioManager2d.stop_character_loop()
-			#level.selected_unit.audio_player.stop()
 			_move_sound_playing = false
 	else:
 		level.selected_unit.position += dir.normalized() * step

@@ -3,7 +3,7 @@
 [ext_resource type="AudioStream" uid="uid://dhh0v4l6b2lfn" path="res://audio/Effects/Footsteps_ running.wav" id="1_2xjly"]
 [ext_resource type="Script" uid="uid://cfb66ehlpe84n" path="res://scripts/stats/character_data.gd" id="1_553e7"]
 [ext_resource type="AudioStream" uid="uid://btlak07m7wp37" path="res://audio/CharacterSounds/Unit_on_death.wav" id="1_ruyyk"]
-[ext_resource type="AudioStream" uid="uid://3u8o3ahy2dfq" path="res://audio/CharacterSounds/Unit_on_hurt.wav" id="2_4bw0q"]
+[ext_resource type="AudioStream" uid="uid://blpc87ylyoo00" path="res://audio/CharacterSounds/Character_on_hurt.wav" id="2_4bw0q"]
 [ext_resource type="Script" uid="uid://dnpndvvrnj26q" path="res://scripts/stats/character_state.gd" id="2_mttmo"]
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="3_2xjly"]
 [ext_resource type="Resource" uid="uid://213btyk7kq4i" path="res://Data/Abilities/defence_basic.tres" id="4_faasa"]

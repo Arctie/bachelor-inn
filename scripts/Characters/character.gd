@@ -272,10 +272,6 @@ func _process(delta: float) -> void:
 func move_to(pos: Vector3i, simulate_only: bool = false) -> void:
 	if simulate_only == false:
 		Main.level.occupancy_map.set_cell_item(state.grid_position, GridMap.INVALID_CELL_ITEM);
-		#if data.audio_move != null:
-			#print("Playing move_to audio.")
-			#audio_player.stream = data.audio_move
-			#audio_player.play()
 		
 	state.is_alive = true;
 	state.grid_position = pos;
