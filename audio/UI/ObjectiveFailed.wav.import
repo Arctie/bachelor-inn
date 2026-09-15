@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bv620s4ek16r"
-path="res://.godot/imported/260216Turnstart.wav-f28645d6732b8aaa2cf95ca0f201831d.sample"
+path="res://.godot/imported/ObjectiveFailed.wav-db4bb58243579ec0ad0d8a854191e964.sample"
 
 [deps]
 
-source_file="res://audio/Effects/260216Turnstart.wav"
-dest_files=["res://.godot/imported/260216Turnstart.wav-f28645d6732b8aaa2cf95ca0f201831d.sample"]
+source_file="res://audio/UI/ObjectiveFailed.wav"
+dest_files=["res://.godot/imported/ObjectiveFailed.wav-db4bb58243579ec0ad0d8a854191e964.sample"]
 
 [params]
 

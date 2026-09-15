@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://nfowf4ddst6x" path="res://scripts/Audio/audio_manager_2d.gd" id="1_6jxb6"]
 [ext_resource type="Script" uid="uid://w5q38ao5gqii" path="res://scripts/Audio/sound_effect_settings.gd" id="2_5frf8"]
-[ext_resource type="AudioStream" uid="uid://m1ijwg4l7qht" path="res://audio/Effects/Weapons/SwordAttack.wav" id="3_ggfqn"]
-[ext_resource type="AudioStream" uid="uid://cp4i5p8iueiig" path="res://audio/Effects/Weapons/BowAttack.wav" id="4_2w1uh"]
+[ext_resource type="AudioStream" uid="uid://m1ijwg4l7qht" path="res://audio/Weapons/SwordAttack.wav" id="3_ggfqn"]
+[ext_resource type="AudioStream" uid="uid://cp4i5p8iueiig" path="res://audio/Weapons/BowAttack.wav" id="4_2w1uh"]
 [ext_resource type="Script" uid="uid://5e6oipqm2ai3" path="res://scripts/Audio/music_settings.gd" id="4_887uv"]
 [ext_resource type="AudioStream" uid="uid://b67e003o351lb" path="res://audio/Music/260216themeWIP.wav" id="5_2w1uh"]
-[ext_resource type="AudioStream" uid="uid://dhh0v4l6b2lfn" path="res://audio/Effects/Characters/Footsteps_ running.wav" id="5_p8gr7"]
+[ext_resource type="AudioStream" uid="uid://dhh0v4l6b2lfn" path="res://audio/Effects/Footsteps_ running.wav" id="5_p8gr7"]
 [ext_resource type="AudioStream" uid="uid://dus5b35y6hpwv" path="res://audio/Music/Boss_Room_Action 1.wav" id="8_riki2"]
 [ext_resource type="AudioStream" uid="uid://bkeusev5jfi3" path="res://audio/Music/Dark Ambient 4.wav" id="9_vvn5r"]
 

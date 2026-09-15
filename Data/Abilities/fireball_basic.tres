@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bhfj4kn8ra1o3" path="res://scenes/Development/Particles/ranged_attack_particle.tscn" id="1_sxwr3"]
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="1_u21qa"]
-[ext_resource type="AudioStream" uid="uid://d3yd6mw1qnqra" path="res://audio/Effects/Abilities/Fireball_skill.wav" id="2_11pje"]
+[ext_resource type="AudioStream" uid="uid://d3yd6mw1qnqra" path="res://audio/Abilities/Fireball_skill.wav" id="2_11pje"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_sxwr3"]
 load_path = "res://.godot/imported/GUI_Assets.png-fb06711353850da2dfdd4a114970627a.ctex"

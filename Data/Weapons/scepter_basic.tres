@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://b3csctruxawhd"]
 
-[ext_resource type="AudioStream" uid="uid://cp4i5p8iueiig" path="res://audio/Effects/Weapons/BowAttack.wav" id="1_1u34p"]
+[ext_resource type="AudioStream" uid="uid://cp4i5p8iueiig" path="res://audio/Weapons/BowAttack.wav" id="1_1u34p"]
 [ext_resource type="Script" uid="uid://hhe2ydney01y" path="res://scripts/stats/weapon.gd" id="1_xfdln"]
 
 [resource]

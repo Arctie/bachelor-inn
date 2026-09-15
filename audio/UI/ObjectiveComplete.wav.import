@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://b0nn58hx6yq08"
-path="res://.godot/imported/ObjectiveComplete.wav-902ddbb919b22c0bcb89f64d76e9cd8c.sample"
+path="res://.godot/imported/ObjectiveComplete.wav-f9dd9aca5062baa0a4cfffd611bb07d6.sample"
 
 [deps]
 
-source_file="res://audio/Effects/ObjectiveComplete.wav"
-dest_files=["res://.godot/imported/ObjectiveComplete.wav-902ddbb919b22c0bcb89f64d76e9cd8c.sample"]
+source_file="res://audio/UI/ObjectiveComplete.wav"
+dest_files=["res://.godot/imported/ObjectiveComplete.wav-f9dd9aca5062baa0a4cfffd611bb07d6.sample"]
 
 [params]
 

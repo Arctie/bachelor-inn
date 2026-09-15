@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://coi7gb4k867j2"
-path="res://.godot/imported/Bird_take_hit.wav-18c01cb3c555fc5e8b64178bc5cb5be6.sample"
+path="res://.godot/imported/Bird_take_hit.wav-57b527dfc3464ba9c309198a89df49a3.sample"
 
 [deps]
 
-source_file="res://audio/Effects/Characters/Bird_take_hit.wav"
-dest_files=["res://.godot/imported/Bird_take_hit.wav-18c01cb3c555fc5e8b64178bc5cb5be6.sample"]
+source_file="res://audio/Characters/Bird_take_hit.wav"
+dest_files=["res://.godot/imported/Bird_take_hit.wav-57b527dfc3464ba9c309198a89df49a3.sample"]
 
 [params]
 

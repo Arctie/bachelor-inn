@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://btwf3k6d44mvv"
-path="res://.godot/imported/Bomb_skill.wav-9580373728577343cca154c0485de111.sample"
+path="res://.godot/imported/Bomb_skill.wav-92361e966a7ef2dc488a11646c29e92a.sample"
 
 [deps]
 
-source_file="res://audio/Effects/Abilities/Bomb_skill.wav"
-dest_files=["res://.godot/imported/Bomb_skill.wav-9580373728577343cca154c0485de111.sample"]
+source_file="res://audio/Abilities/Bomb_skill.wav"
+dest_files=["res://.godot/imported/Bomb_skill.wav-92361e966a7ef2dc488a11646c29e92a.sample"]
 
 [params]
 

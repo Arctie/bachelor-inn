@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://cid4ftyh5ubox"
-path="res://.godot/imported/Bird_spawn_in.wav-e1c64be11d520d86c892d3b9114537af.sample"
+path="res://.godot/imported/Bird_spawn_in.wav-521cbc50430c4844113222faaa43225c.sample"
 
 [deps]
 
-source_file="res://audio/Effects/Characters/Bird_spawn_in.wav"
-dest_files=["res://.godot/imported/Bird_spawn_in.wav-e1c64be11d520d86c892d3b9114537af.sample"]
+source_file="res://audio/Characters/Bird_spawn_in.wav"
+dest_files=["res://.godot/imported/Bird_spawn_in.wav-521cbc50430c4844113222faaa43225c.sample"]
 
 [params]
 
