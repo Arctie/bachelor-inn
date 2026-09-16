@@ -58,6 +58,9 @@ var just_teleported: bool = false
 @export var stability : int
 @export var defense : int
 @export var resistance : int
+@export var movement_points_remaining : int
+@export var base_action_points : int = 1
+@export var action_points_remaining : int
 #endregion
 
 #var is_initialized: bool = false

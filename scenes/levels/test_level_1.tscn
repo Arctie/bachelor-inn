@@ -84,12 +84,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.5, -5)
 data = SubResource("Resource_lxfn4")
 state = SubResource("Resource_e2q1c")
 
-[node name="ObjectiveKillAll" parent="MissionObjective" parent_id_path=PackedInt32Array(327276810) index="0" unique_id=1411412953 instance=ExtResource("8_lxfn4")]
-
-[node name="Ghost_Enemy" parent="MissionObjective" parent_id_path=PackedInt32Array(327276810) index="1" unique_id=1339368304 instance=ExtResource("8_e2q1c")]
+[node name="Ghost_Enemy" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="1" unique_id=1339368304 instance=ExtResource("8_e2q1c")]
 transform = Transform3D(1, 0, 0, 0, 0.9996193, 0.027590154, 0, -0.027590154, 0.9996193, 13, 0.5, -5)
 data = SubResource("Resource_ruqf1")
 state = SubResource("Resource_ckkav")
+
+[node name="ObjectiveKillAll" parent="MissionObjective" parent_id_path=PackedInt32Array(327276810) index="0" unique_id=1411412953 instance=ExtResource("8_lxfn4")]
 
 [node name="Chest" parent="Chests" parent_id_path=PackedInt32Array(2019346901) index="0" unique_id=903149754 instance=ExtResource("2_lw4g3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0.5, 7)
