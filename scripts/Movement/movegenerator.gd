@@ -109,7 +109,10 @@ static func dijkstra(unit : Character, state : GameState, exclude_attacks : bool
 			
 		if can_move:
 			for tile: Vector3i in reachable:
-				commands.append(Move.new(start_pos, tile))
+				var move: Move = Move.new(start_pos, tile)
+				move.total_cost = cost_so_far.get(tile, 0)
+				#print("Move to: ", tile, " total_cost: ", move.total_cost)
+				commands.append(move)
 
 	# -------------------------
 	# 3) Build ALL ATTACK commands
@@ -538,6 +541,13 @@ static func get_valid_neighbours(pos : Vector3i, reachable : Array[Vector3i]) ->
 			valid.append(tile)
 	
 	return valid
+
+static func get_move_cost(start: Vector3i, end: Vector3i, game_state: GameState) -> int:
+	var path: Array[Vector3i] = MovementGrid.find_path(start, end, Main.level.movement_weights_map)
+	var total: int = 0
+	for tile in path:
+		total += Main.level.movement_grid.get_cost(tile)
+	return total
 
 class FrontierData extends RefCounted:
 	var tile : Vector3i

@@ -120,14 +120,9 @@ func _process_next_move(level: Node) -> void:
 		code = level.player_code_done
 	level.occupancy_map.set_cell_item(level.active_move.start_pos, GridMap.INVALID_CELL_ITEM)
 	level.occupancy_map.set_cell_item(level.active_move.end_pos, code)
-	print("move_to called on: ", level.selected_unit.data.unit_name if level.selected_unit else "null",
-	  " end_pos: ", level.active_move.end_pos)
+	#print("move_to called on: ", level.selected_unit.data.unit_name if level.selected_unit else "null",
+	  #" end_pos: ", level.active_move.end_pos)
 	level.selected_unit.move_to(level.active_move.end_pos)
-	# Deduct movement points
-	if level.is_player_turn and level.selected_unit != null:
-		if level.active_move is Move:
-			var move_cost: int = level.game_state.get_tile_cost(level.active_move.end_pos)
-			level.selected_unit.state.movement_points_remaining -= move_cost
 	level.selected_unit.pause_anim()
 	level.camera_controller.free_camera()
 	

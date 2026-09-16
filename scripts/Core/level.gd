@@ -710,12 +710,19 @@ func _handle_action_tile_click(pos: Vector3i) -> String:
 
 	# MOVE HAS PRIORITY
 	if found_move != null:
-		print("Executing MOVE to: ", pos)
+		print("Executing MOVE to: ", pos, " total_cost: ", found_move.total_cost)
+		print("Current MP before: ", selected_unit.state.movement_points_remaining)
+		# Deduct movement points (MP) from chosen move 
+		#if selected_unit.state.is_playable():
+			#selected_unit.state.movement_points_remaining -= found_move.total_cost
 		active_move = found_move
 		moves_stack.append(active_move)
 		camera_controller.focus_camera(selected_unit)
 		create_path(unit_pos, pos)
 		path_map.clear()
+		#var cost: int = MoveGenerator.get_move_cost(level.active_move.start_pos, level.active_move.end_pos, level.game_state)
+		#level.selected_unit.state.movement_points_remaining -= cost
+		print("Current MP afer: ", selected_unit.state.movement_points_remaining)
 		return "move"
 
 	elif found_attack != null:
