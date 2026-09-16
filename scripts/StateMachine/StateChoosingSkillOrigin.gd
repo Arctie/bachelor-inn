@@ -32,6 +32,13 @@ func handle_input(level: Node, event: InputEvent) -> void:
 		actual_target_pos = pos
 	var cast := CastSkill.new(caster.state.grid_position, pos, actual_target_pos, level.active_skill)
 	level.moves_stack.append(cast)
+	
+	# Deduct MP for moving to skill origin
+	if caster.state.is_playable() and pos != caster.state.grid_position:
+		for cmd: Command in level.current_moves:
+			if cmd is Move and cmd.end_pos == pos:
+				caster.state.movement_points_remaining -= cmd.total_cost
+				break
 	level.create_path(caster.state.grid_position, pos)
 	level.camera_controller.focus_camera(caster)
 	

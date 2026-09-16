@@ -621,7 +621,16 @@ func _handle_skill(pos : Vector3i) -> void:
 func _handle_attack_choice(pos: Vector3i) -> void:
 	active_move.end_pos = pos
 	moves_stack.append(active_move)
-
+	
+	 # Deduct MP for moving to attack origin
+	if selected_unit.state.is_playable() and pos != selected_unit.state.grid_position:
+		var move_cost: int = 0
+		for cmd in current_moves:
+			if cmd is Move and cmd.end_pos == pos:
+				move_cost = cmd.total_cost
+				break
+		selected_unit.state.movement_points_remaining -= move_cost
+	
 	create_path(
 		moves_stack.front().start_pos,
 		moves_stack.front().end_pos
