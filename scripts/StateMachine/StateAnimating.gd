@@ -88,18 +88,21 @@ func _process_next_move(level: Node) -> void:
 		if cast.skill != null and cast.skill.audio_cast != null:
 			level.selected_unit.audio_player.stream = cast.skill.audio_cast
 			level.selected_unit.audio_player.play()
-		#AudioManager2d.stop_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
 		await level.combat_vfx.play_skill(level.active_move.result)
+		# Deduct AP for player action
+		if level.is_player_turn and level.selected_unit != null:
+			level.selected_unit.state.action_points_remaining = 0
 		if _cancelled:
 			return
-		#AudioManager2d.play_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_HURT)
 	elif level.active_move is Attack:
 		var weapon: Weapon = level.selected_unit.state.weapon
 		if weapon != null and weapon.audio_attack != null:
 			level.selected_unit.audio_player.stream = weapon.audio_attack
 			level.selected_unit.audio_player.play()
-		#AudioManager2d.stop_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
 		await level.combat_vfx.play_attack(level.active_move.result)
+		# Deduct AP for player action
+		if level.is_player_turn and level.selected_unit != null:
+			level.selected_unit.state.action_points_remaining = 0
 		if _cancelled:
 			return
 	else:
@@ -120,6 +123,11 @@ func _process_next_move(level: Node) -> void:
 	print("move_to called on: ", level.selected_unit.data.unit_name if level.selected_unit else "null",
 	  " end_pos: ", level.active_move.end_pos)
 	level.selected_unit.move_to(level.active_move.end_pos)
+	# Deduct movement points
+	if level.is_player_turn and level.selected_unit != null:
+		if level.active_move is Move:
+			var move_cost: int = level.game_state.get_tile_cost(level.active_move.end_pos)
+			level.selected_unit.state.movement_points_remaining -= move_cost
 	level.selected_unit.pause_anim()
 	level.camera_controller.free_camera()
 	
@@ -177,9 +185,19 @@ func _finish_animation(level: Node) -> void:
 		if not _is_processing:
 			level.call_deferred("MoveSingleAI")
 	else:
-		if is_instance_valid(level.last_selected_unit): # != null:
-			level.select_unit(level.last_selected_unit)
-			level.state_machine.transition_to(StateSelectingMove.new())
+		if is_instance_valid(level.last_selected_unit):
+			var unit: Character = level.last_selected_unit
+			if unit.state.is_playable() and (unit.state.movement_points_remaining > 0 or unit.state.action_points_remaining > 0):
+				level.select_unit(level.last_selected_unit)
+				level.state_machine.transition_to(StateSelectingMove.new())
+			else:
+				# Last selected unit is done - find a new one
+				var selectables: Array = level.get_selectable_characters()
+				if not selectables.is_empty():
+					level.select_unit(selectables.front())
+					level.state_machine.transition_to(StateSelectingMove.new())
+				else:
+					level.state_machine.transition_to(StateSelectingUnit.new())
 		else:
 			var selectables: Array = level.get_selectable_characters()
 			if not selectables.is_empty():

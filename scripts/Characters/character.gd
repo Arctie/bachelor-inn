@@ -286,15 +286,12 @@ func move_to(pos: Vector3i, simulate_only: bool = false) -> void:
 
 func reset() -> void:
 	state.is_alive = true;
-	# slowly heal sanity
 	if state.is_playable():
-		## TODO: Decide if this is intended - Heal sanity after each round
-		#state.current_sanity += 1;
 		state.is_ability_used = false
-	#hide_ui();
+		state.movement_points_remaining = state.movement
+		state.action_points_remaining = state.base_action_points
 	show();
 	state.is_moved = false;
-	#my_material.set_shader_parameter("grey_tint", false)
 	Main.level.emit_signal("character_stats_changed", self)
 
 

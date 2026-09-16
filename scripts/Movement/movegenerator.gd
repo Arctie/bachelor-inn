@@ -27,11 +27,19 @@ static func dijkstra(unit : Character, state : GameState, exclude_attacks : bool
 	frontier.insert(FrontierData.new(start_pos, 0))
 	cost_so_far[start_pos] = 0
 
-	#var movement_range: int = unit.state.movement
-	var movement_range: int = unit.state.get_effective_movement() 
+	# --- Set movement rules for player units vs. enemies
+	var movement_range: int #= unit.state.get_effective_movement() 
+	# NOTE: Player units use movement poitns (MP)
+	if unit.state.is_playable():
+		movement_range = unit.state.movement_points_remaining
+	else:
+	# NOTE: Enemy units uses move one time and/or use an action, then done
+		movement_range = unit.state.get_effective_movement()
+		if unit.state.is_moved:
+			movement_range = 0
 	
-	if unit.state.is_moved:
-		movement_range = 0
+	#if unit.state.is_moved:
+		#movement_range = 0
 
 	# -------------------------
 	# 1) Dijkstra for reachables
@@ -93,7 +101,13 @@ static func dijkstra(unit : Character, state : GameState, exclude_attacks : bool
 	# 2) Build MOVE commands
 	# -------------------------
 	if !exclude_move:
-		if not unit.state.is_moved:
+		var can_move: bool
+		if unit.state.is_playable():
+			can_move = unit.state.movement_points_remaining > 0
+		else:
+			can_move = not unit.state.is_moved
+			
+		if can_move:
 			for tile: Vector3i in reachable:
 				commands.append(Move.new(start_pos, tile))
 
@@ -103,7 +117,14 @@ static func dijkstra(unit : Character, state : GameState, exclude_attacks : bool
 	#    (Temporary rule: enemy must be on same y as origin)
 	# -------------------------
 	if !exclude_attacks:
-		if not unit.state.is_ability_used:
+		var can_act: bool
+		if unit.state.is_playable():
+			can_act = unit.state.action_points_remaining > 0
+		else:
+			can_act = not unit.state.is_ability_used
+			
+		#if not unit.state.is_ability_used:
+		if can_act:
 			# Include "attack from current position"
 			var attack_origins: Array[Vector3i] = [start_pos]
 			for r: Vector3i in reachable:
