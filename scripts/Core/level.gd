@@ -332,8 +332,8 @@ func get_selectable_characters() -> Array[Character]:
 		if not c.state.is_alive:
 			continue
 		result.append(c)
-		if not c.state.is_moved:
-			unmoved.append(c)
+		#if not c.state.is_moved:
+			#unmoved.append(c)
 		if c.state.movement_points_remaining > 0 or c.state.action_points_remaining > 0:
 			unmoved.append(c)
 	#return result
