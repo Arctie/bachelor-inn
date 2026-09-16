@@ -855,7 +855,8 @@ func create_path(start : Vector3i, end : Vector3i) -> void:
 	#movement_grid.fill_from_commands(foo3, game_state)
 	#
 	##var path := movement_grid.get_path(start, end)
-	var path: Array[Vector3i] = MovementGrid.find_path(start, end,movement_weights_map)
+	var path: Array[Vector3i] = MovementGrid.find_path(start, end,movement_weights_map, occupancy_map)
+	print("create_path result: ", path.size(), " points")
 	#print("Path found: ", path.size(), " points from ", start, " to ", end)
 	#print("movement_grid used_cells: ", movement_grid.used_cells.size())
 

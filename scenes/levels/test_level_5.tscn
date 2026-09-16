@@ -27,6 +27,8 @@ bt_profile = 2
 metadata/_custom_type_script = "uid://dnpndvvrnj26q"
 
 [node name="test_level_5" unique_id=656823534 instance=ExtResource("1_oujqn")]
+level_name = null
+level_music = null
 
 [node name="TerrainGrid" parent="." index="0" unique_id=1846160155]
 data = {

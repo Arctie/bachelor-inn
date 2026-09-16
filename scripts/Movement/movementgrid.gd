@@ -148,7 +148,8 @@ func get_path(start : Vector3i, goal : Vector3i) -> Array[Vector3i]:
 	# No path found
 	return []
 
-static func find_path(start: Vector3i, goal: Vector3i, weights_map: GridMap) -> Array[Vector3i]:
+static func find_path(start: Vector3i, goal: Vector3i, weights_map: GridMap, occupancy_map: GridMap = null) -> Array[Vector3i]:
+	print("find_path: ", start, " -> ", goal)
 	var open_set := [start]
 	var came_from := {}
 	var g_score := {start: 0.0}
@@ -170,6 +171,9 @@ static func find_path(start: Vector3i, goal: Vector3i, weights_map: GridMap) -> 
 		for neighbor in _get_neighbors(current):
 			if weights_map.get_cell_item(neighbor) == GridMap.INVALID_CELL_ITEM:
 				continue  # not a walkable tile
+			if occupancy_map != null and neighbor != goal:
+				if occupancy_map.get_cell_item(neighbor) != GridMap.INVALID_CELL_ITEM:
+					continue
 			var tentative_g: float = g_score[current] + 1.0
 			if not g_score.has(neighbor) or tentative_g < g_score[neighbor]:
 				came_from[neighbor] = current
@@ -177,18 +181,27 @@ static func find_path(start: Vector3i, goal: Vector3i, weights_map: GridMap) -> 
 				f_score[neighbor] = tentative_g + _heuristic(neighbor, goal)
 				if not open_set.has(neighbor):
 					open_set.append(neighbor)
+	print("find_path: no path found")
 	return []
 
 static func _heuristic(a: Vector3i, b: Vector3i) -> float:
 	return abs(a.x - b.x) + abs(a.z - b.z)
 
 static func _get_neighbors(pos: Vector3i) -> Array[Vector3i]:
-	return [
-		pos + Vector3i(1, 0, 0),
-		pos + Vector3i(-1, 0, 0),
-		pos + Vector3i(0, 0, 1),
-		pos + Vector3i(0, 0, -1)
+	var neighbors: Array[Vector3i] = []
+	
+	var offsets := [
+		Vector3i(1, 0, 0),
+		Vector3i(-1, 0, 0),
+		Vector3i(0, 0, 1),
+		Vector3i(0, 0, -1)
 	]
+	
+	for offset: Vector3i in offsets:
+		neighbors.append(pos + offset)
+		neighbors.append(pos + offset + Vector3i(0, 1, 0))
+		neighbors.append(pos + offset + Vector3i(0, -1, 0))
+	return neighbors
 
 static func _reconstruct_path(came_from: Dictionary, current: Vector3i) -> Array[Vector3i]:
 	var path: Array[Vector3i] = [current]

@@ -186,7 +186,7 @@ static func generate_attack(unit : Character, game_state : GameState) -> Array[A
 			
 			var consider_terrain_cost : bool = false
 			var include_start_in_output : bool = false
-			var go_through_heroes : bool = true
+			var go_through_heroes : bool = false
 			var go_through_monsters : bool = false
 			var include_hero_tiles_in_output : bool = false
 			var include_monster_tiles_in_output : bool = true
@@ -240,8 +240,12 @@ static func generate_move(unit : Character, game_state : GameState, store_path :
 	var moves : Array[Move]
 	if unit == null:
 		return moves
-	if unit.state.is_moved:
-		return moves
+	if unit.state.is_playable():
+		if unit.state.movement_points_remaining <= 0:
+			return moves
+	else:
+		if unit.state.is_moved:
+			return moves
 	
 	var targets : Array[Vector3i]
 	
@@ -254,7 +258,7 @@ static func generate_move(unit : Character, game_state : GameState, store_path :
 			
 			var consider_terrain_cost : bool = false
 			var include_start_in_output : bool = true
-			var go_through_heroes : bool = true
+			var go_through_heroes : bool = false
 			var go_through_monsters : bool = false
 			var include_hero_tiles_in_output : bool = false
 			var include_monster_tiles_in_output : bool = false
