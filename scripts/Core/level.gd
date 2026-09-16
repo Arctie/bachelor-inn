@@ -713,8 +713,8 @@ func _handle_action_tile_click(pos: Vector3i) -> String:
 		print("Executing MOVE to: ", pos, " total_cost: ", found_move.total_cost)
 		print("Current MP before: ", selected_unit.state.movement_points_remaining)
 		# Deduct movement points (MP) from chosen move 
-		#if selected_unit.state.is_playable():
-			#selected_unit.state.movement_points_remaining -= found_move.total_cost
+		if selected_unit.state.is_playable():
+			selected_unit.state.movement_points_remaining -= found_move.total_cost
 		active_move = found_move
 		moves_stack.append(active_move)
 		camera_controller.focus_camera(selected_unit)
@@ -835,16 +835,18 @@ func create_path(start : Vector3i, end : Vector3i) -> void:
 	#print("create_path() called")
 	animation_path.clear()
 	path_map.clear()
-	var foo0 : Command = moves_stack.front()
-	var foo1 : Vector3i = foo0.start_pos
-	var foo2 : Character = game_state.get_unit(foo1)
-	#print("create_path - looking for unit at: ", foo1, " found: ", foo2.data.unit_name if foo2 else "NULL")
-	if(foo2.data.unit_name == "Tucy"):
-		pass
-	var foo3 : Array[Command] = MoveGenerator.generate(foo2, game_state)
-	movement_grid.fill_from_commands(foo3, game_state)
-	
-	var path := movement_grid.get_path(start, end)
+	selected_unit = get_unit(start)
+	#var foo0 : Command = moves_stack.front()
+	#var foo1 : Vector3i = foo0.start_pos
+	#var foo2 : Character = game_state.get_unit(foo1)
+	##print("create_path - looking for unit at: ", foo1, " found: ", foo2.data.unit_name if foo2 else "NULL")
+	#if(foo2.data.unit_name == "Tucy"):
+		#pass
+	#var foo3 : Array[Command] = MoveGenerator.generate(foo2, game_state)
+	#movement_grid.fill_from_commands(foo3, game_state)
+	#
+	##var path := movement_grid.get_path(start, end)
+	var path: Array[Vector3i] = MovementGrid.find_path(start, end,movement_weights_map)
 	#print("Path found: ", path.size(), " points from ", start, " to ", end)
 	#print("movement_grid used_cells: ", movement_grid.used_cells.size())
 
@@ -858,7 +860,7 @@ func create_path(start : Vector3i, end : Vector3i) -> void:
 			#print(" - ", c.data.unit_name, " at ", c.state.grid_position)
 			#selected_unit = get_unit(start)
 			
-	selected_unit = get_unit(start)
+	#selected_unit = get_unit(start)
 
 
 func reset_all_units() -> void:
