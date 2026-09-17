@@ -1074,8 +1074,8 @@ func tick_all_units_end_round() -> void:
 
 
 func _on_ribbon_skill_pressed(skill: Skill) -> void:
-	if not (state_machine.current is StateSelectingMove):
-		return
+	#if not (state_machine.current is StateSelectingMove):
+		#return
 	if selected_unit != null and selected_unit.state.is_ability_used:
 		print("Unit has already used their ability this turn.")
 		return
@@ -1127,6 +1127,7 @@ func _exit_skill_target_mode() -> void:
 	active_skill = null
 	skill_caster = null
 	valid_skill_target_tiles.clear()
+	clear_aoe_preview()
 	path_map.clear()
 	if is_instance_valid(caster):
 		print("Selecting caster: " + caster.name)
@@ -1529,8 +1530,8 @@ func show_aoe_preview(center: Vector3i, skill: Skill) -> void:
 			#aoe_preview_map.set_cell_item(tile, 8) ## Change index 8  if needed
 
 func clear_aoe_preview() -> void:
-	if active_skill == null or active_skill.aoe_shape == Skill.AoEShape.NONE:
-		return
+	#if active_skill == null or active_skill.aoe_shape == Skill.AoEShape.NONE:
+		#return
 	aoe_preview_map.clear()
 	# Redraw skill target tiles
 	#if state_machine.current is StateChoosingSkillTarget:#is_choosing_skill_target:

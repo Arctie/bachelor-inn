@@ -1,10 +1,12 @@
 extends LevelState
 class_name StateChoosingSkillTarget
+## This is where we decide target tile to cast a skill on
 
 func _enter() -> void:
 	print("ENTER STATE: StateChoosingSkillTarget.")
 
-func _exit() -> void:
+func _exit(level: Node) -> void:
+	level.clear_aoe_preview()
 	print("EXIT STATE: StateChoosingSkillTarget.")
 
 func update(level: Node, delta: float) -> void:
@@ -25,6 +27,42 @@ func handle_input(level: Node, event: InputEvent) -> void:
 		return
 	var pos: Vector3i = level.get_grid_cell_from_mouse()
 	level._update_cursor(pos)
+	
+	# Key inputs
+	if event is InputEventKey and not event.echo and event.pressed:
+		match event.keycode:
+			KEY_TAB:
+				level._exit_skill_target_mode()
+				print("Key Input TAB registered in SelectingMove.")
+				level.select_next_character()
+				level.state_machine.transition_to(StateSelectingMove.new())
+				return
+			KEY_1:
+				var ui := level.get_tree().get_first_node_in_group("ui_controller")
+				if ui:
+					ui.ribbon.trigger_skill_by_index(0)
+				return
+			KEY_2:
+				var ui := level.get_tree().get_first_node_in_group("ui_controller")
+				if ui:
+					ui.ribbon.trigger_skill_by_index(1)
+				return
+			KEY_3:
+				var ui := level.get_tree().get_first_node_in_group("ui_controller")
+				if ui:
+					ui.ribbon.trigger_skill_by_index(2)
+				return
+			KEY_4:
+				var ui := level.get_tree().get_first_node_in_group("ui_controller")
+				if ui:
+					ui.ribbon.trigger_skill_by_index(3)
+				return
+			KEY_5:
+				var ui := level.get_tree().get_first_node_in_group("ui_controller")
+				if ui:
+					ui.ribbon.trigger_skill_by_index(4)
+				return
+	
 	if not event is InputEventMouseButton:
 		return
 	if not event.pressed:
