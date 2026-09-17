@@ -53,6 +53,7 @@ var _last_hovered_pos: Vector3i = Vector3i(-999, -999, -999)
 @onready var trigger_map: GridMap = %TriggerOverlay
 @onready var path_map: GridMap = $PathOverlay
 @onready var fog_map: GridMap = $FogOverlay
+var aoe_preview_map: GridMap
 
 @onready var turn_transition: CanvasLayer = $TurnTransition/CanvasLayer
 @onready var turn_transition_animation_player: AnimationPlayer = $TurnTransition/AnimationPlayer
@@ -181,6 +182,9 @@ func _set_up_grids() -> void:
 	movement_weights_grid = Grid.new(movement_weights_map)
 	path_grid = Grid.new(movement_map)
 	fog_grid = Grid.new(fog_map)
+	aoe_preview_map = path_map.duplicate()
+	aoe_preview_map.clear()
+	add_child(aoe_preview_map)
 
 	Dialogic.signal_event.connect(_on_dialogic_signal)
 
@@ -1514,22 +1518,24 @@ func _get_aoe_tiles(center: Vector3i, skill: Skill) -> Array[Vector3i]:
 func show_aoe_preview(center: Vector3i, skill: Skill) -> void:
 	if skill.aoe_shape == Skill.AoEShape.NONE:
 		return
-	path_map.clear()
+	aoe_preview_map.clear()
 	var tiles := _get_aoe_tiles(center, skill)
 	for tile in tiles:
-		var valid := movement_weights_map.get_cell_item(tile) != GridMap.INVALID_CELL_ITEM
-		print("  tile: ", tile, " valid_in_movement_weights: ", valid)
-		if valid:
-			path_map.set_cell_item(tile, 8) ## Change index 8  if needed
+		if movement_weights_map.get_cell_item(tile) != GridMap.INVALID_CELL_ITEM:
+			aoe_preview_map.set_cell_item(tile, 8)
+		#var valid := movement_weights_map.get_cell_item(tile) != GridMap.INVALID_CELL_ITEM
+		#print("  tile: ", tile, " valid_in_movement_weights: ", valid)
+		#if valid:
+			#aoe_preview_map.set_cell_item(tile, 8) ## Change index 8  if needed
 
 func clear_aoe_preview() -> void:
 	if active_skill == null or active_skill.aoe_shape == Skill.AoEShape.NONE:
 		return
-	#path_map.clear()
+	aoe_preview_map.clear()
 	# Redraw skill target tiles
-	if state_machine.current is StateChoosingSkillTarget:#is_choosing_skill_target:
-		for tile : Vector3i in valid_skill_target_tiles.keys():
-			path_map.set_cell_item(tile, skill_target_code)
+	#if state_machine.current is StateChoosingSkillTarget:#is_choosing_skill_target:
+		#for tile : Vector3i in valid_skill_target_tiles.keys():
+			#path_map.set_cell_item(tile, skill_target_code)
 
 func _debug_terrain() -> void:
 	# Print a few known positions to understand the terrain data

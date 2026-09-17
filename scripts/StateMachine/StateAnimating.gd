@@ -8,6 +8,7 @@ var _move_sound_playing: bool = false
 func enter(level: Node) -> void:
 	print("ENTER STATE: StateAnimating. instance: ", get_instance_id())
 	#_cancelled = false
+	level.aoe_preview_map.clear()
 	_is_processing = false
 	_move_sound_playing = false
 
