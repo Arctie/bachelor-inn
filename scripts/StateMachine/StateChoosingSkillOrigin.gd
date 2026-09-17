@@ -1,6 +1,5 @@
 extends LevelState
 class_name StateChoosingSkillOrigin
-
 ## This is where we decide where to cast skills from
 
 func _enter(level: Node) -> void:

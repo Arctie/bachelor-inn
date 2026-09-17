@@ -1,5 +1,6 @@
 extends LevelState
 class_name StateChoosingSkill
+# Old state - not active.
 
 func enter(level: Node) -> void:
 	print("ENTER STATE: StateChoosingSkill.")

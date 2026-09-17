@@ -7,6 +7,18 @@ func _enter() -> void:
 func _exit() -> void:
 	print("EXIT STATE: StateChoosingSkillTarget.")
 
+func update(level: Node, delta: float) -> void:
+	var pos: Vector3i = level.get_grid_cell_from_mouse()
+	#if pos == level._last_hovered_pos:
+		#return
+	#level._last_hovered_pos = pos
+	
+	if level.valid_skill_target_tiles.has(pos):
+		Input.set_custom_mouse_cursor(level.cursor_wand, Input.CURSOR_ARROW, Vector2(8, 8))
+		level.show_aoe_preview(pos, level.active_skill)
+	else:
+		Input.set_custom_mouse_cursor(null)
+		level.clear_aoe_preview()
 
 func handle_input(level: Node, event: InputEvent) -> void:
 	if not level._can_handle_input(event):

@@ -1243,14 +1243,14 @@ func _update_cursor_on_hover() -> void:
 		return
 	_last_hovered_pos = grid_pos
 	
-	if state_machine.current is StateChoosingSkill:
-		if valid_skill_target_tiles.has(grid_pos):
-			Input.set_custom_mouse_cursor(cursor_wand, Input.CURSOR_ARROW, Vector2(8, 8))
-			_show_aoe_preview(grid_pos, active_skill)
-		else:
-			Input.set_custom_mouse_cursor(null)
-			_clear_aoe_preview()
-		return
+	#if state_machine.current is StateChoosingSkillTarget:
+		#if valid_skill_target_tiles.has(grid_pos):
+			#Input.set_custom_mouse_cursor(cursor_wand, Input.CURSOR_ARROW, Vector2(8, 8))
+			#show_aoe_preview(grid_pos, active_skill)
+		#else:
+			#Input.set_custom_mouse_cursor(null)
+			#clear_aoe_preview()
+		#return
 	
 	var cell := movement_map.get_cell_item(grid_pos)
 	var cell_name := movement_map.mesh_library.get_item_name(cell) if cell != GridMap.INVALID_CELL_ITEM else ""
@@ -1511,7 +1511,7 @@ func _get_aoe_tiles(center: Vector3i, skill: Skill) -> Array[Vector3i]:
 	
 	return tiles
 
-func _show_aoe_preview(center: Vector3i, skill: Skill) -> void:
+func show_aoe_preview(center: Vector3i, skill: Skill) -> void:
 	if skill.aoe_shape == Skill.AoEShape.NONE:
 		return
 	path_map.clear()
@@ -1522,12 +1522,12 @@ func _show_aoe_preview(center: Vector3i, skill: Skill) -> void:
 		if valid:
 			path_map.set_cell_item(tile, 8) ## Change index 8  if needed
 
-func _clear_aoe_preview() -> void:
+func clear_aoe_preview() -> void:
 	if active_skill == null or active_skill.aoe_shape == Skill.AoEShape.NONE:
 		return
-	path_map.clear()
+	#path_map.clear()
 	# Redraw skill target tiles
-	if is_choosing_skill_target:
+	if state_machine.current is StateChoosingSkillTarget:#is_choosing_skill_target:
 		for tile : Vector3i in valid_skill_target_tiles.keys():
 			path_map.set_cell_item(tile, skill_target_code)
 
