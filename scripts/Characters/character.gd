@@ -302,7 +302,7 @@ func apply_damage(amount: int, simulate_only: bool = false,
 	if amount <= 0:
 		return false
 	if simulate_only == false:
-		print("apply_damage - audio_player: ", audio_player, " audio_hurt: ", data.audio_hurt)
+		#print("apply_damage - audio_player: ", audio_player, " audio_hurt: ", data.audio_hurt)
 		play_audio_hurt()
 	
 	# Turn hostile if attacked
@@ -395,7 +395,7 @@ func get_default_weapon_id() -> String:
 func play_audio_hurt() -> void:
 	if data.audio_hurt != null and audio_player != null:
 		audio_player.stream = data.audio_hurt
-		print("Playing audio: ", data.audio_hurt)
+		#print("Playing audio: ", data.audio_hurt)
 		audio_player.play()
 	else:
 		AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_HURT)
@@ -403,35 +403,35 @@ func play_audio_hurt() -> void:
 func play_audio_death() -> void:
 	if data.audio_death != null and audio_player != null:
 		audio_player.stream = data.audio_death
-		print("Playing audio: ", data.audio_death)
+		#print("Playing audio: ", data.audio_death)
 		audio_player.play()
 	else:
 		AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_DEATH)
 
 func play_audio_move() -> void:
 	if data.audio_move != null and audio_player != null:
-		print("play_audio_move called from: ", get_stack())
+		#print("play_audio_move called from: ", get_stack())
 		audio_player.stream = data.audio_move
-		print("Playing audio: ", data.audio_move)
+		#print("Playing audio: ", data.audio_move)
 		audio_player.play()
 	else:
-		print("Playing FALLBACK audio SOUND_EFFECT_TYPE.UNIT_MOVE")
+		#print("Playing FALLBACK audio SOUND_EFFECT_TYPE.UNIT_MOVE")
 		AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
 
 func play_audio_spawned_in() -> void:
 	if data.audio_spawned_in != null and audio_player != null:
 		audio_player.stream = data.audio_spawned_in
-		print("Playing audio: ", data.audio_spawned_in)
+		#print("Playing audio: ", data.audio_spawned_in)
 		audio_player.play()
 	else:
-		print("Play Audio Spawned In: Playing FALLBACK audio SOUND_EFFECT_TYPE.UNIT_MOVE")
+		#print("Play Audio Spawned In: Playing FALLBACK audio SOUND_EFFECT_TYPE.UNIT_MOVE")
 		AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
 
 func play_audio_selected() -> void:
 	if data.audio_selected != null and audio_player != null:
 		audio_player.stream = data.audio_selected
-		print("Playing audio: ", data.audio_selected)
+		#print("Playing audio: ", data.audio_selected)
 		audio_player.play()
 	else:
-		print("Play Audio Select: Playing FALLBACK audio SOUND_EFFECT_TYPE.UNIT_MOVE")
+		#print("Play Audio Select: Playing FALLBACK audio SOUND_EFFECT_TYPE.UNIT_MOVE")
 		AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)

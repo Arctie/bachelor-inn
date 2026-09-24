@@ -29,6 +29,13 @@ func set_skills(in_skills: Array[Skill]) -> void:
 			b.tooltip_text = "%s\n%s" % [s.skill_name, s.tooltip]
 
 			b.set_meta("skill", s)
+			# Disable if out of uses
+			if s.has_quantity and Main.level.selected_unit != null:
+				var qty: int = Main.level.selected_unit.state.item_quantities.get(s.skill_id, 0)
+				b.disabled = qty <= 0
+				b.modulate = Color(0.4, 0.4, 0.4, 1.0) if qty <= 0 else Color(1, 1, 1, 1)
+			else:
+				b.disabled = false
 		else:
 			b.hide()
 			b.disabled = true

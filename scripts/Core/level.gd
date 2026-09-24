@@ -346,20 +346,20 @@ func get_selectable_characters() -> Array[Character]:
 
 func select_next_character() -> void:
 	var list := get_selectable_characters()
-	print("select_next_character - list size: ", list.size(), " selected: ", selected_unit.data.unit_name if selected_unit else "null")
+	#print("select_next_character - list size: ", list.size(), " selected: ", selected_unit.data.unit_name if selected_unit else "null")
 	if list.is_empty():
-		print("list is empty, returning")
+		#print("list is empty, returning")
 		return
 	if selected_unit == null:
 		try_select_unit(list[0])
 		return
 	var index := list.find(selected_unit)
-	print("index of selected: ", index)
+	#print("index of selected: ", index)
 	if index == -1:
 		try_select_unit(list[0])
 		return
 	var next_index := (index + 1) % list.size()
-	print("selecting next index: ", next_index, " unit: ", list[next_index].data.unit_name)
+	#print("selecting next index: ", next_index, " unit: ", list[next_index].data.unit_name)
 	try_select_unit(list[next_index])
 
 func get_grid_cell_from_mouse() -> Vector3i:
@@ -523,6 +523,8 @@ func _handle_skill(pos : Vector3i) -> void:
 	
 	## checks to see if skills should be cancelled
 	var exit_skill : bool = false
+	if used_skill.has_quantity and caster.state.item_quantities.get(used_skill.skill_id, 0) <= 0:
+		exit_skill = true
 	if not valid_skill_target_tiles.has(p):
 		exit_skill = true
 	if target == null and used_skill.aoe_shape == Skill.AoEShape.NONE: ## TODO: Add AoE.none check here
@@ -614,7 +616,10 @@ func _handle_skill(pos : Vector3i) -> void:
 		Tutorial.heal_cast = true
 		Tutorial.can_advance_timeline = true
 		Tutorial.advance_timeline()
-	
+	#if used_skill.has_quantity:
+		#caster.state.item_quantities[used_skill.skill_id] -= 1
+		#print("Item used: ", used_skill.skill_id, " remaining: ", caster.state.item_quantities[used_skill.skill_id])
+
 	_exit_skill_target_mode()
 	print("is_ability_used after exit: ", caster.state.is_ability_used)
 	if is_instance_valid(caster):
@@ -1078,6 +1083,9 @@ func _on_ribbon_skill_pressed(skill: Skill) -> void:
 		#return
 	if selected_unit != null and selected_unit.state.is_ability_used:
 		print("Unit has already used their ability this turn.")
+		return
+	if skill.has_quantity and selected_unit.state.item_quantities.get(skill.skill_id, 0) <= 0:
+		print("No uses remaining for: ", skill.skill_id)
 		return
 	_exit_skill_target_mode()
 	movement_grid.clear()

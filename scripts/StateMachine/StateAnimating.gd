@@ -93,6 +93,11 @@ func _process_next_move(level: Node) -> void:
 		# Deduct AP for player action
 		if level.is_player_turn and level.selected_unit != null:
 			level.selected_unit.state.action_points_remaining = 0
+		# Deduct item quantity
+		if cast.skill != null and cast.skill.has_quantity and level.selected_unit != null:
+			level.selected_unit.state.item_quantities[cast.skill.skill_id] -= 1
+			level.emit_signal("character_stats_changed", level.selected_unit)
+			print("Item used: ", cast.skill.skill_id, " remaining: ", level.selected_unit.state.item_quantities[cast.skill.skill_id])
 		if _cancelled:
 			return
 	elif level.active_move is Attack:

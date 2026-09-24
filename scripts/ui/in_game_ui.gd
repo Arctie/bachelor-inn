@@ -166,6 +166,9 @@ func _on_character_stats_changed(character: Character) -> void:
 		
 	for preview: CharacterPreview in previews.values():
 		preview.update_effects_ui(character)
+	
+	if character == Main.level.selected_unit:
+		ribbon.set_skills(character.state.skills)
 
 
 func _on_party_updated(characters: Array[Character]) -> void:

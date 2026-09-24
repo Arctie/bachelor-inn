@@ -257,6 +257,9 @@ func read(save_slot: int) -> bool:
 			var s: Skill = SkillRegistry.get_skill(id)
 			if s != null:
 				state.skills.append(s)
+				if s.has_quantity:
+					var saved_qty: int = state_dict.get("item_quantities", {}).get(s.skill_id, s.base_quantity)
+					state.item_quantities[s.skill_id] = saved_qty
 		
 		character.data = data
 		character.state = state

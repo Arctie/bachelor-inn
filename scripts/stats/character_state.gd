@@ -61,7 +61,7 @@ var just_teleported: bool = false
 @export var movement_points_remaining : int
 @export var base_action_points : int = 1
 @export var action_points_remaining : int
-@export var items_quantities: Dictionary = {}
+@export var item_quantities: Dictionary = {}
 #endregion
 
 #var is_initialized: bool = false
@@ -222,6 +222,7 @@ func save() -> Dictionary:
 		"current_health": current_health,
 		"current_sanity": current_sanity,
 		"weapon_id": weapon.weapon_id,
-		"skill_ids" : ids
+		"skill_ids" : ids,
+		"item_quantities": item_quantities
 	}
 #endregion
