@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://b10bf6hwaqddg" path="res://scenes/Characters/Player/alfred.tscn" id="5_bfdei"]
 [ext_resource type="AudioStream" uid="uid://cm3hqys15xllp" path="res://audio/CharacterSounds/Unit_on_spawned_in.wav" id="5_njq3j"]
 [ext_resource type="Script" uid="uid://csv21vgg7ba7q" path="res://scripts/Characters/CharacterDefinition.gd" id="6_8me3j"]
+[ext_resource type="Resource" uid="uid://cokhndg82vc8h" path="res://Data/Abilities/bomb_basic.tres" id="10_ix6uy"]
+[ext_resource type="Resource" uid="uid://cqwy7r0vxoxy" path="res://Data/Abilities/melee_sweep.tres" id="11_neahe"]
 
 [sub_resource type="Resource" id="Resource_wepu0"]
 script = ExtResource("1_3c41g")
@@ -32,7 +34,7 @@ metadata/_custom_type_script = "uid://cfb66ehlpe84n"
 [sub_resource type="Resource" id="Resource_p06qf"]
 script = ExtResource("2_bbets")
 weapon = ExtResource("5_bbets")
-skills = Array[ExtResource("3_dn4p7")]([ExtResource("4_bbets")])
+skills = Array[ExtResource("3_dn4p7")]([ExtResource("4_bbets"), ExtResource("10_ix6uy"), ExtResource("11_neahe")])
 metadata/_custom_type_script = "uid://dnpndvvrnj26q"
 
 [resource]

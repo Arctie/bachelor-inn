@@ -580,7 +580,7 @@ func _handle_skill(pos : Vector3i) -> void:
 	#var used_action : bool = used_skill.uses_action
 	
 	## AoE does not mean every spell cast is AoE, it just checks for AoE effects
-	var aoe_tiles := _get_aoe_tiles(p, used_skill)
+	var aoe_tiles := _get_aoe_tiles(p, used_skill, caster)
 	print("AoE center: ", p, " shape: ", used_skill.aoe_shape, " size: ", used_skill.aoe_size, " tiles: ", aoe_tiles.size())
 	for aoe_pos in aoe_tiles:
 		if aoe_pos == p:
@@ -1477,7 +1477,7 @@ func _check_for_victory_trigger() -> void:
 			level_has_victory_trigger = true
 			return
 
-func _get_aoe_tiles(center: Vector3i, skill: Skill) -> Array[Vector3i]:
+func _get_aoe_tiles(center: Vector3i, skill: Skill, caster: Character = null) -> Array[Vector3i]:
 	var tiles: Array[Vector3i] = []
 	var size := skill.aoe_size
 	
@@ -1503,7 +1503,7 @@ func _get_aoe_tiles(center: Vector3i, skill: Skill) -> Array[Vector3i]:
 						var y := get_terrain_height(center.x + dx, center.z + dz, center.y)
 						tiles.append(Vector3i(center.x + dx, y, center.z + dz))
 		Skill.AoEShape.LINE:
-			var caster_pos := skill_caster.state.grid_position
+			var caster_pos := caster.state.grid_position
 			var dx : int = sign(center.x - caster_pos.x)
 			var dz : int = sign(center.z - caster_pos.z)
 			var current := caster_pos
@@ -1513,14 +1513,40 @@ func _get_aoe_tiles(center: Vector3i, skill: Skill) -> Array[Vector3i]:
 				var ny := get_terrain_height(nx, nz, current.y)
 				current = Vector3i(nx, ny, nz)
 				tiles.append(current)
+		Skill.AoEShape.ADJACENT_ONLY:
+			## If range of the skill is 0 = cast on self
+			tiles.append(Vector3i(center.x + 1, center.y, center.z))
+			tiles.append(Vector3i(center.x + 1, center.y, center.z + 1))
+			tiles.append(Vector3i(center.x, center.y, center.z + 1))
+			tiles.append(Vector3i(center.x - 1, center.y, center.z +1))
+			tiles.append(Vector3i(center.x - 1, center.y, center.z))
+			tiles.append(Vector3i(center.x - 1, center.y, center.z - 1))
+			tiles.append(Vector3i(center.x, center.y, center.z - 1))
+			tiles.append(Vector3i(center.x + 1, center.y, center.z - 1))
+		Skill.AoEShape.THREE_TILES_LINE:
+			## Made for melee swipe attack
+			if skill_caster == null:
+				return tiles
+			var caster_pos := caster.state.grid_position
+			# To the right or left
+			if center.z == caster_pos.z and center != caster_pos:
+				tiles.append(Vector3i(center))
+				tiles.append(Vector3i(center.x, center.y, center.z + 1))
+				tiles.append(Vector3i(center.x, center.y, center.z - 1))
+			# Up or down
+			if center.x == caster_pos.x and center != caster_pos:
+				tiles.append(Vector3i(center))
+				tiles.append(Vector3i(center.x +1, center.y, center.z))
+				tiles.append(Vector3i(center.x -1, center.y, center.z))
 	
 	return tiles
 
 func show_aoe_preview(center: Vector3i, skill: Skill) -> void:
+	var caster: Character = skill_caster
 	if skill.aoe_shape == Skill.AoEShape.NONE:
 		return
 	aoe_preview_map.clear()
-	var tiles := _get_aoe_tiles(center, skill)
+	var tiles := _get_aoe_tiles(center, skill, caster)
 	for tile in tiles:
 		if movement_weights_map.get_cell_item(tile) != GridMap.INVALID_CELL_ITEM:
 			aoe_preview_map.set_cell_item(tile, 8)

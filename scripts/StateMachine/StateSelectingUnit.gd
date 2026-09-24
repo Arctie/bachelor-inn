@@ -53,5 +53,5 @@ func handle_input(level: Node, event: InputEvent) -> void:
 	
 	var unit: Character = level.get_unit(pos)
 	if unit and unit.state.faction == CharacterState.Faction.ENEMY:
-		level.selected_enemy_unit = unit
+		#level.selected_enemy_unit = unit
 		level.emit_signal("enemy_selected", unit)

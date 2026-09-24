@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://1pglttdkeyam"]
+
+[ext_resource type="PackedScene" uid="uid://ddvscfqfihmwr" path="res://scenes/Development/Particles/hit_particle.tscn" id="1_nbnic"]
+[ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="1_ojpj5"]
+[ext_resource type="AudioStream" uid="uid://q3ilhpigh7ok" path="res://audio/Effects/Sword_Attack_Greater.wav" id="2_ufygo"]
+[ext_resource type="Texture2D" uid="uid://ddogsq0mua2ft" path="res://art/textures/cursor_sword.png" id="3_ufygo"]
+
+[resource]
+script = ExtResource("1_ojpj5")
+skill_id = "whirlwind"
+skill_name = "WhirlWind"
+tooltip = "Whirl your weapon around you, attack all adjacent tiles."
+icon = ExtResource("3_ufygo")
+Vfx_Scene = ExtResource("1_nbnic")
+audio_cast = ExtResource("2_ufygo")
+effect_mods = {
+"damage": 2
+}
+min_range = 0
+max_range = 0
+target_faction = 1
+aoe_shape = 6
+metadata/_custom_type_script = "uid://c3p07am3ababr"
