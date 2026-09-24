@@ -1559,7 +1559,7 @@ func clear_aoe_preview() -> void:
 	#if active_skill == null or active_skill.aoe_shape == Skill.AoEShape.NONE:
 		#return
 	aoe_preview_map.clear()
-	# Redraw skill target tiles
+	## NOTE: Enable below if we want to redraw skill target tiles
 	#if state_machine.current is StateChoosingSkillTarget:#is_choosing_skill_target:
 		#for tile : Vector3i in valid_skill_target_tiles.keys():
 			#path_map.set_cell_item(tile, skill_target_code)
