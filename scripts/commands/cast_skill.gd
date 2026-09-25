@@ -26,9 +26,10 @@ func prepare(state: GameState, simulate_only: bool = false) -> void:
 	result.target_position = Main.level.grid_to_world(target_pos) + Vector3(0,1,0)
 	result.vfx_scene = skill.Vfx_Scene if skill.Vfx_Scene != null else null
 	
-	if skill.uses_action:
-		caster.state.is_ability_used = true
-	caster.state.is_moved = true
+	if caster != null:
+		if skill.uses_action:
+			caster.state.is_ability_used = true
+		caster.state.is_moved = true
 	
 	if skill.effect_mods != null and skill.effect_mods.has("damage") and target != null:
 		result.damage = skill.effect_mods.get("damage", 0)

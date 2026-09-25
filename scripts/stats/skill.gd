@@ -59,6 +59,7 @@ var max_level : int = 5
 @export var has_requirement: bool = false; ## Må ikke være skill. Kan være class specific etc. 
 @export var has_quantity: bool = false
 @export var base_quantity: int = 1
+@export var cast_from_above: bool = false
 
 func _init(inName : String = "", inTooltip : String = "", inIcon : Texture2D = null, inLevel : int = 1, inMaxLevel : int = 1, inCommand : Command = null) -> void:
 	skill_name = inName

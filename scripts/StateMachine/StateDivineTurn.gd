@@ -3,15 +3,36 @@ class_name StateDivineTurn
 
 func enter(level: Node) -> void:
 	print("ENTER STATE: StateDivineTurn.")
+	print("StateDivineTurn enter - divine character: ", Main.divine.character)
+	level.is_divine_turn = true
 	level.is_player_turn = false
-	## TODO: Hide player card bottom right
+	## TODO: Hide player UI elemets card bottom right
 	level.divine_label.show()
 	level.enemy_label.hide()
-	#level.MoveSingleAI()
-
+	level.player_label.hide()
+	
+	if not level.characters.has(Main.divine.character):
+		level.characters.append(Main.divine.character)
+	if not level.game_state.units.has(Main.divine.character):
+		level.game_state.units.append(Main.divine.character)
+	
+	level.selected_unit = null
+	level.skill_caster = Main.divine.character
+	var ui := level.get_tree().get_first_node_in_group("ui_controller")
+	if ui:
+		ui.ribbon.show()
+		var divine_skills: Array[Skill] = [SkillRegistry.get_skill("divine_cauterizing_heal")]
+		ui.ribbon.set_skills(divine_skills)
+	
+	level.camera_controller.set_pivot_target_translate(level.last_selected_unit.position)
+		
 func exit(level: Node) -> void:
 	print("EXIT STATE: StateDivineTurn.")
-	pass
+	#level.is_divine_turn = false
+	#level.characters.erase(Main.divine.character)
+	#level.game_state.units.erase(Main.divine.character)
+	#level.selected_unit = null
+	#level.skill_caster = null
 
 func handle_input(level: Node, event: InputEvent) -> void:
 	if not level._can_handle_input(event):
@@ -29,6 +50,7 @@ func handle_input(level: Node, event: InputEvent) -> void:
 				#level.state_machine.transition_to(StateSelectingMove.new())
 				#return
 			KEY_1:
+				print("Pressed 1 in DivineState.")
 				var ui := level.get_tree().get_first_node_in_group("ui_controller")
 				if ui:
 					ui.ribbon.trigger_skill_by_index(0)

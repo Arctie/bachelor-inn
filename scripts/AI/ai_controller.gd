@@ -108,7 +108,7 @@ static func _end_enemy_turn(level: Level) -> void:
 	level.check_aggro()
 	level.hide_inactive_characters()
 	level.camera_controller.free_camera()
-	level.state_machine.transition_to(StateTurnTransition.new(true))
+	level.state_machine.transition_to(StateTurnTransition.new(false, true))
 
 #func MoveAI() -> void:
 	#var ai := MinimaxAI.new();

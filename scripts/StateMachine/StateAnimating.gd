@@ -48,7 +48,10 @@ func update(level: Node, delta: float) -> void:
 		_finish_animation(level)
 
 func _move_along_path(level: Node, delta: float) -> void:
-	#print("_move_along_path from instance: ", get_instance_id())
+	if level.selected_unit == null:
+		level.animation_path.clear()
+		return
+		
 	if not _move_sound_playing:# and not level.animation_path.is_empty():
 		pass
 		AudioManager2d.play_character_loop(level.selected_unit.data.audio_move)
@@ -128,8 +131,9 @@ func _process_next_move(level: Node) -> void:
 	level.occupancy_map.set_cell_item(level.active_move.end_pos, code)
 	#print("move_to called on: ", level.selected_unit.data.unit_name if level.selected_unit else "null",
 	  #" end_pos: ", level.active_move.end_pos)
-	level.selected_unit.move_to(level.active_move.end_pos)
-	level.selected_unit.pause_anim()
+	if level.selected_unit != null:
+		level.selected_unit.move_to(level.active_move.end_pos)
+		level.selected_unit.pause_anim()
 	level.camera_controller.free_camera()
 	
 	if not level.is_player_turn:
@@ -183,7 +187,9 @@ func _finish_animation(level: Node) -> void:
 				return
 	
 	if not level.is_player_turn:
-		if not _is_processing:
+		if level.is_divine_turn:
+			level.state_machine.transition_to(StateDivineTurn.new())
+		elif not _is_processing:
 			level.call_deferred("MoveSingleAI")
 	else:
 		if is_instance_valid(level.last_selected_unit):

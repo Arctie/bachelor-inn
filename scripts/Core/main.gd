@@ -22,6 +22,7 @@ var selected_starting_character: String = "alfred" ## Default as alfred, if some
 var full_roster: Array[String]
 var active_party: Array[String]
 var characters: Array[Character]
+var divine: DivineData = DivineData.new()
 
 ## All levels
 var levels: Array[LevelEntry];
@@ -55,6 +56,9 @@ func _ready() -> void:
 	levels = registry.levels
 	world = World
 	camera_controller = world.get_node("CameraScene")
+	divine.setup()
+	print("Divine character: ", divine.character)
+	world.add_child(divine.character)
 	
 ## Unloads the current level instance
 func unload_level() -> void:

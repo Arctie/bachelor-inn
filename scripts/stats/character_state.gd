@@ -18,7 +18,7 @@ signal level_changed(new_level: int)
 #endregion
 
 #region variables
-@export var weapon : Weapon = WeaponRegistry.get_weapon("unarmed");
+@export var weapon: Weapon = null #WeaponRegistry.get_weapon("unarmed");
 @export var faction : Faction = Faction.PLAYER;
 @export var connections : Array[int] = [];
 @export var grid_position: Vector3i;

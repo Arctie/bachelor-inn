@@ -2,8 +2,11 @@ extends LevelState
 class_name StateChoosingSkillTarget
 ## This is where we decide target tile to cast a skill on
 
-func _enter() -> void:
+func enter(level: Node) -> void:
 	print("ENTER STATE: StateChoosingSkillTarget.")
+	#if level.state_machine.current is StateDivineTurn or Main.divine.character == level.skill_caster:
+		#level.skill_caster = Main.divine.character
+	print("StateChoosingSkillTarget handle_input - divine char: ", Main.divine.character, " skill_caster: ", level.skill_caster)
 
 func _exit(level: Node) -> void:
 	level.clear_aoe_preview()
@@ -73,6 +76,24 @@ func handle_input(level: Node, event: InputEvent) -> void:
 		return
 	
 	level.skill_target_pos = pos
+	
+	# Divine turn — skip origin selection, cast right away
+	print("skill_caster: ", level.skill_caster, " divine: ", Main.divine.character)
+	if level.is_divine_turn:
+		level.skill_caster == Main.divine.character
+	print("skill_caster: ", level.skill_caster, " divine: ", Main.divine.character)
+	if level.skill_caster == Main.divine.character:
+		Main.divine.character.state.grid_position = pos
+		Main.divine.character.position = level.grid_to_world(pos)
+		var cast := CastSkill.new(pos, pos, pos, level.active_skill)
+		level.moves_stack.append(cast)
+		level.create_path(pos, pos)
+		level.active_skill = null
+		level.valid_skill_target_tiles.clear()
+		print("Made it to StateAnimating in ChoosingSkillTarget.")
+		level.state_machine.transition_to(StateAnimating.new())
+		return
+		
 	level._show_skill_origin_tiles(pos, level.active_skill)
 	level.state_machine.transition_to(StateChoosingSkillOrigin.new())
 	

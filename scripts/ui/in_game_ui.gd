@@ -197,10 +197,17 @@ func remove_character_preview(character: Character) -> void:
 
 
 func _on_end_turn_button_pressed() -> void:
-	if not Main.level.is_player_turn:
+	if not Main.level.is_player_turn and not Main.level.is_divine_turn:
 		return
 	if Main.level.state_machine.current is StateAnimating:
 		return
+	if Main.level.is_divine_turn:
+		Main.level.is_divine_turn = false
+		#Main.level._clear_selection()
+		Main.level.state_machine.transition_to(StateTurnTransition.new(true))
+		return
+	
+	print("Ending player turn")
 	Main.level._clear_selection()
 	Main.level.end_player_turn()
 	print("'End turn' button pressed")

@@ -246,9 +246,11 @@ func update_derived_stats_after_level_up() -> void:
 
 func _ready() -> void:
 	if placeholder_sprite:
-		placeholder_sprite.hide() # TODO: Remove this before release
+		placeholder_sprite.hide() # TODO: Remove the placeholder sprite from base scene before release
 	if state:
 		state.sanity_changed.connect(_on_sanity_changed)
+	if state != null and state.weapon == null and state.faction != CharacterState.Faction.DIVINE:
+		state.weapon = WeaponRegistry.get_weapon("unarmed")
 	calc_derived_stats()
 	if not state.is_playable() and state.faction != CharacterState.Faction.NEUTRAL:
 		state.faction = CharacterState.Faction.ENEMY;

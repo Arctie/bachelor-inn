@@ -118,6 +118,7 @@ var moves_stack: Array[Command]
 
 var current_moves: Array[Command]
 var is_player_turn: bool = true
+var is_divine_turn: bool = false
 var unit_pos: Vector3
 var player_code: int = 0
 var player_code_done: int = 3
@@ -468,6 +469,8 @@ func _show_attack_tiles(pos: Vector3i) -> void:
 
 func _show_skill_origin_tiles(target_pos: Vector3i, skill: Skill) -> void:
 	path_map.clear()
+	if skill_caster == null:
+		return
 	var reachable: Array[Vector3i] = []
 	for cmd in current_moves:
 		if cmd is Move:
@@ -484,7 +487,7 @@ func _show_skill_origin_tiles(target_pos: Vector3i, skill: Skill) -> void:
 		path_map.set_cell_item(tile, 0)
 
 func _can_handle_input(event: InputEvent) -> bool:
-	if not is_player_turn:
+	if not is_player_turn and not is_divine_turn:
 		return false	
 	if state_machine.current is StateAnimating:
 		return false
@@ -679,6 +682,13 @@ func try_select_unit(unit: Character) -> void:
 
 
 func select_unit(unit: Character) -> void:
+	print("select_unit called - current state: ", state_machine.current.get_script().resource_path if state_machine.current else "null")
+	if state_machine.current is StateDivineTurn:
+		return
+	if state_machine.current is StateChoosingSkillTarget:
+		return
+	if state_machine.current is StateChoosingSkillOrigin:
+		return
 	# Switching unit
 	_clear_selection()
 	
@@ -1080,8 +1090,18 @@ func tick_all_units_end_round() -> void:
 
 
 func _on_ribbon_skill_pressed(skill: Skill) -> void:
-	#if not (state_machine.current is StateSelectingMove):
-		#return
+	if state_machine.current is StateDivineTurn:
+		#_exit_skill_target_mode()
+		active_skill = skill
+		print("About to show skill target tiles")
+		#skill_caster = Main.divine.character
+		var reachable: Array[Vector3i] = movement_weights_map.get_used_cells()
+		_show_skill_target_tiles(reachable, active_skill)
+		print("About to transition to StateChoosingSkillTarget")	
+		state_machine.transition_to(StateChoosingSkillTarget.new())
+		print("Transitioned")
+		return
+		
 	if selected_unit != null and selected_unit.state.is_ability_used:
 		print("Unit has already used their ability this turn.")
 		return
@@ -1207,6 +1227,7 @@ func _draw_path_arrow() -> void:
 				path_map.set_cell_item(point, 3) #SET PATH MAP TO BE THE TILE IN ARRAY WHEN DRAWING PATH ARROW
 
 func end_player_turn() -> bool:
+	print("end_player_turn called from: ", get_stack()[1])
 	if not combat_vfx.is_finished():
 		print("BLOCKED: combat vfx not finished")
 		return false
@@ -1326,6 +1347,8 @@ func check_aggro() -> void:
 	for unit in characters:
 		if unit == null:
 			continue
+		if unit.state.faction == CharacterState.Faction.DIVINE:
+			continue
 		if not unit.state.is_enemy():
 			continue
 		if unit.state.aggro_state == CharacterState.AggroState.AGGRESSIVE:
@@ -1336,6 +1359,7 @@ func check_aggro() -> void:
 				continue
 			if player_unit.state.faction != CharacterState.Faction.PLAYER:
 				continue
+			
 			
 			var distx : int = abs(unit.state.grid_position.x - player_unit.state.grid_position.x)
 			var distz : int = abs(unit.state.grid_position.z - player_unit.state.grid_position.z)
