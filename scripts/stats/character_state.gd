@@ -4,7 +4,7 @@ class_name CharacterState
 ## No scene or node access should happen here.
 
 #region enums
-enum Faction { PLAYER, ENEMY, NEUTRAL }
+enum Faction { PLAYER, ENEMY, NEUTRAL, DIVINE }
 enum AIMode { BEHAVIOUR_TREE, MINIMAX }
 enum BTProfile { DEFAULT, BRUTE, SNIPER }
 enum SanityState { CALM, UNEASY, DISTORTED, OBSESSED, DISSOCIATED }

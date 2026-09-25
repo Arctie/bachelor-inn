@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://drtjg8oi6chlh"]
+
+[ext_resource type="PackedScene" uid="uid://wo1fe0qm5jjk" path="res://scenes/Characters/character.tscn" id="1_r6v25"]
+[ext_resource type="Script" uid="uid://cfb66ehlpe84n" path="res://scripts/stats/character_data.gd" id="2_xyusc"]
+[ext_resource type="Script" uid="uid://dnpndvvrnj26q" path="res://scripts/stats/character_state.gd" id="3_a5tww"]
+[ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="4_j165m"]
+
+[sub_resource type="Resource" id="Resource_ffqy1"]
+script = ExtResource("2_xyusc")
+unit_name = "Divine"
+metadata/_custom_type_script = "uid://cfb66ehlpe84n"
+
+[sub_resource type="Resource" id="Resource_5v4ux"]
+script = ExtResource("3_a5tww")
+faction = 3
+metadata/_custom_type_script = "uid://dnpndvvrnj26q"
+
+[node name="Divine_character" unique_id=7531267 instance=ExtResource("1_r6v25")]
+visible = false
+data = SubResource("Resource_ffqy1")
+state = SubResource("Resource_5v4ux")
+
+[node name="Outline" parent="." index="1" unique_id=53410441]
+visible = false
+
+[node name="Shadow" parent="." index="2" unique_id=2091232362]
+visible = false
+
+[node name="PlaceholderSprite" parent="." index="3" unique_id=166425312]
+visible = false
