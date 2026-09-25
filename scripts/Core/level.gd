@@ -120,6 +120,7 @@ var current_moves: Array[Command]
 var is_player_turn: bool = true
 var is_divine_turn: bool = false
 var unit_pos: Vector3
+var divine_cast_position: Vector3i = Vector3i(-999, -999, -999)
 var player_code: int = 0
 var player_code_done: int = 3
 var enemy_code: int = 1

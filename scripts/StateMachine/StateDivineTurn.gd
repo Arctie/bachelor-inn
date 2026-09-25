@@ -3,7 +3,6 @@ class_name StateDivineTurn
 
 func enter(level: Node) -> void:
 	print("ENTER STATE: StateDivineTurn.")
-	print("StateDivineTurn enter - divine character: ", Main.divine.character)
 	level.is_divine_turn = true
 	level.is_player_turn = false
 	## TODO: Hide player UI elemets card bottom right
@@ -11,10 +10,10 @@ func enter(level: Node) -> void:
 	level.enemy_label.hide()
 	level.player_label.hide()
 	
-	if not level.characters.has(Main.divine.character):
-		level.characters.append(Main.divine.character)
-	if not level.game_state.units.has(Main.divine.character):
-		level.game_state.units.append(Main.divine.character)
+	#if not level.characters.has(Main.divine.character):
+		#level.characters.append(Main.divine.character)
+	#if not level.game_state.units.has(Main.divine.character):
+		#level.game_state.units.append(Main.divine.character)
 	
 	level.selected_unit = null
 	level.skill_caster = Main.divine.character

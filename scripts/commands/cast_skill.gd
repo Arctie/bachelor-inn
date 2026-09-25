@@ -16,6 +16,8 @@ func prepare(state: GameState, simulate_only: bool = false) -> void:
 	var caster: Character = state.get_unit(end_pos)
 	if caster == null:
 		caster = state.get_unit(start_pos)
+	if caster == null and Main.level.is_divine_turn:
+		caster = Main.divine.character
 	var target: Character = state.get_unit(target_pos)
 	
 	if target == caster and start_pos == target_pos and end_pos != target_pos:

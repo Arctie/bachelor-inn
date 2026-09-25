@@ -16,12 +16,14 @@ func enter(level: Node) -> void:
 		level.divine_label.show()
 		#level.turn_transition_animation_player.play()
 	elif _to_player:
+		Main.divine.character.state.grid_position = Vector3i(-999, -999, -999)
+		level.characters.erase(Main.divine.character)
+		level.game_state.units.erase(Main.divine.character)
 		level.is_divine_turn = false
 		level.enemy_label.hide()
 		level.divine_label.hide()
 		level.player_label.show()
 		## Remove Divine Char from map
-		Main.divine.character.state.grid_position = Vector3i(-999, -999, -999)
 	else:
 		level.enemy_label.show()
 		level.player_label.hide()
