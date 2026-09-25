@@ -2,13 +2,20 @@ extends LevelState
 class_name StateTurnTransition
 
 var _to_player: bool
+var _to_divine: bool = false
 
-func _init(to_player: bool) -> void:
+func _init(to_player: bool, to_divine: bool = false) -> void:
 	_to_player = to_player
+	_to_divine = to_divine
 
 func enter(level: Node) -> void:
 	print("ENTER STATE: StateTurnTransition.")
-	if _to_player:
+	if _to_divine:
+		level.enemy_label.hide()
+		level.player_label.hide()
+		level.divine_label.show()
+		#level.turn_transition_animation_player.play()
+	elif _to_player:
 		level.enemy_label.hide()
 		level.player_label.show()
 	else:
@@ -38,8 +45,10 @@ func _on_animation_finished(anim_name: StringName, level: Node) -> void:
 		  " selectables: ", level.get_selectable_characters().size())
 	if level._level_complete:
 		return
-		
-	if _to_player:
+	if _to_divine:
+		level.state_machine.transition_to(StateDivineTurn.new())
+		return	
+	elif _to_player:
 		level.is_player_turn = true
 		var selectables: Array[Character] = level.get_selectable_characters()
 		

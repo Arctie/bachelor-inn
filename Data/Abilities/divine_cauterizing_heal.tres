@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://c3br4io6tyvpr"]
+
+[ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="1_6h5r1"]
+[ext_resource type="Texture2D" uid="uid://davk3as2tq5ut" path="res://art/textures/GUI_Assets.png" id="1_go0xf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v60c7"]
+atlas = ExtResource("1_go0xf")
+region = Rect2(242, 96, 12, 15)
+
+[resource]
+script = ExtResource("1_6h5r1")
+skill_id = "divine_cauterizing_heal"
+skill_name = "Cauterizing Heal"
+icon = SubResource("AtlasTexture_v60c7")
+effect_mods = {
+&"current_health": 5,
+&"dot_tick_damage": 2
+}
+target_faction = 2
+aoe_shape = 1
+duration_turns = 3
+metadata/_custom_type_script = "uid://c3p07am3ababr"

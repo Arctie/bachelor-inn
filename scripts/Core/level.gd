@@ -59,6 +59,7 @@ var aoe_preview_map: GridMap
 @onready var turn_transition_animation_player: AnimationPlayer = $TurnTransition/AnimationPlayer
 @onready var player_label: Label = $TurnTransition/CanvasLayer/VBoxContainer/ColorRect3/playerLabel
 @onready var enemy_label: Label = $TurnTransition/CanvasLayer/VBoxContainer/ColorRect3/enemyLabel
+@onready var divine_label: Label = $TurnTransition/CanvasLayer/VBoxContainer/ColorRect3/divineLabel
 
 var _level_complete : bool = false
 var level_has_victory_trigger: bool = false
