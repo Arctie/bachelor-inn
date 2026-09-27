@@ -217,18 +217,19 @@ func _place_player_units() -> void:
 			new_unit.sanity_flipped.connect(_on_character_sanity_flipped)
 		player_characters.append(new_unit)
 		characters.append(new_unit)
-		
-	for c in player_characters:
-		print("Player audio check - ", c.data.unit_name, 
-			  " audio_player: ", c.audio_player,
-			  " audio_hurt: ", c.data.audio_hurt)
+	
+	## NOTE: PRINT TEST
+	#for c in player_characters:
+		#print("Player audio check - ", c.data.unit_name, 
+			  #" audio_player: ", c.audio_player,
+			  #" audio_hurt: ", c.data.audio_hurt)
 
 func _register_enemies() -> void:
 	for child in find_children("*", "Character", true, false):
-		print("Enemy found: ", child.name, 
-		  " scene_id: ", child.scene_id,
-		  " data: ", child.data,
-		  " audio_hurt: ", child.data.audio_hurt if child.data else "no data")
+		#print("Enemy found: ", child.name, 
+		  #" scene_id: ", child.scene_id,
+		  #" data: ", child.data,
+		  #" audio_hurt: ", child.data.audio_hurt if child.data else "no data")
 		if not child is Character or child.state == null:
 			continue
 		if child.scene_id != "":
@@ -522,9 +523,9 @@ func _handle_skill(pos : Vector3i) -> void:
 	var p : Vector3i = Vector3i(pos)
 	var target: Character = get_unit(p)
 		
-	print("SKILL CLICK p=", p,
-			" in_valid=", valid_skill_target_tiles.has(p),
-			" target=", target)
+	#print("SKILL CLICK p=", p,
+			#" in_valid=", valid_skill_target_tiles.has(p),
+			#" target=", target)
 	
 	## checks to see if skills should be cancelled
 	var exit_skill : bool = false
@@ -543,12 +544,12 @@ func _handle_skill(pos : Vector3i) -> void:
 		return
 	
 	## begin executing skill, flag caster as 'has used ability'
-	print("Casting ", used_skill.skill_id, " from ", skill_caster.data.unit_name, " to ", target.data.unit_name if target != null else "ground")
+	#print("Casting ", used_skill.skill_id, " from ", skill_caster.data.unit_name, " to ", target.data.unit_name if target != null else "ground")
 	#var caster : Character = skill_caster
 	if used_skill.uses_action:
 		caster.state.is_ability_used = true
 		# cast a signal to Ribbon here to gray out ability bar
-		print("emitting ability_used signal")
+		#print("emitting ability_used signal")
 		emit_signal("ability_used")
 		emit_signal("character_stats_changed", skill_caster)
 		#print("Flag set, is_ability_used: ", caster.state.is_ability_used)
@@ -563,10 +564,10 @@ func _handle_skill(pos : Vector3i) -> void:
 		result.damage = used_skill.effect_mods.get("damage", 0)
 	
 	## VFX - Show visual
-	print("Skill result - aggressor: ", result.aggressor)
-	print("Skill result - victim: ", result.victim)
-	print("Skill result - vfx_scene: ", result.vfx_scene)
-	print("Skill result - damage: ", result.damage)
+	#print("Skill result - aggressor: ", result.aggressor)
+	#print("Skill result - victim: ", result.victim)
+	#print("Skill result - vfx_scene: ", result.vfx_scene)
+	#print("Skill result - damage: ", result.damage)
 	await combat_vfx.play_skill(result)
 	
 	## Apply damage to primary target
@@ -578,7 +579,7 @@ func _handle_skill(pos : Vector3i) -> void:
 	if target != null and used_skill.effect_mods != null and used_skill.effect_mods.has("current_health"):
 		var heal := int(used_skill.effect_mods["current_health"])
 		target.state.current_health = min(target.state.current_health + heal, target.state.max_health)#(dmg, false, skill_caster, used_skill.skill_name)
-		print("Healed ", target.data.unit_name, " to ", target.state.current_health, "/", target.state.max_health)
+		#print("Healed ", target.data.unit_name, " to ", target.state.current_health, "/", target.state.max_health)
 		emit_signal("character_stats_changed", target)
 	
 
@@ -588,26 +589,26 @@ func _handle_skill(pos : Vector3i) -> void:
 	
 	## AoE does not mean every spell cast is AoE, it just checks for AoE effects
 	var aoe_tiles := _get_aoe_tiles(p, used_skill, caster)
-	print("AoE center: ", p, " shape: ", used_skill.aoe_shape, " size: ", used_skill.aoe_size, " tiles: ", aoe_tiles.size())
+	#print("AoE center: ", p, " shape: ", used_skill.aoe_shape, " size: ", used_skill.aoe_size, " tiles: ", aoe_tiles.size())
 	for aoe_pos in aoe_tiles:
 		if aoe_pos == p:
 			continue
 		var aoe_target: Character = get_unit(aoe_pos)
 		## TODO: Change this 'aoe_target == null' if we want to be able to cast skills on ground.
-		print("  tile: ", aoe_pos, " target: ", aoe_target)
+		#print("  tile: ", aoe_pos, " target: ", aoe_target)
 		if aoe_target == null: 
 			continue
 		if not _is_valid_target(aoe_target, used_skill, skill_caster):
 			print("  invalid target")
 			continue
 		if used_skill.effect_mods != null and used_skill.effect_mods.has("damage"):
-			print("Applying damage to: ", aoe_target.data.unit_name)
+			#print("Applying damage to: ", aoe_target.data.unit_name)
 			var dmg := int(used_skill.effect_mods["damage"])
 			aoe_target.apply_damage(dmg, false, skill_caster, used_skill.skill_name)
 			if aoe_pos != p:
 				combat_vfx.spawn_damage_number(dmg, aoe_target.global_position)
 		if used_skill.effect_mods != null and used_skill.effect_mods.has("current_health"):
-			print("Healing ", aoe_target.data.unit.name)
+			#print("Healing ", aoe_target.data.unit.name)
 			var heal := int(used_skill.effect_mods["current_health"])
 			aoe_target.state.current_health = min(aoe_target.state.current_health + heal, aoe_target.state.max_health)
 		
@@ -626,7 +627,7 @@ func _handle_skill(pos : Vector3i) -> void:
 		#print("Item used: ", used_skill.skill_id, " remaining: ", caster.state.item_quantities[used_skill.skill_id])
 
 	_exit_skill_target_mode()
-	print("is_ability_used after exit: ", caster.state.is_ability_used)
+	#print("is_ability_used after exit: ", caster.state.is_ability_used)
 	if is_instance_valid(caster):
 		state_machine.transition_to(StateSelectingMove.new())
 	else:
@@ -676,14 +677,14 @@ func can_handle_ui_input() -> bool:
 
 
 func try_select_unit(unit: Character) -> void:
-	print("try_select_unit: ", unit.data.unit_name, " can_handle: ", can_handle_ui_input())
+	#print("try_select_unit: ", unit.data.unit_name, " can_handle: ", can_handle_ui_input())
 	if not can_handle_ui_input():
 		return
 	select_unit(unit)
 
 
 func select_unit(unit: Character) -> void:
-	print("select_unit called - current state: ", state_machine.current.get_script().resource_path if state_machine.current else "null")
+	#print("select_unit called - current state: ", state_machine.current.get_script().resource_path if state_machine.current else "null")
 	if state_machine.current is StateDivineTurn:
 		return
 	if state_machine.current is StateChoosingSkillTarget:
@@ -709,7 +710,7 @@ func select_unit(unit: Character) -> void:
 	movement_grid.fill_from_commands(current_moves, game_state)
 	
 	if Main.level.level_name.begins_with("tutorial") == true:
-		print("Level name matches: ", Main.level.name)
+		#print("Level name matches: ", Main.level.name)
 		Tutorial.tutorial_unit_selected()
 	## DIALOGIC
 	#if (Main.level.name == "tutorial_1"):
@@ -735,13 +736,13 @@ func _handle_action_tile_click(pos: Vector3i) -> String:
 			found_move = cmd
 		elif cmd is Attack and cmd.attack_pos == pos:
 			found_attack = cmd
-	print("Clicked: ", pos, " found_move: ", found_move != null, " found_attack: ", found_attack != null)
+	#print("Clicked: ", pos, " found_move: ", found_move != null, " found_attack: ", found_attack != null)
 	movement_map.clear()
 
 	# MOVE HAS PRIORITY
 	if found_move != null:
-		print("Executing MOVE to: ", pos, " total_cost: ", found_move.total_cost)
-		print("Current MP before: ", selected_unit.state.movement_points_remaining)
+		#print("Executing MOVE to: ", pos, " total_cost: ", found_move.total_cost)
+		#print("Current MP before: ", selected_unit.state.movement_points_remaining)
 		# Deduct movement points (MP) from chosen move 
 		if selected_unit.state.is_playable():
 			selected_unit.state.movement_points_remaining -= found_move.total_cost
@@ -752,11 +753,11 @@ func _handle_action_tile_click(pos: Vector3i) -> String:
 		path_map.clear()
 		#var cost: int = MoveGenerator.get_move_cost(level.active_move.start_pos, level.active_move.end_pos, level.game_state)
 		#level.selected_unit.state.movement_points_remaining -= cost
-		print("Current MP afer: ", selected_unit.state.movement_points_remaining)
+		#print("Current MP afer: ", selected_unit.state.movement_points_remaining)
 		return "move"
 
 	elif found_attack != null:
-		print("Executing ATTACK on: ", pos)
+		#print("Executing ATTACK on: ", pos)
 		active_move = found_attack
 		_show_attack_tiles(pos)
 		return "attack"
@@ -877,7 +878,7 @@ func create_path(start : Vector3i, end : Vector3i) -> void:
 	#
 	##var path := movement_grid.get_path(start, end)
 	var path: Array[Vector3i] = MovementGrid.find_path(start, end,movement_weights_map, occupancy_map)
-	print("create_path result: ", path.size(), " points")
+	#print("create_path result: ", path.size(), " points")
 	#print("Path found: ", path.size(), " points from ", start, " to ", end)
 	#print("movement_grid used_cells: ", movement_grid.used_cells.size())
 
@@ -1094,20 +1095,20 @@ func _on_ribbon_skill_pressed(skill: Skill) -> void:
 	if state_machine.current is StateDivineTurn:
 		#_exit_skill_target_mode()
 		active_skill = skill
-		print("About to show skill target tiles")
+		#print("About to show skill target tiles")
 		#skill_caster = Main.divine.character
 		var reachable: Array[Vector3i] = movement_weights_map.get_used_cells()
 		_show_skill_target_tiles(reachable, active_skill)
-		print("About to transition to StateChoosingSkillTarget")	
+		#print("About to transition to StateChoosingSkillTarget")	
 		state_machine.transition_to(StateChoosingSkillTarget.new())
-		print("Transitioned")
+		#print("Transitioned")
 		return
 		
 	if selected_unit != null and selected_unit.state.is_ability_used:
-		print("Unit has already used their ability this turn.")
+		#print("Unit has already used their ability this turn.")
 		return
 	if skill.has_quantity and selected_unit.state.item_quantities.get(skill.skill_id, 0) <= 0:
-		print("No uses remaining for: ", skill.skill_id)
+		#print("No uses remaining for: ", skill.skill_id)
 		return
 	_exit_skill_target_mode()
 	movement_grid.clear()
@@ -1160,7 +1161,7 @@ func _exit_skill_target_mode() -> void:
 	clear_aoe_preview()
 	path_map.clear()
 	if is_instance_valid(caster):
-		print("Selecting caster: " + caster.name)
+		#print("Selecting caster: " + caster.name)
 		select_unit(caster)
 
 func _is_valid_target(unit: Character, skill: Skill, caster: Character) -> bool:
@@ -1228,9 +1229,9 @@ func _draw_path_arrow() -> void:
 				path_map.set_cell_item(point, 3) #SET PATH MAP TO BE THE TILE IN ARRAY WHEN DRAWING PATH ARROW
 
 func end_player_turn() -> bool:
-	print("end_player_turn called from: ", get_stack()[1])
+	#print("end_player_turn called from: ", get_stack()[1])
 	if not combat_vfx.is_finished():
-		print("BLOCKED: combat vfx not finished")
+		print("End Player Turn Blocked - Combat vfx not finished")
 		return false
 	if state_machine.current is StateMenu:
 		return false
@@ -1344,7 +1345,7 @@ func _register_patrol_paths() -> void:
 
 
 func check_aggro() -> void:
-	print("Check_Aggro() called")
+	#print("Check_Aggro() called")
 	for unit in characters:
 		if unit == null:
 			continue
@@ -1367,7 +1368,7 @@ func check_aggro() -> void:
 			var dist : int = distx + distz
 			if dist <= unit.state.aggro_range:
 				unit.state.aggro_state = CharacterState.AggroState.AGGRESSIVE
-				print(unit.data.unit_name, " has aggro")
+				#print(unit.data.unit_name, " has aggro")
 				break
 
 func hide_inactive_characters() -> void:
@@ -1407,7 +1408,7 @@ func _register_chests() -> void:
 		if child is Chest:
 			var grid_pos := world_to_grid(child.global_position)
 			chests[grid_pos] = child
-			print("Registered chest at: ", grid_pos, " weapon: ", child.weapon_id)
+			#print("Registered chest at: ", grid_pos, " weapon: ", child.weapon_id)
 
 
 
@@ -1450,7 +1451,7 @@ func _on_chest_opened(pos: Vector3i) -> void:
 
 
 func _recruit_neutral_units() -> void:
-	print("recruit_neutral_units() triggered")
+	#print("recruit_neutral_units() triggered")
 	var player_chars: Array[Character] = []
 	
 	for c in characters:
@@ -1480,7 +1481,7 @@ func _recruit_neutral_units() -> void:
 		var def: CharacterDefinition = Main.save.registry.characters.get(c.data.unit_name.to_lower(), null)
 		if def != null:
 			c.state.skills = def.base_state.skills.duplicate()
-			print("Loaded ", c.state.skills.size(), " skills for: ", c.data.unit_name)
+			#print("Loaded ", c.state.skills.size(), " skills for: ", c.data.unit_name)
 		else:
 			push_error("No definition found for: " + c.data.unit_name)
 		
@@ -1610,15 +1611,14 @@ func _debug_terrain() -> void:
 		var name := ""
 		if cell != GridMap.INVALID_CELL_ITEM:
 			name = terrain_map.mesh_library.get_item_name(cell)
-			print("Terrain at ", pos, " cell: ", cell, " name: ", name)
+			#print("Terrain at ", pos, " cell: ", cell, " name: ", name)
 
-	# Also print where your player units actually are
-	for c in player_characters:
-		print("Unit ", c.data.unit_name, " at grid: ", c.state.grid_position, 
-		" world: ", c.position)
+	#for c in player_characters:
+		#print("Unit ", c.data.unit_name, " at grid: ", c.state.grid_position, 
+		#" world: ", c.position)
 	
 func has_line_of_sight(from: Vector3i, to: Vector3i) -> bool:
-	# Bresenham's line algorithm
+	## NOTE: This is Bresenham's line (of sight) algorithm
 	#print("LoS check from: ", from, " to: ", to)
 	#var _from := Vector3i.ZERO
 	#var _to := Vector3i.ZERO
@@ -1670,14 +1670,14 @@ func has_line_of_sight(from: Vector3i, to: Vector3i) -> bool:
 
 func _execute_teleport(portal: Teleporter, unit: Character) -> void:
 	var destination: Node = portal.get_linked_portal()
-	print("Teleporter: ", name, " grid pos: ", Main.level.world_to_grid(global_position))
+	#print("Teleporter: ", name, " grid pos: ", Main.level.world_to_grid(global_position))
 
 	if destination == null:
 		push_error("TeleportPortal: no linked portal found for " + portal.name)
 		return
 	
 	var dest_grid_pos: Vector3i = destination.get("teleporter_grid_position")
-	print("Teleporting ", unit.data.unit_name, " to grid: ", dest_grid_pos, " world: ", grid_to_world(dest_grid_pos))
+	#print("Teleporting ", unit.data.unit_name, " to grid: ", dest_grid_pos, " world: ", grid_to_world(dest_grid_pos))
 	
 	# Check if destination is occupied
 	if occupancy_map.get_cell_item(dest_grid_pos) != GridMap.INVALID_CELL_ITEM:

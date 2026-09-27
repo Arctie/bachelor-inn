@@ -13,7 +13,8 @@ func enter(level: Node) -> void:
 	_move_sound_playing = false
 
 func exit(level: Node) -> void:
-	print("EXIT STATE: StateAnimating. instance: ", get_instance_id())	
+	print("Exit State: StateAnimating.")
+	#print("EXIT STATE: StateAnimating. instance: ", get_instance_id())	
 	_cancelled = true
 	_is_processing = false
 	#level.moves_stack.clear()
@@ -80,7 +81,7 @@ func _move_along_path(level: Node, delta: float) -> void:
 
 
 func _process_next_move(level: Node) -> void:
-	print("Process_next_move started.")
+	#print("Process_next_move started.")
 	_is_processing = true
 	level.active_move = level.moves_stack.pop_front()
 	if level.selected_unit != null:
@@ -173,14 +174,14 @@ func _finish_animation(level: Node) -> void:
 	level.check_victory_conditions()
 	
 	var teleporters := level.get_tree().get_nodes_in_group("teleporters")
-	print("Teleporters in group: ", teleporters.size())
+	#print("Teleporters in group: ", teleporters.size())
 	for portal in teleporters:
 		var portal_grid: Vector3i = portal.get("teleporter_grid_position")
-		print("Portal: ", portal.name, " grid: ", portal_grid)
+		#print("Portal: ", portal.name, " grid: ", portal_grid)
 		for c: Character in level.player_characters:
 			if not is_instance_valid(c):
 				continue
-			print("  checking: ", c.data.unit_name, " at: ", c.state.grid_position)
+			#print("  checking: ", c.data.unit_name, " at: ", c.state.grid_position)
 			if c.state.grid_position == portal_grid and not c.state.just_teleported:
 				c.state.just_teleported = true
 				await level._execute_teleport(portal, c)

@@ -149,7 +149,7 @@ func get_path(start : Vector3i, goal : Vector3i) -> Array[Vector3i]:
 	return []
 
 static func find_path(start: Vector3i, goal: Vector3i, weights_map: GridMap, occupancy_map: GridMap = null) -> Array[Vector3i]:
-	print("find_path: ", start, " -> ", goal)
+	#print("find_path: ", start, " -> ", goal)
 	var open_set := [start]
 	var came_from := {}
 	var g_score := {start: 0.0}

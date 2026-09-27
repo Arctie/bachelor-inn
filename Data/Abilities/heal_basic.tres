@@ -2,16 +2,13 @@
 
 [ext_resource type="PackedScene" uid="uid://bqfgq7vek2sty" path="res://scenes/Development/Particles/heal_fx_particle.tscn" id="1_bj1s2"]
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="1_wxe0v"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wxe0v"]
-load_path = "res://.godot/imported/GUI_Assets.png-fb06711353850da2dfdd4a114970627a.ctex"
+[ext_resource type="Texture2D" uid="uid://davk3as2tq5ut" path="res://art/textures/GUI_Assets.png" id="2_07c11"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bj1s2"]
-atlas = SubResource("CompressedTexture2D_wxe0v")
+atlas = ExtResource("2_07c11")
 region = Rect2(208, 64, 16, 16)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bj1s2"]
-load_path = "res://.godot/imported/GUI_Assets.png-fb06711353850da2dfdd4a114970627a.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_07c11"]
 atlas = SubResource("CompressedTexture2D_bj1s2")
