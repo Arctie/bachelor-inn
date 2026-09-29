@@ -1549,12 +1549,12 @@ func _get_aoe_tiles(center: Vector3i, skill: Skill, caster: Character = null) ->
 			if skill_caster == null:
 				return tiles
 			var caster_pos := caster.state.grid_position
-			# To the right or left
+			# Attack to the right or left
 			if center.z == caster_pos.z and center != caster_pos:
 				tiles.append(Vector3i(center))
 				tiles.append(Vector3i(center.x, center.y, center.z + 1))
 				tiles.append(Vector3i(center.x, center.y, center.z - 1))
-			# Up or down
+			# Attack up or down
 			if center.x == caster_pos.x and center != caster_pos:
 				tiles.append(Vector3i(center))
 				tiles.append(Vector3i(center.x +1, center.y, center.z))
