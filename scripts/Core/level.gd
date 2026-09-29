@@ -514,15 +514,12 @@ func _update_cursor(pos: Vector3i) -> void:
 
 
 func _handle_skill(pos : Vector3i) -> void:
+	#print("_handle_skill called from: ", get_stack())
+	## NOTE: _handle_skill() is dead. Replaced by statemachine.
 	var used_skill : Skill = active_skill
 	var caster: Character = skill_caster
-	# Normalize to same plane your maps/skills use
-	##TODO make _handle_skill use height. Fixed?
-	#var p := Vector3i(pos.x, 0, pos.z)
-	
 	var p : Vector3i = Vector3i(pos)
 	var target: Character = get_unit(p)
-		
 	#print("SKILL CLICK p=", p,
 			#" in_valid=", valid_skill_target_tiles.has(p),
 			#" target=", target)
@@ -545,14 +542,10 @@ func _handle_skill(pos : Vector3i) -> void:
 	
 	## begin executing skill, flag caster as 'has used ability'
 	#print("Casting ", used_skill.skill_id, " from ", skill_caster.data.unit_name, " to ", target.data.unit_name if target != null else "ground")
-	#var caster : Character = skill_caster
 	if used_skill.uses_action:
 		caster.state.is_ability_used = true
-		# cast a signal to Ribbon here to gray out ability bar
-		#print("emitting ability_used signal")
 		emit_signal("ability_used")
 		emit_signal("character_stats_changed", skill_caster)
-		#print("Flag set, is_ability_used: ", caster.state.is_ability_used)
 		
 	## Take all the stuff and compile a list of the results as AttackResult! 
 	var result: AttackResult = AttackResult.new()
@@ -582,11 +575,6 @@ func _handle_skill(pos : Vector3i) -> void:
 		#print("Healed ", target.data.unit_name, " to ", target.state.current_health, "/", target.state.max_health)
 		emit_signal("character_stats_changed", target)
 	
-
-	
-	## TODO: fix crash here if used_skill is null
-	#var used_action : bool = used_skill.uses_action
-	
 	## AoE does not mean every spell cast is AoE, it just checks for AoE effects
 	var aoe_tiles := _get_aoe_tiles(p, used_skill, caster)
 	#print("AoE center: ", p, " shape: ", used_skill.aoe_shape, " size: ", used_skill.aoe_size, " tiles: ", aoe_tiles.size())
@@ -594,7 +582,6 @@ func _handle_skill(pos : Vector3i) -> void:
 		if aoe_pos == p:
 			continue
 		var aoe_target: Character = get_unit(aoe_pos)
-		## TODO: Change this 'aoe_target == null' if we want to be able to cast skills on ground.
 		#print("  tile: ", aoe_pos, " target: ", aoe_target)
 		if aoe_target == null: 
 			continue
@@ -663,8 +650,7 @@ func can_handle_ui_input() -> bool:
 	var valid_states: Array[Script] = [
 		StateSelectingUnit, 
 		StateSelectingMove, 
-		StateChoosingAttack, 
-		StateChoosingSkill, 
+		StateChoosingAttack,
 		StateChoosingSkillTarget,
 		StateChoosingSkillOrigin
 		]
@@ -1254,7 +1240,7 @@ func end_player_turn() -> bool:
 func _update_cursor_on_hover() -> void:
 	#Input.set_custom_mouse_cursor(cursor_sword, Input.CURSOR_ARROW, Vector2(8, 8))
 	#print("cursor update called, texture is null: ", cursor_sword == null)
-	var valid_states: Array = [StateSelectingUnit, StateSelectingMove, StateChoosingAttack, StateChoosingSkill]
+	var valid_states: Array = [StateSelectingUnit, StateSelectingMove, StateChoosingAttack]
 	var is_interactive: bool = false
 	for s: Script in valid_states: ## :Script instead of LevelState for broader use
 		if is_instance_of(state_machine.current, s):
