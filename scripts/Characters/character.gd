@@ -292,7 +292,7 @@ func reset() -> void:
 	if state.is_playable():
 		state.is_ability_used = false
 		state.movement_points_remaining = state.movement
-		state.action_points_remaining = state.baseline_ap
+		state.action_points_remaining = state.base_action_points
 	show();
 	state.is_moved = false;
 	## Decrease skill cooldown

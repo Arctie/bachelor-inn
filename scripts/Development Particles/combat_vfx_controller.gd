@@ -45,7 +45,8 @@ func play_skill(result : AttackResult) -> void:
 		vfx.look_at(result.victim.global_position + Vector3(0,0.5,0), Vector3.UP)
 		var tween := vfx.create_tween()
 		tween.tween_property(vfx, "global_position", result.victim.global_position + Vector3(0,0.5,0), 0.25)
-		await tween.finished_spawn_hit_particles(result.victim)
+		await tween.finished
+		_spawn_hit_particles(result.victim)
 		_trigger_hit_flash(result.victim, result.was_critical)
 		_play_skill_aftereffects(vfx, result)
 	else:
