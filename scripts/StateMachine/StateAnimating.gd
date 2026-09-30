@@ -93,7 +93,11 @@ func _process_next_move(level: Node) -> void:
 		if cast.skill != null and cast.skill.audio_cast != null:
 			level.selected_unit.audio_player.stream = cast.skill.audio_cast
 			level.selected_unit.audio_player.play()
-		await level.combat_vfx.play_skill(level.active_move.result)
+		#await level.combat_vfx.play_skill(level.active_move.result)
+		if cast.skill == null or cast.skill.aoe_shape == Skill.AoEShape.NONE:
+			await level.combat_vfx.play_skill(level.active_move.result)
+		else:
+			await level.get_tree().create_timer(0.3).timeout
 		# Deduct AP for player action
 		if level.is_player_turn and level.selected_unit != null:
 			level.selected_unit.state.action_points_remaining = 0

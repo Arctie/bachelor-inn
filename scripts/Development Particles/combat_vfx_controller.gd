@@ -26,11 +26,11 @@ func play_attack(result : AttackResult) -> void:
 func play_skill(result : AttackResult) -> void:
 	if result == null:
 		return
+	if result.vfx_scene == null:
+		return
 	var dmg : int = result.damage if result.damage != null else 0
-	## Moved to cast_skill.gd
-	#if dmg > 0:  #and result.Skill.skill_aoe_shape == Skill.AoEShape.NONE:
-		#_spawn_dmg_number_scene(result)
-		#
+	if dmg == 0 and (result.victim == null or not is_instance_valid(result.victim)):
+		return
 	var effect : PackedScene = result.vfx_scene
 	if effect == null:
 		return
@@ -45,16 +45,7 @@ func play_skill(result : AttackResult) -> void:
 		vfx.look_at(result.victim.global_position + Vector3(0,0.5,0), Vector3.UP)
 		var tween := vfx.create_tween()
 		tween.tween_property(vfx, "global_position", result.victim.global_position + Vector3(0,0.5,0), 0.25)
-		await tween.finished
-		## Moved to own function
-		#if vfx.has_method("play"):
-			#await vfx.play()
-		#else:
-			#await get_tree().create_timer(0.5).timeout
-			#vfx.queue_free()
-		#_spawn_hit_particles(result.victim)
-		#_trigger_hit_flash(result.victim, result.was_critical)
-		_spawn_hit_particles(result.victim)
+		await tween.finished_spawn_hit_particles(result.victim)
 		_trigger_hit_flash(result.victim, result.was_critical)
 		_play_skill_aftereffects(vfx, result)
 	else:
@@ -115,15 +106,12 @@ func spawn_damage_number(amount: int, position: Vector3, is_critical: bool = fal
 func _spawn_hit_particles(target : Character) -> void:
 	if not hit_particles_scene:
 		return
-
 	var vfx : Node3D = hit_particles_scene.instantiate()
 	target.add_child(vfx)
 	vfx.position = Vector3.ZERO
-
 	if vfx.has_method("play"):
 		vfx.play()
 
-	
 func _trigger_hit_flash(target : Character, crit : bool) -> void:
 	if target.has_method("flash_hit"):
 		target.flash_hit(crit)
@@ -202,10 +190,7 @@ func _spawn_ranged_attack(attacker : Character, target : Character, result: Atta
 	var projectile_scene: PackedScene = result.vfx_scene if result.vfx_scene != null else ranged_attack_scene
 	if not ranged_attack_scene:
 		return
-	
-	#var projectile := ranged_attack_scene.instantiate()
 	var projectile := projectile_scene.instantiate()
-	#get_tree().current_scene.add_child(projectile)
 	Main.level.add_child(projectile) 
 	
 	var start_pos: = attacker.global_position + Vector3(0, 1, 0)
