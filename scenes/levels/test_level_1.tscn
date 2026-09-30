@@ -85,7 +85,7 @@ data = SubResource("Resource_lxfn4")
 state = SubResource("Resource_e2q1c")
 
 [node name="Ghost_Enemy" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="1" unique_id=1339368304 instance=ExtResource("8_e2q1c")]
-transform = Transform3D(1, 0, 0, 0, 0.9996193, 0.027590154, 0, -0.027590154, 0.9996193, 13, 0.5, -5)
+transform = Transform3D(1, 0, 0, 0, 0.9996193, 0.027590154, 0, -0.027590154, 0.9996193, 7, 0.5, -7)
 data = SubResource("Resource_ruqf1")
 state = SubResource("Resource_ckkav")
 

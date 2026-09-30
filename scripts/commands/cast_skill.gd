@@ -73,11 +73,13 @@ func apply_damage(state: GameState, simulate_only: bool = false) -> void:
 			var dmg := int(skill.effect_mods["damage"])
 			aoe_target.apply_damage(dmg, simulate_only, caster, skill.skill_name)
 			Main.level.combat_vfx.spawn_damage_number(dmg, aoe_target.global_position)
-			if skill.Vfx_Scene != null:
-				Main.level.combat_vfx.play_skill(result)
+			Main.level.combat_vfx.spawn_vfx_at(skill.Vfx_Scene, aoe_target.global_position + Vector3(0,1,0), true, aoe_target)
+			#if skill.Vfx_Scene != null:
+				#Main.level.combat_vfx.play_skill(result)
 		if skill.effect_mods != null and skill.effect_mods.has("current_health"):
 			var heal := int(skill.effect_mods["current_health"])
 			aoe_target.state.current_health = min(aoe_target.state.current_health + heal, aoe_target.state.max_health)
+			Main.level.combat_vfx.spawn_vfx_at(skill.Vfx_Scene, aoe_target.global_position + Vector3(0,1,0), false, aoe_target)
 		aoe_target.state.apply_skill_effect(skill)
 		Main.level.emit_signal("character_stats_changed", aoe_target)
 	

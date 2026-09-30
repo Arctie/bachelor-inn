@@ -66,7 +66,7 @@ func play_skill(result : AttackResult) -> void:
 			vfx.queue_free()
 	return
 
-func spawn_vfx_at(vfx_scene: PackedScene, position: Vector3i) -> void:
+func spawn_vfx_at(vfx_scene: PackedScene, position: Vector3i, show_hit_effects: bool = false, target: Character = null) -> void:
 	if vfx_scene == null:
 		return
 	var vfx: Node3D = vfx_scene.instantiate()
