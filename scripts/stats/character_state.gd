@@ -38,6 +38,8 @@ var just_teleported: bool = false
 # --- SKILLS ---
 @export var skills: Array[Skill] = []
 @export var active_effects: Array[Dictionary] = []
+@export var skill_cooldowns: Dictionary = {}
+@export var item_quantities: Dictionary = {}
 
 # --- AI / BEHAVIOUR TREE ---
 @export var ai_mode: AIMode = AIMode.BEHAVIOUR_TREE
@@ -61,7 +63,6 @@ var just_teleported: bool = false
 @export var movement_points_remaining : int
 @export var base_action_points : int = 1
 @export var action_points_remaining : int
-@export var item_quantities: Dictionary = {}
 #endregion
 
 #var is_initialized: bool = false

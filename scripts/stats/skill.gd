@@ -20,11 +20,9 @@ enum AoEShape { NONE, SQUARE, CROSS, DIAMOND, LINE, WALL, ADJACENT_ONLY, THREE_T
 @export var icon : Texture2D
 
 @export_subgroup("Vfx")
-
 @export var should_play_vfx : bool = true
 @export var Vfx_Scene : PackedScene
 @export var audio_cast: AudioStream
-
 
 @export_subgroup("Stats")
 @export var current_level : int = 1
@@ -36,11 +34,10 @@ var max_level : int = 5
 ## Key names MUST match the variable name inside character_state.gd, or variable name used in runtime!!!
 
 @export var effect_mods : Dictionary = {}
-
-@export_range(0,100) var min_range: int = 1;
-@export_range(0,100) var max_range: int = 3;
-
+@export_range(0,100) var min_range: int = 1
+@export_range(0,100) var max_range: int = 3
 @export var target_faction: TargetFaction = TargetFaction.FRIENDLY
+
 @export_subgroup("AoE")
 @export var aoe_shape: AoEShape = AoEShape.NONE
 @export var aoe_size: int = 1
@@ -52,8 +49,10 @@ var max_level : int = 5
 @export var smallIcon : Texture2D       ## The icon for the lingering effect
 @export var effect_tooltip : String     ## the tooltip for the lingering effect
 
+@export_subgroup("Cooldown Duration")
+@export var cooldown_duration_turns: int = 0 ## default is 0, meaning the ability has no cooldown
+
 @export_subgroup("bools")
-# BOOLS / REQUIREMENTS
 @export var uses_action: bool = true;
 @export var requires_speciality: bool = false; ## Feks. polearm training etc.
 @export var has_requirement: bool = false; ## Må ikke være skill. Kan være class specific etc. 
