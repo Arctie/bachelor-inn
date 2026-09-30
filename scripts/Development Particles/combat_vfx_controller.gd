@@ -66,6 +66,17 @@ func play_skill(result : AttackResult) -> void:
 			vfx.queue_free()
 	return
 
+func spawn_vfx_at(vfx_scene: PackedScene, position: Vector3i) -> void:
+	if vfx_scene == null:
+		return
+	var vfx: Node3D = vfx_scene.instantiate()
+	Main.level.add_child(vfx)
+	vfx.global_position = position
+	if vfx.has_method("play"):
+		vfx.play()
+	else:
+		await get_tree().create_timer(0.5).timeout
+		vfx.queue_free()
 
 func _play_skill_aftereffects(vfx: Node3D, result: AttackResult) -> void:
 	if vfx.has_method("play"):

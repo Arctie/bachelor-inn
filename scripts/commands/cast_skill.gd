@@ -13,6 +13,7 @@ func _init(inStartPos: Vector3i, inEndPos: Vector3i, inTargetPos: Vector3i, inSk
 func prepare(state: GameState, simulate_only: bool = false) -> void:
 	result = AttackResult.new()
 	#result.skill_aoe_shape = skill.aoe_shape
+	var y_offset: float = 10.0 if skill.cast_from_divine else 1.0
 	var caster: Character = state.get_unit(end_pos)
 	if caster == null:
 		caster = state.get_unit(start_pos)
@@ -25,7 +26,7 @@ func prepare(state: GameState, simulate_only: bool = false) -> void:
 	
 	result.aggressor = caster
 	result.victim = target if target != null else caster
-	result.target_position = Main.level.grid_to_world(target_pos) + Vector3(0,1,0)
+	result.target_position = Main.level.grid_to_world(target_pos) + Vector3(0,y_offset,0)
 	result.vfx_scene = skill.Vfx_Scene if skill.Vfx_Scene != null else null
 	
 	if caster != null:
@@ -72,6 +73,8 @@ func apply_damage(state: GameState, simulate_only: bool = false) -> void:
 			var dmg := int(skill.effect_mods["damage"])
 			aoe_target.apply_damage(dmg, simulate_only, caster, skill.skill_name)
 			Main.level.combat_vfx.spawn_damage_number(dmg, aoe_target.global_position)
+			if skill.Vfx_Scene != null:
+				Main.level.combat_vfx.play_skill(result)
 		if skill.effect_mods != null and skill.effect_mods.has("current_health"):
 			var heal := int(skill.effect_mods["current_health"])
 			aoe_target.state.current_health = min(aoe_target.state.current_health + heal, aoe_target.state.max_health)
