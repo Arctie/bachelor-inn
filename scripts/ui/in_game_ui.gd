@@ -10,6 +10,9 @@ var previews: Dictionary[Character, CharacterPreview] = {}
 @onready var ribbon: Ribbon = %Ribbon
 @onready var objective_label: Label = $ObjectiveLabel
 var mission_text: String = ""
+@onready var divine_resource_container: VBoxContainer = $DivineResource/DivineResourceContainer
+@onready var current_value_divine_visual: ColorRect = $DivineResource/CurrentValueDivine
+@onready var divine_power_current_value_text: Label = $DivineResource/DivinePowerCurrentValueLabel
 
 #build all stats into a dictionary for use in the sub UI items
 func build_character_stats(character: Character) -> Dictionary:
@@ -86,6 +89,8 @@ func _connect_to_level(level: Node) -> void:
 	_on_party_updated(level.characters)
 	_update_objective_label()
 	ribbon.hide()
+	Main.divine.divine_resource_changed.connect(_on_divine_resource_changed)
+	update_divine_resource_gui()
 
 func _update_objective_label() -> void:
 	var objectives := get_tree().get_nodes_in_group("objectives")
@@ -211,10 +216,40 @@ func _on_end_turn_button_pressed() -> void:
 	Main.level._clear_selection()
 	Main.level.end_player_turn()
 	print("'End turn' button pressed")
-
+	
+func _on_divine_resource_changed(new_value: int, cap: int) -> void:
+	update_divine_resource_gui()
+	
+func update_divine_resource_gui() -> void:
+	var current: int = Main.divine.divine_resource
+	var cap: int = Main.divine.divine_resource_cap
+	var percent: float = float(current) / float(cap)
+	
+	#current_value_divine_visual.custom_minimum_size.y = 200.0 * percent ## 200 is the current height of the colorrect
+	current_value_divine_visual.scale.y = percent
+	divine_power_current_value_text.text = str(current, " / ", cap)
 
 func _hide_ui() -> void:
 	self.hide()
 
 func _show_ui() -> void:
 	self.show()
+
+func show_divine_ui() -> void:
+	divine_resource_container.show()
+	current_value_divine_visual.show()
+	divine_power_current_value_text.show()
+
+func hide_divine_ui() -> void:
+	divine_resource_container.hide()
+	current_value_divine_visual.hide()
+	divine_power_current_value_text.hide()
+
+func show_player_ui() -> void:
+	player_stats.show()
+	preview_container.show()
+
+func hide_player_ui() -> void:
+	player_stats.hide()
+	enemy_stats.hide()
+	preview_container.hide()

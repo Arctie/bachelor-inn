@@ -366,6 +366,7 @@ func die(simulate_only : bool) -> void:
 	state.is_alive = false
 	if simulate_only == false:
 		#AudioManager2d.play_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_DEATH)
+		#Main.divine.divine_resource += 10 TODO: make faction check
 		play_audio_death()
 		Main.level.emit_signal("character_stats_changed", self)
 		Main.level.emit_signal("character_died", self)

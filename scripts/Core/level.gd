@@ -621,6 +621,8 @@ func _handle_skill(pos : Vector3i) -> void:
 		state_machine.transition_to(StateSelectingUnit.new())
 
 func _handle_attack_choice(pos: Vector3i) -> void:
+	#print("handle_attack_choise in level.gd called from", get_stack())
+	## TODO: refactor into StateChoosingAttack
 	active_move.end_pos = pos
 	moves_stack.append(active_move)
 	
@@ -1079,6 +1081,9 @@ func tick_all_units_end_round() -> void:
 
 func _on_ribbon_skill_pressed(skill: Skill) -> void:
 	if state_machine.current is StateDivineTurn:
+		if skill.divine_resource_cost > 0 and Main.divine.divine_resource < skill.divine_resource_cost:
+			print("Not enough divine resource")
+			return
 		#_exit_skill_target_mode()
 		active_skill = skill
 		#print("About to show skill target tiles")

@@ -28,6 +28,8 @@ enum AoEShape { NONE, SQUARE, CROSS, DIAMOND, LINE, WALL, ADJACENT_ONLY, THREE_T
 @export var current_level : int = 1
 var max_level : int = 5
 @export var command : Command
+@export var action_point_cost: int = 1
+@export var divine_resource_cost: int = 10
 ## STATS
 ## Stat effects are now stored in a dictionary per spell/ability
 ## Add new Dict -> New Key: StringName, New Value: Int

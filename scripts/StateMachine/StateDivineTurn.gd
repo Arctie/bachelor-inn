@@ -10,16 +10,17 @@ func enter(level: Node) -> void:
 	level.enemy_label.hide()
 	level.player_label.hide()
 	
-	#if not level.characters.has(Main.divine.character):
-		#level.characters.append(Main.divine.character)
-	#if not level.game_state.units.has(Main.divine.character):
-		#level.game_state.units.append(Main.divine.character)
-	
 	level.selected_unit = null
 	level.skill_caster = Main.divine.character
 	var ui := level.get_tree().get_first_node_in_group("ui_controller")
 	if ui:
 		ui.ribbon.show()
+		ui.DivineResourceContainer.show()
+		ui.current_value_divine_visual.show()
+		ui.divine_power_current_value_text.show()
+		ui.player_stats.hide()
+		ui.enemy_stats.hide()
+		ui.preview_container.hide()
 		var divine_skills: Array[Skill] = [SkillRegistry.get_skill("divine_cauterizing_heal")]
 		ui.ribbon.set_skills(divine_skills)
 	

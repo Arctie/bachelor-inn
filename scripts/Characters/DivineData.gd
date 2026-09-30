@@ -1,7 +1,13 @@
 extends Resource
 class_name DivineData
 
-@export var divine_resource: int = 0
+signal divine_resource_changed(new_value: int, cap: int)
+
+@export var divine_resource: int = 50:
+	set(value):
+		divine_resource = clamp(value, 0, divine_resource_cap)
+		emit_signal("divine_resource_changed", divine_resource, divine_resource_cap)
+		
 @export var divine_resource_cap: int = 100
 @export var divine_skills: Array[Skill] = []
 

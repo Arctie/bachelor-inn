@@ -42,5 +42,3 @@ func set_health_percent(new_percent: float) -> void:
 	if new_percent <= 0.0:
 		await _trail_tween.finished
 		queue_free()
-	
-	
