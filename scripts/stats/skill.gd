@@ -41,10 +41,8 @@ var max_level : int = 5
 @export_subgroup("AoE")
 @export var aoe_shape: AoEShape = AoEShape.NONE
 @export var aoe_size: int = 1
-## Key names:
-## DoT = &dot_tick_damage
-@export_subgroup("Lingering effects")
-## Lingering effects
+
+@export_subgroup("Lingering effects") ## NOTE: Use the string 'dot_tick_damage' when creating DoT effects on skills
 @export var duration_turns: int = 0     ## how long it lasts
 @export var smallIcon : Texture2D       ## The icon for the lingering effect
 @export var effect_tooltip : String     ## the tooltip for the lingering effect

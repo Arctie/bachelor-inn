@@ -29,7 +29,9 @@ func set_skills(in_skills: Array[Skill]) -> void:
 			if Main.level.selected_unit != null:
 				var no_qty: bool = s.has_quantity and Main.level.selected_unit.state.item_quantities.get(s.skill_id, 0) <= 0
 				var no_ap: bool = s.uses_action and Main.level.selected_unit.state.action_points_remaining <= 0
-				var should_gray: bool = no_qty or no_ap
+				var on_cooldown: bool = Main.level.selected_unit != null and Main.level.selected_unit.state.skill_cooldowns.get(s.skill_id, 0) > 0
+				var should_gray: bool = no_qty or no_ap or on_cooldown
+				#var should_gray: bool = no_qty or no_ap
 				b.disabled = should_gray
 				b.modulate = Color(0.4, 0.4, 0.4, 1.0) if should_gray else Color(1, 1, 1, 1)
 			else:

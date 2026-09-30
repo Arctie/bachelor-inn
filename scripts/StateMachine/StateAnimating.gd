@@ -106,6 +106,8 @@ func _process_next_move(level: Node) -> void:
 			level.selected_unit.state.item_quantities[cast.skill.skill_id] -= 1
 			level.emit_signal("character_stats_changed", level.selected_unit)
 			print("Item used: ", cast.skill.skill_id, " remaining: ", level.selected_unit.state.item_quantities[cast.skill.skill_id])
+		if cast.skill != null and cast.skill.cooldown_duration_turns > 0 and level.selected_unit != null:
+			level.selected_unit.state.skill_cooldowns[cast.skill.skill_id] = cast.skill.cooldown_duration_turns
 		if _cancelled:
 			return
 	elif level.active_move is Attack:

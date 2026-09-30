@@ -24,4 +24,5 @@ effect_mods = {
 max_range = 4
 target_faction = 1
 duration_turns = 3
+cooldown_duration_turns = 2
 metadata/_custom_type_script = "uid://c3p07am3ababr"

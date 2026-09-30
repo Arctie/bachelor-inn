@@ -26,4 +26,5 @@ effect_mods = {
 }
 min_range = 0
 smallIcon = SubResource("AtlasTexture_07c11")
+cooldown_duration_turns = 3
 metadata/_custom_type_script = "uid://c3p07am3ababr"

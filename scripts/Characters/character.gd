@@ -288,12 +288,23 @@ func move_to(pos: Vector3i, simulate_only: bool = false) -> void:
 
 func reset() -> void:
 	state.is_alive = true;
+	var keys: Array = state.skill_cooldowns.keys()
 	if state.is_playable():
 		state.is_ability_used = false
 		state.movement_points_remaining = state.movement
-		state.action_points_remaining = state.base_action_points
+		state.action_points_remaining = state.baseline_ap
 	show();
 	state.is_moved = false;
+	## Decrease skill cooldown
+	for id: String in keys:
+		state.skill_cooldowns[id] -= 1
+		if state.skill_cooldowns[id] <= 0:
+			state.skill_cooldowns.erase(id)
+	for s: Skill in state.skills:
+		if s == null:
+			continue
+		if s.cooldown_duration_turns > 0:
+			print("Skill: ", s.skill_id, " cooldown remaining: ", state.skill_cooldowns.get(s.skill_id, 0), "/", s.cooldown_duration_turns)
 	Main.level.emit_signal("character_stats_changed", self)
 
 

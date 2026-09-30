@@ -24,4 +24,5 @@ min_range = 0
 max_range = 0
 target_faction = 1
 aoe_shape = 6
+cooldown_duration_turns = 2
 metadata/_custom_type_script = "uid://c3p07am3ababr"
