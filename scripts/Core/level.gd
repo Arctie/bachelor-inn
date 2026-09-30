@@ -900,18 +900,18 @@ func _continue_enemy_turn() -> void:
 	print("_continue_enemy_turn() in level.gd called. Routing to ai_controller.run_enemy_turn()")
 	await ai_controller.run_enemy_turn(self)
 
-func _end_enemy_turn() -> void:
-	tick_all_units_end_round()
-	for c in characters:
-		if c == null:
-			continue
-		emit_signal("character_stats_changed", c)
-	reset_all_units()
-	is_player_turn = true
-	check_aggro()
-	hide_inactive_characters()
-	camera_controller.free_camera()
-	state_machine.transition_to(StateTurnTransition.new(true))
+#func _end_enemy_turn() -> void:
+	#tick_all_units_end_round()
+	#for c in characters:
+		#if c == null:
+			#continue
+		#emit_signal("character_stats_changed", c)
+	#reset_all_units()
+	#is_player_turn = true
+	#check_aggro()
+	#hide_inactive_characters()
+	#camera_controller.free_camera()
+	#state_machine.transition_to(StateTurnTransition.new(true))
 
 func check_trigger_conditions() -> void:
 	if selected_unit == null:
