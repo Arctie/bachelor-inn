@@ -14,13 +14,9 @@ func enter(level: Node) -> void:
 	level.skill_caster = Main.divine.character
 	var ui := level.get_tree().get_first_node_in_group("ui_controller")
 	if ui:
+		ui.show_divine_ui()
+		ui.hide_player_ui()
 		ui.ribbon.show()
-		ui.DivineResourceContainer.show()
-		ui.current_value_divine_visual.show()
-		ui.divine_power_current_value_text.show()
-		ui.player_stats.hide()
-		ui.enemy_stats.hide()
-		ui.preview_container.hide()
 		var divine_skills: Array[Skill] = [SkillRegistry.get_skill("divine_cauterizing_heal")]
 		ui.ribbon.set_skills(divine_skills)
 	
@@ -28,11 +24,10 @@ func enter(level: Node) -> void:
 		
 func exit(level: Node) -> void:
 	print("EXIT STATE: StateDivineTurn.")
-	#level.is_divine_turn = false
-	#level.characters.erase(Main.divine.character)
-	#level.game_state.units.erase(Main.divine.character)
-	#level.selected_unit = null
-	#level.skill_caster = null
+	#var ui := level.get_tree().get_first_node_in_group("ui_controller")
+	#if ui:
+		#ui.show_player_ui()
+		#ui.hide_divine_ui()
 
 func handle_input(level: Node, event: InputEvent) -> void:
 	if not level._can_handle_input(event):
@@ -90,9 +85,11 @@ func handle_input(level: Node, event: InputEvent) -> void:
 	level.state_machine.transition_to(StateChoosingSkillOrigin.new())
 
 func _cancel(level: Node) -> void:
-	var caster: Character = level.skill_caster
+	#var caster: Character = level.skill_caster
 	level._exit_skill_target_mode()
-	if is_instance_valid(caster):
-		level.state_machine.transition_to(StateSelectingMove.new())
-	else:
-		level.state_machine.transition_to(StateSelectingUnit.new())
+	level.skill_caster = Main.divine.character
+	level.state_machine.transition_to(StateDivineTurn.new())
+	#if is_instance_valid(caster):
+		#level.state_machine.transition_to(StateSelectingMove.new())
+	#else:
+		#level.state_machine.transition_to(StateSelectingUnit.new())

@@ -208,7 +208,10 @@ func _on_end_turn_button_pressed() -> void:
 		return
 	if Main.level.is_divine_turn:
 		Main.level.is_divine_turn = false
-		#Main.level._clear_selection()
+		var ui := Main.level.get_tree().get_first_node_in_group("ui_controller")
+		if ui:
+			ui.show_player_ui()
+			ui.hide_divine_ui()
 		Main.level.state_machine.transition_to(StateTurnTransition.new(true))
 		return
 	

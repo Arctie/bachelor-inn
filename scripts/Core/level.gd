@@ -349,6 +349,8 @@ func get_selectable_characters() -> Array[Character]:
 
 
 func select_next_character() -> void:
+	if state_machine.current is StateDivineTurn:
+		return
 	var list := get_selectable_characters()
 	#print("select_next_character - list size: ", list.size(), " selected: ", selected_unit.data.unit_name if selected_unit else "null")
 	if list.is_empty():
@@ -489,8 +491,13 @@ func _show_skill_origin_tiles(target_pos: Vector3i, skill: Skill) -> void:
 		path_map.set_cell_item(tile, 0)
 
 func _can_handle_input(event: InputEvent) -> bool:
+	if is_divine_turn:
+		if not (state_machine.current is StateDivineTurn or
+				state_machine.current is StateChoosingSkillTarget or
+				state_machine.current is StateChoosingSkillOrigin):
+					return false
 	if not is_player_turn and not is_divine_turn:
-		return false	
+		return false
 	if state_machine.current is StateAnimating:
 		return false
 	if is_in_menu:
@@ -505,7 +512,6 @@ func _can_handle_input(event: InputEvent) -> bool:
 		if get_grid_cell_from_mouse() == Vector3i(-999, -999, -999):
 			return false
 	return true
-
 
 func _update_cursor(pos: Vector3i) -> void:
 	var world_pos := grid_to_world(pos)
@@ -666,6 +672,8 @@ func can_handle_ui_input() -> bool:
 
 func try_select_unit(unit: Character) -> void:
 	#print("try_select_unit: ", unit.data.unit_name, " can_handle: ", can_handle_ui_input())
+	if state_machine.current is StateDivineTurn:
+		return
 	if not can_handle_ui_input():
 		return
 	select_unit(unit)
@@ -673,6 +681,9 @@ func try_select_unit(unit: Character) -> void:
 
 func select_unit(unit: Character) -> void:
 	#print("select_unit called - current state: ", state_machine.current.get_script().resource_path if state_machine.current else "null")
+	print("select_unit called from: ", get_stack())
+	if is_divine_turn:
+		return
 	if state_machine.current is StateDivineTurn:
 		return
 	if state_machine.current is StateChoosingSkillTarget:
@@ -708,12 +719,16 @@ func select_unit(unit: Character) -> void:
 
 
 func _handle_player_click(pos: Vector3i) -> void:
+	if state_machine.current is StateDivineTurn:
+		return
 	unit_pos = pos
 	movement_map.clear()
 	select_unit(get_unit(pos))
 
 
 func _handle_action_tile_click(pos: Vector3i) -> String:
+	#if state_machine.current is StateDivineTurn:
+		#return
 	active_move = null
 
 	var found_move : Move = null
