@@ -5,11 +5,13 @@ extends Node
 ## Loads settings and saves for the game.
 
 # TODO:
-# Should own World.tscn, main_menu.tscn, hub.tscn and level.tscn.
+# Should main.gd own World.tscn, main_menu.tscn, hub.tscn and level.tscn?
 # load settings
 
 #region Props
 ## Current level running
+enum GameLocation { LEVEL, CAMP }
+var current_game_location: GameLocation = GameLocation.CAMP
 var level: Level;
 var current_level_name: String = ""
 
@@ -57,7 +59,7 @@ func _ready() -> void:
 	world = World
 	camera_controller = world.get_node("CameraScene")
 	divine.setup()
-	print("Divine character: ", divine.character)
+	#print("Divine character: ", divine.character)
 	world.add_child(divine.character)
 	
 ## Unloads the current level instance
@@ -113,7 +115,7 @@ func load_single_level(index: int) -> void:
 		return
 	is_standalone_test = true
 	
-	 # Populate with default test party from registry
+	# Populate with default test party from registry
 	Main.characters.clear()
 	Main.full_roster = ["alfred", "emil", "lucy"]
 	Main.active_party = ["alfred", "emil", "lucy"]

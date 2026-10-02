@@ -1368,7 +1368,6 @@ func check_aggro() -> void:
 			if player_unit.state.faction != CharacterState.Faction.PLAYER:
 				continue
 			
-			
 			var distx : int = abs(unit.state.grid_position.x - player_unit.state.grid_position.x)
 			var distz : int = abs(unit.state.grid_position.z - player_unit.state.grid_position.z)
 			var dist : int = distx + distz
