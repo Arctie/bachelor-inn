@@ -218,7 +218,7 @@ func _place_player_units() -> void:
 		player_characters.append(new_unit)
 		characters.append(new_unit)
 	
-	## NOTE: PRINT TEST
+	## NOTE: PRINT TESTing
 	#for c in player_characters:
 		#print("Player audio check - ", c.data.unit_name, 
 			  #" audio_player: ", c.audio_player,
@@ -1022,6 +1022,7 @@ func check_victory_conditions() -> void:
 	next_level()
 
 func next_level() -> void:
+	## NOTE: This is a clean up function that moves the level forward
 	if _level_complete:
 		return
 	_level_complete = true
@@ -1037,9 +1038,18 @@ func next_level() -> void:
 		
 	await get_tree().create_timer(1.0).timeout
 	
+	# Update player units and move to main.character array
 	for c in Main.characters:
 		if is_instance_valid(c):
 			c.calc_derived_stats()
+			Main.characters.append(c)
+	
+	# Clear unit arrays attached to level.gd
+	player_characters.clear()
+	enemy_characters.clear()
+	neutral_characters.clear()
+	characters.clear()
+	
 	Main.save.save_progress(Main.current_save_slot, Main.current_level_index +1)
 	Main.go_to_transition_screen()
 	

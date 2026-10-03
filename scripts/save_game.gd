@@ -185,6 +185,7 @@ func read(save_slot: int) -> bool:
 	var units : Array = slot["units"]
 	var raw_roster: Array = slot.get("full_roster", [])
 	var raw_party: Array = slot.get("active_party", [])
+	var location: String = slot.get("location", "camp")
 	Main.full_roster.clear()
 	Main.active_party.clear()
 	for id: String in raw_roster:
@@ -268,7 +269,10 @@ func read(save_slot: int) -> bool:
 		
 	#print("read() called. slot: ", save_slot)
 	#print("Units found in save file: ", units.size())
-	Main.load_level(level)
+	if location == "camp":
+		Main.load_hub()
+	else:
+		Main.load_level(level)
 	return true
 
 
@@ -334,6 +338,7 @@ func save_progress(save_slot: int, level_index: int) -> void:
 		
 	saves[slot_key] = {
 		"level": level_index, 
+		"location": "level" if Main.current_location == Main.GameLocation.LEVEL else "camp",
 		"full_roster": Main.full_roster,
 		"active_party": Main.active_party,
 		"units": units
