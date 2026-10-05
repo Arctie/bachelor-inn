@@ -10,7 +10,7 @@ class_name StateSelectingUnit
 ## Signals made in enter() must be disconnected in exit()
 func enter(level: Node) -> void:
 	print("ENTER STATE: StateSelectingUnit.")
-	#level._clear_selection()
+	level._clear_selection()
 
 func exit(level: Node) -> void:
 	print("EXIT STATE: StateSelectingUnit.")
