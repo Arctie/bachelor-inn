@@ -496,8 +496,8 @@ func _can_handle_input(event: InputEvent) -> bool:
 			return false
 		if Input.is_action_pressed("enable_dragging"):
 			return false
-		if get_grid_cell_from_mouse() == Vector3i(-999, -999, -999):
-			return false
+		#if get_grid_cell_from_mouse() == Vector3i(-999, -999, -999):
+			#return false
 	return true
 
 
