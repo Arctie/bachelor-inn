@@ -30,7 +30,7 @@ static func _run_minimax(enemy: Character, state: GameState) -> Command:
 # func run_bt()
 
 static func run_enemy_turn(level: Level) -> void:
-	var any_active_enemies := _has_active_enemies(level)
+	var any_active_enemies : bool = _has_active_enemies(level)
 	
 	if not any_active_enemies:
 		_end_enemy_turn(level)
