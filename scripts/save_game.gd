@@ -16,7 +16,7 @@ func is_savefile_existing() -> bool:
 	return FileAccess.file_exists(SAVE_GAME_PATH);
 
 
-func create_new_from_state(slot:int, level: int, state: GameState) -> void:
+func create_new_from_state(slot: int, level: int, state: GameState) -> void:
 	var units: Array[Character]
 	
 	for unit in state.units:
@@ -39,11 +39,12 @@ func create_new_save_data() -> void:
 	var save_file: Object = FileAccess.open(SAVE_GAME_PATH, FileAccess.WRITE);
 	
 	var units := []
+	Main.full_roster = ["alfred", "emil", "lucy"]
+	Main.active_party = ["alfred", "emil", "lucy"]
 	
-	for id: String in registry.characters.keys():
+	for id: String in Main.active_party: #registry.characters.keys():
 		var def: CharacterDefinition = registry.characters[id]
-		
-		var character := Character.new()
+		var character := def.scene.instantiate()
 		character.data = def.base_data.duplicate()
 		character.state = def.base_state.duplicate()
 		character.scene_id = id
@@ -56,21 +57,29 @@ func create_new_save_data() -> void:
 		"Slot 1":
 		{
 			"level": 3,
+			"full_roster": Main.full_roster,
+			"active_party": Main.active_party,
 			"units": units
 		},
 		"Slot 2":
 		{
 			"level": 4,
+			"full_roster": Main.full_roster,
+			"active_party": Main.active_party,
 			"units": units
 		},
 		"Slot 3":
 		{
 			"level": 5,
+			"full_roster": Main.full_roster,
+			"active_party": Main.active_party,
 			"units": units
 		},
 		"Slot 4": #For Tutorial reset. 
 		{
 			"level": 0,
+			"full_roster": Main.full_roster,
+			"active_party": Main.active_party,
 			"units": units
 		}
 	}
@@ -95,17 +104,29 @@ func create_new_save_in_slot(save_slot: int) -> void:
 
 	# Build fresh units
 	var units := []
-	for id: String in registry.characters.keys():
-		var def: CharacterDefinition = registry.characters[id]
-		var character := Character.new()
+	var starting_party := ["alfred", "emil", "lucy"]
+	Main.full_roster = ["alfred", "emil", "lucy"]
+	Main.active_party = ["alfred", "emil", "lucy"]
+	
+	for id: String in starting_party:
+		var def: CharacterDefinition = registry.characters.get(id, null)
+		if def == null:
+			push_error("No definition found for: " + id)
+			continue
+		var character := def.scene.instantiate() #.new()
 		character.data = def.base_data.duplicate()
 		character.state = def.base_state.duplicate()
 		character.scene_id = id
+		character.calc_derived_stats()
 		units.append(character.save())
 
 	# Only overwrite the selected slot
 	saves["Noble Nights Save format"] = version
-	saves["Slot " + str(save_slot + 1)] = {"level": 3, "units": units}
+	saves["Slot " + str(save_slot + 1)] = {
+											"level": 3, 
+											"full_roster": ["alfred", "emil", "lucy"],
+											"active_party": ["alfred", "emil", "lucy"],
+											"units": units}
 	var save_file := FileAccess.open(SAVE_GAME_PATH, FileAccess.WRITE)
 	save_file.store_string(JSON.stringify(saves))
 	save_file.close()
@@ -134,6 +155,7 @@ func write(_save_slot: int) -> void:
 
 
 func read(save_slot: int) -> bool:
+	#print("read() called for slot: ", save_slot)
 	if not FileAccess.file_exists(SAVE_GAME_PATH):
 		return false
 
@@ -161,12 +183,25 @@ func read(save_slot: int) -> bool:
 
 	var level : int = slot["level"]
 	var units : Array = slot["units"]
-
-	Main.characters.clear()
+	var raw_roster: Array = slot.get("full_roster", [])
+	var raw_party: Array = slot.get("active_party", [])
+	Main.full_roster.clear()
+	Main.active_party.clear()
+	for id: String in raw_roster:
+		Main.full_roster.append(str(id))
+	for id: String in raw_party:
+		Main.active_party.append(str(id))
+	Main.characters.clear() # Clear before rebuilding, for safety
+	#print("active_party: ", Main.active_party)
+	#print("full_roster: ", Main.full_roster)
+	#print("units in save: ", units.size())
 
 	for unit_dict : Dictionary in units:
-		
 		var scene_id : String = unit_dict.get("scene")
+		print("Loading unit: ", scene_id, " in active_party: ", Main.active_party.has(scene_id))
+		
+		if not Main.active_party.has(scene_id):
+			continue
 		var def: CharacterDefinition = registry.characters.get(scene_id)
 		if def == null:
 			push_error("Unknown character scene_id: " + scene_id)
@@ -174,11 +209,16 @@ func read(save_slot: int) -> bool:
 		var packed_scene: PackedScene = def.scene
 		
 		var character := packed_scene.instantiate();
-
-		# --- DATA ---
-		var data := CharacterData.new()
+		
+		# --- DATA and STATE ---
+		var state_dict : Dictionary = unit_dict["state"]
 		var data_dict : Dictionary = unit_dict["data"]
-
+		if data_dict.is_empty() or state_dict.is_empty():
+			push_error("Malformed unit entry in save data")
+			continue
+			
+		# DATA
+		var data := CharacterData.new()
 		data.unit_name = data_dict["unit_name"]
 		data.speciality = data_dict["speciality"]
 		data.personality = data_dict["personality"]
@@ -187,26 +227,27 @@ func read(save_slot: int) -> bool:
 		data.speed = data_dict["speed"]
 		data.focus = data_dict["focus"]
 		data.endurance = data_dict["endurance"]
-
-		# --- STATE ---
+		
+		# Load audio from registry base_data
+		var base_data: CharacterData = def.base_data
+		if base_data != null:
+			data.audio_hurt = base_data.audio_hurt
+			data.audio_death = base_data.audio_death
+			data.audio_move = base_data.audio_move
+			data.audio_selected = base_data.audio_selected
+			data.audio_spawned_in = base_data.audio_spawned_in
+			
+		# STATE
 		var state := CharacterState.new()
-		var state_dict : Dictionary = unit_dict["state"]
 		var gp : Array = state_dict["grid_position"]
 		state.grid_position = Vector3i(gp[0], gp[1], gp[2])
 		state.faction = state_dict["faction"]
 		state.experience = state_dict["experience"]
 		state.level = state_dict["level"]
-		## Need to do this atm to avoid UI signal overwriting current_sanity on load/read
-		var endurance := int(data_dict["endurance"])
-		var focus := int(data_dict["focus"])
-		var mind := int(data_dict["mind"])
-		var strength := int(data_dict["strength"])
-		var resistance := int(4 + floor(float(focus) / 2.0) + floor(float(endurance) / 2.0))
-		state.max_health = int(4 + endurance + floor(float(strength) / 2.0))
-		state.max_sanity = resistance + mind
 		
 		state.current_health = int(state_dict["current_health"])
 		state.current_sanity = int(state_dict["current_sanity"])
+		#print("READ: ", data.unit_name, " current_sanity: ", state.current_sanity, " max_sanity: ", state.max_sanity)
 		
 		state.weapon = WeaponRegistry.get_weapon(state_dict["weapon_id"])
 		state.skills.clear()
@@ -216,19 +257,18 @@ func read(save_slot: int) -> bool:
 			var s: Skill = SkillRegistry.get_skill(id)
 			if s != null:
 				state.skills.append(s)
+				if s.has_quantity:
+					var saved_qty: int = state_dict.get("item_quantities", {}).get(s.skill_id, s.base_quantity)
+					state.item_quantities[s.skill_id] = saved_qty
 		
 		character.data = data
 		character.state = state
-		
-		#print("DEBUG LOADED unit:", data.unit_name, " skills:", state.skills.size(), " ids:", state_dict.get("skill_ids", []))
-		#print("LOADED ", data.unit_name, " skill_ids=", state_dict.get("skill_ids", []))
-		#print("RESOLVED ", data.unit_name, " skills=", state.skills.map(func(s: Skill) -> String: return s.skill_id if s else "NULL"))
-		
+		character.calc_derived_stats()
 		Main.characters.append(character)
-	var level_name : String = Main.levels[level].get_file().get_basename()
-	print("read() called. slot: ", save_slot)
-	print("Units found in save file: ", units.size())
-	Main.load_level(level_name)
+		
+	#print("read() called. slot: ", save_slot)
+	#print("Units found in save file: ", units.size())
+	Main.load_level(level)
 	return true
 
 
@@ -236,23 +276,21 @@ func load_tutorial() -> void:
 	print("load_tutorial() pressed.")
 	Main.current_save_slot = TUTORIAL_SAVE_SLOT
 	Main.characters.clear()
+	Main.full_roster = [Main.selected_starting_character]
+	Main.active_party = [Main.selected_starting_character]
 	
 	var chosen_char_id := Main.selected_starting_character
-	var chardef : CharacterDefinition = registry.characters.get(chosen_char_id, null)
+	var chardef: CharacterDefinition = registry.characters.get(chosen_char_id, null)
 	if chardef == null:
 		push_error("No definition found for " + chosen_char_id + ".")
 		return
-	
-	#for id: String in registry.characters.keys():
-		#var chardef : CharacterDefinition = registry.characters[id]
 		
 	var character := chardef.scene.instantiate()
 	character.data = chardef.base_data.duplicate()
 	character.state = chardef.base_state.duplicate()
 	Main.characters.append(character)
 	
-	Main.current_level_name = "tutorialDesignedLevel"
-	Main.load_level("tutorialDesignedLevel")
+	Main.load_level(0) 
 	
 	#Main.current_level_name = "tutorialDesignedLevel"
 	#var level := Main.current_level_name if Main.current_level_name != "" else "tutorialDesignedLevel"
@@ -266,10 +304,11 @@ func load_tutorial() -> void:
 
 
 func save_progress(save_slot: int, level_index: int) -> void:
-	print("save_progress called. slot: ", save_slot, " level: ", level_index, " units: ", Main.characters.size())
+	#print("save_progress called from: ", get_stack()[1])
+	#print("save_progress called. slot: ", save_slot, " level: ", level_index, " units: ", Main.characters.size())
 	for c in Main.characters:
 		if c != null:
-			print("  Saving unit: ", c.data.unit_name)
+			print("Saving unit: ", c.data.unit_name)
 	
 	var file := FileAccess.open(SAVE_GAME_PATH, FileAccess.READ)
 	var json_string := file.get_as_text()
@@ -283,7 +322,8 @@ func save_progress(save_slot: int, level_index: int) -> void:
 	var saves: Dictionary = json.data
 	var slot_key := "Slot " + str(save_slot +1)
 	var units := []
-
+	
+	# NOTE: When/if garrison is included, this iteration should adress Main.full_roster.
 	for character in Main.characters:
 		if character == null:
 			continue
@@ -292,7 +332,12 @@ func save_progress(save_slot: int, level_index: int) -> void:
 		units.append(character.save())
 		print("  Saving: ", character.data.unit_name, " hp: ", character.state.current_health, " san: ", character.state.current_sanity)
 		
-	saves[slot_key] = {"level": level_index, "units": units}
+	saves[slot_key] = {
+		"level": level_index, 
+		"full_roster": Main.full_roster,
+		"active_party": Main.active_party,
+		"units": units
+		}
 	
 	var save_file := FileAccess.open(SAVE_GAME_PATH, FileAccess.WRITE)
 	save_file.store_string(JSON.stringify(saves))

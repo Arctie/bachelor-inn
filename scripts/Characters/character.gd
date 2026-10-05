@@ -12,6 +12,8 @@ class_name Character
 @export var run_down_animation : SpriteAnim
 @export var idle_animation : SpriteAnim
 
+@onready var audio_player: AudioStreamPlayer3D = $AudioPlayer
+
 @export_category("UI")
 @export var portrait : Texture2D
 @export var portrait_big : Texture2D
@@ -38,6 +40,7 @@ var my_outline_material : ShaderMaterial = null
 
 @onready var sprite : Sprite3D = $Sprite
 @onready var outline : Sprite3D = $Outline
+@onready var placeholder_sprite: Sprite3D = $PlaceholderSprite
 #endregion
 
 #region packed scenes
@@ -101,6 +104,7 @@ func play(anim : SpriteAnim) -> void:
 
 
 func pause_anim() -> void:
+	audio_player.stop()
 	play(idle_animation)
 
 
@@ -118,42 +122,12 @@ func clone() -> Character:
 func _on_sanity_changed(_in_sanity : int) -> void:
 	if !(state.current_sanity <= 0 and state.is_alive):
 		return
-	#state.faction = CharacterState.Faction.ENEMY
-	#data.unit_name = data.unit_name + "'thulhu"
-	#health_bar = health_bar_enemy
-	#health_bar_ally.hide()
-	#health_bar_enemy.show()
-		
-	#TODO:
 	
-	
-	##Create an enemy character instance based of this character
-	#var CorruptedChar : Character = load("res://scenes/Characters/Horror_Scene.tscn").instantiate();
-	#
-	##State
-	#CorruptedChar.state = state;
-	#CorruptedChar.state.current_health = CorruptedChar.state.max_health
-	#CorruptedChar.state.faction = CorruptedChar.state.Faction.ENEMY;
-	#CorruptedChar.state.is_moved = true;
-	#CorruptedChar.state.is_ability_used = false;
-	#CorruptedChar.state.is_alive = true;
-	##Data
-	#CorruptedChar.data = data;
-		#
-	#die(false);
-	#if CorruptedChar.get_parent() != Main.world:
-		#Main.world.add_child(CorruptedChar)
-	#Main.level.characters.append(CorruptedChar)
-	#Main.level.game_state.units.append(CorruptedChar)
-		#
-	#CorruptedChar.position = position
-		#
-	#Main.level.occupancy_map.set_cell_item(state.grid_position, 6)
 	var pos : Vector3i = state.grid_position
 	var pre_corrupted_data : CharacterData = data
 	var pre_corrupted_state : CharacterState = state
 	die(false);
-	var CorruptedChar : Character = Main.level.spawn_enemy(pos, "07_InsaneCharacter")
+	var CorruptedChar : Character = Main.level.spawn_corrupted_character(pos)
 	CorruptedChar.data = pre_corrupted_data
 	CorruptedChar.state = pre_corrupted_state
 	CorruptedChar.state.current_health = CorruptedChar.state.max_health
@@ -162,7 +136,6 @@ func _on_sanity_changed(_in_sanity : int) -> void:
 	CorruptedChar.state.is_moved = true;
 	CorruptedChar.state.is_ability_used = false;
 	CorruptedChar.data.unit_name += "'thulhu"
-	#CorruptedChar.position = position
 
 
 func get_random_unaquired_skill(ignore_skill : Skill = null) -> Skill:
@@ -243,23 +216,25 @@ func get_random_unaquired_skill(ignore_skill : Skill = null) -> Skill:
 
 
 func calc_derived_stats() -> void:
-	## TODO: Simplyfy how stats work?? Right now, adding endurance increases max sanity, 
-	## 	 	 because it increases resistance.
 	if data == null:
 		return
+	
+	var was_full_health := state.current_health >= state.max_health
+	var was_full_sanity := state.current_sanity >= state.max_sanity
+	
 	state.defense = 4 + data.endurance
 	state.resistance = 4 + floor(data.focus / 2.0) + floor(data.endurance / 2.0)
 	state.max_health = 4 + data.endurance + floor(data.strength / 2.0);
-	state.max_sanity = state.resistance + data.mind
-	#state.movement = 4 + floor(data.speed / 3.0)
-	state.stability = max(1, data.focus - (data.mind/2))
+	state.max_sanity = 20 + state.resistance + data.mind
 	state.movement = 4 + data.speed
+	state.stability = max(1, data.focus - (data.mind/2))
+	state.movement_points_remaining = state.movement
+	state.action_points_remaining = state.base_action_points
 	
-	if state.current_health <= 0:
+	if state.current_health <= 0 or was_full_health:
 		state.current_health = state.max_health
-	if state.current_sanity <= 0:
+	if state.current_sanity <= 0 or was_full_sanity:
 		state.current_sanity = state.max_sanity
-	
 	## TODO: decide if we want to have an auto equip class weapon.
 	#if state.weapon == null or state.weapon.weapon_id == "unarmed":
 		#var weapon_id := get_default_weapon_id()
@@ -267,57 +242,24 @@ func calc_derived_stats() -> void:
 
 
 func update_derived_stats_after_level_up() -> void:
-	if data == null:
-		return
-	state.defense = 4 + data.endurance
-	state.resistance = 4 + floor(data.focus / 2.0) + floor(data.endurance / 2.0)
-	state.movement = 4 + data.speed
-	state.stability = max(1, data.focus - data.mind)
-	
-	var new_max_health := int(4 + data.endurance + floor(data.strength / 2.0))
-	var new_max_sanity := int(state.resistance + data.mind)
-	
-	if state.current_health == state.max_health:
-		state.current_health = new_max_health
-	state.max_health = new_max_health
-	
-	if state.current_sanity == state.max_sanity or state.current_sanity == new_max_sanity - 1:
-		state.max_sanity = new_max_sanity
-		state.current_sanity = new_max_sanity
-	else:
-		state.max_sanity = new_max_sanity
+	calc_derived_stats()
 
 func _ready() -> void:
+	if placeholder_sprite:
+		placeholder_sprite.hide() # TODO: Remove this before release
 	if state:
 		state.sanity_changed.connect(_on_sanity_changed)
-	
 	calc_derived_stats()
-	
 	if not state.is_playable() and state.faction != CharacterState.Faction.NEUTRAL:
 		state.faction = CharacterState.Faction.ENEMY;
-	# should remake the entire level up 
-	#level_up_popup = LEVEL_UP_POPUP.instantiate();
-	#add_child(level_up_popup);
-	#level_up_popup.hide();
-	#level_up_popup.name_label = data.unit_name;
-	#calibrate_level_popup();
-	
-#	skill_choose_popup = SKILL_CHOOSE_POPUP.instantiate()
-#	add_child(skill_choose_popup)
-#	skill_choose_popup.text = data.unit_name + ", " + CharacterData.Speciality.keys()[data.speciality]
-#	skill_choose_popup.hide()
-	
-	play(idle_animation)
-	
+	if idle_animation != null:
+		play(idle_animation)
 	camera = get_viewport().get_camera_3d()
-
 
 func _process(delta: float) -> void:
 	if current_animation == null:
 		return
-	
 	frame_timer += delta
-	
 	if frame_timer >= 1.0 / current_animation.fps:
 		frame_timer = 0.0
 		frame_index = (frame_index + 1) % (current_animation.frame_columns * current_animation.frame_rows)
@@ -329,7 +271,7 @@ func _process(delta: float) -> void:
 func move_to(pos: Vector3i, simulate_only: bool = false) -> void:
 	if simulate_only == false:
 		Main.level.occupancy_map.set_cell_item(state.grid_position, GridMap.INVALID_CELL_ITEM);
-	
+		
 	state.is_alive = true;
 	state.grid_position = pos;
 	state.is_moved = true;
@@ -344,24 +286,40 @@ func move_to(pos: Vector3i, simulate_only: bool = false) -> void:
 
 func reset() -> void:
 	state.is_alive = true;
-	# slowly heal sanity
 	if state.is_playable():
-		## TODO: Decide if this is intended - Heal sanity after each round
-		#state.current_sanity += 1;
 		state.is_ability_used = false
-	#hide_ui();
+		state.movement_points_remaining = state.movement
+		state.action_points_remaining = state.base_action_points
 	show();
 	state.is_moved = false;
-	#my_material.set_shader_parameter("grey_tint", false)
 	Main.level.emit_signal("character_stats_changed", self)
 
 
-## Importing this to attack.gd
+## TODO: Import this to attack.gd?
 func apply_damage(amount: int, simulate_only: bool = false, 
 	_source: Character = null, _label: String = "") -> bool:
 	amount = int(amount)
 	if amount <= 0:
 		return false
+	if simulate_only == false:
+		#print("apply_damage - audio_player: ", audio_player, " audio_hurt: ", data.audio_hurt)
+		play_audio_hurt()
+	
+	# Turn hostile if attacked
+	if not simulate_only and state.hostile_when_attacked:
+		if state.faction == CharacterState.Faction.NEUTRAL:
+			state.faction = CharacterState.Faction.ENEMY
+			Main.level.check_aggro()
+			Main.level.enemy_characters.append(self)
+			Main.level.neutral_characters.erase(self)
+			#Main.level.game_state = GameState.from_level(Main.level) 	#<-- This is more robust
+			Main.level.game_state.units.append(self) 					#<-- This is cheaper
+			Main.level.occupancy_map.set_cell_item(state.grid_position, Main.level.enemy_code)
+	
+	#AudioManager2d.play_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_HURT)
+	#if data.audio_hurt != null:
+		#audio_player.stream = data.audio_hurt
+		#audio_player.play()
 	
 	## Health reduced here 
 	state.current_health = max(0, state.current_health - amount)
@@ -369,6 +327,7 @@ func apply_damage(amount: int, simulate_only: bool = false,
 	if not simulate_only and not killed:
 		Main.level.emit_signal("character_stats_changed", self)
 	if killed:
+		play_audio_death()
 		die(simulate_only)
 
 	return killed
@@ -392,21 +351,26 @@ func flash_hit(crit : bool) -> void:
 
 func die(simulate_only : bool) -> void:
 	state.is_alive = false
-	
 	if simulate_only == false:
+		#AudioManager2d.play_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_DEATH)
+		play_audio_death()
 		Main.level.emit_signal("character_stats_changed", self)
+		Main.level.emit_signal("character_died", self)
 		if state.is_playable():
 			Main.characters.erase(self)
+			Main.active_party.erase(scene_id)
+		Main.level.characters.erase(self)
+		Main.level.enemy_characters.erase(self)
+		Main.level.neutral_characters.erase(self)
+		Main.level.player_characters.erase(self)
 		Main.level.game_state.units.erase(self)
 		Main.level.occupancy_map.set_cell_item(state.grid_position, GridMap.INVALID_CELL_ITEM)
 		if get_parent() != null:
 			get_parent().remove_child(self)
 		queue_free.call_deferred()
 
-
 func print_stats() -> void:
 	print(save());
-
 
 func save() -> Dictionary:
 	return {
@@ -414,7 +378,6 @@ func save() -> Dictionary:
 		"data": data.save(),
 		"state": state.save()
 	}
-
 
 ## This func is used inside the next function - ensure_weapon_equipped()
 ## Gives characters their base weapon based on speciality.
@@ -428,3 +391,47 @@ func get_default_weapon_id() -> String:
 			return "bow_basic";
 		_:
 			return "unarmed"
+
+func play_audio_hurt() -> void:
+	if data.audio_hurt != null and audio_player != null:
+		audio_player.stream = data.audio_hurt
+		#print("Playing audio: ", data.audio_hurt)
+		audio_player.play()
+	else:
+		AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_HURT)
+
+func play_audio_death() -> void:
+	if data.audio_death != null and audio_player != null:
+		audio_player.stream = data.audio_death
+		#print("Playing audio: ", data.audio_death)
+		audio_player.play()
+	else:
+		AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_DEATH)
+
+func play_audio_move() -> void:
+	if data.audio_move != null and audio_player != null:
+		#print("play_audio_move called from: ", get_stack())
+		audio_player.stream = data.audio_move
+		#print("Playing audio: ", data.audio_move)
+		audio_player.play()
+	else:
+		#print("Playing FALLBACK audio SOUND_EFFECT_TYPE.UNIT_MOVE")
+		AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
+
+func play_audio_spawned_in() -> void:
+	if data.audio_spawned_in != null and audio_player != null:
+		audio_player.stream = data.audio_spawned_in
+		#print("Playing audio: ", data.audio_spawned_in)
+		audio_player.play()
+	else:
+		#print("Play Audio Spawned In: Playing FALLBACK audio SOUND_EFFECT_TYPE.UNIT_MOVE")
+		AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)
+
+func play_audio_selected() -> void:
+	if data.audio_selected != null and audio_player != null:
+		audio_player.stream = data.audio_selected
+		#print("Playing audio: ", data.audio_selected)
+		audio_player.play()
+	else:
+		#print("Play Audio Select: Playing FALLBACK audio SOUND_EFFECT_TYPE.UNIT_MOVE")
+		AudioManager2d.play_audio(SoundEffect.SOUND_EFFECT_TYPE.UNIT_MOVE)

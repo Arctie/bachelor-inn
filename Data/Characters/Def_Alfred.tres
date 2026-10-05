@@ -1,11 +1,19 @@
 [gd_resource type="Resource" script_class="CharacterDefinition" format=3 uid="uid://dhdymgaw357sb"]
 
 [ext_resource type="Script" uid="uid://cfb66ehlpe84n" path="res://scripts/stats/character_data.gd" id="1_3c41g"]
+[ext_resource type="AudioStream" uid="uid://btlak07m7wp37" path="res://audio/CharacterSounds/Unit_on_death.wav" id="1_bfdei"]
+[ext_resource type="AudioStream" uid="uid://dhh0v4l6b2lfn" path="res://audio/Effects/Footsteps_ running.wav" id="1_dn4p7"]
 [ext_resource type="Script" uid="uid://dnpndvvrnj26q" path="res://scripts/stats/character_state.gd" id="2_bbets"]
+[ext_resource type="AudioStream" uid="uid://blpc87ylyoo00" path="res://audio/CharacterSounds/Character_on_hurt.wav" id="2_njq3j"]
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="3_dn4p7"]
-[ext_resource type="Resource" uid="uid://bde3fwobbck4h" path="res://Data/Weapons/unarmed.tres" id="4_vrqmp"]
+[ext_resource type="AudioStream" uid="uid://dow7wohp1kjyd" path="res://audio/CharacterSounds/Unit_on_selected.wav" id="4_8me3j"]
+[ext_resource type="Resource" uid="uid://x7mbefo655v8" path="res://Data/Abilities/fireball_basic.tres" id="4_bbets"]
+[ext_resource type="Resource" uid="uid://b3csctruxawhd" path="res://Data/Weapons/scepter_basic.tres" id="5_bbets"]
 [ext_resource type="PackedScene" uid="uid://b10bf6hwaqddg" path="res://scenes/Characters/Player/alfred.tscn" id="5_bfdei"]
+[ext_resource type="AudioStream" uid="uid://cm3hqys15xllp" path="res://audio/CharacterSounds/Unit_on_spawned_in.wav" id="5_njq3j"]
 [ext_resource type="Script" uid="uid://csv21vgg7ba7q" path="res://scripts/Characters/CharacterDefinition.gd" id="6_8me3j"]
+[ext_resource type="Resource" uid="uid://cokhndg82vc8h" path="res://Data/Abilities/bomb_basic.tres" id="10_ix6uy"]
+[ext_resource type="Resource" uid="uid://cqwy7r0vxoxy" path="res://Data/Abilities/melee_sweep.tres" id="11_neahe"]
 
 [sub_resource type="Resource" id="Resource_wepu0"]
 script = ExtResource("1_3c41g")
@@ -16,11 +24,17 @@ mind = 6
 speed = 6
 focus = 5
 endurance = 5
+audio_hurt = ExtResource("2_njq3j")
+audio_death = ExtResource("1_bfdei")
+audio_move = ExtResource("1_dn4p7")
+audio_selected = ExtResource("4_8me3j")
+audio_spawned_in = ExtResource("5_njq3j")
 metadata/_custom_type_script = "uid://cfb66ehlpe84n"
 
 [sub_resource type="Resource" id="Resource_p06qf"]
 script = ExtResource("2_bbets")
-weapon = ExtResource("4_vrqmp")
+weapon = ExtResource("5_bbets")
+skills = Array[ExtResource("3_dn4p7")]([ExtResource("4_bbets"), ExtResource("10_ix6uy"), ExtResource("11_neahe")])
 metadata/_custom_type_script = "uid://dnpndvvrnj26q"
 
 [resource]

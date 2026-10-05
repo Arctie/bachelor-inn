@@ -7,6 +7,7 @@ class_name Command
 var result: AttackResult = null
 var start_pos : Vector3i
 var end_pos : Vector3i
+var total_cost: int = 0
 
 func execute(_state : GameState, _simulate_only : bool = false) -> void:
 	pass;

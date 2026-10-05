@@ -8,7 +8,8 @@ const RIBBON: PackedScene = preload("res://scenes/userinterface/Level/ribbon.tsc
 @onready var enemy_stats: EnemyStatsUI = %Enemy_Stats
 var previews: Dictionary[Character, CharacterPreview] = {}
 @onready var ribbon: Ribbon = %Ribbon
-
+@onready var objective_label: Label = $ObjectiveLabel
+var mission_text: String = ""
 
 #build all stats into a dictionary for use in the sub UI items
 func build_character_stats(character: Character) -> Dictionary:
@@ -47,7 +48,6 @@ func build_enemy_Stats(character: Character) -> Dictionary:
 func _ready() -> void:
 	add_to_group("ui_controller")
 
-
 func _clear_previews() -> void:
 	print("cleared previews")
 	for p: CharacterPreview in previews.values():
@@ -84,8 +84,19 @@ func _connect_to_level(level: Node) -> void:
 	ribbon.skill_pressed.connect(level._on_ribbon_skill_pressed)
 	#level.enemy_deselected.connect(_on_enemy_deselected)
 	_on_party_updated(level.characters)
+	_update_objective_label()
 	ribbon.hide()
 
+func _update_objective_label() -> void:
+	var objectives := get_tree().get_nodes_in_group("objectives")
+	if objectives == null:
+		objective_label.text = ""
+		return
+	#var lines: Array[String] =[]
+	for o in objectives:
+		var prefix: String = " - V" if o.is_complete else ""
+		#lines.append(prefix + o.display_text)
+		objective_label.text = ("Objective: " + o.display_text + prefix)
 
 #adds character preview scene to Vbox
 func add_character_preview(character: Character) -> void:
@@ -110,12 +121,12 @@ func add_character_preview(character: Character) -> void:
 func _on_character_selected(character: Character) -> void:
 	player_stats.apply_stats(build_character_stats(character))
 	player_stats.show()
-	print("DEBUG SELECT:",character.data.unit_name, "effects", character.state.active_effects)
+	#print("DEBUG SELECT:",character.data.unit_name, "effects", character.state.active_effects)
 	ribbon.show()
 	ribbon.set_skills(character.state.skills)
 
 
-	print("DEBUG SELECT:", character.data.unit_name, "skills:", character.state.skills.size())
+	#print("DEBUG SELECT:", character.data.unit_name, "skills:", character.state.skills.size())
 	for c: Character in previews.keys():
 		##This is a quickfix, instead the character should be removed from the dictionary when its 
 		##corresponding character dies
@@ -127,7 +138,7 @@ func _on_character_selected(character: Character) -> void:
 func _on_enemy_selected(enemy: Character) -> void:
 	enemy_stats.apply_stats(build_enemy_Stats(enemy), enemy)
 	enemy_stats.show()
-	print("a enemy has been selected")
+	#print("a enemy has been selected")
 
 
 func _on_character_deselected() -> void:
@@ -155,10 +166,13 @@ func _on_character_stats_changed(character: Character) -> void:
 		
 	for preview: CharacterPreview in previews.values():
 		preview.update_effects_ui(character)
+	
+	if character == Main.level.selected_unit:
+		ribbon.set_skills(character.state.skills)
 
 
 func _on_party_updated(characters: Array[Character]) -> void:
-	print("UI party_updated count:", characters.size())
+	#print("UI party_updated count:", characters.size())
 	for character in characters:
 		##If statement in case an enemy dies during playtie, which then makes them null.
 		##Instead we should be moving the null value out of the array.
@@ -185,7 +199,7 @@ func remove_character_preview(character: Character) -> void:
 func _on_end_turn_button_pressed() -> void:
 	if not Main.level.is_player_turn:
 		return
-	if Main.level.state == Main.level.States.ANIMATING:
+	if Main.level.state_machine.current is StateAnimating:
 		return
 	Main.level._clear_selection()
 	Main.level.end_player_turn()

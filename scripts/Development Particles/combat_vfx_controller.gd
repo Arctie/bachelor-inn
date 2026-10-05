@@ -24,51 +24,20 @@ func play_attack(result : AttackResult) -> void:
 			await _spawn_ranged_attack(attacker, result.victim, result)
 
 func play_skill(result : AttackResult) -> void:
-	#if result == null:
-		#return
-	#var dmg : int = result.damage if result.damage != null else 0
-	#print("play_skill dmg: ", dmg)
-	#if dmg > 0:
-		#_spawn_dmg_number_scene(result)
-	#
-	#var effect : PackedScene = result.vfx_scene
-	#print("play_skill effect: ", effect)
-	#if effect == null:
-		#return
-		#
-	#var vfx : Node3D = effect.instantiate()
-	#print("vfx instantiated: ", vfx)
-	#get_tree().current_scene.add_child(vfx)
-	#print("vfx added to scene at: ", result.aggressor.global_position)
-	#vfx.global_position = result.aggressor.global_position + Vector3(0,1,0)
-	#vfx.look_at(result.victim.global_position + Vector3(0,1,0), Vector3.UP)
-		#
-	#print("play_skill called, vfx_scene: ", result.vfx_scene)
-	##var target : Character = result.victim
-	#
-	#var tween := vfx.create_tween()
-	#tween.tween_property(vfx, "global_position", result.victim.global_position + Vector3(0,1,0), 0.25)
-	#await tween.finished
-	#print("tween finished, freeing vfx")
-	#vfx.queue_free()
-	#
-	#if dmg > 0:
-		#_spawn_hit_particles(result.victim)
-		#_trigger_hit_flash(result.victim, result.was_critical)
-		
 	if result == null:
 		return
-	
 	var dmg : int = result.damage if result.damage != null else 0
-	if dmg > 0:
-		_spawn_dmg_number_scene(result)
-		
+	## Moved to cast_skill.gd
+	#if dmg > 0:  #and result.Skill.skill_aoe_shape == Skill.AoEShape.NONE:
+		#_spawn_dmg_number_scene(result)
+		#
 	var effect : PackedScene = result.vfx_scene
 	if effect == null:
 		return
 	
 	var vfx : Node3D = effect.instantiate()
-	get_tree(). current_scene.add_child(vfx)
+	#get_tree().current_scene.add_child(vfx)
+	Main.level.add_child(vfx)
 	
 	## TODO: Effect plays twice if AoE ability is cast directly on enemy
 	if dmg > 0:
@@ -77,13 +46,17 @@ func play_skill(result : AttackResult) -> void:
 		var tween := vfx.create_tween()
 		tween.tween_property(vfx, "global_position", result.victim.global_position + Vector3(0,0.5,0), 0.25)
 		await tween.finished
-		if vfx.has_method("play"):
-			await vfx.play()
-		else:
-			await get_tree().create_timer(0.5).timeout
-			vfx.queue_free()
+		## Moved to own function
+		#if vfx.has_method("play"):
+			#await vfx.play()
+		#else:
+			#await get_tree().create_timer(0.5).timeout
+			#vfx.queue_free()
+		#_spawn_hit_particles(result.victim)
+		#_trigger_hit_flash(result.victim, result.was_critical)
 		_spawn_hit_particles(result.victim)
 		_trigger_hit_flash(result.victim, result.was_critical)
+		_play_skill_aftereffects(vfx, result)
 	else:
 		vfx.global_position = result.target_position if result.target_position != Vector3.ZERO else result.aggressor.global_position#result.victim.global_position
 		if vfx.has_method("play"):
@@ -94,12 +67,22 @@ func play_skill(result : AttackResult) -> void:
 	return
 
 
+func _play_skill_aftereffects(vfx: Node3D, result: AttackResult) -> void:
+	if vfx.has_method("play"):
+		await vfx.play()
+	else:
+		await get_tree().create_timer(0.5).timeout
+		vfx.queue_free()
+	#_spawn_hit_particles(result.victim)
+	#_trigger_hit_flash(result.victim, result.was_critical)
+
 func _spawn_dmg_number_scene(result : AttackResult) -> void:
 	if not damage_number_scene:
 		return
 
 	var dmg : Node3D = damage_number_scene.instantiate()
-	get_tree().current_scene.add_child(dmg)
+	#get_tree().current_scene.add_child(dmg)
+	Main.level.add_child(dmg)
 	dmg.global_position = result.victim.global_position + Vector3(0,1,0)
 	
 	dmg.set_value(
@@ -112,7 +95,8 @@ func spawn_damage_number(amount: int, position: Vector3, is_critical: bool = fal
 	if not damage_number_scene:
 		return
 	var dmg: Node3D = damage_number_scene.instantiate()
-	get_tree().current_scene.add_child(dmg)
+	#get_tree().current_scene.add_child(dmg)
+	Main.level.add_child(dmg)
 	dmg.global_position = position + Vector3(0, 1, 0)
 	dmg.set_value(amount, is_critical)
 
@@ -164,7 +148,8 @@ func _spawn_blood_splatter(target : Character, attacker : Character) -> void:
 		
 		if "bloodColor" in target:
 			splatter.bloodCol = target.bloodColor
-		get_tree().current_scene.add_child(splatter)
+		#get_tree().current_scene.add_child(splatter)
+		Main.level.add_child(splatter)
 		splatter.global_position = result.position + Vector3(0, 0.01, 0)
 
 		var look_target: Vector3 = splatter.global_position + splash_dir
@@ -174,7 +159,8 @@ func _spawn_melee_attack(attacker : Character, target : Character, result: Attac
 	if not melee_attack_scene:
 		return
 	var slice := melee_attack_scene.instantiate()
-	get_tree().current_scene.add_child(slice)
+	#get_tree().current_scene.add_child(slice)
+	Main.level.add_child(slice)
 	
 	var start_pos: = attacker.global_position + Vector3(0, 0, 0)
 	var end_pos: = target.global_position + Vector3(0, 0, 0)
@@ -208,7 +194,8 @@ func _spawn_ranged_attack(attacker : Character, target : Character, result: Atta
 	
 	#var projectile := ranged_attack_scene.instantiate()
 	var projectile := projectile_scene.instantiate()
-	get_tree().current_scene.add_child(projectile)
+	#get_tree().current_scene.add_child(projectile)
+	Main.level.add_child(projectile) 
 	
 	var start_pos: = attacker.global_position + Vector3(0, 1, 0)
 	var end_pos: = target.global_position + Vector3(0, 1, 0)

@@ -10,9 +10,9 @@ const S_HASTE_BASIC = preload("res://Data/Abilities/haste_basic.tres")
 const S_DEFENCE_BASIC = preload("res://Data/Abilities/defence_basic.tres")
 const S_TRAP_BASIC = preload("res://Data/Abilities/trap_basic.tres")
 const S_BOMB_BASIC = preload("res://Data/Abilities/bomb_basic.tres")
+const S_WHIRLWIND = preload("res://Data/Abilities/whirlwind.tres")
 
 var _by_id: Dictionary = {}
-
 
 func _ready() -> void:
 	_by_id.clear()
@@ -25,6 +25,7 @@ func _ready() -> void:
 	_register(S_HEAL_SANITY_BASIC)
 	_register(S_TRAP_BASIC)
 	_register(S_DEFENCE_BASIC)
+	_register(S_WHIRLWIND)
 
 func _register(s: Skill) -> void:
 	if s == null:

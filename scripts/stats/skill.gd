@@ -10,7 +10,7 @@ enum TargetFaction
 	SELF
 }
 
-enum AoEShape { NONE, SQUARE, CROSS, DIAMOND, LINE, WALL }
+enum AoEShape { NONE, SQUARE, CROSS, DIAMOND, LINE, WALL, ADJACENT_ONLY, THREE_TILES_LINE }
 
 ## ID
 @export_subgroup("Visuals")
@@ -23,6 +23,7 @@ enum AoEShape { NONE, SQUARE, CROSS, DIAMOND, LINE, WALL }
 
 @export var should_play_vfx : bool = true
 @export var Vfx_Scene : PackedScene
+@export var audio_cast: AudioStream
 
 
 @export_subgroup("Stats")
@@ -56,7 +57,8 @@ var max_level : int = 5
 @export var uses_action: bool = true;
 @export var requires_speciality: bool = false; ## Feks. polearm training etc.
 @export var has_requirement: bool = false; ## Må ikke være skill. Kan være class specific etc. 
-
+@export var has_quantity: bool = false
+@export var base_quantity: int = 1
 
 func _init(inName : String = "", inTooltip : String = "", inIcon : Texture2D = null, inLevel : int = 1, inMaxLevel : int = 1, inCommand : Command = null) -> void:
 	skill_name = inName

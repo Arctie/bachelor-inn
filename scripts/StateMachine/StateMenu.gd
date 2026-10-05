@@ -1,0 +1,20 @@
+extends LevelState
+class_name StateMenu
+
+func enter(level: Node) -> void:
+	print("ENTER STATE: StateMenu.")
+	level.is_in_menu = true
+	level.pause_menu.show()
+	level.get_tree().paused = true
+
+func exit(level: Node) -> void:
+	print("EXIT STATE: StateMenu.")
+	#print(get_stack())
+	level.is_in_menu = false
+	level.pause_menu.hide()
+	level.get_tree().paused = false
+
+func handle_input(level: Node, event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_ESCAPE:
+			level.state_machine.pop()

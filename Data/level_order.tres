@@ -1,7 +1,20 @@
 [gd_resource type="Resource" script_class="LevelOrder" format=3 uid="uid://vjdtuo3nhqwn"]
 
+[ext_resource type="Script" uid="uid://clh7qtku5w0x4" path="res://scripts/Core/level_entry.gd" id="1_8gfqg"]
 [ext_resource type="Script" uid="uid://cxpf6awrsq5lp" path="res://scripts/Core/level_order.gd" id="1_tnguu"]
+
+[sub_resource type="Resource" id="Resource_sjdwp"]
+script = ExtResource("1_8gfqg")
+display_name = "Fen"
+scene_path = "res://scenes/levels/fen.tscn"
+metadata/_custom_type_script = "uid://clh7qtku5w0x4"
+
+[sub_resource type="Resource" id="Resource_ow2jd"]
+script = ExtResource("1_8gfqg")
+display_name = "Fento"
+scene_path = "res://scenes/levels/fento.tscn"
+metadata/_custom_type_script = "uid://clh7qtku5w0x4"
 
 [resource]
 script = ExtResource("1_tnguu")
-levels = Array[String](["tutorialDesignedLevel", "tutorial_2", "tutorial_3", "fento", "fen", "waterfallLevel", "woodlandsLevel"])
+levels = Array[ExtResource("1_8gfqg")]([SubResource("Resource_sjdwp"), SubResource("Resource_ow2jd")])

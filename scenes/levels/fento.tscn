@@ -6,7 +6,62 @@
 [ext_resource type="MeshLibrary" uid="uid://d1p1bflduhst1" path="res://scenes/libraries/LIB_GridMapMeshLibrary.gltf" id="2_t8ckx"]
 [ext_resource type="PackedScene" uid="uid://4qhd45gbklo" path="res://art/meshes/HouseTest.fbx" id="3_37ajb"]
 [ext_resource type="ArrayMesh" uid="uid://bw8vrn7u0v5x5" path="res://art/meshes/Grass_Mesh.res" id="5_fcqlb"]
+[ext_resource type="AudioStream" uid="uid://coi7gb4k867j2" path="res://audio/CharacterSounds/Bird_on_death.wav" id="6_04ned"]
 [ext_resource type="PackedScene" uid="uid://k7pqwlthd0ri" path="res://scenes/Development/Particles/smaller_fire.tscn" id="7_baojg"]
+[ext_resource type="AudioStream" uid="uid://d1ncrot3vanmj" path="res://audio/CharacterSounds/Bird_on_hurt.wav" id="7_q0lvr"]
+[ext_resource type="Script" uid="uid://bik6shmmal220" path="res://scripts/StateMachine/state_machine.gd" id="8_baojg"]
+[ext_resource type="AudioStream" uid="uid://dhh0v4l6b2lfn" path="res://audio/Effects/Footsteps_ running.wav" id="8_wudub"]
+[ext_resource type="PackedScene" uid="uid://drpd1d805rfy5" path="res://scenes/Characters/Enemy/bird2.tscn" id="9_bgqgo"]
+[ext_resource type="Resource" uid="uid://cegp3wmw3wytm" path="res://Data/Weapons/sword_basic.tres" id="9_h4l6e"]
+[ext_resource type="Script" uid="uid://cfb66ehlpe84n" path="res://scripts/stats/character_data.gd" id="10_rfi1q"]
+[ext_resource type="Script" uid="uid://dnpndvvrnj26q" path="res://scripts/stats/character_state.gd" id="11_rqvaf"]
+[ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="12_h4l6e"]
+[ext_resource type="PackedScene" uid="uid://cirnwlc7so3aq" path="res://scenes/Characters/Enemy/Ghost_Enemy2.tscn" id="13_rfi1q"]
+[ext_resource type="AudioStream" uid="uid://guqkydnjqy4v" path="res://audio/CharacterSounds/Ghost_on_death.wav" id="14_k8445"]
+[ext_resource type="PackedScene" uid="uid://c5b1wt1vdugfg" path="res://scenes/MissionObjectives/objective_kill_all.tscn" id="14_rqvaf"]
+[ext_resource type="AudioStream" uid="uid://c2xfstym7vcb" path="res://audio/CharacterSounds/Ghost_on_hurt.wav" id="15_oa73t"]
+[ext_resource type="AudioStream" uid="uid://dajuikwey1t8d" path="res://audio/CharacterSounds/Ghost_spawn_in.wav" id="16_gygk5"]
+
+[sub_resource type="Resource" id="Resource_n5yy2"]
+script = ExtResource("10_rfi1q")
+unit_name = "Bird"
+audio_hurt = ExtResource("7_q0lvr")
+audio_death = ExtResource("6_04ned")
+audio_move = ExtResource("8_wudub")
+metadata/_custom_type_script = "uid://cfb66ehlpe84n"
+
+[sub_resource type="Resource" id="Resource_8n3l6"]
+script = ExtResource("11_rqvaf")
+faction = 1
+metadata/_custom_type_script = "uid://dnpndvvrnj26q"
+
+[sub_resource type="Resource" id="Resource_bgqgo"]
+script = ExtResource("10_rfi1q")
+unit_name = "Bird"
+audio_hurt = ExtResource("7_q0lvr")
+audio_death = ExtResource("6_04ned")
+audio_move = ExtResource("8_wudub")
+metadata/_custom_type_script = "uid://cfb66ehlpe84n"
+
+[sub_resource type="Resource" id="Resource_rfi1q"]
+script = ExtResource("11_rqvaf")
+weapon = ExtResource("9_h4l6e")
+faction = 1
+metadata/_custom_type_script = "uid://dnpndvvrnj26q"
+
+[sub_resource type="Resource" id="Resource_rqvaf"]
+script = ExtResource("10_rfi1q")
+unit_name = "Ghost"
+audio_hurt = ExtResource("15_oa73t")
+audio_death = ExtResource("14_k8445")
+audio_move = ExtResource("16_gygk5")
+audio_spawned_in = ExtResource("16_gygk5")
+metadata/_custom_type_script = "uid://cfb66ehlpe84n"
+
+[sub_resource type="Resource" id="Resource_h4l6e"]
+script = ExtResource("11_rqvaf")
+faction = 1
+metadata/_custom_type_script = "uid://dnpndvvrnj26q"
 
 [sub_resource type="FogMaterial" id="FogMaterial_2lct5"]
 density = 8.0
@@ -14,8 +69,9 @@ albedo = Color(0, 0, 0, 1)
 height_falloff = 0.0030443608
 edge_fade = 0.42870885
 
-[node name="Map3d" unique_id=557424311 instance=ExtResource("1_bwofp")]
+[node name="FentoLevel" unique_id=557424311 instance=ExtResource("1_bwofp")]
 level_name = "first fen edition"
+level_music = 4
 
 [node name="TerrainGrid2" type="GridMap" parent="." index="0" unique_id=1919496315]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -34,12 +90,13 @@ metadata/_editor_floor_ = Vector3(0, 5, 0)
 
 [node name="MovementWeightsGrid" parent="." index="2" unique_id=1499977434]
 data = {
-"cells": PackedInt32Array(0, 65535, 655360, 65535, 1, 655361, 65535, 0, 655360, 65535, 65535, 655360, 65535, 65534, 655360, 65534, 65534, 655360, 65533, 65534, 655360, 65534, 0, 655360, 0, 65534, 655361, 0, 65533, 655361, 65535, 65533, 655361, 65534, 65533, 655361, 65533, 65533, 655361, 65533, 65532, 655361, 65534, 65532, 655361, 65535, 65532, 655361, 0, 65532, 655361, 1, 65532, 655361, 1, 65533, 655361, 2, 65533, 655361, 2, 65534, 655361, 3, 65535, 1441793, 2, 65535, 655361, 3, 1, 655361, 1, 0, 655361, 1, 65535, 655361, 1, 1, 655361, 1, 2, 655361, 0, 2, 655361, 0, 1, 655361, 0, 0, 655361, 65534, 1, 655361, 65535, 2, 655361, 65533, 2, 655361, 65533, 1, 1441792, 65533, 0, 655361, 65533, 65535, 655361, 65532, 1, 655361, 65532, 2, 1441792, 2, 65532, 655361, 3, 65532, 655361, 65530, 65531, 655362, 65531, 65531, 655362, 65532, 65531, 655362, 65533, 65531, 655362, 65534, 65531, 655362, 65535, 65531, 655362, 0, 65531, 655362, 1, 65531, 655362, 1, 65530, 655362, 2, 65530, 655362, 3, 65530, 655362, 4, 65530, 655362, 5, 65530, 655362, 5, 65529, 655362, 5, 65528, 655362, 6, 65528, 655362, 7, 65528, 655362, 8, 65528, 655362, 9, 65528, 655362, 4, 65527, 655361, 3, 65527, 655361, 2, 65527, 655361, 65532, 65527, 655361, 65531, 65527, 655360, 4, 65529, 655361, 4, 65528, 655361, 3, 65528, 655361, 3, 65529, 655361, 2, 65528, 655361, 1, 65528, 655361, 65531, 65530, 655361, 65530, 65530, 655360, 65530, 65529, 655360, 65530, 65528, 655360, 65531, 65528, 655361, 65531, 65529, 655361, 65532, 65529, 655361, 65532, 65528, 655361, 2, 65531, 1, 6, 65529, 655361, 6, 65530, 655361, 6, 65531, 655361, 5, 65531, 655361, 7, 65531, 655361, 8, 65531, 655361, 8, 65530, 655361, 8, 65529, 655361, 7, 65529, 655361, 7, 65530, 655361, 9, 65530, 655361, 9, 65529, 655361, 9, 65532, 655361, 9, 65531, 655361, 8, 65532, 655361, 9, 65533, 655361, 9, 65534, 655361, 9, 65535, 655361, 9, 0, 655361, 9, 1, 655362, 9, 2, 655361, 8, 2, 655361, 8, 1, 655362, 8, 0, 655361, 7, 1, 655362, 7, 2, 655361, 6, 1, 655362, 65531, 1, 655361, 65530, 1, 655361, 65530, 2, 655361, 65530, 3, 655361, 65530, 4, 655361, 65530, 5, 1441792, 65530, 6, 655361, 65531, 6, 655361, 65531, 5, 1441792, 65531, 4, 655361, 65531, 3, 655361, 65532, 3, 1441792, 65532, 4, 1441792, 65532, 5, 1441792, 3, 3, 655362, 3, 2, 655361, 2, 2, 655361, 2, 4, 655362, 2, 3, 655362, 9, 3, 655361, 9, 4, 655361, 9, 5, 655361, 9, 6, 655361, 8, 6, 655361, 7, 6, 655361, 6, 6, 655361, 6, 5, 655361, 6, 4, 655361, 6, 3, 655361, 8, 3, 655361, 7, 3, 655361, 7, 4, 655361, 7, 5, 655361, 8, 5, 655361, 8, 4, 655361, 4, 3, 655362, 4, 2, 655362, 2, 0, 1, 5, 1, 655362, 5, 2, 655362, 3, 0, 655361, 8, 65535, 655361, 7, 0, 655361, 8, 65534, 655361, 8, 65533, 655361, 7, 65532, 655361, 1, 65529, 1, 4, 65531, 655361, 65534, 2, 1, 65532, 65530, 655361, 65532, 0, 655361, 65532, 65535, 655361, 65532, 65534, 0, 65532, 65533, 655360, 65532, 65532, 655361, 65531, 65532, 655361, 65530, 65532, 655361, 65529, 65531, 2, 65526, 65531, 2, 65527, 65531, 2, 65528, 65531, 2, 65528, 65532, 655361, 65527, 65532, 655361, 65526, 65532, 655361, 65526, 65533, 0, 65527, 65533, 0, 65529, 2, 655361, 65529, 3, 655361, 65529, 4, 655361, 65529, 5, 1441792, 65529, 6, 655361, 65526, 4, 1441792, 65527, 6, 1441792, 65527, 5, 1441792, 65528, 6, 655361, 0, 65530, 655361, 2, 65526, 655361, 3, 65526, 655361, 4, 65526, 655361, 5, 65526, 655361, 6, 65526, 655361, 7, 65526, 655361, 8, 65526, 655361, 8, 65525, 655361, 9, 65525, 655361, 9, 65526, 655361, 7, 65525, 655361, 6, 65525, 655361, 5, 65525, 655361, 4, 65525, 655361, 3, 65525, 655361, 5, 65527, 655361, 6, 65527, 655360, 7, 65527, 655361, 8, 65527, 655361, 9, 65527, 655361, 1, 65534, 655361, 3, 65533, 655361, 3, 65534, 655361, 65536, 65528, 655361, 65536, 65529, 655361, 65537, 65527, 655361, 131071, 65530, 655361, 131070, 65530, 655361, 196605, 65530, 655362, 196606, 65529, 655362, 196606, 65528, 655362, 196607, 65528, 655362, 131072, 65527, 655362, 131072, 65526, 655362, 131073, 65525, 655362, 65538, 65525, 655361, 65529, 1, 655361, 65528, 3, 655361, 65526, 6, 1441792, 65532, 6, 655361, 65533, 6, 655361, 65534, 6, 655361, 65535, 6, 655361, 0, 6, 655361, 1, 6, 655361, 2, 6, 655361, 3, 6, 655361, 4, 6, 655361, 4, 5, 655361, 4, 4, 655361, 3, 4, 655361, 3, 5, 655361, 2, 5, 655361, 2, 1, 655361, 65528, 4, 655361, 65527, 4, 1441792, 65526, 3, 655361, 65530, 0, 655361, 65528, 0, 655361, 65529, 65532, 655361, 65525, 65532, 655361, 65528, 5, 1441792, 65526, 5, 1441792)
+"cells": PackedInt32Array(0, 65535, 655360, 65535, 1, 655361, 65535, 0, 655360, 65535, 65535, 655360, 65535, 65534, 655360, 65534, 65534, 655360, 65533, 65534, 655360, 65534, 0, 655360, 0, 65534, 655361, 0, 65533, 655361, 65535, 65533, 655361, 65534, 65533, 655361, 65533, 65533, 655361, 65533, 65532, 655361, 65534, 65532, 655361, 65535, 65532, 655361, 0, 65532, 655361, 1, 65532, 655361, 1, 65533, 655361, 2, 65533, 655361, 2, 65534, 655361, 3, 65535, 1441793, 2, 65535, 655361, 3, 1, 655361, 1, 0, 655361, 1, 65535, 655361, 1, 1, 655361, 1, 2, 655361, 0, 2, 655361, 0, 1, 655361, 0, 0, 655361, 65534, 1, 655361, 65535, 2, 655361, 65533, 2, 655361, 65533, 1, 1441792, 65533, 0, 655361, 65533, 65535, 655361, 65532, 1, 655361, 65532, 2, 1441792, 2, 65532, 655361, 3, 65532, 655361, 65530, 65531, 655362, 65531, 65531, 655362, 65532, 65531, 655362, 65533, 65531, 655362, 65534, 65531, 655362, 65535, 65531, 655362, 0, 65531, 655362, 1, 65531, 655362, 1, 65530, 655362, 2, 65530, 655362, 3, 65530, 655362, 4, 65530, 655362, 5, 65530, 655362, 5, 65529, 655362, 5, 65528, 655362, 6, 65528, 655362, 7, 65528, 655362, 8, 65528, 655362, 9, 65528, 655362, 4, 65527, 655361, 3, 65527, 655361, 2, 65527, 655361, 65532, 65527, 655361, 65531, 65527, 655360, 4, 65529, 655361, 4, 65528, 655361, 3, 65528, 655361, 3, 65529, 655361, 2, 65528, 655361, 1, 65528, 655361, 65531, 65530, 655361, 65530, 65530, 655360, 65530, 65529, 655360, 65530, 65528, 655360, 65531, 65528, 655361, 65531, 65529, 655361, 65532, 65529, 655361, 65532, 65528, 655361, 2, 65531, 1, 6, 65529, 655361, 6, 65530, 655361, 6, 65531, 655361, 5, 65531, 655361, 7, 65531, 655361, 8, 65531, 655361, 8, 65530, 655361, 8, 65529, 655361, 7, 65529, 655361, 7, 65530, 655361, 9, 65530, 655361, 9, 65529, 655361, 9, 65532, 655361, 9, 65531, 655361, 8, 65532, 655361, 9, 65533, 655361, 9, 65534, 655361, 9, 65535, 655361, 9, 0, 655361, 9, 1, 655362, 9, 2, 655361, 8, 2, 655361, 8, 1, 655362, 8, 0, 655361, 7, 1, 655362, 7, 2, 655361, 6, 1, 655362, 65531, 1, 655361, 65530, 1, 655361, 65530, 2, 655361, 65530, 3, 655361, 65530, 4, 655361, 65530, 5, 1441792, 65530, 6, 655361, 65531, 6, 655361, 65531, 5, 1441792, 65531, 4, 655361, 65531, 3, 655361, 65532, 3, 1441792, 65532, 4, 1441792, 65532, 5, 1441792, 3, 3, 655362, 3, 2, 655361, 2, 2, 655361, 2, 4, 655362, 2, 3, 655362, 9, 3, 655361, 9, 4, 655361, 9, 5, 655361, 9, 6, 655361, 8, 6, 655361, 7, 6, 655361, 6, 6, 655361, 6, 5, 655361, 6, 4, 655361, 6, 3, 655361, 8, 3, 655361, 7, 3, 655361, 7, 4, 655361, 7, 5, 655361, 8, 5, 655361, 8, 4, 655361, 4, 3, 655362, 4, 2, 655362, 2, 0, 1, 5, 1, 655362, 5, 2, 655362, 3, 0, 655361, 8, 65535, 655361, 7, 0, 655361, 8, 65534, 655361, 8, 65533, 655361, 7, 65532, 655361, 1, 65529, 1, 4, 65531, 655361, 65534, 2, 1, 65532, 65530, 655361, 65532, 0, 655361, 65532, 65535, 655361, 65532, 65534, 0, 65532, 65533, 655360, 65532, 65532, 655361, 65531, 65532, 655361, 65530, 65532, 655361, 65529, 65531, 2, 65526, 65531, 2, 65527, 65531, 2, 65528, 65531, 2, 65528, 65532, 655361, 65527, 65532, 655361, 65526, 65532, 655361, 65526, 65533, 0, 65527, 65533, 0, 65529, 2, 655361, 65529, 3, 655361, 65529, 4, 655361, 65529, 5, 1441792, 65529, 6, 655361, 65526, 4, 1441792, 65527, 6, 1441792, 65527, 5, 1441792, 65528, 6, 655361, 0, 65530, 655361, 2, 65526, 655361, 3, 65526, 655361, 4, 65526, 655361, 5, 65526, 655361, 6, 65526, 655361, 7, 65526, 655361, 8, 65526, 655361, 8, 65525, 655361, 9, 65525, 655361, 9, 65526, 655361, 7, 65525, 655361, 6, 65525, 655361, 5, 65525, 655361, 4, 65525, 655361, 3, 65525, 655361, 5, 65527, 655361, 6, 65527, 655360, 7, 65527, 655361, 8, 65527, 655361, 9, 65527, 655361, 1, 65534, 655361, 3, 65533, 655361, 3, 65534, 655361, 65536, 65528, 655361, 65536, 65529, 655361, 65537, 65527, 655361, 131071, 65530, 655361, 131070, 65530, 655361, 196606, 65529, 1, 196606, 65528, 1, 196607, 65528, 1, 131072, 65527, 1, 131072, 65526, 1, 131073, 65525, 1, 65538, 65525, 655361, 65529, 1, 655361, 65528, 3, 655361, 65526, 6, 1441792, 65532, 6, 655361, 65533, 6, 655361, 65534, 6, 655361, 65535, 6, 655361, 0, 6, 655361, 1, 6, 655361, 2, 6, 655361, 3, 6, 655361, 4, 6, 655361, 4, 5, 655361, 4, 4, 655361, 3, 4, 655361, 3, 5, 655361, 2, 5, 655361, 2, 1, 655361, 65528, 4, 655361, 65527, 4, 1441792, 65526, 3, 655361, 65530, 0, 655361, 65528, 0, 655361, 65529, 65532, 655361, 65525, 65532, 655361, 65528, 5, 1441792, 65526, 5, 1441792, 196605, 65530, 1, 196606, 65527, 1)
 }
+metadata/_editor_floor_ = Vector3(0, 2, 0)
 
 [node name="OccupancyOverlay" parent="." index="3" unique_id=1662628409]
 data = {
-"cells": PackedInt32Array(0, 65530, 4, 7, 3, 4, 1, 65533, 5, 65532, 65533, 0, 65533, 65533, 0, 65533, 65534, 0, 65532, 0, 0, 65533, 0, 0, 65532, 65532, 0, 65531, 65527, 4)
+"cells": PackedInt32Array(1, 65533, 5, 65532, 65533, 0, 65533, 65533, 0, 65533, 65534, 0, 65532, 0, 0, 65533, 0, 0, 65532, 65532, 0)
 }
 
 [node name="TriggerOverlay" parent="." index="4" unique_id=1471713088]
@@ -60,10 +117,6 @@ data = {
 
 [node name="Cursor" parent="." index="8" unique_id=791973269]
 visible = true
-
-[node name="BattleLog" parent="." index="10" unique_id=840436049]
-text = "Objective: Kill the monsters
-"
 
 [node name="Lamp" parent="Lights" parent_id_path=PackedInt32Array(38605441) index="0" unique_id=286206317]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.662776, 0.81837225, 0.08767605)
@@ -97,8 +150,23 @@ spot_angle = 15.399274
 [node name="FireParticle" parent="Particles" parent_id_path=PackedInt32Array(194722830) index="0" unique_id=597087587 instance=ExtResource("2_4unoq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0176532, 0.5142578, -1.3080425)
 
-[node name="CameraSettings" parent="." index="17" unique_id=2146881514]
+[node name="CameraSettings" parent="." index="16" unique_id=2146881514]
 visible = false
+
+[node name="Character" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="0" unique_id=159367408 instance=ExtResource("9_bgqgo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8467233, 0.5, -7.381399)
+data = SubResource("Resource_n5yy2")
+state = SubResource("Resource_8n3l6")
+
+[node name="Character2" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="1" unique_id=1710656175 instance=ExtResource("9_bgqgo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.153276, 0.5, -11.381399)
+data = SubResource("Resource_bgqgo")
+state = SubResource("Resource_rfi1q")
+
+[node name="Ghost_Enemy" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="2" unique_id=1339368304 instance=ExtResource("13_rfi1q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0.5, 3)
+data = SubResource("Resource_rqvaf")
+state = SubResource("Resource_h4l6e")
 
 [node name="HouseTest" parent="." index="19" unique_id=644969375 instance=ExtResource("3_37ajb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.406776, 0, 1.0393695)
@@ -131,3 +199,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.171986, -2.1846838, -18.74
 
 [node name="Smaller fire2" parent="Fog WIP" index="1" unique_id=1419798794 instance=ExtResource("7_baojg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.6081, -2.1946487, -8.235571)
+
+[node name="StateMachine" type="Node" parent="." index="22" unique_id=299474275]
+script = ExtResource("8_baojg")
+metadata/_custom_type_script = "uid://bik6shmmal220"
+
+[node name="ObjectiveKillAll" parent="MissionObjective" parent_id_path=PackedInt32Array(327276810) index="0" unique_id=1411412953 instance=ExtResource("14_rqvaf")]

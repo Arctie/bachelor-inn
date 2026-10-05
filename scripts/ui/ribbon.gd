@@ -8,28 +8,33 @@ signal skill_pressed(skill: Skill)
 var _skill_buttons: Array[TextureButton] = []
 
 func _ready() -> void:
-	print("Main.level: ", Main.level)
 	Main.level.ability_used.connect(_on_ability_used)
 	_skill_buttons = _collect_buttons(skills)
 	_connect_group(_skill_buttons, _on_skill_button_pressed)
-	_debug_print_buttons()
+	#_debug_print_buttons()
 	set_skills([])
 
 func set_skills(in_skills: Array[Skill]) -> void:
-	gray_out_abilities_used(false)
-	
+	#gray_out_abilities_used(false)
 	for i in range(_skill_buttons.size()):
 		var b: TextureButton = _skill_buttons[i]
-
 		if i < in_skills.size() and in_skills[i] != null:
 			var s: Skill = in_skills[i]
 			b.show()
 			b.disabled = false
-
 			b.texture_normal = s.icon
 			b.tooltip_text = "%s\n%s" % [s.skill_name, s.tooltip]
-
 			b.set_meta("skill", s)
+			# Disable if out of uses
+			if Main.level.selected_unit != null:
+				var no_qty: bool = s.has_quantity and Main.level.selected_unit.state.item_quantities.get(s.skill_id, 0) <= 0
+				var no_ap: bool = s.uses_action and Main.level.selected_unit.state.action_points_remaining <= 0
+				var should_gray: bool = no_qty or no_ap
+				b.disabled = should_gray
+				b.modulate = Color(0.4, 0.4, 0.4, 1.0) if should_gray else Color(1, 1, 1, 1)
+			else:
+				b.disabled = false
+				b.modulate = Color(1, 1, 1, 1)
 		else:
 			b.hide()
 			b.disabled = true
@@ -51,7 +56,6 @@ func _connect_group(buttons: Array[TextureButton], handler: Callable) -> void:
 			b.pressed.connect(handler.bind(b))
 
 func _on_skill_button_pressed(button: TextureButton) -> void:
-	print("Skill button pressed.")
 	if Main.level.is_choosing_skill_attack_origin:
 		return
 	if Main.level.is_choosing_skill_target:
@@ -62,8 +66,8 @@ func _on_skill_button_pressed(button: TextureButton) -> void:
 
 
 func _on_ability_used() -> void:
-	print("ability_used signal received in ribbon")
-	gray_out_abilities_used(true)
+	print("_on_ability_used() called, but it does nothing.")
+	pass
 
 ## TODO: Fix? Faied attempt to gray out ability buttons after use
 func gray_out_abilities_used(used: bool) -> void:

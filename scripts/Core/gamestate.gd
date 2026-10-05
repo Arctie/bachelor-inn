@@ -63,10 +63,7 @@ func reset_moves() -> void:
 
 func apply_move(move : Command, simulate_only : bool = false) -> GameState:
 	var new_state : GameState = clone();
-	
 	var unit : Character = new_state.get_unit(move.start_pos)
-	#if not simulate_only:
-		#unit.state.is_moved = true;
 	unit.state.is_moved = true;
 	
 	move.execute(new_state, simulate_only);
@@ -169,6 +166,8 @@ func is_free(pos : Vector3i) -> bool:
 				return false;
 	
 	for u in units:
+		if not is_instance_valid(u):
+			continue
 		if u.state.is_alive:
 			if u.state.grid_position == pos:
 				return false;
@@ -220,5 +219,14 @@ func get_enemies() -> Array[Character]:
 		if u == null:
 			continue
 		if u.state.is_enemy() == !is_current_player_enemy:
+			output.append(u)
+	return output
+
+func get_neutral_objects() -> Array[Character]:
+	var output: Array[Character] = []
+	for u in units:
+		if u == null:
+			continue
+		if u.state.faction == CharacterState.Faction.NEUTRAL:
 			output.append(u)
 	return output

@@ -1,7 +1,8 @@
 extends Node3D
 
 ## Reference to the World node
-@onready var world: Node3D = $World;
+## Doing this in main.gd
+@export var main_menu_music: AudioStream
 
 ## Reference to the GUI
 @onready var gui: Control = $UI;
@@ -12,8 +13,12 @@ extends Node3D
 
 ## Names of levels in the order they will be played
 @export var levels_order: LevelOrder
+const REGISTRY_PATH := "res://Data/levels_for_grid_select.tres"
+var _registry: LevelOrder = preload(REGISTRY_PATH)
+var current_level_index: int = -1
+@onready var grid_container: GridContainer = $UI/SelectLevelGrid/VBoxContainer/GridContainer
 
-@onready var camera_controller: CameraController = $World/CameraScene
+#@onready var camera_controller: CameraController = $World/CameraScene
 
 ## Bools
 var _slot_pending_overwrite: int = -1
@@ -22,11 +27,14 @@ var _slot_pending_overwrite: int = -1
 ## Called when the node enters the scene tree for the first time
 func _ready() -> void:
 	print(OS.get_data_dir())
-	Main.world = world;
-	Main.levels = levels_order.levels;
-	Main.camera_controller = camera_controller;
+	add_to_group("main_menu")
+	AudioManager2d.play_music(MusicTrack.TRACK_TYPE.MAIN_MENU_THEME, 1.0)
+	#Main.world = world;
+	#Main.levels = levels_order.levels; <-- Done in main.gd _ready()
+	#Main.camera_controller = camera_controller;
 	
 	#$UI/LevelSelect.visible = false;
+	_fill_grid_with_levels()
 	
 	print(OS.get_data_dir());
 	
@@ -89,9 +97,7 @@ func _on_start_tutorial_pressed() -> void:
 
 
 func _on_start_new_game_pressed() -> void:
-	$UI/LevelSelect.visible = false
-	$UI/CreateNewSaveFileSelect.visible = true
-	#_update_create_save_buttons()
+	print("_on_start_new_game_pressed was pressed.")
 	_update_save_buttons()
 
 func _on_load_game_pressed() -> void:
@@ -208,6 +214,9 @@ func _update_load_buttons() -> void:
 
 
 func _update_save_buttons() -> void:
+	$UI/LevelSelect.visible = false
+	$UI/CreateNewSaveFileSelect.visible = true
+	
 	var save_buttons := [		
 		$UI/CreateNewSaveFileSelect/LevelSelectVBOX/SelectSaveFile0,
 		$UI/CreateNewSaveFileSelect/LevelSelectVBOX/SelectSaveFile1,
@@ -229,3 +238,30 @@ var credits: Dictionary = {
 	"Programming 3" : "Andreas",
 	"Music" : "Han fyren"
 }
+
+
+func _on_level_select_pressed() -> void:
+	print("Level Selection Pressed.")
+	## Hide current UI
+	$UI/LevelSelect.visible = false
+	## Show grid with level nodes
+	$UI/SelectLevelGrid.visible = true
+
+func _fill_grid_with_levels() -> void:
+	# Iterate over level_order.tres and fill grid with buttons to start each level
+	# Will only play scene, not use save game system
+	for i in range(_registry.levels.size()):
+		var entry: LevelEntry = _registry.levels[i]
+		var button:= Button.new()
+		button.text = entry.display_name
+		button.pressed.connect(_on_level_button_pressed.bind(i))
+		grid_container.add_child(button)
+	pass
+
+func _on_level_button_pressed(index: int) -> void:
+	$UI.visible = false
+	Main.load_single_level(index)
+	
+func _on_back_button_level_select_pressed() -> void:
+	$UI/SelectLevelGrid.visible = false;
+	$UI/LevelSelect.visible = true;

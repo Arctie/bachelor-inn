@@ -1,14 +1,22 @@
 [gd_resource type="Resource" script_class="Skill" format=3 uid="uid://cqwy7r0vxoxy"]
 
+[ext_resource type="PackedScene" uid="uid://ddvscfqfihmwr" path="res://scenes/Development/Particles/hit_particle.tscn" id="1_don6w"]
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="1_v5vr7"]
+[ext_resource type="AudioStream" uid="uid://q3ilhpigh7ok" path="res://audio/Effects/Sword_Attack_Greater.wav" id="2_n1nf5"]
+[ext_resource type="Texture2D" uid="uid://cbkhqf01of0kd" path="res://art/textures/ability_poison_arrow.png" id="3_n1nf5"]
 
 [resource]
 script = ExtResource("1_v5vr7")
 skill_id = "melee_sweep"
 skill_name = "melee sweep"
 tooltip = "Attacks in an arc, hitting all enemies in the path."
+icon = ExtResource("3_n1nf5")
+Vfx_Scene = ExtResource("1_don6w")
+audio_cast = ExtResource("2_n1nf5")
 effect_mods = {
 &"damage": 3
 }
 max_range = 1
+target_faction = 1
+aoe_shape = 7
 metadata/_custom_type_script = "uid://c3p07am3ababr"

@@ -10,9 +10,9 @@ static func generate(unit : Character, state : GameState, exclude_attacks : bool
 
 
 static func dijkstra(unit : Character, state : GameState, exclude_attacks : bool = false, exclude_move : bool = false) -> Array[Command]:
-	print("Unit: ", unit.data.unit_name, 
-		  " | movement: ", unit.state.movement,
-		  " | effective: ", unit.state.get_effective_movement())
+	#print("Unit: ", unit.data.unit_name, 
+		  #" | movement: ", unit.state.movement,
+		  #" | effective: ", unit.state.get_effective_movement())
 	
 	var start_pos: Vector3i = unit.state.grid_position
 
@@ -27,11 +27,19 @@ static func dijkstra(unit : Character, state : GameState, exclude_attacks : bool
 	frontier.insert(FrontierData.new(start_pos, 0))
 	cost_so_far[start_pos] = 0
 
-	#var movement_range: int = unit.state.movement
-	var movement_range: int = unit.state.get_effective_movement() 
+	# --- Set movement rules for player units vs. enemies
+	var movement_range: int #= unit.state.get_effective_movement() 
+	# NOTE: Player units use movement poitns (MP)
+	if unit.state.is_playable():
+		movement_range = unit.state.movement_points_remaining
+	else:
+	# NOTE: Enemy units uses move one time and/or use an action, then done
+		movement_range = unit.state.get_effective_movement()
+		if unit.state.is_moved:
+			movement_range = 0
 	
-	if unit.state.is_moved:
-		movement_range = 0
+	#if unit.state.is_moved:
+		#movement_range = 0
 
 	# -------------------------
 	# 1) Dijkstra for reachables
@@ -93,9 +101,18 @@ static func dijkstra(unit : Character, state : GameState, exclude_attacks : bool
 	# 2) Build MOVE commands
 	# -------------------------
 	if !exclude_move:
-		if not unit.state.is_moved:
+		var can_move: bool
+		if unit.state.is_playable():
+			can_move = unit.state.movement_points_remaining > 0
+		else:
+			can_move = not unit.state.is_moved
+			
+		if can_move:
 			for tile: Vector3i in reachable:
-				commands.append(Move.new(start_pos, tile))
+				var move: Move = Move.new(start_pos, tile)
+				move.total_cost = cost_so_far.get(tile, 0)
+				#print("Move to: ", tile, " total_cost: ", move.total_cost)
+				commands.append(move)
 
 	# -------------------------
 	# 3) Build ALL ATTACK commands
@@ -103,7 +120,14 @@ static func dijkstra(unit : Character, state : GameState, exclude_attacks : bool
 	#    (Temporary rule: enemy must be on same y as origin)
 	# -------------------------
 	if !exclude_attacks:
-		if not unit.state.is_ability_used:
+		var can_act: bool
+		if unit.state.is_playable():
+			can_act = unit.state.action_points_remaining > 0
+		else:
+			can_act = not unit.state.is_ability_used
+			
+		#if not unit.state.is_ability_used:
+		if can_act:
 			# Include "attack from current position"
 			var attack_origins: Array[Vector3i] = [start_pos]
 			for r: Vector3i in reachable:
@@ -116,6 +140,11 @@ static func dijkstra(unit : Character, state : GameState, exclude_attacks : bool
 			var seen_pairs: Dictionary = {}
 
 			var opponents : Array[Character] = state.get_enemies()
+			for u in state.get_neutral_objects():
+				opponents.append(u)
+			#print("Total opponents including neutrals: ", opponents.size())
+			#for o in opponents:
+				#print("  opponent: ", o.data.unit_name, " at: ", o.state.grid_position)
 			for opponent : Character in opponents:
 				if opponent == null:
 					continue
@@ -124,6 +153,8 @@ static func dijkstra(unit : Character, state : GameState, exclude_attacks : bool
 					var delta : Vector3i = tile - origin
 					var dist : int = abs(delta.x) + abs(delta.z) + max(0, abs(delta.y)-1)
 					if dist < min_r or dist > max_r:
+						continue
+					if not Main.level.has_line_of_sight(origin, tile):
 						continue
 					var key := str(origin.x)+","+str(origin.y)+","+str(origin.z)+"->"+str(tile.x)+","+str(tile.y)+","+str(tile.z)
 					if seen_pairs.has(key):
@@ -155,7 +186,7 @@ static func generate_attack(unit : Character, game_state : GameState) -> Array[A
 			
 			var consider_terrain_cost : bool = false
 			var include_start_in_output : bool = false
-			var go_through_heroes : bool = true
+			var go_through_heroes : bool = false
 			var go_through_monsters : bool = false
 			var include_hero_tiles_in_output : bool = false
 			var include_monster_tiles_in_output : bool = true
@@ -167,6 +198,16 @@ static func generate_attack(unit : Character, game_state : GameState) -> Array[A
 				go_through_heroes, go_through_monsters,
 				include_hero_tiles_in_output, include_monster_tiles_in_output,
 				go_through_empty_tiles, include_empty_tiles_in_output)
+			
+			# NOTE: Allows attacks of neutral units
+			for u in game_state.units:
+				if u.state.faction == CharacterState.Faction.NEUTRAL:
+					var dist: int = abs(u.state.grid_position.x - start.x) + abs(u.state.grid_position.z - start.z)
+					print("Neutral unit found: ", u.data.unit_name, " dist=", dist, 
+						" min=", min_depth, " max=", max_depth,
+						" in_range=", dist >= min_depth and dist <= max_depth)
+					if dist >= min_depth and dist <= max_depth:
+						targets.append(u.state.grid_position)
 			
 		CharacterState.Faction.ENEMY:
 			
@@ -189,6 +230,8 @@ static func generate_attack(unit : Character, game_state : GameState) -> Array[A
 			return moves
 	
 	for target : Vector3i in targets:
+		if not Main.level.has_line_of_sight(start, target):
+			continue
 		moves.append(Attack.new(start, target, start))
 	
 	return moves;
@@ -197,8 +240,12 @@ static func generate_move(unit : Character, game_state : GameState, store_path :
 	var moves : Array[Move]
 	if unit == null:
 		return moves
-	if unit.state.is_moved:
-		return moves
+	if unit.state.is_playable():
+		if unit.state.movement_points_remaining <= 0:
+			return moves
+	else:
+		if unit.state.is_moved:
+			return moves
 	
 	var targets : Array[Vector3i]
 	
@@ -211,7 +258,7 @@ static func generate_move(unit : Character, game_state : GameState, store_path :
 			
 			var consider_terrain_cost : bool = false
 			var include_start_in_output : bool = true
-			var go_through_heroes : bool = true
+			var go_through_heroes : bool = false
 			var go_through_monsters : bool = false
 			var include_hero_tiles_in_output : bool = false
 			var include_monster_tiles_in_output : bool = false
@@ -411,7 +458,7 @@ static func is_neighbour(pos : Vector3i, end_pos : Vector3i) -> bool:
 	return false
 
 
-static func get_attack_origins(unit: Character, state: GameState, target_pos: Vector3i, reachable: Array[Vector3i]) -> Array[Vector3i]:
+static func get_attack_origins(unit: Character, state: GameState, target_pos: Vector3i, reachable: Array[Vector3i], min_range: int, max_range: int) -> Array[Vector3i]:
 	# Include "attack from current position"
 	var origins: Array[Vector3i] = [unit.state.grid_position]
 	for r in reachable:
@@ -419,13 +466,12 @@ static func get_attack_origins(unit: Character, state: GameState, target_pos: Ve
 
 	# Temporary rule: enemy must share same height as origin
 	# Weapon range from registry
-	var w: Weapon = WeaponRegistry.get_weapon(unit.state.weapon.weapon_id)
-	var min_r: int = w.min_range
-	var max_r: int = w.max_range
+	#var w: Weapon = WeaponRegistry.get_weapon(unit.state.weapon.weapon_id)
+	#var min_r: int = w.min_range
+	#var max_r: int = w.max_range
 
 	var valid: Array[Vector3i] = []
 	var seen: Dictionary = {} # de-dupe by position
-
 	for origin in origins:
 		var origin_key := str(origin.x) + "," + str(origin.y) + "," + str(origin.z)
 		if seen.has(origin_key):
@@ -434,13 +480,9 @@ static func get_attack_origins(unit: Character, state: GameState, target_pos: Ve
 		
 		var delta : Vector3i = target_pos - origin
 		var dist: int = abs(delta.x) + abs(delta.z) + max(0, abs(delta.y)-1)
-		if dist >= min_r and dist <= max_r and (delta.y) <= 2:
-			valid.append(origin)
-			
-		## Thi caused attack origins to be generated from any enemy within range
-		#if _has_enemy_in_range_from_origin(origin, min_r, max_r, unit, state):
-		#	valid.append(origin)
-
+		if dist >= min_range and dist <= max_range and (delta.y) <= 2:
+			if Main.level.has_line_of_sight(origin, target_pos):
+				valid.append(origin)
 	return valid
 
 
@@ -503,6 +545,13 @@ static func get_valid_neighbours(pos : Vector3i, reachable : Array[Vector3i]) ->
 			valid.append(tile)
 	
 	return valid
+
+static func get_move_cost(start: Vector3i, end: Vector3i, game_state: GameState) -> int:
+	var path: Array[Vector3i] = MovementGrid.find_path(start, end, Main.level.movement_weights_map)
+	var total: int = 0
+	for tile in path:
+		total += Main.level.movement_grid.get_cost(tile)
+	return total
 
 class FrontierData extends RefCounted:
 	var tile : Vector3i

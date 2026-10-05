@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cm02uehw506nt"]
 
 [ext_resource type="Script" uid="uid://bt1if6bipdwt1" path="res://scripts/Core/main_menu.gd" id="1_vgp3j"]
+[ext_resource type="AudioStream" uid="uid://b67e003o351lb" path="res://audio/Music/260216themeWIP.wav" id="2_7bulk"]
 [ext_resource type="Resource" uid="uid://vjdtuo3nhqwn" path="res://Data/level_order.tres" id="2_dij2v"]
 [ext_resource type="Shader" uid="uid://b28ad3myemhko" path="res://shaders/Intro_Background.gdshader" id="3_qqcna"]
 [ext_resource type="Texture2D" uid="uid://cft6wh327wv2r" path="res://art/textures/NobleNightsLogo_normalsize.png" id="4_h2qhj"]
@@ -11,8 +12,6 @@
 [ext_resource type="StyleBox" uid="uid://7btdlsimck4p" path="res://scenes/userinterface/button_normal_style.tres" id="9_0r8c7"]
 [ext_resource type="StyleBox" uid="uid://dcptgtrri5psh" path="res://scenes/userinterface/button_pressed_style.tres" id="10_5hqp6"]
 [ext_resource type="StyleBox" uid="uid://bxg7htv4vn5rw" path="res://scenes/userinterface/button_hover_style.tres" id="11_xe483"]
-[ext_resource type="AudioStream" uid="uid://b67e003o351lb" path="res://audio/Music/260216themeWIP.wav" id="12_e4x0b"]
-[ext_resource type="PackedScene" uid="uid://cnagni7ikbg16" path="res://scenes/utilities/CameraScene.tscn" id="13_40ob2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gkqwp"]
 shader = ExtResource("3_qqcna")
@@ -183,6 +182,7 @@ region_rect = Rect2(0, 0, 32, 32)
 
 [node name="Main" type="Node3D" unique_id=1793110786]
 script = ExtResource("1_vgp3j")
+main_menu_music = ExtResource("2_7bulk")
 levels_order = ExtResource("2_dij2v")
 
 [node name="UI" type="Control" parent="." unique_id=361496965]
@@ -354,6 +354,19 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_nsnfg")
 theme_override_styles/hover = ExtResource("11_xe483")
 theme_override_styles/focus = ExtResource("8_oa3rt")
 text = "Load Game"
+
+[node name="LevelSelect" type="Button" parent="UI/LevelSelect/LevelSelectVBOX" unique_id=384835995]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("6_xeebt")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxTexture_ds07i")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_nsnfg")
+theme_override_styles/hover = ExtResource("11_xe483")
+theme_override_styles/focus = ExtResource("8_oa3rt")
+text = "Level Selection"
 
 [node name="BackButtonLevel" type="Button" parent="UI/LevelSelect/LevelSelectVBOX" unique_id=1613961083]
 custom_minimum_size = Vector2(32, 32)
@@ -735,13 +748,63 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_huha7")
 theme_override_styles/focus = ExtResource("8_oa3rt")
 text = "Back"
 
-[node name="World" type="Node3D" parent="." unique_id=1857862226]
+[node name="SelectLevelGrid" type="Control" parent="UI" unique_id=740697941]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="World" unique_id=904918254]
-stream = ExtResource("12_e4x0b")
-autoplay = true
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/SelectLevelGrid" unique_id=184977866]
+custom_minimum_size = Vector2(300, 150)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -168.1425
+offset_top = -112.77875
+offset_right = 131.8575
+offset_bottom = 37.221252
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="CameraScene" parent="World" unique_id=1082997309 instance=ExtResource("13_40ob2")]
+[node name="Label" type="Label" parent="UI/SelectLevelGrid/VBoxContainer" unique_id=616957056]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Level Select"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="UI/SelectLevelGrid/VBoxContainer" unique_id=137365903]
+layout_mode = 2
+columns = 2
+
+[node name="SelectSaveFile3" type="Button" parent="UI/SelectLevelGrid/VBoxContainer/GridContainer" unique_id=1322257530]
+visible = false
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("6_xeebt")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = ExtResource("9_0r8c7")
+theme_override_styles/pressed = ExtResource("10_5hqp6")
+theme_override_styles/hover = ExtResource("11_xe483")
+theme_override_styles/focus = ExtResource("8_oa3rt")
+text = "1"
+
+[node name="BackButtonLevelSelect" type="Button" parent="UI/SelectLevelGrid/VBoxContainer" unique_id=1302898691]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("6_xeebt")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxTexture_wxwbn")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_beadd")
+theme_override_styles/hover = SubResource("StyleBoxTexture_huha7")
+theme_override_styles/focus = ExtResource("8_oa3rt")
+text = "Back"
 
 [connection signal="pressed" from="UI/MainMenu/Selector/StartGameButton" to="." method="_on_start_game_button_pressed"]
 [connection signal="pressed" from="UI/MainMenu/Selector/OptionsButton" to="." method="_on_options_button_pressed"]
@@ -750,6 +813,7 @@ autoplay = true
 [connection signal="pressed" from="UI/LevelSelect/LevelSelectVBOX/Start Tutorial" to="." method="_on_start_tutorial_pressed"]
 [connection signal="pressed" from="UI/LevelSelect/LevelSelectVBOX/StartNewGame" to="." method="_on_start_new_game_pressed"]
 [connection signal="pressed" from="UI/LevelSelect/LevelSelectVBOX/LoadGame" to="." method="_on_load_game_pressed"]
+[connection signal="pressed" from="UI/LevelSelect/LevelSelectVBOX/LevelSelect" to="." method="_on_level_select_pressed"]
 [connection signal="pressed" from="UI/LevelSelect/LevelSelectVBOX/BackButtonLevel" to="." method="_on_back_button_level_pressed"]
 [connection signal="pressed" from="UI/OptionsSelect/LevelSelectVBOX/BackButtonOptions" to="." method="_on_back_button_options_pressed"]
 [connection signal="pressed" from="UI/CreditsSelect/LevelSelectVBOX/BackButtonCredits" to="." method="_on_back_button_credits_pressed"]
@@ -762,3 +826,5 @@ autoplay = true
 [connection signal="pressed" from="UI/CreateNewSaveFileSelect/LevelSelectVBOX/SelectSaveFile2" to="." method="_on_select_save_file_2_pressed"]
 [connection signal="pressed" from="UI/CreateNewSaveFileSelect/LevelSelectVBOX/DeleteSaveData" to="." method="_on_delete_save_data_pressed"]
 [connection signal="pressed" from="UI/CreateNewSaveFileSelect/LevelSelectVBOX/BackButtonCreateSave" to="." method="_on_back_button_create_save_pressed"]
+[connection signal="pressed" from="UI/SelectLevelGrid/VBoxContainer/GridContainer/SelectSaveFile3" to="." method="_on_select_save_file_0_pressed"]
+[connection signal="pressed" from="UI/SelectLevelGrid/VBoxContainer/BackButtonLevelSelect" to="." method="_on_back_button_level_select_pressed"]
