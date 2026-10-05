@@ -34,7 +34,7 @@ offset_bottom = 56.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 64
-text = "HUB WORLD"
+text = "HUB CAMP"
 
 [node name="PlayerUnitContainer" type="PanelContainer" parent="." unique_id=1789842128]
 custom_minimum_size = Vector2(1200, 200)
@@ -121,7 +121,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "NEXT LEVEL"
 
-[node name="ProgressButton3" type="Button" parent="ButtonContainer/VBoxContainer" unique_id=78865178]
+[node name="SaveAndQuitButton" type="Button" parent="ButtonContainer/VBoxContainer" unique_id=78865178]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
@@ -144,3 +144,4 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [connection signal="pressed" from="ButtonContainer/VBoxContainer/NextLevelButton" to="." method="_on_next_level_button_pressed"]
+[connection signal="pressed" from="ButtonContainer/VBoxContainer/SaveAndQuitButton" to="." method="_on_save_and_quit_button_pressed"]

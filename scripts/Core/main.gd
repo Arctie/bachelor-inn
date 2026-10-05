@@ -64,10 +64,6 @@ func _ready() -> void:
 	
 ## Unloads the current level instance
 func unload_level() -> void:
-	#for c in characters:
-		#if is_instance_valid(c):
-			#c.queue_free()
-	#characters.clear()
 	if is_instance_valid(level):
 		level.queue_free()
 	level = null
@@ -76,8 +72,10 @@ func next_level() -> void:
 	print("next_level() in main.gd triggered!")
 	var next_index := current_level_index + 1
 	if next_index >= levels.size():
+		current_game_location = Main.GameLocation.LEVEL
 		get_tree().change_scene_to_file("res://scenes/states/victory.tscn")
 	else:
+		current_game_location = Main.GameLocation.LEVEL
 		load_level(next_index)
 
 func load_level(index: int) -> void:
@@ -85,6 +83,7 @@ func load_level(index: int) -> void:
 		push_error("Level index out or range: %d" % index)
 		return
 	current_level_index = index
+	current_game_location = Main.GameLocation.LEVEL
 	var entry: LevelEntry = levels[index]
 	
 	if OS.has_feature("mobile"):
@@ -93,6 +92,8 @@ func load_level(index: int) -> void:
 		Dialogic.VAR.PLATFORM = "DESKTOP";
 	
 	unload_level()
+	
+	save.save_progress(current_save_slot, index)
 	
 	var packed := load(entry.scene_path)
 	if packed == null:
@@ -185,9 +186,9 @@ func get_current_entry() -> LevelEntry:
 func go_to_hub_scene() -> void:
 	if is_instance_valid(Main.level):
 		print("Going to Hub. Instance Main.level is valid.")
-	Main.level.is_in_menu = false
-	Main.level.get_tree().paused = false
-	if is_instance_valid(Main.level):
+		Main.level.is_in_menu = false
+		Main.level.get_tree().paused = false
+	#if is_instance_valid(Main.level):
 		Main.level.cleanup_level()
 		Main.level.queue_free()
 		Main.level = null

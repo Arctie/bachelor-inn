@@ -270,11 +270,12 @@ func read(save_slot: int) -> bool:
 	#print("read() called. slot: ", save_slot)
 	#print("Units found in save file: ", units.size())
 	if location == "camp":
-		Main.load_hub()
+		#print("Location is: ", str(location))
+		Main.go_to_hub_scene()
 	else:
+		#print("Location is: ", str(location))
 		Main.load_level(level)
 	return true
-
 
 func load_tutorial() -> void:
 	print("load_tutorial() pressed.")
