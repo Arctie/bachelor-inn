@@ -5,7 +5,6 @@
 [ext_resource type="AudioStream" uid="uid://d3yd6mw1qnqra" path="res://audio/Abilities/Fireball_skill.wav" id="2_11pje"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_sxwr3"]
-load_path = "res://.godot/imported/GUI_Assets.png-fb06711353850da2dfdd4a114970627a.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_11pje"]
 atlas = SubResource("CompressedTexture2D_sxwr3")

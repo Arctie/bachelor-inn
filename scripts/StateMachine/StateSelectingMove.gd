@@ -86,7 +86,7 @@ func handle_input(level: Node, event: InputEvent) -> void:
 		#emit_signal("enemy_selected", level.selected_enemy_unit)
 	
 	# Click empty tile /anything else
-	level._clear_selection()
+	# level._clear_selection()
 	level.state_machine.transition_to(StateSelectingUnit.new())
 	
 	

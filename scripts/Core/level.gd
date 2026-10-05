@@ -679,7 +679,7 @@ func try_select_unit(unit: Character) -> void:
 
 func select_unit(unit: Character) -> void:
 	# Switching unit
-	_clear_selection()
+	#_clear_selection()
 	
 	last_selected_unit = unit
 	selected_unit = unit
@@ -1221,7 +1221,7 @@ func end_player_turn() -> bool:
 			active_move.execute(game_state);
 			occupancy_map.set_cell_item(active_move.start_pos, GridMap.INVALID_CELL_ITEM);
 			occupancy_map.set_cell_item(active_move.end_pos, player_code_done);
-			_clear_selection()
+			#_clear_selection()
 	
 	state_machine.transition_to(StateTurnTransition.new(false))
 	return true

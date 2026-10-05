@@ -132,8 +132,8 @@ func _process_next_move(level: Node) -> void:
 	level.selected_unit.pause_anim()
 	level.camera_controller.free_camera()
 	
-	if not level.is_player_turn:
-		level._clear_selection()
+	#if not level.is_player_turn:
+		#level._clear_selection()
 	level.completed_moves.append(level.active_move)
 	
 	if Tutorial.in_tutorial:

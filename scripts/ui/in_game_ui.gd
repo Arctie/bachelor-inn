@@ -201,7 +201,7 @@ func _on_end_turn_button_pressed() -> void:
 		return
 	if Main.level.state_machine.current is StateAnimating:
 		return
-	Main.level._clear_selection()
+	#Main.level._clear_selection()
 	Main.level.end_player_turn()
 	print("'End turn' button pressed")
 
