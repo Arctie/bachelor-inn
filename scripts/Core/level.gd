@@ -743,8 +743,8 @@ func _handle_action_tile_click(pos: Vector3i) -> String:
 
 
 func _clear_selection() -> void:
-	emit_signal("character_deselected")
-	emit_signal("enemy_deselected")
+	emit_signal("character_deselected")		#Hides UI of ribbon and preview
+	emit_signal("enemy_deselected")			#Unused
 	_exit_skill_target_mode()
 	movement_map.clear()
 	path_map.clear()
