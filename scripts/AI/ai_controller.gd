@@ -30,15 +30,7 @@ static func _run_minimax(enemy: Character, state: GameState) -> Command:
 # func run_bt()
 
 static func run_enemy_turn(level: Level) -> void:
-	var any_active_enemies := false
-	for unit in level.characters:
-		if unit == null:
-			continue
-		if not unit.state.is_enemy():
-			continue
-		if unit.state.aggro_state != CharacterState.AggroState.FROZEN:
-			any_active_enemies = true
-			break
+	var any_active_enemies := _has_active_enemies(level)
 	
 	if not any_active_enemies:
 		_end_enemy_turn(level)
@@ -110,6 +102,15 @@ static func _end_enemy_turn(level: Level) -> void:
 	level.camera_controller.free_camera()
 	level.state_machine.transition_to(StateTurnTransition.new(true))
 
+static func _has_active_enemies(level: Level) -> bool :
+	for unit in level.characters:
+		if unit == null:
+			continue
+		if not unit.state.is_enemy():
+			continue
+		if unit.state.aggro_state != CharacterState.AggroState.FROZEN:
+			return true
+	return false
 #func MoveAI() -> void:
 	#var ai := MinimaxAI.new();
 	#var current_state := GameState.from_level(Main.level);
