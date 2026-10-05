@@ -185,7 +185,7 @@ func read(save_slot: int) -> bool:
 	var units : Array = slot["units"]
 	var raw_roster: Array = slot.get("full_roster", [])
 	var raw_party: Array = slot.get("active_party", [])
-	var location: String = slot.get("location", "camp")
+	var location: String = slot.get("location", "level")
 	Main.full_roster.clear()
 	Main.active_party.clear()
 	for id: String in raw_roster:

@@ -21,6 +21,7 @@ func _on_back_to_main_menu_pressed() -> void:
 	Main.level.is_in_menu = false
 	Main.level.get_tree().paused = false
 	if is_instance_valid(Main.level):
+		Main.level.cleanup_level()
 		Main.level.queue_free()
 		Main.level = null
 	get_tree().change_scene_to_file("res://scenes/userinterface/Menus/main_menu.tscn");

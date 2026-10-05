@@ -192,6 +192,7 @@ func _set_up_grids() -> void:
 	Dialogic.signal_event.connect(_on_dialogic_signal)
 
 func _place_player_units() -> void:
+	print("_place_player_units - Main.characters size: ", Main.characters.size())
 	var spawn_points: Array[Vector3i] = occupancy_map.get_used_cells()
 	var characters_placed := 0
 	#print("Loading new level, number of playable characters: ", Main.characters.size())
@@ -1045,14 +1046,17 @@ func next_level() -> void:
 			Main.characters.append(c)
 	
 	# Clear unit arrays attached to level.gd
+	#cleanup_level()
+	
+	#Main.save.save_progress(Main.current_save_slot, Main.current_level_index +1)
+	Main.go_to_transition_screen()
+
+func cleanup_level() -> void:
 	player_characters.clear()
 	enemy_characters.clear()
 	neutral_characters.clear()
 	characters.clear()
-	
-	Main.save.save_progress(Main.current_save_slot, Main.current_level_index +1)
-	Main.go_to_transition_screen()
-	
+
 func trigger_game_over() -> void:
 	state_machine.transition_to(StateGameOver.new())
 
@@ -1425,8 +1429,6 @@ func _register_chests() -> void:
 			chests[grid_pos] = child
 			#print("Registered chest at: ", grid_pos, " weapon: ", child.weapon_id)
 
-
-
 func _on_chest_opened(pos: Vector3i) -> void:
 	var c: Chest = chests.get(pos, null)
 	if c == null:
@@ -1463,7 +1465,6 @@ func _on_chest_opened(pos: Vector3i) -> void:
 		Tutorial.chest_open = true
 		Tutorial.can_advance_timeline = true
 		Tutorial.advance_timeline()
-
 
 func _recruit_neutral_units() -> void:
 	#print("recruit_neutral_units() triggered")

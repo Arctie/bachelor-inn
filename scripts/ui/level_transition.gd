@@ -31,7 +31,10 @@ func _on_continue_button_pressed() -> void:
 			return
 	Main.transition_screen.queue_free()
 	Main.transition_screen = null
-	Main.next_level()
+	Main.current_game_location = Main.GameLocation.CAMP
+	Main.save.save_progress(Main.current_save_slot, Main.current_level_index +1)
+	Main.go_to_hub_scene()
+	#Main.next_level()
 
 func update_continue_button() -> void:
 	for c in Main.characters:

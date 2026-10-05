@@ -64,10 +64,10 @@ func _ready() -> void:
 	
 ## Unloads the current level instance
 func unload_level() -> void:
-	for c in characters:
-		if is_instance_valid(c):
-			c.queue_free()
-	characters.clear()
+	#for c in characters:
+		#if is_instance_valid(c):
+			#c.queue_free()
+	#characters.clear()
 	if is_instance_valid(level):
 		level.queue_free()
 	level = null
@@ -181,6 +181,18 @@ func get_current_entry() -> LevelEntry:
 	if current_level_index < 0 or current_level_index >= levels.size():
 		return null
 	return levels[current_level_index]
+
+func go_to_hub_scene() -> void:
+	if is_instance_valid(Main.level):
+		print("Going to Hub. Instance Main.level is valid.")
+	Main.level.is_in_menu = false
+	Main.level.get_tree().paused = false
+	if is_instance_valid(Main.level):
+		Main.level.cleanup_level()
+		Main.level.queue_free()
+		Main.level = null
+	get_tree().change_scene_to_file("res://scenes/levels/hub_level.tscn");
+
 
 func go_to_transition_screen() -> void:
 	print("go_to_transition_screen called")
