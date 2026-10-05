@@ -257,7 +257,7 @@ func tutorial_end_turn() -> void:
 	if Main.level.state_machine.current is StateAnimating:
 		return
 	Main.level.is_in_menu = false
-	Main.level._clear_selection()
+	#Main.level._clear_selection()
 	Main.level.end_player_turn()
 	print("'End turn' called from Tutorial")
 

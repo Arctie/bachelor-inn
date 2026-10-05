@@ -496,8 +496,8 @@ func _can_handle_input(event: InputEvent) -> bool:
 			return false
 		if Input.is_action_pressed("enable_dragging"):
 			return false
-		if get_grid_cell_from_mouse() == Vector3i(-999, -999, -999):
-			return false
+		#if get_grid_cell_from_mouse() == Vector3i(-999, -999, -999):
+			#return false
 	return true
 
 
@@ -679,7 +679,7 @@ func try_select_unit(unit: Character) -> void:
 
 func select_unit(unit: Character) -> void:
 	# Switching unit
-	_clear_selection()
+	#_clear_selection()
 	
 	last_selected_unit = unit
 	selected_unit = unit
@@ -695,15 +695,6 @@ func select_unit(unit: Character) -> void:
 	# Adding 'true' as a 3rd arg in fill_from_commands exludes attacks
 	# current_moves = MoveGenerator.generate(selected_unit, game_state, true)
 	movement_grid.fill_from_commands(current_moves, game_state)
-	
-	if Main.level.level_name.begins_with("tutorial") == true:
-		print("Level name matches: ", Main.level.name)
-		Tutorial.tutorial_unit_selected()
-	## DIALOGIC
-	#if (Main.level.name == "tutorial_1"):
-	#	print("DIALOGIC TEST")
-	#	Dialogic.start_timeline("tutorialpc2")
-	#get_viewport().gui_release_focus()
 
 
 func _handle_player_click(pos: Vector3i) -> void:
@@ -752,8 +743,8 @@ func _handle_action_tile_click(pos: Vector3i) -> String:
 
 
 func _clear_selection() -> void:
-	emit_signal("character_deselected")
-	emit_signal("enemy_deselected")
+	emit_signal("character_deselected")		#Hides UI of ribbon and preview
+	emit_signal("enemy_deselected")			#Unused
 	_exit_skill_target_mode()
 	movement_map.clear()
 	path_map.clear()

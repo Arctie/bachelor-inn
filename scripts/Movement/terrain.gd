@@ -26,3 +26,9 @@ static func get_weight(t : String) -> int:
 	elif t == "1_1_W3":
 		return 3
 	return 1
+
+static func get_elevation_change(t : String) -> bool:
+	if t == "1_2_ElevationChange": 
+		print("Character is standing on elevation change")
+		return true
+	return false

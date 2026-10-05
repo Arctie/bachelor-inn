@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="LevelOrder" format=3 uid="uid://vjdtuo3nhqwn"]
 
-[ext_resource type="Script" uid="uid://clh7qtku5w0x4" path="res://scripts/Core/level_entry.gd" id="1_8gfqg"]
+[ext_resource type="Script" path="res://scripts/Core/level_entry.gd" id="1_8gfqg"]
 [ext_resource type="Script" uid="uid://cxpf6awrsq5lp" path="res://scripts/Core/level_order.gd" id="1_tnguu"]
 
 [sub_resource type="Resource" id="Resource_sjdwp"]
