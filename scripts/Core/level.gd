@@ -695,15 +695,6 @@ func select_unit(unit: Character) -> void:
 	# Adding 'true' as a 3rd arg in fill_from_commands exludes attacks
 	# current_moves = MoveGenerator.generate(selected_unit, game_state, true)
 	movement_grid.fill_from_commands(current_moves, game_state)
-	
-	if Main.level.level_name.begins_with("tutorial") == true:
-		print("Level name matches: ", Main.level.name)
-		Tutorial.tutorial_unit_selected()
-	## DIALOGIC
-	#if (Main.level.name == "tutorial_1"):
-	#	print("DIALOGIC TEST")
-	#	Dialogic.start_timeline("tutorialpc2")
-	#get_viewport().gui_release_focus()
 
 
 func _handle_player_click(pos: Vector3i) -> void:
