@@ -168,26 +168,7 @@ func _finish_animation(level: Node) -> void:
 	level.check_trigger_conditions()
 	level.check_victory_conditions()
 	
-	var teleporters := level.get_tree().get_nodes_in_group("teleporters")
-	print("Teleporters in group: ", teleporters.size())
-	for portal in teleporters:
-		var portal_grid: Vector3i = portal.get("teleporter_grid_position")
-		print("Portal: ", portal.name, " grid: ", portal_grid)
-		for c: Character in level.player_characters:
-			if not is_instance_valid(c):
-				continue
-			print("  checking: ", c.data.unit_name, " at: ", c.state.grid_position)
-			if c.state.grid_position == portal_grid and not c.state.just_teleported:
-				c.state.just_teleported = true
-				await level._execute_teleport(portal, c)
-				return
-	
-	##Checking for elevation change after move
-	if Terrain.get_elevation_change(
-		level.movement_weights_map.mesh_library.get_item_name(
-			level.movement_weights_map.get_cell_item(
-				level.selected_unit.state.grid_position))) :
-		pass		##Character is standing on a half-tile, this should adjust their position accordingly
+	_movement_end_triggers(level)
 	
 	if not level.is_player_turn:
 		if not _is_processing:
@@ -213,3 +194,28 @@ func _finish_animation(level: Node) -> void:
 				level.state_machine.transition_to(StateSelectingMove.new())
 			else:
 				level.state_machine.transition_to(StateSelectingUnit.new())
+
+func _movement_end_triggers(level: Node) -> void :
+	##Checks for all characters whether they are on a teleporter at the end of any movement
+	var teleporters := level.get_tree().get_nodes_in_group("teleporters")
+	print("Teleporters in group: ", teleporters.size())
+	for portal in teleporters:
+		var portal_grid: Vector3i = portal.get("teleporter_grid_position")
+		print("Portal: ", portal.name, " grid: ", portal_grid)
+		for c: Character in level.player_characters:
+			if not is_instance_valid(c):
+				continue
+			print("  checking: ", c.data.unit_name, " at: ", c.state.grid_position)
+			if c.state.grid_position == portal_grid and not c.state.just_teleported:
+				c.state.just_teleported = true
+				await level._execute_teleport(portal, c)
+				return
+	
+	##Checking for elevation change for the character that currently moved
+	if Terrain.get_elevation_change(
+		level.movement_weights_map.mesh_library.get_item_name(
+			level.movement_weights_map.get_cell_item(
+				level.selected_unit.state.grid_position))) :
+		pass		##Character is standing on a half-tile, need to add height adjustment in code
+
+	return
