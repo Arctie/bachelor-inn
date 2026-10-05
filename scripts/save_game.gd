@@ -338,7 +338,7 @@ func save_progress(save_slot: int, level_index: int) -> void:
 		
 	saves[slot_key] = {
 		"level": level_index, 
-		"location": "level" if Main.current_location == Main.GameLocation.LEVEL else "camp",
+		"location": "level" if Main.current_game_location == Main.GameLocation.LEVEL else "camp",
 		"full_roster": Main.full_roster,
 		"active_party": Main.active_party,
 		"units": units

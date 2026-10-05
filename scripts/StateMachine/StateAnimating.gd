@@ -185,6 +185,9 @@ func _finish_animation(level: Node) -> void:
 	level.check_trigger_conditions()
 	level.check_victory_conditions()
 	
+	if level._level_complete:
+		return 
+	
 	var teleporters := level.get_tree().get_nodes_in_group("teleporters")
 	#print("Teleporters in group: ", teleporters.size())
 	for portal in teleporters:

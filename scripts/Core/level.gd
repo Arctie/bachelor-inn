@@ -682,7 +682,7 @@ func try_select_unit(unit: Character) -> void:
 
 func select_unit(unit: Character) -> void:
 	#print("select_unit called - current state: ", state_machine.current.get_script().resource_path if state_machine.current else "null")
-	print("select_unit called from: ", get_stack())
+	#print("select_unit called from: ", get_stack())
 	if is_divine_turn:
 		return
 	if state_machine.current is StateDivineTurn:
@@ -1024,7 +1024,9 @@ func check_victory_conditions() -> void:
 
 func next_level() -> void:
 	## NOTE: This is a clean up function that moves the level forward
+	print("next level called.")
 	if _level_complete:
+		print("Level already complete. Cant run next_level() again.")
 		return
 	_level_complete = true
 	
@@ -1040,11 +1042,12 @@ func next_level() -> void:
 	await get_tree().create_timer(1.0).timeout
 	
 	# Update player units and move to main.character array
-	for c in Main.characters:
+	Main.characters.clear()
+	for c in player_characters:
 		if is_instance_valid(c):
 			c.calc_derived_stats()
 			Main.characters.append(c)
-	
+	print("Characters appended to Main. Going to transition screen.")
 	# Clear unit arrays attached to level.gd
 	#cleanup_level()
 	
