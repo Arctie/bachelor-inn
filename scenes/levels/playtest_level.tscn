@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://b60qw41biwjh0"]
+[gd_scene format=3 uid="uid://cvudx42012uly"]
 
 [ext_resource type="Script" uid="uid://uw563shloq3m" path="res://scripts/Core/level.gd" id="1_k46kj"]
 [ext_resource type="MeshLibrary" uid="uid://d1p1bflduhst1" path="res://scenes/libraries/LIB_GridMapMeshLibrary.gltf" id="2_togab"]
@@ -176,4 +176,4 @@ teleporter_grid_position = Vector3i(3, 1, 4)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 5, 9)
 script = ExtResource("13_togab")
 linked_teleporter = NodePath("../TP_Bot_1")
-teleporter_grid_position = Vector3i(5, 5, 4)
+teleporter_grid_position = Vector3i(5, 4, 4)
