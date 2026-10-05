@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cc2f7gp6w2q8o"]
 
 [ext_resource type="Texture2D" uid="uid://b0dxq6yt434jb" path="res://art/textures/healt_bar_enemy_background.png" id="1_0a80w"]
+[ext_resource type="Script" uid="uid://dmu6y0plvja88" path="res://scripts/Core/hub_level.gd" id="1_lictt"]
 [ext_resource type="PackedScene" uid="uid://b0rpwot0fbt6t" path="res://scenes/states/UnitCard.tscn" id="2_lictt"]
 
 [node name="HubLevel" type="Control" unique_id=1070308301]
@@ -10,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_lictt")
 
 [node name="Background" type="TextureRect" parent="." unique_id=262875502]
 layout_mode = 1
@@ -104,13 +106,20 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
-text = "STORY"
+text = "STORY
+MISSION"
 
 [node name="ProgressButton2" type="Button" parent="ButtonContainer/VBoxContainer" unique_id=1629006100]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "SIDE QUEST"
+
+[node name="NextLevelButton" type="Button" parent="ButtonContainer/VBoxContainer" unique_id=702845273]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "NEXT LEVEL"
 
 [node name="ProgressButton3" type="Button" parent="ButtonContainer/VBoxContainer" unique_id=78865178]
 custom_minimum_size = Vector2(0, 100)
@@ -133,3 +142,5 @@ offset_right = 100.0
 offset_bottom = 351.5
 grow_horizontal = 2
 grow_vertical = 2
+
+[connection signal="pressed" from="ButtonContainer/VBoxContainer/NextLevelButton" to="." method="_on_next_level_button_pressed"]
