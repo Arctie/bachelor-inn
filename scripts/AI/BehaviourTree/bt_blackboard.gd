@@ -11,6 +11,8 @@ var target: Character = null
 var target_pos: Vector3i = Vector3i.ZERO
 var attack_origin: Vector3i = Vector3i.ZERO
 var weights_map: GridMap = null
+var reachable_tiles : Array[Vector3i] = []
+var stored_generic_position : Vector3i = Vector3i.ZERO
 
 func _init(in_unit: Character, in_state: GameState, in_context: MissionContext) -> void:
 	unit = in_unit
