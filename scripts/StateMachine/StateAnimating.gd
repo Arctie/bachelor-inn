@@ -182,6 +182,13 @@ func _finish_animation(level: Node) -> void:
 				await level._execute_teleport(portal, c)
 				return
 	
+	##Checking for elevation change after move
+	if Terrain.get_elevation_change(
+		level.movement_weights_map.mesh_library.get_item_name(
+			level.movement_weights_map.get_cell_item(
+				level.selected_unit.state.grid_position))) :
+		pass		##Character is standing on a half-tile, this should adjust their position accordingly
+	
 	if not level.is_player_turn:
 		if not _is_processing:
 			level.call_deferred("MoveSingleAI")
