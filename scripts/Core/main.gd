@@ -25,6 +25,7 @@ var full_roster: Array[String]
 var active_party: Array[String]
 var characters: Array[Character]
 var divine: DivineData = DivineData.new()
+var divine_turn_unlocked: bool = false
 
 ## All levels
 var levels: Array[LevelEntry];

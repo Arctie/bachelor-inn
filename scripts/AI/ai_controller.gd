@@ -108,8 +108,10 @@ static func _end_enemy_turn(level: Level) -> void:
 	level.check_aggro()
 	level.hide_inactive_characters()
 	level.camera_controller.free_camera()
-	level.state_machine.transition_to(StateTurnTransition.new(false, true))
-
+	if Main.divine_turn_unlocked:
+		level.state_machine.transition_to(StateTurnTransition.new(false, true))
+	else:
+		level.state_machine.transition_to(StateTurnTransition.new(true))
 #func MoveAI() -> void:
 	#var ai := MinimaxAI.new();
 	#var current_state := GameState.from_level(Main.level);
