@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://35f0uly6eidp"]
+
+[ext_resource type="PackedScene" uid="uid://wo1fe0qm5jjk" path="res://scenes/Characters/character.tscn" id="1_fdmwf"]
+[ext_resource type="Resource" uid="uid://3cd4cr5lmyf6" path="res://art/Animations/Enemies/Bird/Bird_Moving_L.tres" id="2_tmrwu"]
+[ext_resource type="Resource" uid="uid://slltmy14nx2g" path="res://art/Animations/Enemies/Bird/Bird_Moving_R.tres" id="3_xmtob"]
+[ext_resource type="Resource" uid="uid://dksa5tevjcrv3" path="res://art/Animations/Enemies/Bird/Bird_Moving_U.tres" id="4_y0yih"]
+[ext_resource type="Resource" uid="uid://b711yumqmi5qb" path="res://art/Animations/Enemies/Bird/Bird_Moving_D.tres" id="5_6hm5x"]
+[ext_resource type="Resource" uid="uid://f5ypnq3b1pdl" path="res://art/Animations/Enemies/Bird/Bird_Idle.tres" id="6_4o3h2"]
+[ext_resource type="Texture2D" uid="uid://dts8poisflgnq" path="res://art/textures/Bird_portrait.png" id="7_cp8yv"]
+[ext_resource type="Texture2D" uid="uid://bfqraamr3mk7h" path="res://art/Animations/Enemies/Ghost/NewTextures/D_bird_Idle_Base_.png" id="8_nroi8"]
+
+[node name="Character" unique_id=159367408 instance=ExtResource("1_fdmwf")]
+run_left_animation = ExtResource("2_tmrwu")
+run_right_animation = ExtResource("3_xmtob")
+run_up_animation = ExtResource("4_y0yih")
+run_down_animation = ExtResource("5_6hm5x")
+idle_animation = ExtResource("6_4o3h2")
+portrait = ExtResource("7_cp8yv")
+bloodColor = Color(0.34615496, 3.3691526e-07, 2.4065375e-07, 1)
+
+[node name="Sprite" parent="." index="0" unique_id=1365623275]
+transform = Transform3D(10, 0, 0, 0, 2.5711505, 3.0641778, 0, -3.0641778, 2.5711505, 0, 0.67509294, -0.53662795)
+
+[node name="Outline" parent="." index="1" unique_id=53410441]
+transform = Transform3D(10, 0, 0, 0, 2.5711505, 3.0641778, 0, -3.0641778, 2.5711505, 0, 0.67509294, -0.53662795)
+
+[node name="PlaceholderSprite" parent="." index="3" unique_id=166425312]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 0, 1.0662484, 0)
+texture = ExtResource("8_nroi8")

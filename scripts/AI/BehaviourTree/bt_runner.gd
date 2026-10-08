@@ -24,5 +24,7 @@ static func _get_profile(profile: int) -> BTNode:
 			return BTBrute.build()
 		CharacterState.BTProfile.SNIPER:
 			return BTSniper.build()
+		CharacterState.BTProfile.RAT:
+			return BTRat.build()
 		_:
 			return BTDefault.build()

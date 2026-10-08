@@ -1,4 +1,5 @@
 extends RefCounted
+class_name BTRat
 
 static func build() -> BTNode:
 	var root: BTSelector = BTSelector.new()
