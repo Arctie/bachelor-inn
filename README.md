@@ -77,7 +77,7 @@ That output would allow a more exact “when work was done” view by contributo
 
 ## Method
 
-A proper postmortem could follow the IEEE standard for postmortems, as described here: [https://courses.cs.umbc.edu/undergraduate/345/spring12/mitchell/readings/aDefinedProcessForProjectPostMortem.pdf](https://courses.cs.umbc.edu/undergraduate/345/spring12/mitchell/readings/aDefinedProcessForProjectPostMortem.pdf)
+A proper postmortem could follow the IEEE standard for postmortems, as described here: [https://courses.cs.umbc.edu/undergraduate/345/spring12/mitchell/readings/aDefinedProcessForProjectPostMortemReview.pdf](https://courses.cs.umbc.edu/undergraduate/345/spring12/mitchell/readings/aDefinedProcessForProjectPostMortemReview.pdf)
 
 I will however make a much simpler one based on the following questions to better understand how the project didn't live up to my expectations:
 
