@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="LevelOrder" format=3 uid="uid://c2mx2egkjqlcc"]
+
+[ext_resource type="Script" uid="uid://clh7qtku5w0x4" path="res://scripts/Core/level_entry.gd" id="1_1e7bo"]
+[ext_resource type="Script" uid="uid://cxpf6awrsq5lp" path="res://scripts/Core/level_order.gd" id="2_fpydw"]
+
+[sub_resource type="Resource" id="Resource_sjdwp"]
+script = ExtResource("1_1e7bo")
+display_name = "Fen"
+scene_path = "res://scenes/levels/fen.tscn"
+metadata/_custom_type_script = "uid://clh7qtku5w0x4"
+
+[sub_resource type="Resource" id="Resource_ow2jd"]
+script = ExtResource("1_1e7bo")
+display_name = "Fento"
+scene_path = "res://scenes/levels/fento.tscn"
+metadata/_custom_type_script = "uid://clh7qtku5w0x4"
+
+[resource]
+script = ExtResource("2_fpydw")
+levels = Array[ExtResource("1_1e7bo")]([SubResource("Resource_sjdwp"), SubResource("Resource_ow2jd")])

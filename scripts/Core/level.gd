@@ -912,11 +912,12 @@ func reset_all_units() -> void:
 
 func MoveSingleAI() -> void:
 	print("MoveSingleAI() in level.gd called. Routing to ai_controller.run_enemy_turn()")
-	await ai_controller.run_enemy_turn(self)
+	await AIController.run_enemy_turn(self)
 
 func _continue_enemy_turn() -> void:
 	print("_continue_enemy_turn() in level.gd called. Routing to ai_controller.run_enemy_turn()")
-	await ai_controller.run_enemy_turn(self)
+	await AIController.run_enemy_turn(self)
+	#await ai_controller.run_enemy_turn(self)
 
 #func _end_enemy_turn() -> void:
 	#tick_all_units_end_round()
@@ -1627,7 +1628,7 @@ func _debug_terrain() -> void:
 		]
 	for pos: Vector3i in test_positions:
 		var cell := terrain_map.get_cell_item(pos)
-		var name := ""
+		#var name := ""
 		if cell != GridMap.INVALID_CELL_ITEM:
 			name = terrain_map.mesh_library.get_item_name(cell)
 			#print("Terrain at ", pos, " cell: ", cell, " name: ", name)
