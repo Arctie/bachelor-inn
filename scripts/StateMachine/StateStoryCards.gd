@@ -6,11 +6,10 @@ func _init() -> void:
 
 func enter(level: Node) -> void:
 	print("ENTER STATE: StateStoryCards.")
-	## Play StoryCards
+	## Play StoryCardsIntro.tscn
 
 func exit(level: Node) -> void:
 	print("EXIT STATE: StateStoryCards.")
-	
 
 func handle_input(level: Node, event: InputEvent) -> void:
 	## Block all input during animation (helps for Tutorial :D)

@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://b7pxxrlhn5e7i"]
+
+[node name="StoryCards" type="CanvasLayer" unique_id=1488155635]
+layer = 90
+
+[node name="Control" type="Control" parent="." unique_id=810776412]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="Control" unique_id=1963960070]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="FrameRation" type="AspectRatioContainer" parent="Control" unique_id=13012305]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.48958334
+anchor_top = 0.4814815
+anchor_right = 0.5104167
+anchor_bottom = 0.5185185
+offset_right = -6.1035156e-05
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Frame" type="PanelContainer" parent="Control/FrameRation" unique_id=1074352349]
+layout_mode = 2
+
+[node name="CardImage" type="TextureRect" parent="Control/FrameRation/Frame" unique_id=1636913911]
+layout_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control" unique_id=1322536784]
+root_node = NodePath("../..")
+
+[node name="Button" type="Button" parent="Control" unique_id=1403766048]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -270.0
+offset_top = -105.0
+offset_right = -66.0
+offset_bottom = -47.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 56
+text = "Continue"
