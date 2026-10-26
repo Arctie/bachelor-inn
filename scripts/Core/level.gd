@@ -167,6 +167,7 @@ func _ready() -> void:
 	
 	await get_tree().process_frame
 	_debug_terrain()
+	## Change this to StateStoryCards
 	state_machine.transition_to(StateTurnTransition.new(true))
 
 func _set_up_grids() -> void:
@@ -1701,7 +1702,7 @@ func _execute_teleport(portal: Teleporter, unit: Character) -> void:
 	
 	# Check if destination is occupied
 	if occupancy_map.get_cell_item(dest_grid_pos) != GridMap.INVALID_CELL_ITEM:
-		# Destination occupied — don't teleport
+		#TODO: Add Destination occupied message — don't teleport
 		unit.state.just_teleported = true  # prevent retry
 		select_unit(unit)
 		state_machine.transition_to(StateSelectingMove.new())
