@@ -156,3 +156,7 @@ one_shot = true
 [node name="Teleporters" type="Node" parent="." unique_id=1793230163]
 
 [node name="Pair1" type="Node" parent="Teleporters" unique_id=1313553453]
+
+[node name="StoryCardsIntro" type="Node" parent="." unique_id=808861277]
+
+[node name="StoryCardsOutro" type="Node" parent="." unique_id=1533478141]

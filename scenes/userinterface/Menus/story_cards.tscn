@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://coaxu36p6dh4x" path="res://scripts/ui/story_cards.gd" id="1_5cm3t"]
 
 [node name="StoryCards" type="CanvasLayer" unique_id=1488155635]
+process_mode = 3
 layer = 90
 script = ExtResource("1_5cm3t")
 
@@ -23,7 +24,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="FrameRation" type="AspectRatioContainer" parent="Control" unique_id=13012305]
+[node name="FrameRatioRect" type="AspectRatioContainer" parent="Control" unique_id=13012305]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.48958334
@@ -35,11 +36,13 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="Frame" type="PanelContainer" parent="Control/FrameRation" unique_id=1074352349]
+[node name="Frame" type="PanelContainer" parent="Control/FrameRatioRect" unique_id=1074352349]
 layout_mode = 2
 
-[node name="CardImage" type="TextureRect" parent="Control/FrameRation/Frame" unique_id=1636913911]
+[node name="CardImage" type="TextureRect" parent="Control/FrameRatioRect/Frame" unique_id=1636913911]
 layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Control" unique_id=1322536784]
 root_node = NodePath("../..")
