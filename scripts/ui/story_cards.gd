@@ -18,16 +18,23 @@ var _playing: bool = false
 
 func _ready() -> void:
 	hide()
+	continue_button.disabled = false
 	continue_button.hide()
 
 func play_intro() -> void:
+	await _play(intro)
+	
+func play_outro() -> void:
+	await _play(outro)
+
+func _play(cards: Array[Texture2D]) -> void:
 	if _playing:
 		return
-	var is_valid: Array[Texture2D] = []
-	for t: Texture2D in intro:
+	var valid: Array[Texture2D] = []
+	for t: Texture2D in cards:
 		if t != null:
-			is_valid.append(t)
-	if is_valid.is_empty():
+			valid.append(t)
+	if valid.is_empty():
 		finished.emit() #
 		return
 	
@@ -39,23 +46,23 @@ func play_intro() -> void:
 	show()
 	await _fade(root, 1.0, 0.5)
 
-	for i in is_valid.size():
-		card_image.texture = is_valid[i]
-		await FadeToBlack._fade(card_image, 1.0)
-		if i < is_valid.size() - 1:
+	for i in valid.size():
+		card_image.texture = valid[i]
+		await FadeToBlack.fade_in(card_image, 1.0, fade_time)
+		if i < valid.size() - 1:
 			await get_tree().create_timer(hold_time).timeout
-			await FadeToBlack._fade(card_image, 0.0, 0.5)
+			await FadeToBlack.fade_out(card_image, 0.0, fade_time)
 	continue_button.show()  # last card stays up until the player continues
 	
 
 func _on_continue_button_pressed() -> void:
 	continue_button.disabled = true   # blocks double presses
-	await _fade(root, 0.0, 0.5)
+	await FadeToBlack.fade_out(root, 0.0, 0.5)
 	hide()
 	_playing = false
 	finished.emit()
 
-func _fade(node: CanvasItem, target_alpha: float, fade_time: float) -> void:
+func _fade(node: CanvasItem, target_alpha: float, duration: float = -1.0) -> void:
 	var tween: Tween = create_tween()
 	tween.tween_property(node, "modulate:a", target_alpha, fade_time)
 	await tween.finished
