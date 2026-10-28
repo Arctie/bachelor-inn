@@ -12,8 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://c4b8f02hyixcc" path="res://scenes/userinterface/Level/InGameUI_WIP.tscn" id="11_06w7e"]
 [ext_resource type="PackedScene" uid="uid://b7pxxrlhn5e7i" path="res://scenes/userinterface/Menus/story_cards.tscn" id="11_n1m61"]
 [ext_resource type="PackedScene" uid="uid://d4b4a1hbdjh6j" path="res://scenes/utilities/CameraSettings.tscn" id="12_2iq81"]
-[ext_resource type="Texture2D" uid="uid://bycgsy1bdsv0k" path="res://art/textures/StoryCards/Moosecolours.png" id="12_vltbs"]
-[ext_resource type="Texture2D" uid="uid://c18iq134huxcl" path="res://art/textures/StoryCards/mountainsforest_screen_big.png" id="13_7o8w5"]
 [ext_resource type="PackedScene" uid="uid://cxrc33gqig64w" path="res://scripts/Other/CombatVFXController.tscn" id="22_dypiu"]
 
 [node name="Map3d2" type="Node3D" unique_id=656823534]
@@ -105,7 +103,6 @@ mouse_filter = 2
 [node name="GUI" parent="UI_Elements" unique_id=33842839 instance=ExtResource("11_06w7e")]
 
 [node name="StoryCards" parent="UI_Elements" unique_id=1488155635 instance=ExtResource("11_n1m61")]
-intro = Array[Texture2D]([ExtResource("12_vltbs"), ExtResource("13_7o8w5")])
 
 [node name="Lights" type="Node3D" parent="." unique_id=38605441]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.183081, 6.232548, 0.9140688)
