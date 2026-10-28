@@ -18,6 +18,8 @@ signal finished
 var _playing: bool = false
 
 func _ready() -> void:
+	print("StoryCards ready. intro: ", intro.size(), " outro: ", outro.size(),
+	" | scene: ", owner.scene_file_path if owner else "no owner")
 	hide()
 	continue_button.disabled = false
 
@@ -36,6 +38,7 @@ func _play(cards: Array[Texture2D], title: String = "") -> void:
 		if t != null:
 			valid.append(t)
 	if valid.is_empty():
+		print("Valid entries in the image arrays is 0.")
 		finished.emit() #
 		return
 	
@@ -56,10 +59,11 @@ func _play(cards: Array[Texture2D], title: String = "") -> void:
 	continue_button.show()  # last card stays up until the player continues
 	
 
-func _on_continue_button_pressed() -> void:
+func _on_button_pressed() -> void:
+	print("ContinueButton in StoryCards pressed")
 	continue_button.disabled = true   # blocks double presses
 	await _fade(root, 0.0)
-	hide()
+	root.hide()
 	_playing = false
 	finished.emit()
 
