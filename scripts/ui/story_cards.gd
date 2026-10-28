@@ -45,7 +45,7 @@ func _play(cards: Array[Texture2D], title: String = "") -> void:
 	_playing = true
 	continue_button.hide()
 	continue_button.disabled = false
-	root.modulate.a = 0.0
+	root.modulate.a = 1.0
 	card_image.modulate.a = 0.0
 	show()
 	await _fade(root, 1.0)
