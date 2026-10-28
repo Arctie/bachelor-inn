@@ -46,16 +46,16 @@ var state_machine: StateMachine
 var _last_hovered_pos: Vector3i = Vector3i(-999, -999, -999)
 #region end
 
-@onready var terrain_map: GridMap = %GridOverlays/TerrainGrid
-@onready var occupancy_map: GridMap = %GridOverlays/OccupancyOverlay
-@onready var movement_map: GridMap = %GridOverlays/MovementOverlay
-@onready var movement_weights_map: GridMap = %GridOverlays/MovementWeightsGrid
-@onready var trigger_map: GridMap = %GridOverlays/TriggerOverlay
-@onready var path_map: GridMap = $GridOverlays/PathOverlay
-@onready var fog_map: GridMap = $GridOverlays/FogOverlay
+@onready var terrain_map: GridMap = %TerrainGrid
+@onready var occupancy_map: GridMap = %OccupancyOverlay
+@onready var movement_map: GridMap = %MovementOverlay
+@onready var movement_weights_map: GridMap = %MovementWeightsGrid
+@onready var trigger_map: GridMap = %TriggerOverlay
+@onready var path_map: GridMap = %PathOverlay
+@onready var fog_map: GridMap = %FogOverlay
 var aoe_preview_map: GridMap
-@onready var story_cards: StoryCards = $UI_Elements/StoryCards
 
+@onready var story_cards: StoryCards = $UI_Elements/StoryCards
 @onready var turn_transition: CanvasLayer = $UI_Elements/TurnTransition/CanvasLayer
 @onready var turn_transition_animation_player: AnimationPlayer = $UI_Elements/TurnTransition/AnimationPlayer
 @onready var player_label: Label = $UI_Elements/TurnTransition/CanvasLayer/VBoxContainer/ColorRect3/playerLabel
@@ -174,8 +174,7 @@ func _ready() -> void:
 
 func _set_up_grids() -> void:
 	cursor.hide()
-	if is_instance_valid(trigger_map):
-		trigger_map.hide()
+	trigger_map.hide()
 	movement_map.clear()
 	movement_weights_map.hide()
 	occupancy_map.hide()

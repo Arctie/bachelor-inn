@@ -38,7 +38,8 @@ texture = ExtResource("6_8a3vg")
 region_enabled = true
 region_rect = Rect2(0, 0, 32, 32)
 
-[node name="GridOverlays" type="Node" parent="." unique_id=464760260]
+[node name="GridOverlays" type="Node3D" parent="." unique_id=1515842119]
+unique_name_in_owner = true
 
 [node name="TerrainGrid" type="GridMap" parent="GridOverlays" unique_id=1846160155]
 unique_name_in_owner = true
@@ -94,7 +95,7 @@ mesh_library = ExtResource("4_dypiu")
 cell_size = Vector3(2, 1, 2)
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
-[node name="UI_Elements" type="Node" parent="." unique_id=396783726]
+[node name="UI_Elements" type="Node" parent="." unique_id=134262859]
 
 [node name="TurnTransition" parent="UI_Elements" unique_id=2040840352 instance=ExtResource("7_ygto3")]
 mouse_filter = 2
@@ -159,3 +160,7 @@ one_shot = true
 [node name="Teleporters" type="Node" parent="." unique_id=1793230163]
 
 [node name="Pair1" type="Node" parent="Teleporters" unique_id=1313553453]
+
+[node name="StoryCards" type="Node" parent="." unique_id=1767375028]
+
+[node name="StoryCards" parent="StoryCards" unique_id=371571458 instance=ExtResource("11_n1m61")]
