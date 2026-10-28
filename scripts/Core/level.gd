@@ -54,6 +54,7 @@ var _last_hovered_pos: Vector3i = Vector3i(-999, -999, -999)
 @onready var path_map: GridMap = $GridOverlays/PathOverlay
 @onready var fog_map: GridMap = $GridOverlays/FogOverlay
 var aoe_preview_map: GridMap
+@onready var story_cards: StoryCards = $UI_Elements/StoryCards
 
 @onready var turn_transition: CanvasLayer = $UI_Elements/TurnTransition/CanvasLayer
 @onready var turn_transition_animation_player: AnimationPlayer = $UI_Elements/TurnTransition/AnimationPlayer
@@ -168,7 +169,8 @@ func _ready() -> void:
 	await get_tree().process_frame
 	_debug_terrain()
 	## Change this to StateStoryCards
-	state_machine.transition_to(StateTurnTransition.new(true))
+	state_machine.transition_to(StateStoryCards.new(story_cards, false))
+	#state_machine.transition_to(StateTurnTransition.new(true))
 
 func _set_up_grids() -> void:
 	cursor.hide()

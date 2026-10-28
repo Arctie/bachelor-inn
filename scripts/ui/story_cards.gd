@@ -1,8 +1,9 @@
 extends CanvasLayer
 class_name StoryCards
 
+## TODO: Consider having a label with level name or something similar displayed. 
+
 signal finished
-## Change ImageTexture to CompressedTexture2D?
 
 @export var intro: Array[Texture2D] = []
 @export var outro: Array[Texture2D] = []
@@ -12,12 +13,14 @@ signal finished
 @onready var root: Control = $Control
 @onready var card_image: TextureRect = %CardImage
 @onready var continue_button: Button = %ContinueButton
-#@onready var story_cards_player: AnimationPlayer = $Control/AnimationPlayer
+@onready var level_title: Label = $Control/LevelTitleLabel
 
 var _playing: bool = false
 
 func _ready() -> void:
 	hide()
+	#level.title.text = Main.level.name
+	#level.title.show()
 	continue_button.disabled = false
 	continue_button.hide()
 
@@ -44,20 +47,20 @@ func _play(cards: Array[Texture2D]) -> void:
 	root.modulate.a = 0.0
 	card_image.modulate.a = 0.0
 	show()
-	await _fade(root, 1.0, 0.5)
+	await _fade(root, 1.0)
 
 	for i in valid.size():
 		card_image.texture = valid[i]
-		await FadeToBlack.fade_in(card_image, 1.0, fade_time)
+		await _fade(card_image, 1.0)
 		if i < valid.size() - 1:
 			await get_tree().create_timer(hold_time).timeout
-			await FadeToBlack.fade_out(card_image, 0.0, fade_time)
+			await _fade(card_image, 0.0)
 	continue_button.show()  # last card stays up until the player continues
 	
 
 func _on_continue_button_pressed() -> void:
 	continue_button.disabled = true   # blocks double presses
-	await FadeToBlack.fade_out(root, 0.0, 0.5)
+	await _fade(root, 0.0)
 	hide()
 	_playing = false
 	finished.emit()

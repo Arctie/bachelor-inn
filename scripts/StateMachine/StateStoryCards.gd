@@ -1,12 +1,20 @@
 extends LevelState
 class_name StateStoryCards
 
-func _init() -> void:
-	pass
+var _cards: StoryCards
+var _is_outro: bool
+
+func _init(cards: StoryCards, is_outro: bool = false) -> void:
+	_cards = cards
+	_is_outro = is_outro
 
 func enter(level: Node) -> void:
 	print("ENTER STATE: StateStoryCards.")
-	## Play StoryCardsIntro.tscn
+	_cards.finished.connect(_on_cards_finished.bind(level), CONNECT_ONE_SHOT)
+	if _is_outro:
+		_cards.play_outro()
+	else:
+		_cards.play_intro()
 
 func exit(level: Node) -> void:
 	print("EXIT STATE: StateStoryCards.")
@@ -16,7 +24,7 @@ func handle_input(level: Node, event: InputEvent) -> void:
 	pass 
 
 func _on_cards_finished(level: Node) -> void:
-	#print("TurnTransition finished - to_player: ", _to_player, 
-		  #" last_selected: ", level.last_selected_unit,
-		  #" selectables: ", level.get_selectable_characters().size())
-	pass
+	if _is_outro:
+		Main.go_to_transition_screen() ## Change this to the correct scene
+	else:
+		level.state_machine.transition_to(StateTurnTransition.new(true))
