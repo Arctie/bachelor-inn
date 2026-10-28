@@ -19,18 +19,16 @@ var _playing: bool = false
 
 func _ready() -> void:
 	hide()
-	#level.title.text = Main.level.name
-	#level.title.show()
 	continue_button.disabled = false
-	continue_button.hide()
 
 func play_intro() -> void:
+	var title: String = Main.level.level_name if is_instance_valid(Main.level) else ""
 	await _play(intro)
 	
 func play_outro() -> void:
-	await _play(outro)
+	await _play(outro, "The journey continues..")
 
-func _play(cards: Array[Texture2D]) -> void:
+func _play(cards: Array[Texture2D], title: String = "") -> void:
 	if _playing:
 		return
 	var valid: Array[Texture2D] = []
