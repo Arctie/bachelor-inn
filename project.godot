@@ -33,6 +33,7 @@ WeaponRegistry="*res://scripts/stats/weapon_registry.gd"
 SkillRegistry="*res://scripts/stats/skillregistry.gd"
 MonsterNames="*uid://duran11dt4kk1"
 AudioManager2d="*uid://c8lofxbttw74k"
+FadeToBlack="*uid://bs1f1c3r7tf63"
 
 [debug]
 
