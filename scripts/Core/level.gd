@@ -1051,12 +1051,10 @@ func next_level() -> void:
 		if is_instance_valid(c):
 			c.calc_derived_stats()
 			Main.characters.append(c)
-	print("Characters appended to Main. Going to transition screen.")
-	# Clear unit arrays attached to level.gd
-	#cleanup_level()
 	
-	#Main.save.save_progress(Main.current_save_slot, Main.current_level_index +1)
-	Main.go_to_transition_screen()
+	#Main.go_to_transition_screen()
+	print("Characters appended to Main. Playing outro.")
+	state_machine.transition_to(StateStoryCards.new(story_cards, true))
 
 func cleanup_level() -> void:
 	player_characters.clear()

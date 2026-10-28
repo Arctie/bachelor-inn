@@ -43,27 +43,28 @@ func _play(cards: Array[Texture2D], title: String = "") -> void:
 		return
 	
 	_playing = true
+	level_title.text = title
+	level_title.visible = not title.is_empty()
 	continue_button.hide()
 	continue_button.disabled = false
 	root.modulate.a = 1.0
 	card_image.modulate.a = 0.0
 	show()
-	await _fade(root, 1.0)
+	#await _fade(root, 1.0)
 
 	for i in valid.size():
 		card_image.texture = valid[i]
 		await _fade(card_image, 1.0)
-		if i < valid.size() - 1:
+		if i < valid.size() - 1: # -1 because last card stays up until the player continues
 			await get_tree().create_timer(hold_time).timeout
 			await _fade(card_image, 0.0)
-	continue_button.show()  # last card stays up until the player continues
+	continue_button.show()  
 	
 
 func _on_button_pressed() -> void:
-	print("ContinueButton in StoryCards pressed")
-	continue_button.disabled = true   # blocks double presses
+	continue_button.disabled = true
 	await _fade(root, 0.0)
-	root.hide()
+	hide()
 	_playing = false
 	finished.emit()
 

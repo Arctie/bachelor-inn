@@ -25,6 +25,6 @@ func handle_input(level: Node, event: InputEvent) -> void:
 
 func _on_cards_finished(level: Node) -> void:
 	if _is_outro:
-		Main.go_to_transition_screen() ## Change this to the correct scene
+		Main.go_to_transition_screen() ## Go to level up screen if outro
 	else:
-		level.state_machine.transition_to(StateTurnTransition.new(true))
+		level.state_machine.transition_to(StateTurnTransition.new(true)) ## Start playing if intro

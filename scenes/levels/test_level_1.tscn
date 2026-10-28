@@ -2,7 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://bu3kvc2qxcq2w" path="res://scenes/levels/LevelTemplate.tscn" id="1_mq16p"]
 [ext_resource type="PackedScene" uid="uid://bajx21wdflkf8" path="res://scenes/grid_items/chest.tscn" id="2_lw4g3"]
+[ext_resource type="Texture2D" uid="uid://bycgsy1bdsv0k" path="res://art/textures/StoryCards/Moosecolours.png" id="2_ytn8h"]
 [ext_resource type="AudioStream" uid="uid://coi7gb4k867j2" path="res://audio/CharacterSounds/Bird_on_death.wav" id="3_ckkav"]
+[ext_resource type="Texture2D" uid="uid://c18iq134huxcl" path="res://art/textures/StoryCards/mountainsforest_screen_big.png" id="3_tuif4"]
 [ext_resource type="PackedScene" uid="uid://drpd1d805rfy5" path="res://scenes/Characters/Enemy/bird2.tscn" id="3_vbfgb"]
 [ext_resource type="Script" uid="uid://cfb66ehlpe84n" path="res://scripts/stats/character_data.gd" id="4_g58ai"]
 [ext_resource type="AudioStream" uid="uid://d1ncrot3vanmj" path="res://audio/CharacterSounds/Bird_on_hurt.wav" id="4_mxmev"]
@@ -70,6 +72,10 @@ data = {
 data = {
 "cells": PackedInt32Array(1, 2, 0, 1, 3, 0, 2, 3, 0, 2, 2, 0)
 }
+
+[node name="StoryCards" parent="UI_Elements" parent_id_path=PackedInt32Array(134262859) index="2" unique_id=1488155635]
+outro = Array[Texture2D]([ExtResource("2_ytn8h"), ExtResource("3_tuif4")])
+fade_time = 0.3
 
 [node name="Lamp" parent="Lights" parent_id_path=PackedInt32Array(38605441) index="0" unique_id=286206317]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.803471, 15.515251, 10.36287)
