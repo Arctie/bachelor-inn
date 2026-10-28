@@ -1,7 +1,10 @@
 [gd_scene format=3 uid="uid://b7pxxrlhn5e7i"]
 
+[ext_resource type="Script" uid="uid://coaxu36p6dh4x" path="res://scripts/ui/story_cards.gd" id="1_5cm3t"]
+
 [node name="StoryCards" type="CanvasLayer" unique_id=1488155635]
 layer = 90
+script = ExtResource("1_5cm3t")
 
 [node name="Control" type="Control" parent="." unique_id=810776412]
 layout_mode = 3
@@ -56,3 +59,5 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 56
 text = "Continue"
+
+[connection signal="pressed" from="Control/Button" to="." method="_on_button_pressed"]
