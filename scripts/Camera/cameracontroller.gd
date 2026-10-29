@@ -230,10 +230,17 @@ func setup_minmax_positions(minimum_x: float, maximum_x: float, minimum_z: float
 	_pivot_max_z = maximum_z
 
 func start_roaming(unit: Node3D) -> void:
-	# add valid checks and restrictions
-	# set cam mode
-	# set spring arm length = freeroam_springarm_length
-	pass
+	if freeze_camera_mode or not is_instance_valid(unit):
+		return
+	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		_stop_drag()
+	if _tactical_view:
+		_tactical_view = false
+		_pivot_target_transform.basis = Basis.from_euler(_stored_angle)
+	_zoom_factor = 0.0
+	_focused_unit = unit
+	_camera_mode = CameraStates.FREE_ROAM
+	set_springarm_length(freeroam_springarm_length)
 
 func set_roaming_target(unit: Node3D) -> void:
 	pass
