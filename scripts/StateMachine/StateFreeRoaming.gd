@@ -49,8 +49,9 @@ func _set_path(pos: Vector3i) -> void:
 
 
 func _pick_leader() -> Character:
-	if is_instance_valid(_level.last_selected_unit):
-		return _level.last_selected_unit
+	var last_c: Character = _level.last_selected_unit
+	if is_instance_valid(last_c) and last_c.state.is_alive and last_c.state.is_playable():
+		return last_c
 	for c: Character in _level.player_characters:
 		if is_instance_valid(c) and c.state.is_alive:
 			return c

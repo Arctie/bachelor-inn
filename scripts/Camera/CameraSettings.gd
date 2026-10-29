@@ -34,6 +34,9 @@ func _ready() -> void:
 	camera_controller.springarm_length_maximum = maximum_camera_height
 	camera_controller.springarm_length_minimum = minimum_camera_height
 	var newTransform : Transform3D = transform
+	camera_controller.end_roaming()
+	camera_controller.free_camera()
+	camera_controller.set_pivot_transform(newTransform)
 	camera_controller.free_camera()
 	camera_controller.set_pivot_transform(newTransform)
 	if set_springarm_length:
