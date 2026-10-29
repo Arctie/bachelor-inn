@@ -5,6 +5,12 @@ const WALK_SPEED: float = 8.0
 var _walker: Character
 var _path: Array[Vector3i]
 var _next: int = 0
+var _party: Array[Character] = []
+var _trail: Array[Vector3i] = []
+var _queues: Array[Array] = []
+var _alerted: Array[Character] = []
+var _stopping: bool = false
+var _party_confirmed: bool = false
 
 func _init(walker: Character, path: Array[Vector3i]) -> void:
 	_walker = walker
@@ -12,12 +18,17 @@ func _init(walker: Character, path: Array[Vector3i]) -> void:
 
 func _enter(_level: Node) -> void:
 	print("ENTER STATE: StateFreeRoamAnimating.")
+	#if not party_confirmed:
+		#build_party()
 	if is_instance_valid(_walker) and _walker.data.audio_move != null:
 		AudioManager2d.play_character_loop(_walker.data.audio_move)
 
 func exit(_level: Node) -> void:
 	print("EXIT STATE: StateFreeRoamAnimating.")
 	AudioManager2d.stop_character_loop()
+
+func _build_party(level: Node) -> void:
+	pass
 
 func handle_input(_level: Node, event: InputEvent) -> void:
 	# Block all input when animating

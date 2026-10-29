@@ -138,7 +138,6 @@ func _toggle_tactical_view(event: InputEvent) -> void:
 		_pivot_target_transform.basis = Basis.from_euler(_TACTICAL_ANGLE)
 #endregion
 
-
 #region _process
 func _process(delta: float) -> void:
 	if(_camera_mode == CameraStates.FOCUS_UNIT or _camera_mode == CameraStates.FREE_ROAM):
@@ -149,7 +148,6 @@ func _process(delta: float) -> void:
 	delta = min(delta, 0.04)
 	_process_springarm(delta)
 	_process_pivot(delta)
-
 
 func _process_pivot(delta: float) -> void:
 	var weight: float = 1 - pow(_lerp_weight, delta)
@@ -176,12 +174,10 @@ func _process_springarm(delta: float) -> void:
 	var weight: float = 1 - pow(_lerp_weight, delta)
 	springarm.transform.origin = springarm.transform.origin.lerp(Vector3(0, 0, _springarm_target_length), weight)
 
-
 func _process_focus_unit(_dt: float) -> void:
 	if not is_instance_valid(_focused_unit):
 		return
 	set_pivot_target_translate(_focused_unit.transform.origin)
-
 
 #region _process_input
 func _process_input_pivot(delta: float) -> void:
@@ -217,7 +213,6 @@ func _process_input_springarm(delta: float) -> void:
 	add_springarm_target_length(_zoom_factor)
 	_zoom_factor = 0
 #endregion
-#endregion
 
 #region Setup functions
 func setup_minmax_positions(minimum_x: float, maximum_x: float, minimum_z: float, maximum_z: float) -> void:
@@ -246,7 +241,7 @@ func set_roam_target(unit: Node3D) -> void:
 func end_roaming() -> void:
 	if _camera_mode == CameraStates.FREE_ROAM:
 		_camera_mode = CameraStates.FREE
-	
+
 ##TODO
 #func setup_springarm()
 #endregion
@@ -255,11 +250,9 @@ func end_roaming() -> void:
 #region Camera functions
 func make_current() -> void:
 	camera.make_current()
-	
-	
+
 func clear_current() -> void:
 	camera.clear_current()
-
 
 ## Returns a 3D position in world space, that is the result of projecting 
 ## a point on the Viewport rectangle by the inverse camera projection. 
