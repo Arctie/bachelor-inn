@@ -17,7 +17,7 @@ func _init(walker: Character, path: Array[Vector3i]) -> void:
 	_walker = walker
 	_path = path
 
-func _enter(_level: Node) -> void:
+func enter(_level: Node) -> void:
 	print("ENTER STATE: StateFreeRoamAnimating.")
 	if not _party_confirmed:
 		_build_party(_level)
@@ -36,21 +36,23 @@ func update(level: Node, delta: float) -> void:
 	if level._level_complete:
 		return
 	_move_leader(level, delta)
-	
-	if not is_instance_valid(_walker) or _next >= _path.size():
+	for i in range(1, _party.size()):
+		_move_follower(level, i, delta)
+	if _leader_done() and _follower_idle():
 		_finish(level)
-		return
 
 func _build_party(level: Node) -> void:
 	_party.append(_walker)
 	for c: Character in level.player_characters:
 		if c != _walker and is_instance_valid(c) and c.state.is_alive:
 			_party.append(c)
+			print("Added ", c.data.unit_name, " to _party.")
 	for c: Character in _party:
 		_trail.append(c.state.grid_position)
 		_queues.append([])
 	if not _party.is_empty():
 		_party_confirmed = true
+	print("party size: ", _party.size())
 
 func _leader_done() -> bool:
 	return not is_instance_valid(_walker) or _next >= _path.size()
@@ -84,6 +86,7 @@ func _move_leader(level: Node, delta: float) -> void:
 func _on_leader_arrived(level: Node, tile: Vector3i) -> void:
 	if _stopping:
 		return
+	print("leader arrived: ", tile, " trail: ", _trail)
 	_trail.push_front(tile)
 	_trail.resize(_party.size())
 	for i in range (1, _party.size()):
@@ -99,6 +102,7 @@ func _queue_follower(level: Node, i: int, destination: Vector3i) -> void:
 	if from == destination:
 		return
 	var p: Array[Vector3i] = MovementGrid.find_path(from, destination, level.movement_weights_map, level.occupancy_map)
+	print("follower ", i, " from ", from, " to ", destination, " path size ", p.size())
 	for tile: Vector3i in p:
 		if tile != from:
 			q.append(tile)
