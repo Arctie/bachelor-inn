@@ -1,4 +1,4 @@
-extends Node
+extends LevelState
 class_name StateFreeRoaming
 
 var _level: Level
@@ -11,7 +11,7 @@ func _init() -> void:
 
 func enter(level: Node) -> void:
 	print("ENTER STATE: StateFreeRoaming")
-	_level = Main.level as Level
+	_level = level as Level
 	_level.is_player_turn = true
 	if not is_instance_valid(_leader):
 		_leader = _pick_leader()
@@ -24,35 +24,22 @@ func enter(level: Node) -> void:
 	_level.last_selected_unit = _leader
 	_level.camera_controller.start_roaming(_leader)
 	print("Selected unit is: ", _leader, ". And camera is following.")
-	if not _leader.step_finished.is_connected(_on_leader_step):
-		_leader.step_finished.connect(_on_leader_step)
 		
 
 func exit(level: Node) -> void:
 	print("EXIT STATE: StateFreeRoaming")
-	if is_instance_valid(_leader):
-		_leader.stop_walking()
-		if _leader.step_finished.is_connected(_on_leader_step):
-			_leader.step_finished.disconnect(_on_leader_step)
 
 func _set_path(pos: Vector3i) -> void:
-	if not is_instance_valid(_leader) or _leader.is_walking():
+	if not is_instance_valid(_leader):
 		return
-	if _level.occupancy_map.get_cell_item(goal) != GridMap.INVALID_CELL_ITEM:
-		return      # an enemy or neutral stands there; find_path would still end on it
+	if _level.occupancy_map.get_cell_item(pos) != GridMap.INVALID_CELL_ITEM:
+		return
 	var path: Array[Vector3i] = MovementGrid.find_path(
-		_leader.state.grid_position, goal, _level.movement_weights_map, _level.occupancy_map)
+		_leader.state.grid_position, pos, _level.movement_weights_map, _level.occupancy_map)
 	if path.is_empty():
 		return
-	_leader.walk_along(path, true)
-	
-func _on_pathing(_tile: Vector3i) -> void:
-	var alerted: Array[Character] = _level.check_aggro()
-	if alerted.is_empty():
-		return
-	_leader.stop_walking()
-	_level.hide_inactive_characters()
-	_level.state_machine.transition_to(StateAggroAlert.new(alerted, _level.begin_combat))
+	_level.state_machine.transition_to(StateFreeRoamAnimating.new(_leader, path))
+
 
 func _pick_leader() -> Character:
 	if is_instance_valid(_level.last_selected_unit):

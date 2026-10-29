@@ -1,29 +1,25 @@
-extends Node
+extends LevelState
 class_name StateFreeRoamAnimating
 
-signal step_finished(grid_pos: Vector3i)
-signal walk_finished
 const WALK_SPEED: float = 8.0
-var _walking: bool = false
-var _stop_requested: bool = false
 var _walker: Character
 var _path: Array[Vector3i]
 var _next: int = 0
 
-func _inti(walker: Character, path: Array[Vector3i]) -> void:
+func _init(walker: Character, path: Array[Vector3i]) -> void:
 	_walker = walker
 	_path = path
 
-func _enter() -> void:
+func _enter(_level: Node) -> void:
 	print("ENTER STATE: StateFreeRoamAnimating.")
 	if is_instance_valid(_walker) and _walker.data.audio_move != null:
 		AudioManager2d.play_character_loop(_walker.data.audio_move)
 
-func exit() -> void:
+func exit(_level: Node) -> void:
 	print("EXIT STATE: StateFreeRoamAnimating.")
 	AudioManager2d.stop_character_loop()
 
-func handle_input(_level: Node) -> void:
+func handle_input(_level: Node, event: InputEvent) -> void:
 	# Block all input when animating
 	pass
 
