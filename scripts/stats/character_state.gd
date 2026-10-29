@@ -47,7 +47,7 @@ var just_teleported: bool = false
 @export var search_depth: int = 2
 @export var aggro_state: AggroState = AggroState.FROZEN
 @export var aggro_range: int = 10
-@export var aggro_group: String = "" 
+@export var aggro_group_index: int = 0 
 @export var patrol_index: int = 0 # Patrol not implemented, and probably will not be due to game play design
 #endregion
 

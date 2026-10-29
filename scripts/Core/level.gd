@@ -236,6 +236,7 @@ func _register_enemies() -> void:
 		  #" audio_hurt: ", child.data.audio_hurt if child.data else "no data")
 		if not child is Character or child.state == null:
 			continue
+		#print(child.name, " group: ", child.state.aggro_group_index)
 		if child.scene_id != "":
 			if enemy_registry.enemies.has(child.scene_id):
 				var char_def: EnemyDefinitions = enemy_registry.enemies[child.scene_id]
