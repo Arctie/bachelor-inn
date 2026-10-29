@@ -144,7 +144,7 @@ func _toggle_tactical_view(event: InputEvent) -> void:
 
 #region _process
 func _process(delta: float) -> void:
-	if(_camera_mode == CameraStates.FOCUS_UNIT):
+	if(_camera_mode == CameraStates.FOCUS_UNIT or _camera_mode == CameraStates.FREE_ROAM):
 		_process_focus_unit(delta)
 	if(_camera_mode == CameraStates.FREE):
 		_process_input_pivot(delta)
@@ -181,7 +181,7 @@ func _process_springarm(delta: float) -> void:
 
 
 func _process_focus_unit(_dt: float) -> void:
-	if(_focused_unit == null):
+	if not is_instance_valid(_focused_unit):
 		return
 	set_pivot_target_translate(_focused_unit.transform.origin)
 
@@ -426,6 +426,8 @@ func focus_camera(unit: Node3D) -> bool:
 
 
 func free_camera() -> void:
+	if _camera_mode == CameraStates.FREE_ROAM:
+		return
 	if freeze_camera_mode:
 		return
 	_camera_mode = CameraStates.FREE
