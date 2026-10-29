@@ -199,7 +199,9 @@ func _finish_animation(level: Node) -> void:
 			#print("  checking: ", c.data.unit_name, " at: ", c.state.grid_position)
 			if c.state.grid_position == portal_grid and not c.state.just_teleported:
 				c.state.just_teleported = true
+				_is_processing = true
 				await level._execute_teleport(portal, c)
+				_is_processing = false
 				return
 	
 	if not level.is_player_turn:
@@ -208,23 +210,24 @@ func _finish_animation(level: Node) -> void:
 		elif not _is_processing:
 			level.call_deferred("MoveSingleAI")
 	else:
-		if is_instance_valid(level.last_selected_unit):
-			var unit: Character = level.last_selected_unit
-			if unit.state.is_playable() and (unit.state.movement_points_remaining > 0 or unit.state.action_points_remaining > 0):
-				level.select_unit(level.last_selected_unit)
-				level.state_machine.transition_to(StateSelectingMove.new())
-			else:
-				# Last selected unit is done - find a new one
-				var selectables: Array = level.get_selectable_characters()
-				if not selectables.is_empty():
-					level.select_unit(selectables.front())
-					level.state_machine.transition_to(StateSelectingMove.new())
-				else:
-					level.state_machine.transition_to(StateSelectingUnit.new())
-		else:
-			var selectables: Array = level.get_selectable_characters()
-			if not selectables.is_empty():
-				level.select_unit(selectables.front())
-				level.state_machine.transition_to(StateSelectingMove.new())
-			else:
-				level.state_machine.transition_to(StateSelectingUnit.new())
+		level.end_of_player_action()
+		#if is_instance_valid(level.last_selected_unit):
+			#var unit: Character = level.last_selected_unit
+			#if unit.state.is_playable() and (unit.state.movement_points_remaining > 0 or unit.state.action_points_remaining > 0):
+				#level.select_unit(level.last_selected_unit)
+				#level.state_machine.transition_to(StateSelectingMove.new())
+			#else:
+				## Last selected unit is done - find a new one
+				#var selectables: Array = level.get_selectable_characters()
+				#if not selectables.is_empty():
+					#level.select_unit(selectables.front())
+					#level.state_machine.transition_to(StateSelectingMove.new())
+				#else:
+					#level.state_machine.transition_to(StateSelectingUnit.new())
+		#else:
+			#var selectables: Array = level.get_selectable_characters()
+			#if not selectables.is_empty():
+				#level.select_unit(selectables.front())
+				#level.state_machine.transition_to(StateSelectingMove.new())
+			#else:
+				#level.state_machine.transition_to(StateSelectingUnit.new())

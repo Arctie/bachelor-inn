@@ -36,7 +36,6 @@ script = ExtResource("5_vbfgb")
 weapon = ExtResource("7_vbfgb")
 faction = 1
 bt_profile = 2
-aggro_range = 8
 aggro_group_index = 1
 metadata/_custom_type_script = "uid://dnpndvvrnj26q"
 
@@ -54,7 +53,6 @@ metadata/_custom_type_script = "uid://cfb66ehlpe84n"
 script = ExtResource("5_vbfgb")
 faction = 1
 bt_profile = 1
-aggro_range = 8
 aggro_group_index = 1
 metadata/_custom_type_script = "uid://dnpndvvrnj26q"
 

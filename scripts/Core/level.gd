@@ -1278,6 +1278,31 @@ func end_player_turn() -> bool:
 	state_machine.transition_to(StateTurnTransition.new(false))
 	return true
 
+func end_of_player_action() -> void:
+	if _level_complete:
+		return
+	var alerted: Array[Character] = check_aggro()
+	if alerted.is_empty():
+		resume_player_turn()
+		return
+	hide_inactive_characters()
+	state_machine.transition_to(StateAggroAlert.new(alerted, resume_player_turn))
+
+func resume_player_turn() -> void:
+	if _level_complete:
+		return
+	if is_instance_valid(last_selected_unit):
+		var unit: Character = last_selected_unit
+		if unit.state.is_playable() and (unit.state.movement_points_remaining > 0 or unit.state.action_points_remaining > 0):
+			select_unit(last_selected_unit)
+			state_machine.transition_to(StateSelectingMove.new())
+			return
+	var selectables: Array[Character] = get_selectable_characters()
+	if not selectables.is_empty():
+		select_unit(selectables.front())
+		state_machine.transition_to(StateSelectingMove.new())
+	else:
+		state_machine.transition_to(StateSelectingUnit.new())
 
 func _update_cursor_on_hover() -> void:
 	#Input.set_custom_mouse_cursor(cursor_sword, Input.CURSOR_ARROW, Vector2(8, 8))
@@ -1376,14 +1401,14 @@ func check_aggro() -> Array[Character]:
 	#print("Check_Aggro() called")
 	var newly_aggroed: Array[Character] = []
 	for unit: Character in enemy_characters:
-		print(unit.name, " alive: ", unit.state.is_alive, " state: ", unit.state.aggro_state)
+		#print(unit.name, " alive: ", unit.state.is_alive, " state: ", unit.state.aggro_state)
 		if not is_instance_valid(unit) or not unit.state.is_alive:
 			continue
 		if unit.state.aggro_state == CharacterState.AggroState.AGGRESSIVE:
 			continue
 		if _player_in_aggro_range(unit):
 			_set_aggressive(unit, newly_aggroed)
-			print("Aggroed units: " + unit.name, " alive: ", unit.state.is_alive, " state: ", unit.state.aggro_state)
+			#print("Aggroed units: " + unit.name, " alive: ", unit.state.is_alive, " state: ", unit.state.aggro_state)
 	return newly_aggroed
 
 func _set_aggressive(unit: Character, changed: Array[Character]) -> void:
@@ -1412,11 +1437,11 @@ func _player_in_aggro_range(unit: Character) -> bool:
 			continue
 		var d: Vector3i = unit.state.grid_position - p.state.grid_position
 		var dist: int = absi(d.x) + absi(d.z)
-		print("  vs ", p.data.unit_name, " pos ", p.state.grid_position, " dist ", dist)
+		#print("  vs ", p.data.unit_name, " pos ", p.state.grid_position, " dist ", dist)
 		if dist > unit.state.aggro_range:
 			continue
 		if not has_line_of_sight(unit.state.grid_position, p.state.grid_position):
-			print("    in range but no line of sight")
+			#print("    in range but no line of sight")
 			continue
 		return true
 	return false
