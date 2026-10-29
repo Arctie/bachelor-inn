@@ -1376,12 +1376,14 @@ func check_aggro() -> Array[Character]:
 	#print("Check_Aggro() called")
 	var newly_aggroed: Array[Character] = []
 	for unit: Character in enemy_characters:
+		print(unit.name, " alive: ", unit.state.is_alive, " state: ", unit.state.aggro_state)
 		if not is_instance_valid(unit) or not unit.state.is_alive:
 			continue
 		if unit.state.aggro_state == CharacterState.AggroState.AGGRESSIVE:
 			continue
 		if _player_in_aggro_range(unit):
 			_set_aggressive(unit, newly_aggroed)
+			print("Aggroed units: " + unit.name, " alive: ", unit.state.is_alive, " state: ", unit.state.aggro_state)
 	return newly_aggroed
 
 func _set_aggressive(unit: Character, changed: Array[Character]) -> void:
@@ -1409,8 +1411,14 @@ func _player_in_aggro_range(unit: Character) -> bool:
 		if not is_instance_valid(p) or p.state.faction != CharacterState.Faction.PLAYER:
 			continue
 		var d: Vector3i = unit.state.grid_position - p.state.grid_position
-		if absi(d.x) + absi(d.z) <= unit.state.aggro_range:
-			return true
+		var dist: int = absi(d.x) + absi(d.z)
+		print("  vs ", p.data.unit_name, " pos ", p.state.grid_position, " dist ", dist)
+		if dist > unit.state.aggro_range:
+			continue
+		if not has_line_of_sight(unit.state.grid_position, p.state.grid_position):
+			print("    in range but no line of sight")
+			continue
+		return true
 	return false
 
 func hide_inactive_characters() -> void:
