@@ -18,8 +18,8 @@ signal finished
 var _playing: bool = false
 
 func _ready() -> void:
-	print("StoryCards ready. intro: ", intro.size(), " outro: ", outro.size(),
-	" | scene: ", owner.scene_file_path if owner else "no owner")
+	#print("StoryCards ready. intro: ", intro.size(), " outro: ", outro.size(),
+	#" | scene: ", owner.scene_file_path if owner else "no owner")
 	hide()
 	continue_button.disabled = false
 

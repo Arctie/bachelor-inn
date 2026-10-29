@@ -19,10 +19,10 @@ extends Node3D
 func _ready() -> void:
 	hide()
 	var camera_controller : CameraController = Main.camera_controller
-	print("CameraSettings firing. My world position: ", global_position)
-	print("Camera mode before free_camera: ", camera_controller._camera_mode)
 	if ( camera_controller == null):
 		return
+	print("CameraSettings firing. My world position: ", global_position)
+	print("Camera mode before free_camera: ", camera_controller._camera_mode)
 		
 	camera_controller.make_current()
 	camera_controller.setup_minmax_positions(

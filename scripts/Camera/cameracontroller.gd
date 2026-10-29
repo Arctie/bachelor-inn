@@ -24,6 +24,7 @@ enum CameraStates {
 	FOCUS_UNIT, ## interpolating to a unit
 	LOCKED, ## Camera will not recieve new positions, but will interpolate to existing targets
 	NOT_IN_LEVEL,
+	FREE_ROAM
 }
 var _camera_mode : CameraStates = CameraStates.NOT_IN_LEVEL;
 var _unlock_camera_mode : CameraStates = _camera_mode
