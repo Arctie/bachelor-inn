@@ -243,11 +243,12 @@ func start_roaming(unit: Node3D) -> void:
 	set_springarm_length(freeroam_springarm_length)
 
 func set_roaming_target(unit: Node3D) -> void:
-	pass
+	if _camera_mode == CameraStates.FREE_ROAM and is_instance_valid(unit):
+		_focused_unit = unit
 
 func end_roaming() -> void:
-	# Set cam back to original state
-	pass
+	if _camera_mode == CameraStates.FREE_ROAM:
+		_camera_mode = CameraStates.FREE
 	
 ##TODO
 #func setup_springarm()
