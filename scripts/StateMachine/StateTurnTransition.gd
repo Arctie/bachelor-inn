@@ -25,8 +25,8 @@ func enter(level: Node) -> void:
 		level.player_label.show()
 		## Remove Divine Char from map
 	else:
-		level.pending_alert = level.check_aggro() ## This now runs
-		## ADD AWAIT?
+		level.pending_alert = level.check_aggro() 	## 	This now runs the check aggro after the player turn is done, before
+		## ADD AWAIT?									the enemy turn triggers, to pan the camera over on newly aggroed enemies.
 		level.enemy_label.show()
 		level.player_label.hide()
 		#level.check_aggro()
