@@ -374,6 +374,7 @@ func die(simulate_only : bool) -> void:
 			Main.characters.erase(self)
 			Main.active_party.erase(scene_id)
 		Main.level.characters.erase(self)
+		Main.level.aggroed_enemies.erase(self)
 		Main.level.enemy_characters.erase(self)
 		Main.level.neutral_characters.erase(self)
 		Main.level.player_characters.erase(self)
