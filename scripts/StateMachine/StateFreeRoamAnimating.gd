@@ -46,13 +46,13 @@ func _build_party(level: Node) -> void:
 	for c: Character in level.player_characters:
 		if c != _walker and is_instance_valid(c) and c.state.is_alive:
 			_party.append(c)
-			print("Added ", c.data.unit_name, " to _party.")
+			#print("Added ", c.data.unit_name, " to _party.")
 	for c: Character in _party:
 		_trail.append(c.state.grid_position)
 		_queues.append([])
 	if not _party.is_empty():
 		_party_confirmed = true
-	print("party size: ", _party.size())
+	#print("party size: ", _party.size())
 
 func _leader_done() -> bool:
 	return not is_instance_valid(_walker) or _next >= _path.size()

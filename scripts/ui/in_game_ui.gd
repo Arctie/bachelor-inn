@@ -13,6 +13,7 @@ var mission_text: String = ""
 @onready var divine_resource_container: VBoxContainer = $DivineResource/DivineResourceContainer
 @onready var current_value_divine_visual: ColorRect = $DivineResource/CurrentValueDivine
 @onready var divine_power_current_value_text: Label = $DivineResource/DivinePowerCurrentValueLabel
+@onready var end_turn_button: Button = %End_Turn_Button
 
 #build all stats into a dictionary for use in the sub UI items
 func build_character_stats(character: Character) -> Dictionary:
@@ -212,10 +213,11 @@ func _on_end_turn_button_pressed() -> void:
 		if ui:
 			ui.show_player_ui()
 			ui.hide_divine_ui()
+		if Main.level.try_return_to_roaming():
+			return
 		Main.level.state_machine.transition_to(StateTurnTransition.new(true))
 		return
 	
-	print("Ending player turn")
 	Main.level._clear_selection()
 	Main.level.end_player_turn()
 	print("'End turn' button pressed")
@@ -256,3 +258,11 @@ func hide_player_ui() -> void:
 	player_stats.hide()
 	enemy_stats.hide()
 	preview_container.hide()
+
+func show_end_turn_button() -> void:
+	end_turn_button.show()
+	end_turn_button.disabled = false
+
+func hide_end_turn_button() -> void:
+	end_turn_button.hide()
+	end_turn_button.disabled = true

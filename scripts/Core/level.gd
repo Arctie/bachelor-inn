@@ -1260,6 +1260,10 @@ func _draw_path_arrow() -> void:
 func begin_combat() -> void:
 	if _level_complete:
 		return
+	var ui := get_tree().get_first_node_in_group("ui_controller")
+	if ui:
+		ui.show_end_turn_button()
+	# TODO: Add resolved_stacked_units() to move units to free locations
 	for c: Character in player_characters:
 		if not is_instance_valid(c) or not c.state.is_alive:
 			continue
@@ -1269,6 +1273,20 @@ func begin_combat() -> void:
 		c.state.is_ability_used = false
 		occupancy_map.set_cell_item(c.state.grid_position, player_code)
 	resume_player_turn()
+
+func has_active_threat() -> bool:
+	var alive: Array[Character] = []
+	for e: Character in aggroed_enemies:
+		if is_instance_valid(e) and e.state.is_alive:
+			alive.append(e)
+	aggroed_enemies = alive
+	return not aggroed_enemies.is_empty()
+
+func try_return_to_roaming() -> bool:
+	if _level_complete or has_active_threat():
+		return false
+	state_machine.transition_to(StateFreeRoaming.new())
+	return true 
 
 func end_player_turn() -> bool:
 	#print("end_player_turn called from: ", get_stack()[1])
@@ -1297,7 +1315,8 @@ func end_of_player_action() -> void:
 		return
 	var alerted: Array[Character] = check_aggro()
 	if alerted.is_empty():
-		resume_player_turn()
+		if not try_return_to_roaming():
+			resume_player_turn()
 		return
 	hide_inactive_characters()
 	state_machine.transition_to(StateAggroAlert.new(alerted, resume_player_turn))

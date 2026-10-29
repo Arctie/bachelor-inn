@@ -104,6 +104,8 @@ static func _end_enemy_turn(level: Level) -> void:
 			continue
 		level.emit_signal("character_stats_changed", c)
 	level.reset_all_units()
+	#if level.try_return_to_roaming():
+		#return
 	level.is_player_turn = true
 	#level.check_aggro() ## StateMachine takes care of this
 	level.hide_inactive_characters()

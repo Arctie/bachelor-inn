@@ -13,6 +13,11 @@ func enter(level: Node) -> void:
 	print("ENTER STATE: StateFreeRoaming")
 	_level = level as Level
 	_level.is_player_turn = true
+	
+	var ui := level.get_tree().get_first_node_in_group("ui_controller")
+	if ui:
+		ui.hide_end_turn_button()
+		
 	if not is_instance_valid(_leader):
 		_leader = _pick_leader()
 	if _leader == null:
@@ -23,8 +28,10 @@ func enter(level: Node) -> void:
 	_level.selected_unit = _leader
 	_level.last_selected_unit = _leader
 	_level.camera_controller.start_roaming(_leader)
-	print("Selected unit is: ", _leader, ". And camera is following.")
-		
+	_level.movement_map.clear()
+	_level.path_map.clear()
+	_level.aoe_preview_map.clear()
+	#print("Selected unit is: ", _leader, ". And camera is following.")
 
 func exit(level: Node) -> void:
 	print("EXIT STATE: StateFreeRoaming")
