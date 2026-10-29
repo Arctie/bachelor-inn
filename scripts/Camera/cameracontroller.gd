@@ -10,6 +10,7 @@ class_name CameraController extends Node3D
 @onready var springarm : Node3D = %Springarm
 @onready var camera : Camera3D = %Camera
 @onready var pivot : Node3D = %Pivot
+@export var freeroam_springarm_length: float = 15.0
 #endregion
 
 #region Variables
@@ -228,6 +229,19 @@ func setup_minmax_positions(minimum_x: float, maximum_x: float, minimum_z: float
 	_pivot_min_z = minimum_z
 	_pivot_max_z = maximum_z
 
+func start_roaming(unit: Node3D) -> void:
+	# add valid checks and restrictions
+	# set cam mode
+	# set spring arm length = freeroam_springarm_length
+	pass
+
+func set_roaming_target(unit: Node3D) -> void:
+	pass
+
+func end_roaming() -> void:
+	# Set cam back to original state
+	pass
+	
 ##TODO
 #func setup_springarm()
 #endregion
