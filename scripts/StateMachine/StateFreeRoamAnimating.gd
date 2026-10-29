@@ -23,45 +23,48 @@ func exit() -> void:
 	print("EXIT STATE: StateFreeRoamAnimating.")
 	AudioManager2d.stop_character_loop()
 
+func handle_input(_level: Node) -> void:
+	# Block all input when animating
+	pass
 
-func is_walking() -> bool:
-	return _walking
-
-func stop_walking() -> void:
-	_stop_requested = true
-
-func walk_along(path: Array[Vector3i], with_audio: bool = false) -> void:
-	if _walking:
+func update(level: Node, delta: float) -> void:
+	if level._level_complete:
 		return
-	_walking = true
-	_stop_requested = false
-	if with_audio and data.audio_move != null:
-		AudioManager2d.play_character_loop(data.audio_move)
-	for tile: Vector3i in path:
-		if _stop_requested:
-			break
-		if tile == state.grid_position:
-			continue
-		var target: Vector3 = Main.level.grid_to_world(tile)
-		var dir: Vector3 = target - position
+	if not is_instance_valid(_walker) or _next >= _path.size():
+		_finish(level)
+		return
+	var target: Vector3 = level.grid_to_world(_path[_next])
+	var dir: Vector3 = target - _walker.position
+	var step: float = WALK_SPEED * delta
+	if dir.length() <= step:
+		_walker.position = target
+		_walker.state.grid_position = _path[_next]
+		_next += 1
+		_check_aggro(level)
+	else:
+		_walker.position += dir.normalized() * step
 		_play_run(dir)
-		var tween: Tween = create_tween()
-		tween.tween_property(self, "position", target, dir.length() / WALK_SPEED)
-		await tween.finished
-		state.grid_position = tile
-		step_finished.emit(tile)
-	if with_audio:
-		AudioManager2d.stop_character_loop()
-	pause_anim()
-	_walking = false
-	walk_finished.emit()
+
+func _check_aggro(level: Node) -> void:
+	var alerted: Array[Character] = level.check_aggro()
+	if alerted.is_empty():
+		return
+	_walker.pause_anim()
+	level.camera_controller.end_roaming()
+	level.hide_inactive_characters()
+	level.state_machine.transition_to(StateAggroAlert.new(alerted, level.begin_combat))	
+
+func _finish(level: Node) -> void:
+	if is_instance_valid(_walker):
+		_walker.pause_anim()
+	level.state_machine.transition_to(StateFreeRoaming.new())
 
 func _play_run(dir: Vector3) -> void:
 	if dir.z > 0.01:
-		play(run_down_animation)
+		_walker.play(_walker.run_down_animation)
 	elif dir.z < -0.01:
-		play(run_up_animation)
+		_walker.play(_walker.run_up_animation)
 	elif dir.x > 0.01:
-		play(run_right_animation)
+		_walker.play(_walker.run_right_animation)
 	elif dir.x < -0.01:
-		play(run_left_animation)
+		_walker.play(_walker.run_left_animation)
