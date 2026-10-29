@@ -58,6 +58,26 @@ aggro_range = 8
 aggro_group_index = 1
 metadata/_custom_type_script = "uid://dnpndvvrnj26q"
 
+[sub_resource type="Resource" id="Resource_ytn8h"]
+script = ExtResource("4_g58ai")
+metadata/_custom_type_script = "uid://cfb66ehlpe84n"
+
+[sub_resource type="Resource" id="Resource_tuif4"]
+script = ExtResource("5_vbfgb")
+faction = 1
+aggro_group_index = 2
+metadata/_custom_type_script = "uid://dnpndvvrnj26q"
+
+[sub_resource type="Resource" id="Resource_qvqs4"]
+script = ExtResource("4_g58ai")
+metadata/_custom_type_script = "uid://cfb66ehlpe84n"
+
+[sub_resource type="Resource" id="Resource_ok7ts"]
+script = ExtResource("5_vbfgb")
+faction = 1
+aggro_group_index = 2
+metadata/_custom_type_script = "uid://dnpndvvrnj26q"
+
 [node name="TestLevel1" unique_id=656823534 instance=ExtResource("1_mq16p")]
 level_music = 4
 
@@ -112,3 +132,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0.5, -11)
 
 [node name="Chest4" parent="Chests" parent_id_path=PackedInt32Array(2019346901) index="3" unique_id=990366938 instance=ExtResource("2_lw4g3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0.5, -11)
+
+[node name="Character" parent="." index="15" unique_id=1864091600 instance=ExtResource("3_vbfgb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0.5, 5)
+data = SubResource("Resource_ytn8h")
+state = SubResource("Resource_tuif4")
+
+[node name="Ghost_Enemy" parent="." index="16" unique_id=952824404 instance=ExtResource("8_e2q1c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0.5, 7)
+data = SubResource("Resource_qvqs4")
+state = SubResource("Resource_ok7ts")
