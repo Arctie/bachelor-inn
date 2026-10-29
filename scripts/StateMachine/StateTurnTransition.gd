@@ -25,9 +25,11 @@ func enter(level: Node) -> void:
 		level.player_label.show()
 		## Remove Divine Char from map
 	else:
+		level.pending_alert = level.check_aggro() ## This now runs
+		## ADD AWAIT?
 		level.enemy_label.show()
 		level.player_label.hide()
-		level.check_aggro()
+		#level.check_aggro()
 		level.hide_inactive_characters()
 	
 	## TODO: add signal to remove UI while animating?
@@ -77,4 +79,11 @@ func _on_animation_finished(anim_name: StringName, level: Node) -> void:
 				level.state_machine.transition_to(StateSelectingUnit.new())
 	else:
 		level.is_player_turn = false
-		level.state_machine.transition_to(StateEnemyTurn.new())
+		if level.pending_alert.is_empty():
+			level.state_machine.transition_to(StateEnemyTurn.new())
+		else:
+			var alerted: Array[Character] = []
+			alerted.assign(level.pending_alert)
+			level.pending_alert.clear()
+			level.state_machine.transition_to(StateAggroAlert.new(alerted, 
+			func() -> void: level.state_machine.transition_to(StateEnemyTurn.new())))
