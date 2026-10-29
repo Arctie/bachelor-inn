@@ -98,7 +98,7 @@ const PORTRAIT_POPUP = preload("res://scenes/userinterface/Level/PortraitPopUp.t
 const LOOT_POP_UP = preload("res://scenes/userinterface/Level/LootPopUp.tscn")
 const SKILL_POP_UP = preload("res://scenes/userinterface/Level/SkillPopUp.tscn")
 const GAME_OVER = preload("res://scenes/states/game_over.tscn")
-const FADE_OVERLAY = preload("res://scenes/userinterface/Level/fade_to_black.tscn")
+#const FADE_OVERLAY = preload("res://scenes/userinterface/Level/fade_to_black.tscn")
 const PAUSE_MENU = preload("res://scenes/states/pause_menu.tscn")
 const HEALTH_BAR_ENEMY := preload("res://scenes/userinterface/Level/health_bar_enemy_overhead.tscn")
 var enemy_registry: EnemyRegistry = load("res://Data/Characters/CurrentEnemyRegistry.tres")
@@ -107,7 +107,7 @@ var loot_popup : LootPopup
 var skill_loot_popup : SkillPopup
 var pause_menu: PauseMenu
 var game_over_screen: CanvasLayer
-var fade_overlay: CanvasLayer
+#var fade_overlay: CanvasLayer
 #region end
 
 var game_state : GameState;
@@ -1760,7 +1760,7 @@ func _execute_teleport(portal: Teleporter, unit: Character) -> void:
 		return
 	
 	# Fade out
-	await fade_overlay.fade_out()
+	await FadeToBlack.fade_out()
 
 	# Update occupancy map — clear old position
 	occupancy_map.set_cell_item(unit.state.grid_position, GridMap.INVALID_CELL_ITEM)
@@ -1775,7 +1775,7 @@ func _execute_teleport(portal: Teleporter, unit: Character) -> void:
 	camera_controller.free_camera()
 	camera_controller.set_pivot_target_translate(unit.position)
 
-	await fade_overlay.fade_in()
+	await FadeToBlack.fade_in()
 
 	select_unit(unit)
 	state_machine.transition_to(StateSelectingMove.new())

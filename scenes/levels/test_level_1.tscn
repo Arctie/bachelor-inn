@@ -77,6 +77,7 @@ aggro_group_index = 2
 metadata/_custom_type_script = "uid://dnpndvvrnj26q"
 
 [node name="TestLevel1" unique_id=656823534 instance=ExtResource("1_mq16p")]
+level_name = null
 level_music = 4
 
 [node name="TerrainGrid" parent="GridOverlays" parent_id_path=PackedInt32Array(1515842119) index="0" unique_id=1846160155]
