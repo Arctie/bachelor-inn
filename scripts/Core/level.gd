@@ -68,6 +68,8 @@ var has_window_open : bool = false
 var mission_context: MissionContext = MissionContext.new()
 var player_characters: Array[Character] = []   # refs to Main.characters, placed this level
 var enemy_characters: Array[Character] = []    # enemies, destroyed at level end
+var aggroed_enemies: Array[Character] = [] 	   # List of currently aggressive enemies
+var pending_alert: Array[Character] = []       # Agressive state just flipped - waiting for feedback
 var neutral_characters: Array[Character] = []  # escorts, NPCs etc
 var characters: Array[Character] = []          # all of the above combined, for systems that need everything
 
@@ -1370,31 +1372,46 @@ func _register_patrol_paths() -> void:
 			print("Registered patrol path for: ", child.enemy_name, " waypoints: ", child.get_waypoints(self))
 
 
-func check_aggro() -> void:
+func check_aggro() -> Array[Character]:
 	#print("Check_Aggro() called")
-	for unit in characters:
-		if unit == null:
-			continue
-		if unit.state.faction == CharacterState.Faction.DIVINE:
-			continue
-		if not unit.state.is_enemy():
+	var newly_aggroed: Array[Character] = []
+	for unit: Character in enemy_characters:
+		if not is_instance_valid(unit) or not unit.state.is_alive:
 			continue
 		if unit.state.aggro_state == CharacterState.AggroState.AGGRESSIVE:
 			continue
-			
-		for player_unit in characters:
-			if player_unit == null:
-				continue
-			if player_unit.state.faction != CharacterState.Faction.PLAYER:
-				continue
-			
-			var distx : int = abs(unit.state.grid_position.x - player_unit.state.grid_position.x)
-			var distz : int = abs(unit.state.grid_position.z - player_unit.state.grid_position.z)
-			var dist : int = distx + distz
-			if dist <= unit.state.aggro_range:
-				unit.state.aggro_state = CharacterState.AggroState.AGGRESSIVE
-				#print(unit.data.unit_name, " has aggro")
-				break
+		if _player_in_aggro_range(unit):
+			_set_aggressive(unit, newly_aggroed)
+	return newly_aggroed
+
+func _set_aggressive(unit: Character, changed: Array[Character]) -> void:
+	unit.state.aggro_state = CharacterState.AggroState.AGGRESSIVE
+	changed.append(unit)
+	if not aggroed_enemies.has(unit):
+		aggroed_enemies.append(unit)
+	var group: int = unit.state.aggro_group_index
+	if group == 0:
+		return
+	for other: Character in enemy_characters:
+		if other == unit or not is_instance_valid(other) or not other.state.is_alive:
+			continue
+		if other.state.aggro_group_index != group:
+			continue
+		if other.state.aggro_state == CharacterState.AggroState.AGGRESSIVE:
+			continue
+		other.state.aggro_state = CharacterState.AggroState.AGGRESSIVE
+		changed.append(other)
+		if not aggroed_enemies.has(other):
+			aggroed_enemies.append(other)
+
+func _player_in_aggro_range(unit: Character) -> bool:
+	for p: Character in player_characters:
+		if not is_instance_valid(p) or p.state.faction != CharacterState.Faction.PLAYER:
+			continue
+		var d: Vector3i = unit.state.grid_position - p.state.grid_position
+		if absi(d.x) + absi(d.z) <= unit.state.aggro_range:
+			return true
+	return false
 
 func hide_inactive_characters() -> void:
 	for unit in characters:
