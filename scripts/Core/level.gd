@@ -295,9 +295,9 @@ func _set_up_ui() -> void:
 	game_over_screen.hide()
 	add_child(game_over_screen)
 	
-	fade_overlay = FADE_OVERLAY.instantiate()
+	#fade_overlay = FADE_OVERLAY.instantiate()
 	#fade_overlay.hide()
-	add_child(fade_overlay)
+	#add_child(fade_overlay)
 	
 	get_viewport().gui_release_focus() 
 
