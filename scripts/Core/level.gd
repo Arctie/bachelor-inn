@@ -396,8 +396,9 @@ func get_grid_cell_from_mouse() -> Vector3i:
 		var y: int = int(floor(check_pos.y / cell_size.y))
 		var z: int = int(floor(check_pos.z / cell_size.z))
 		var candidate: Vector3i = Vector3i(x, y, z)
-
-		if movement_weights_map.get_used_cells().has(candidate):
+		
+		#if movement_weights_map.get_used_cells().has(candidate):
+		if movement_weights_map.get_cell_item(candidate) != GridMap.INVALID_CELL_ITEM:
 			best_cell = candidate
 			is_best_cell = true
 			break

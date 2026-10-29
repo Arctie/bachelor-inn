@@ -1,8 +1,5 @@
-# Author: Alan & Alexander
-
-## Class to control a camera.
-## Design is to set a destination to the
-class_name CameraController extends Node3D
+extends Node3D
+class_name CameraController 
 
 @onready var _pre_drag_mouse_pos : Vector2 = get_viewport().get_mouse_position()
 
