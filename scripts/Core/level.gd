@@ -1257,6 +1257,19 @@ func _draw_path_arrow() -> void:
 			for point : Vector3i in points:
 				path_map.set_cell_item(point, 3) #SET PATH MAP TO BE THE TILE IN ARRAY WHEN DRAWING PATH ARROW
 
+func begin_combat() -> void:
+	if _level_complete:
+		return
+	for c: Character in player_characters:
+		if not is_instance_valid(c) or not c.state.is_alive:
+			continue
+		c.state.movement_points_remaining = c.state.movement
+		c.state.action_points_remaining = c.state.base_action_points
+		c.state.is_moved = false
+		c.state.is_ability_used = false
+		occupancy_map.set_cell_item(c.state.grid_position, player_code)
+	resume_player_turn()
+
 func end_player_turn() -> bool:
 	#print("end_player_turn called from: ", get_stack()[1])
 	if not combat_vfx.is_finished():

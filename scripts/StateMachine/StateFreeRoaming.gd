@@ -11,19 +11,56 @@ func _init() -> void:
 
 func enter(level: Node) -> void:
 	print("ENTER STATE: StateFreeRoaming")
-	if is_instance_valid(level.last_selected_unit):
-		level.select_unit(level.last_selected_unit)
-	else:
-		var unit: Character
-		for n in range(level.player_characters.size()):
-			if is_instance_valid(level.player_characters[n]):
-				level.select_unit(level.player_characters[n])
-			return 
+	_level = Main.level as Level
+	_level.is_player_turn = true
+	if not is_instance_valid(_leader):
+		_leader = _pick_leader()
+	if _leader == null:
+		return # This should not be possible
+	for c: Character in _level.player_characters:
+		if is_instance_valid(c):
+			_level.occupancy_map.set_cell_item(c.state.grid_position, GridMap.INVALID_CELL_ITEM)
+	_level.selected_unit = _leader
+	_level.last_selected_unit = _leader
+	_level.camera_controller.start_roaming(_leader)
+	print("Selected unit is: ", _leader, ". And camera is following.")
+	if not _leader.step_finished.is_connected(_on_leader_step):
+		_leader.step_finished.connect(_on_leader_step)
+		
 
 func exit(level: Node) -> void:
 	print("EXIT STATE: StateFreeRoaming")
-	# Set all player units to free_pathing = false <-- Might be handeled in StateAggroAlert
-	pass
+	if is_instance_valid(_leader):
+		_leader.stop_walking()
+		if _leader.step_finished.is_connected(_on_leader_step):
+			_leader.step_finished.disconnect(_on_leader_step)
+
+func _set_path(pos: Vector3i) -> void:
+	if not is_instance_valid(_leader) or _leader.is_walking():
+		return
+	if _level.occupancy_map.get_cell_item(goal) != GridMap.INVALID_CELL_ITEM:
+		return      # an enemy or neutral stands there; find_path would still end on it
+	var path: Array[Vector3i] = MovementGrid.find_path(
+		_leader.state.grid_position, goal, _level.movement_weights_map, _level.occupancy_map)
+	if path.is_empty():
+		return
+	_leader.walk_along(path, true)
+	
+func _on_pathing(_tile: Vector3i) -> void:
+	var alerted: Array[Character] = _level.check_aggro()
+	if alerted.is_empty():
+		return
+	_leader.stop_walking()
+	_level.hide_inactive_characters()
+	_level.state_machine.transition_to(StateAggroAlert.new(alerted, _level.begin_combat))
+
+func _pick_leader() -> Character:
+	if is_instance_valid(_level.last_selected_unit):
+		return _level.last_selected_unit
+	for c: Character in _level.player_characters:
+		if is_instance_valid(c) and c.state.is_alive:
+			return c
+	return null
 
 func handle_input(level: Node, event: InputEvent) -> void:
 	if not level._can_handle_input(event):
