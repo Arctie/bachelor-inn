@@ -48,7 +48,6 @@ func build_enemy_Stats(character: Character) -> Dictionary:
 		"max_health": character.state.max_health,
 	}
 
-
 func _ready() -> void:
 	add_to_group("ui_controller")
 
@@ -65,13 +64,12 @@ func _clear_previews() -> void:
 	for child in preview_container.get_children():
 		child.queue_free()
 
-
 func _on_preview_selected(character: Character) -> void:
 	var level := get_tree().get_first_node_in_group("level")
 	if level:
 		level.try_select_unit(character) 
 		ribbon.show()
-
+		ribbon.set_skills(character.state.skills)
 
 func _connect_to_level(level: Node) -> void:
 	if level == null:
