@@ -54,12 +54,14 @@ horizontal_alignment = 1
 
 [node name="FinishButton" type="Button" parent="DimBackground/BoxBackground/VBoxContainer" unique_id=1756314282]
 layout_mode = 2
+focus_mode = 0
 theme_override_font_sizes/font_size = 54
 text = "Finish Level
 "
 
 [node name="RoamButton" type="Button" parent="DimBackground/BoxBackground/VBoxContainer" unique_id=606853179]
 layout_mode = 2
+focus_mode = 0
 theme_override_font_sizes/font_size = 54
 text = "Continue To Roam"
 
