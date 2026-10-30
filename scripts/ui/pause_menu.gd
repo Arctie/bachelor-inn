@@ -4,6 +4,7 @@ class_name PauseMenu
 @onready var options: Button = %Options
 @onready var resume_button: Button = %ResumeButton
 @onready var back_to_main_menu: Button = %BackToMainMenu
+@onready var finish_level_button: Button = %FinishLevelButton
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -24,3 +25,11 @@ func _on_back_to_main_menu_pressed() -> void:
 
 func _on_options_pressed() -> void:
 	print("Options Menu Button pressed from in game.")
+
+func show_finish_level_button() -> void:
+	finish_level_button.show()
+
+func _on_finish_level_button_pressed() -> void:
+	Main.level.state_machine.pop()
+	finish_level_button.show()
+	Main.level.next_level()
