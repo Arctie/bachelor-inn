@@ -56,26 +56,6 @@ bt_profile = 1
 aggro_group_index = 1
 metadata/_custom_type_script = "uid://dnpndvvrnj26q"
 
-[sub_resource type="Resource" id="Resource_ytn8h"]
-script = ExtResource("4_g58ai")
-metadata/_custom_type_script = "uid://cfb66ehlpe84n"
-
-[sub_resource type="Resource" id="Resource_tuif4"]
-script = ExtResource("5_vbfgb")
-faction = 1
-aggro_group_index = 2
-metadata/_custom_type_script = "uid://dnpndvvrnj26q"
-
-[sub_resource type="Resource" id="Resource_qvqs4"]
-script = ExtResource("4_g58ai")
-metadata/_custom_type_script = "uid://cfb66ehlpe84n"
-
-[sub_resource type="Resource" id="Resource_ok7ts"]
-script = ExtResource("5_vbfgb")
-faction = 1
-aggro_group_index = 2
-metadata/_custom_type_script = "uid://dnpndvvrnj26q"
-
 [node name="TestLevel1" unique_id=656823534 instance=ExtResource("1_mq16p")]
 level_name = "The Test Chamber"
 level_music = 4
@@ -110,12 +90,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.443085, 1.9841189, -13.621
 visible = true
 
 [node name="Bird" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="0" unique_id=159367408 instance=ExtResource("3_vbfgb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31, 0.5, -13)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0.5, -13)
 data = SubResource("Resource_lxfn4")
 state = SubResource("Resource_e2q1c")
 
 [node name="Ghost_Enemy" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="1" unique_id=1339368304 instance=ExtResource("8_e2q1c")]
-transform = Transform3D(1, 0, 0, 0, 0.9996193, 0.027590154, 0, -0.027590154, 0.9996193, 33, 0.5, -15)
+transform = Transform3D(1, 0, 0, 0, 0.99961925, 0.027590152, 0, -0.027590152, 0.99961925, 15, 0.5, -15)
 data = SubResource("Resource_ruqf1")
 state = SubResource("Resource_ckkav")
 
@@ -133,13 +113,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0.5, -11)
 
 [node name="Chest4" parent="Chests" parent_id_path=PackedInt32Array(2019346901) index="3" unique_id=990366938 instance=ExtResource("2_lw4g3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0.5, -11)
-
-[node name="Character" parent="." index="15" unique_id=1864091600 instance=ExtResource("3_vbfgb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0.5, 5)
-data = SubResource("Resource_ytn8h")
-state = SubResource("Resource_tuif4")
-
-[node name="Ghost_Enemy" parent="." index="16" unique_id=952824404 instance=ExtResource("8_e2q1c")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0.5, 7)
-data = SubResource("Resource_qvqs4")
-state = SubResource("Resource_ok7ts")

@@ -187,6 +187,8 @@ func _finish_animation(level: Node) -> void:
 	
 	if level._level_complete:
 		return 
+	if level.state_machine.current is StateUIPopup:
+		return
 	
 	var teleporters := level.get_tree().get_nodes_in_group("teleporters")
 	#print("Teleporters in group: ", teleporters.size())

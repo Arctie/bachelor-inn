@@ -18,6 +18,7 @@ func open() -> void:
 	finish_button.disabled = false
 	roam_button.disabled = false
 	show()
+	print("popup open, size: ", size, " visible: ", visible)
 
 func close() -> void:
 	hide()

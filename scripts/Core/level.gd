@@ -55,16 +55,18 @@ var _last_hovered_pos: Vector3i = Vector3i(-999, -999, -999)
 @onready var fog_map: GridMap = %FogOverlay
 var aoe_preview_map: GridMap
 
-@onready var story_cards: StoryCards = $UI_Elements/StoryCards
+@onready var story_cards: StoryCards = %StoryCards
+@onready var objective_complete_popup: ObjectiveCompletePopup = %ObjectiveCompletePopup
 @onready var turn_transition: CanvasLayer = $UI_Elements/TurnTransition/CanvasLayer
 @onready var turn_transition_animation_player: AnimationPlayer = $UI_Elements/TurnTransition/AnimationPlayer
 @onready var player_label: Label = $UI_Elements/TurnTransition/CanvasLayer/VBoxContainer/ColorRect3/playerLabel
 @onready var enemy_label: Label = $UI_Elements/TurnTransition/CanvasLayer/VBoxContainer/ColorRect3/enemyLabel
 @onready var divine_label: Label = $UI_Elements/TurnTransition/CanvasLayer/VBoxContainer/ColorRect3/divineLabel
 
-var _level_complete : bool = false
+var _level_complete: bool = false
+var objectives_met: bool = false
 var level_has_victory_trigger: bool = false
-var has_window_open : bool = false
+var has_window_open: bool = false
 var mission_context: MissionContext = MissionContext.new()
 var player_characters: Array[Character] = []   # refs to Main.characters, placed this level
 var enemy_characters: Array[Character] = []    # enemies, destroyed at level end
@@ -1006,21 +1008,21 @@ func check_trigger_conditions() -> void:
 
 func check_victory_conditions() -> void:
 	# Check for defeat of all player units
+	print("Victory check, met: ", objectives_met)
 	if player_characters.is_empty():
 		trigger_game_over()
 		return
-	
-	# Check for mission objectives complete
+	if objectives_met:
+		return 
 	var objectives := get_tree().get_nodes_in_group("objectives")
 	if objectives.is_empty():
 		return
-	
 	var groups: Dictionary = {}
 	for o in objectives:
 		if not groups.has(o.objective_group):
 			groups[o.objective_group] = []
-		groups[o.objective_group].append(o)#o.is_optional and not o.is_complete:
-	
+		groups[o.objective_group].append(o) ## NOTE: o.is_optional and not o.is_complete:
+		print("objectives found: ", objectives.size())
 	for group: Array in groups.values():
 		var group_complete := false
 		for o: ObjectiveBase in group:
@@ -1029,8 +1031,11 @@ func check_victory_conditions() -> void:
 				break
 		if not group_complete:
 			return
-	
-	next_level()
+	print("all groups complete")
+	objectives_met = true	
+	pause_menu.show_finish_level_button()
+	show_level_complete_prompt()
+	#next_level()
 
 func next_level() -> void:
 	## NOTE: This is a clean up function that moves the level forward
@@ -1061,6 +1066,21 @@ func next_level() -> void:
 	#Main.go_to_transition_screen()
 	print("Characters appended to Main. Playing outro.")
 	state_machine.transition_to(StateStoryCards.new(story_cards, true))
+
+func show_level_complete_prompt() -> void:
+	print("popup node: ", objective_complete_popup)
+	if Tutorial.in_tutorial:
+		next_level()
+		return
+	state_machine.transition_to(StateUIPopup.new(objective_complete_popup, _on_level_complete_choice))
+
+func _on_level_complete_choice(result: String) -> void:
+	if result == "finish":
+		next_level()
+	elif has_active_threat():
+		resume_player_turn()
+	else:
+		state_machine.transition_to(StateFreeRoaming.new())
 
 func cleanup_level() -> void:
 	player_characters.clear()
