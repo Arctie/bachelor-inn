@@ -11,7 +11,7 @@ func _init(popup: PopupBase, on_closed: Callable) -> void:
 func enter(level: Node) -> void:
 	print("ENTER STATE: StateUIPopup.")
 	level.is_in_menu = true
-	_current_ui.connect(_on_popup_closed.bind(level), CONNECT_ONE_SHOT)
+	_current_ui.closed.connect(_on_popup_closed.bind(level), CONNECT_ONE_SHOT)
 	_current_ui.show()
 
 func exit(level: Node) -> void:
