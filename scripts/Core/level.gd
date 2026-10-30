@@ -499,6 +499,8 @@ func _show_skill_origin_tiles(target_pos: Vector3i, skill: Skill) -> void:
 		path_map.set_cell_item(tile, 0)
 
 func _can_handle_input(event: InputEvent) -> bool:
+	if _level_complete:
+		return false
 	if is_divine_turn:
 		if not (state_machine.current is StateDivineTurn or
 				state_machine.current is StateChoosingSkillTarget or
