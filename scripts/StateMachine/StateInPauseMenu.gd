@@ -1,14 +1,14 @@
 extends LevelState
-class_name StateMenu
+class_name StateInPauseMenu
 
 func enter(level: Node) -> void:
-	print("ENTER STATE: StateMenu.")
+	print("ENTER STATE: StateInPauseMenu.")
 	level.is_in_menu = true
 	level.pause_menu.show()
 	level.get_tree().paused = true
 
 func exit(level: Node) -> void:
-	print("EXIT STATE: StateMenu.")
+	print("EXIT STATE: StateInPauseMenu.")
 	#print(get_stack())
 	level.is_in_menu = false
 	level.pause_menu.hide()

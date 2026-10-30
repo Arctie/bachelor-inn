@@ -821,14 +821,14 @@ func _input(event: InputEvent) -> void:
 					if _level_complete or has_window_open:
 						print("Pressed ESC while another window is open.")
 						pass
-					elif state_machine.current is StateMenu:
+					elif state_machine.current is StateInPauseMenu:
 						pass
 					elif state_machine.current is StateAnimating:
 						pass
 					elif state_machine.current is StateLevelComplete:
 						pass
 					else:
-						state_machine.push(StateMenu.new())
+						state_machine.push(StateInPauseMenu.new())
 						get_viewport().set_input_as_handled() ## block multiple instances of input
 		
 		else:
@@ -1293,7 +1293,7 @@ func end_player_turn() -> bool:
 	if not combat_vfx.is_finished():
 		print("End Player Turn Blocked - Combat vfx not finished")
 		return false
-	if state_machine.current is StateMenu:
+	if state_machine.current is StateInPauseMenu:
 		return false
 	if not (state_machine.current is StateSelectingUnit or state_machine.current is StateSelectingMove):
 		return false

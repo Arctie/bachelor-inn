@@ -6,7 +6,7 @@ func enter(level: Node) -> void:
 	level.is_in_menu = true
 
 func exit(level: Node) -> void:
-	print("EXIT STATE: StateMenu.")
+	print("EXIT STATE: StateLevelComplete.")
 	level.is_in_menu = false
 
 func handle_input(_level: Node, _event: InputEvent) -> void:
