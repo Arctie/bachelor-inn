@@ -13,7 +13,7 @@ func enter(level: Node) -> void:
 	print("ENTER STATE: StateFreeRoaming")
 	_level = level as Level
 	_level.is_player_turn = true
-	
+	_level.emit_signal("character_selected", _leader)
 	var ui := level.get_tree().get_first_node_in_group("ui_controller")
 	if ui:
 		ui.hide_end_turn_button()

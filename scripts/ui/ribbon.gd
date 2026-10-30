@@ -15,7 +15,10 @@ func _ready() -> void:
 	set_skills([])
 
 func set_skills(in_skills: Array[Skill]) -> void:
-	#gray_out_abilities_used(false)
+	##gray_out_abilities_used(false)
+	var unit: Character = Main.level.selected_unit
+	var in_roam: bool = Main.level.state_machine.current is StateFreeRoaming \
+			or Main.level.state_machine.current is StateFreeRoamAnimating
 	for i in range(_skill_buttons.size()):
 		var b: TextureButton = _skill_buttons[i]
 		if i < in_skills.size() and in_skills[i] != null:
@@ -26,12 +29,12 @@ func set_skills(in_skills: Array[Skill]) -> void:
 			b.tooltip_text = "%s\n%s" % [s.skill_name, s.tooltip]
 			b.set_meta("skill", s)
 			# Disable if out of uses
-			if Main.level.selected_unit != null:
-				var no_qty: bool = s.has_quantity and Main.level.selected_unit.state.item_quantities.get(s.skill_id, 0) <= 0
-				var no_ap: bool = s.uses_action and Main.level.selected_unit.state.action_points_remaining <= 0
-				var on_cooldown: bool = Main.level.selected_unit != null and Main.level.selected_unit.state.skill_cooldowns.get(s.skill_id, 0) > 0
+			if unit != null:
+				var no_qty: bool = s.has_quantity and unit.state.item_quantities.get(s.skill_id, 0) <= 0
+				# AP is unlimited while roaming; cooldowns and item quantities still apply.
+				var no_ap: bool = s.uses_action and not in_roam and unit.state.action_points_remaining <= 0
+				var on_cooldown: bool = unit.state.skill_cooldowns.get(s.skill_id, 0) > 0
 				var should_gray: bool = no_qty or no_ap or on_cooldown
-				#var should_gray: bool = no_qty or no_ap
 				b.disabled = should_gray
 				b.modulate = Color(0.4, 0.4, 0.4, 1.0) if should_gray else Color(1, 1, 1, 1)
 			else:
