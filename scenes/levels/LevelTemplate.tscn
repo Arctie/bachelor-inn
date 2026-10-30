@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://c4b8f02hyixcc" path="res://scenes/userinterface/Level/InGameUI_WIP.tscn" id="11_06w7e"]
 [ext_resource type="PackedScene" uid="uid://b7pxxrlhn5e7i" path="res://scenes/userinterface/Menus/story_cards.tscn" id="11_n1m61"]
 [ext_resource type="PackedScene" uid="uid://d4b4a1hbdjh6j" path="res://scenes/utilities/CameraSettings.tscn" id="12_2iq81"]
+[ext_resource type="PackedScene" uid="uid://bgbspd1w6k5uk" path="res://scenes/userinterface/Menus/objective_complete_popup.tscn" id="12_85lyy"]
 [ext_resource type="PackedScene" uid="uid://cxrc33gqig64w" path="res://scripts/Other/CombatVFXController.tscn" id="22_dypiu"]
 
 [node name="Map3d2" type="Node3D" unique_id=656823534]
@@ -103,6 +104,8 @@ mouse_filter = 2
 [node name="GUI" parent="UI_Elements" unique_id=33842839 instance=ExtResource("11_06w7e")]
 
 [node name="StoryCards" parent="UI_Elements" unique_id=1488155635 instance=ExtResource("11_n1m61")]
+
+[node name="ObjectiveCompletePopup" parent="UI_Elements" unique_id=156968320 instance=ExtResource("12_85lyy")]
 
 [node name="Lights" type="Node3D" parent="." unique_id=38605441]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.183081, 6.232548, 0.9140688)
