@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://bgbspd1w6k5uk"]
+
+[ext_resource type="Script" uid="uid://pd6uj7xmonk3" path="res://scripts/ui/objective_complete_popup.gd" id="1_dkhpr"]
+
+[node name="ObjectiveCompletePopup" type="Control" unique_id=156968320]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dkhpr")
+
+[node name="DimBackground" type="ColorRect" parent="." unique_id=315077476]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.090589695, 0.11160078, 0.0493116, 0.5254902)
+
+[node name="BoxBackground" type="ColorRect" parent="DimBackground" unique_id=889696192]
+custom_minimum_size = Vector2(800, 600)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DimBackground/BoxBackground" unique_id=679188361]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="DimBackground/BoxBackground/VBoxContainer" unique_id=2087593088]
+layout_mode = 2
+text = "EXAMPLE TEXT"
+
+[node name="FinishButton" type="Button" parent="DimBackground/BoxBackground/VBoxContainer" unique_id=1756314282]
+layout_mode = 2
+text = "Finish Level
+"
+
+[node name="RoamButton" type="Button" parent="DimBackground/BoxBackground/VBoxContainer" unique_id=606853179]
+layout_mode = 2
+text = "Continue To Roam"
+
+[connection signal="pressed" from="DimBackground/BoxBackground/VBoxContainer/FinishButton" to="." method="_on_finish_button_pressed"]
+[connection signal="pressed" from="DimBackground/BoxBackground/VBoxContainer/RoamButton" to="." method="_on_roam_button_pressed"]
