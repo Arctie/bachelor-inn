@@ -1,9 +1,9 @@
 extends PopupBase
 class_name ObjectiveCompletePopup
 
-@onready var dim_background: ColorRect = $DimBackground
-@onready var finish_button: Button = $DimBackground/BoxBackground/VBoxContainer/FinishButton
-@onready var roam_button: Button = $DimBackground/BoxBackground/VBoxContainer/RoamButton
+@onready var dim_background: ColorRect = %DimBackground
+@onready var finish_button: Button = %FinishButton
+@onready var roam_button: Button = %RoamButton
 
 func _ready() -> void:
 	hide()

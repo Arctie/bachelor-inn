@@ -12,6 +12,7 @@ grow_vertical = 2
 script = ExtResource("1_dkhpr")
 
 [node name="DimBackground" type="ColorRect" parent="." unique_id=315077476]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -53,6 +54,7 @@ text = "MAP OBJECTIVE COMPLERE!"
 horizontal_alignment = 1
 
 [node name="FinishButton" type="Button" parent="DimBackground/BoxBackground/VBoxContainer" unique_id=1756314282]
+unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 theme_override_font_sizes/font_size = 54
@@ -60,6 +62,7 @@ text = "Finish Level
 "
 
 [node name="RoamButton" type="Button" parent="DimBackground/BoxBackground/VBoxContainer" unique_id=606853179]
+unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 theme_override_font_sizes/font_size = 54
