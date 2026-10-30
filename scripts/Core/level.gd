@@ -1138,7 +1138,6 @@ func tick_all_units_end_round() -> void:
 		if sanity_diff != 0:
 			combat_vfx.spawn_damage_number(sanity_diff, c.global_position + Vector3(0,0.5,0))
 
-
 func _on_ribbon_skill_pressed(skill: Skill) -> void:
 	if state_machine.current is StateDivineTurn:
 		if skill.divine_resource_cost > 0 and Main.divine.divine_resource < skill.divine_resource_cost:
@@ -1154,7 +1153,9 @@ func _on_ribbon_skill_pressed(skill: Skill) -> void:
 		state_machine.transition_to(StateChoosingSkillTarget.new())
 		#print("Transitioned")
 		return
-		
+	if _is_roaming_context():
+		_start_roam_skill(skill)
+		return
 	if selected_unit != null and selected_unit.state.is_ability_used:
 		#print("Unit has already used their ability this turn.")
 		return
@@ -1177,7 +1178,6 @@ func _on_ribbon_skill_pressed(skill: Skill) -> void:
 	_show_skill_target_tiles(reachable, active_skill)
 	#print("Entered skill target mode: ", active_skill.skill_id, ". Caster: ", skill_caster.data.unit_name)
 	state_machine.transition_to(StateChoosingSkillTarget.new())
-	
 
 func _show_skill_target_tiles(reachable: Array[Vector3i], skill: Skill) -> void:
 	valid_skill_target_tiles.clear()
@@ -1214,6 +1214,41 @@ func _exit_skill_target_mode() -> void:
 	if is_instance_valid(caster):
 		#print("Selecting caster: " + caster.name)
 		select_unit(caster)
+
+func _is_roaming_context() -> bool:
+	var cur: LevelState = state_machine.current
+	if cur is StateFreeRoaming:
+		return true
+	return cur is StateChoosingSkillTarget and (cur as StateChoosingSkillTarget).from_roaming
+
+func _start_roam_skill(skill: Skill) -> void:
+	var caster: Character = selected_unit
+	if not is_instance_valid(caster) or not caster.state.is_alive:
+		return
+	if skill.has_quantity and caster.state.item_quantities.get(skill.skill_id, 0) <= 0:
+		return
+	if caster.state.skill_cooldowns.get(skill.skill_id, 0) > 0:
+		return
+	valid_skill_target_tiles.clear()
+	path_map.clear()
+	clear_aoe_preview()
+	active_skill = skill
+	skill_caster = caster
+	var origin: Array[Vector3i] = [caster.state.grid_position]
+	_show_skill_target_tiles(origin, skill)
+	print("Pressed skill in FreeRoam mode.")
+	state_machine.transition_to(StateChoosingSkillTarget.new(true))
+
+func end_of_roam_action() -> void:
+	if _level_complete:
+		return
+	var alerted: Array[Character] = check_aggro()
+	if alerted.is_empty():
+		state_machine.transition_to(StateFreeRoaming.new())
+		return
+	camera_controller.end_roaming()
+	hide_inactive_characters()
+	state_machine.transition_to(StateAggroAlert.new(alerted, begin_combat))
 
 func _is_valid_target(unit: Character, skill: Skill, caster: Character) -> bool:
 	if unit == null or skill == null or caster == null:

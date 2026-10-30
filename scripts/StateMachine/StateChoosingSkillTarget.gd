@@ -1,6 +1,10 @@
 extends LevelState
 class_name StateChoosingSkillTarget
 ## This is where we decide target tile to cast a skill on
+var from_roaming: bool = false
+
+func _init(roaming: bool = false) -> void:
+	from_roaming = roaming
 
 func enter(level: Node) -> void:
 	print("ENTER STATE: StateChoosingSkillTarget.")
