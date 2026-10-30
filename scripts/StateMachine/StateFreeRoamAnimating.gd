@@ -152,6 +152,10 @@ func _check_aggro(level: Node) -> void:
 func _finish(level: Node) -> void:
 	if is_instance_valid(_walker):
 		_walker.pause_anim()
+	level.check_trigger_conditions()
+	level.check_victory_conditions()
+	if level.state_machine.current != self:
+		return
 	if _stopping:
 		level.camera_controller.end_roaming()
 		level.hide_inactive_characters()
