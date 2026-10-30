@@ -1,7 +1,7 @@
-extends Control
+extends PopupBase
 class_name ObjectiveCompletePopup
 
-signal closed(result: String)
+#signal closed(result: String)
 
 @onready var dim_background: ColorRect = $DimBackground
 @onready var finish_button: Button = $DimBackground/BoxBackground/VBoxContainer/FinishButton
