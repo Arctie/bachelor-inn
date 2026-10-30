@@ -1,14 +1,10 @@
 extends PopupBase
 class_name ObjectiveCompletePopup
 
-#signal closed(result: String)
-
 @onready var dim_background: ColorRect = $DimBackground
 @onready var finish_button: Button = $DimBackground/BoxBackground/VBoxContainer/FinishButton
 @onready var roam_button: Button = $DimBackground/BoxBackground/VBoxContainer/RoamButton
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	hide()
 	# TODO: Add dim effect via ColorRect etc.

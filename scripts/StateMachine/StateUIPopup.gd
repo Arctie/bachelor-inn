@@ -1,10 +1,10 @@
 extends LevelState
 class_name StateUIPopup
 
-var _current_ui: ObjectiveCompletePopup
+var _current_ui: PopupBase
 var _on_closed: Callable
 
-func _init(popup: ObjectiveCompletePopup, on_closed: Callable) -> void:
+func _init(popup: PopupBase, on_closed: Callable) -> void:
 	_current_ui = popup
 	_on_closed = on_closed
 
