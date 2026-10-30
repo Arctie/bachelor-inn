@@ -154,7 +154,7 @@ func _finish(level: Node) -> void:
 		_walker.pause_anim()
 	level.check_trigger_conditions()
 	level.check_victory_conditions()
-	if level.state_machine.current != self:
+	if level._level_complete or level.state_machine.current != self:
 		return
 	if _stopping:
 		level.camera_controller.end_roaming()
