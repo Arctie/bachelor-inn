@@ -683,13 +683,16 @@ func can_handle_ui_input() -> bool:
 
 
 func try_select_unit(unit: Character) -> void:
-	#print("try_select_unit: ", unit.data.unit_name, " can_handle: ", can_handle_ui_input())
 	if state_machine.current is StateDivineTurn:
 		return
+	if state_machine.current is StateFreeRoaming:
+		(state_machine.current as StateFreeRoaming).set_leader(unit)
+		return
+	if state_machine.current is StateFreeRoamAnimating:
+		return          # ignore portrait clicks while the party is walking
 	if not can_handle_ui_input():
 		return
 	select_unit(unit)
-
 
 func select_unit(unit: Character) -> void:
 	#print("select_unit called - current state: ", state_machine.current.get_script().resource_path if state_machine.current else "null")
