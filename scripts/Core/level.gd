@@ -1342,6 +1342,9 @@ func has_active_threat() -> bool:
 func try_return_to_roaming() -> bool:
 	if _level_complete or has_active_threat():
 		return false
+	#for c: Character in player_characters:
+		#if is_instance_valid(c):
+			#c.state.clear_cooldowns()
 	state_machine.transition_to(StateFreeRoaming.new())
 	return true 
 

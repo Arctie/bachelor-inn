@@ -48,7 +48,6 @@ func _set_path(pos: Vector3i) -> void:
 		return
 	_level.state_machine.transition_to(StateFreeRoamAnimating.new(_leader, path))
 
-
 func _pick_leader() -> Character:
 	var last_c: Character = _level.last_selected_unit
 	if is_instance_valid(last_c) and last_c.state.is_alive and last_c.state.is_playable():

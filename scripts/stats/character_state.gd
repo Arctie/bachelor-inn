@@ -62,6 +62,7 @@ var just_teleported: bool = false
 @export var defense : int
 @export var resistance : int
 @export var movement_points_remaining : int
+var roam_steps: int = 0 # For tracking spell cool downs in Free Roam state
 @export var base_action_points : int = 1
 @export var action_points_remaining : int
 #endregion
@@ -175,6 +176,18 @@ func get_effective_movement() -> int:
 #	current_health = max(0, hp - amount)
 	# Optional: emit signal / set dead flag / etc.
 	# if hp == 0: is_dead = true
+
+func tick_cooldowns() -> void:
+	print("Tick cooldowns called.")
+	for id: String in skill_cooldowns.keys():
+		skill_cooldowns[id] -= 1
+		if skill_cooldowns[id] <= 0:
+			print("Skill cooldown erased. No id fetched.")
+			skill_cooldowns.erase(id)
+
+func clear_cooldowns() -> void:
+	skill_cooldowns.clear()
+	roam_steps = 0
 
 ## This tics down spells and effects that lasts for more than 1 round.
 func tick_effects_end_round(owner: Character) -> void:

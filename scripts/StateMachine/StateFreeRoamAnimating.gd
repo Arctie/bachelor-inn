@@ -12,6 +12,7 @@ var _queues: Array[Array] = []
 var _alerted: Array[Character] = []
 var _stopping: bool = false
 var _party_confirmed: bool = false
+var roam_steps_per_tick: int = 10
 
 func _init(walker: Character, path: Array[Vector3i]) -> void:
 	_walker = walker
@@ -28,7 +29,7 @@ func exit(_level: Node) -> void:
 	print("EXIT STATE: StateFreeRoamAnimating.")
 	AudioManager2d.stop_character_loop()
 
-func handle_input(_level: Node, event: InputEvent) -> void:
+func _handle_input(_level: Node, event: InputEvent) -> void:
 	# Block all input when animating
 	pass
 
@@ -86,7 +87,8 @@ func _move_leader(level: Node, delta: float) -> void:
 func _on_leader_arrived(level: Node, tile: Vector3i) -> void:
 	if _stopping:
 		return
-	print("leader arrived: ", tile, " trail: ", _trail)
+	_count_step(level, _walker)
+	#print("leader arrived: ", tile, " trail: ", _trail)
 	_trail.push_front(tile)
 	_trail.resize(_party.size())
 	for i in range (1, _party.size()):
@@ -102,7 +104,7 @@ func _queue_follower(level: Node, i: int, destination: Vector3i) -> void:
 	if from == destination:
 		return
 	var p: Array[Vector3i] = MovementGrid.find_path(from, destination, level.movement_weights_map, level.occupancy_map)
-	print("follower ", i, " from ", from, " to ", destination, " path size ", p.size())
+	#print("follower ", i, " from ", from, " to ", destination, " path size ", p.size())
 	for tile: Vector3i in p:
 		if tile != from:
 			q.append(tile)
@@ -123,6 +125,7 @@ func _move_follower(level: Node, i: int, delta: float) -> void:
 	if dir.length() <= step:
 		f.position = target
 		f.state.grid_position = tile
+		_count_step(level, f)
 		q.pop_front()
 		if q.is_empty():
 			f.pause_anim()
@@ -130,6 +133,18 @@ func _move_follower(level: Node, i: int, delta: float) -> void:
 	else:
 		f.position += dir.normalized() * step
 		_play_run(f, dir)
+
+func _count_step(level: Node, unit: Character) -> void:
+	unit.state.roam_steps += 1
+	print("count_step: ", unit.data.unit_name, " steps: ", unit.state.roam_steps,
+			" cooldowns: ", unit.state.skill_cooldowns)
+	if unit.state.roam_steps < roam_steps_per_tick:
+		return
+	unit.state.roam_steps = 0
+	if unit.state.skill_cooldowns.is_empty():
+		return
+	unit.state.tick_cooldowns()
+	level.emit_signal("character_stats_changed", unit)
 
 func _check_aggro(level: Node) -> void:
 	if _stopping:
@@ -143,11 +158,6 @@ func _check_aggro(level: Node) -> void:
 		var q: Array = _queues[i]
 		if q.size() > 1:
 			q.resize(1)
-	#_walker.pause_anim()
-	#level.camera_controller.end_roaming()
-	#level.hide_inactive_characters()
-	#level.state_machine.transition_to(StateAggroAlert.new(alerted, level.begin_combat))	
-
 
 func _finish(level: Node) -> void:
 	if is_instance_valid(_walker):
