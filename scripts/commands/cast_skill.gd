@@ -37,7 +37,7 @@ func prepare(state: GameState, simulate_only: bool = false) -> void:
 	_outcomes = AbilityHandler.calculate_outcome(skill, caster, target_pos, state,
 		start_pos == target_pos and end_pos != target_pos)
 	for o: SkillOutcome in _outcomes:
-		if o.is_primary and o.type == SkillOutcome.Type.DAMAGE:
+		if o.is_primary_target and o.type == SkillOutcome.Type.DAMAGE:
 			result.damage = o.amount
 	#if skill.effect_mods != null and skill.effect_mods.has("damage") and target != null:
 		#result.damage = skill.effect_mods.get("damage", 0)

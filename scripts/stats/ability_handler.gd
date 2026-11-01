@@ -14,7 +14,7 @@ target_tile: Vector3i,state: GameState, caster_moved: bool) -> Array[SkillOutcom
 	var targets: Array[Character] = []
 	if primary_target != null and _valid(primary_target, skill, caster):
 		targets.append(primary_target)
-	if skill.AoEShape != skill.AoE_shape.NONE:
+	if skill.aoe_shape != skill.AoEShape.NONE:
 		for tile: Vector3i in Main.level._get_aoe_tiles(target_tile, skill, caster):
 			if tile == target_tile:
 				continue
