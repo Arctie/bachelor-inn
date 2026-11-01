@@ -2,6 +2,7 @@ extends Node
 # TODO: Set to autoload
 
 const S_NO_SKILL = preload("res://Data/Abilities/no_skill.tres")
+#const SKILL_LIST = 
 const S_HEAL_BASIC = preload("res://Data/Abilities/heal_basic.tres")
 const S_HEAL_SANITY_BASIC = preload("res://Data/Abilities/heal_sanity_basic.tres")
 const S_FIREBALL_BASIC = preload("res://Data/Abilities/fireball_basic.tres")
