@@ -13,8 +13,7 @@ func _init(inStartPos: Vector3i, inEndPos: Vector3i, inTargetPos: Vector3i, inSk
 	
 func prepare(state: GameState, simulate_only: bool = false) -> void:
 	result = AttackResult.new()
-	#result.skill_aoe_shape = skill.aoe_shape
-	var y_offset: float = 10.0 if skill.cast_from_divine else 1.0
+	var y_offset: float = 10.0 if skill.cast_from_divine else 1.0 ## NOTE: Offset should be set on skill, not a state check
 	var caster: Character = state.get_unit(end_pos)
 	if caster == null:
 		caster = state.get_unit(start_pos)
