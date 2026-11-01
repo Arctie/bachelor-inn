@@ -1138,6 +1138,7 @@ func tick_all_units_end_round() -> void:
 		var sanity_diff := c.state.current_sanity - sanity_before
 		if health_diff != 0:
 			combat_vfx.spawn_damage_number(health_diff, c.global_position)
+			## TODO: Add VFX 
 		if sanity_diff != 0:
 			combat_vfx.spawn_damage_number(sanity_diff, c.global_position + Vector3(0,0.5,0))
 
