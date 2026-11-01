@@ -33,56 +33,76 @@ func prepare(state: GameState, simulate_only: bool = false) -> void:
 		if skill.uses_action:
 			caster.state.is_ability_used = true
 		caster.state.is_moved = true
-	
-	if skill.effect_mods != null and skill.effect_mods.has("damage") and target != null:
-		result.damage = skill.effect_mods.get("damage", 0)
+		
+	_outcomes = AbilityHandler.calculate_outcome(skill, caster, target_pos, state,
+		start_pos == target_pos and end_pos != target_pos)
+	for o: SkillOutcome in _outcomes:
+		if o.is_primary and o.type == SkillOutcome.Type.DAMAGE:
+			result.damage = o.amount
+	#if skill.effect_mods != null and skill.effect_mods.has("damage") and target != null:
+		#result.damage = skill.effect_mods.get("damage", 0)
 
 func apply_damage(state: GameState, simulate_only: bool = false) -> void:
 	var caster: Character = result.aggressor
-	var target: Character = state.get_unit(target_pos)
-	if target == caster and start_pos == target_pos and end_pos != target_pos:
-		target = null
-	
-	if target != null and skill.effect_mods != null and skill.effect_mods.has("damage"):
-		var dmg := int(skill.effect_mods["damage"])
-		target.apply_damage(dmg, simulate_only, caster, skill.skill_name)
-		if not simulate_only:
-			Main.level.combat_vfx.spawn_damage_number(dmg, target.global_position, result.was_critical)
-			Main.level.emit_signal("character_stats_changed", target)
-	
-	if target != null and skill.effect_mods != null and skill.effect_mods.has("current_health"):
-		var heal := int(skill.effect_mods["current_health"])
-		target.state.current_health = min(target.state.current_health + heal, target.state.max_health)
-		if not simulate_only:
-			Main.level.emit_signal("character_stats_changed", target)
-	
-	if simulate_only:
-		return
-	
-	# AoE
-	var aoe_tiles := Main.level._get_aoe_tiles(target_pos, skill)
-	for aoe_pos in aoe_tiles:
-		if aoe_pos == target_pos:
+	for o: SkillOutcome in _outcomes:
+		if simulate_only and (not o.is_primary or o.type == SkillOutcome.Type.EFFECT):
 			continue
-		var aoe_target: Character = Main.level.get_unit(aoe_pos)
-		if aoe_target == null:
+		var t: Character = o.target
+		var pos: Vector3 = t.global_position if is_instance_valid(t) else Vector3.ZERO
+		AbilityHandler.apply_outcome(o, skill, caster, simulate_only)
+		if simulate_only or o.type == SkillOutcome.Type.EFFECT:
 			continue
-		if not Main.level._is_valid_target(aoe_target, skill, caster):
-			continue
-		if skill.effect_mods != null and skill.effect_mods.has("damage"):
-			var dmg := int(skill.effect_mods["damage"])
-			aoe_target.apply_damage(dmg, simulate_only, caster, skill.skill_name)
-			Main.level.combat_vfx.spawn_damage_number(dmg, aoe_target.global_position)
-			Main.level.combat_vfx.spawn_vfx_at(skill.Vfx_Scene, aoe_target.global_position + Vector3(0,1,0), true, aoe_target)
-			#if skill.Vfx_Scene != null:
-				#Main.level.combat_vfx.play_skill(result)
-		if skill.effect_mods != null and skill.effect_mods.has("current_health"):
-			var heal := int(skill.effect_mods["current_health"])
-			aoe_target.state.current_health = min(aoe_target.state.current_health + heal, aoe_target.state.max_health)
-			Main.level.combat_vfx.spawn_vfx_at(skill.Vfx_Scene, aoe_target.global_position + Vector3(0,1,0), false, aoe_target)
-		aoe_target.state.apply_skill_effect(skill)
-		Main.level.emit_signal("character_stats_changed", aoe_target)
-	
+		if o.type == SkillOutcome.Type.DAMAGE:
+			Main.level.combat_vfx.spawn_damage_number(o.amount, pos, result.was_critical)
+		if not o.is_primary_target:
+			Main.level.combat_vfx.spawn_vfx_at(skill.Vfx_Scene, pos + Vector3(0, 1, 0), o.type == SkillOutcome.Type.DAMAGE, t)
+		if is_instance_valid(t):
+			Main.level.emit_signal("character_stats_changed", t)
+		#
+	#var target: Character = state.get_unit(target_pos)
+	#if target == caster and start_pos == target_pos and end_pos != target_pos:
+		#target = null
+	#
+	#if target != null and skill.effect_mods != null and skill.effect_mods.has("damage"):
+		#var dmg := int(skill.effect_mods["damage"])
+		#target.apply_damage(dmg, simulate_only, caster, skill.skill_name)
+		#if not simulate_only:
+			#Main.level.combat_vfx.spawn_damage_number(dmg, target.global_position, result.was_critical)
+			#Main.level.emit_signal("character_stats_changed", target)
+	#
+	#if target != null and skill.effect_mods != null and skill.effect_mods.has("current_health"):
+		#var heal := int(skill.effect_mods["current_health"])
+		#target.state.current_health = min(target.state.current_health + heal, target.state.max_health)
+		#if not simulate_only:
+			#Main.level.emit_signal("character_stats_changed", target)
+	#
+	#if simulate_only:
+		#return
+	#
+	## AoE
+	#var aoe_tiles := Main.level._get_aoe_tiles(target_pos, skill)
+	#for aoe_pos in aoe_tiles:
+		#if aoe_pos == target_pos:
+			#continue
+		#var aoe_target: Character = Main.level.get_unit(aoe_pos)
+		#if aoe_target == null:
+			#continue
+		#if not Main.level._is_valid_target(aoe_target, skill, caster):
+			#continue
+		#if skill.effect_mods != null and skill.effect_mods.has("damage"):
+			#var dmg := int(skill.effect_mods["damage"])
+			#aoe_target.apply_damage(dmg, simulate_only, caster, skill.skill_name)
+			#Main.level.combat_vfx.spawn_damage_number(dmg, aoe_target.global_position)
+			#Main.level.combat_vfx.spawn_vfx_at(skill.Vfx_Scene, aoe_target.global_position + Vector3(0,1,0), true, aoe_target)
+			##if skill.Vfx_Scene != null:
+				##Main.level.combat_vfx.play_skill(result)
+		#if skill.effect_mods != null and skill.effect_mods.has("current_health"):
+			#var heal := int(skill.effect_mods["current_health"])
+			#aoe_target.state.current_health = min(aoe_target.state.current_health + heal, aoe_target.state.max_health)
+			#Main.level.combat_vfx.spawn_vfx_at(skill.Vfx_Scene, aoe_target.global_position + Vector3(0,1,0), false, aoe_target)
+		#aoe_target.state.apply_skill_effect(skill)
+		#Main.level.emit_signal("character_stats_changed", aoe_target)
+	#
 	if Tutorial.in_tutorial and skill.skill_id == "heal_basic":
 		Tutorial.heal_cast = true
 		Tutorial.can_advance_timeline = true
