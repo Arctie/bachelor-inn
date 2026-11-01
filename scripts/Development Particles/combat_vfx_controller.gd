@@ -93,7 +93,9 @@ func _spawn_dmg_number_scene(result : AttackResult) -> void:
 		result.was_critical
 	)
 
-
+## TODO: 	Expand func spawn_damage_number with paramete rdamage_type 
+## 			spawn_damage_number(amount: int, position: Vector3, is_critical: bool = false, damage_type) -> void:
+##			This will add an icon beside the damage numbers
 func spawn_damage_number(amount: int, position: Vector3, is_critical: bool = false) -> void:
 	if not damage_number_scene:
 		return
