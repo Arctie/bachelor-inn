@@ -3,39 +3,35 @@ class_name Attack
 ## AttackMove is atomic: movement + attack resolution.
 ## Used as a single minimax action.
 
-var attack_pos : Vector3i;
-
+var attack_pos : Vector3i
+var weapon_name: String = "Unarmed"
 
 func _init(inStartPos : Vector3i, victimPos : Vector3i, attackFromPos : Vector3i) -> void:
 	start_pos = inStartPos;
 	end_pos = attackFromPos;
 	attack_pos = victimPos;
 
-
-
 func prepare(state : GameState, simulate_only: bool = false) -> void:
 	result = AttackResult.new()
-
-	#var aggressor : Character = state.get_unit(start_pos);
-	var aggressor : Character = state.get_unit(end_pos);
+	var aggressor : Character = state.get_unit(end_pos)
 	if aggressor == null:
 		aggressor = state.get_unit(start_pos)
-	var victim : Character = state.get_unit(attack_pos);
+	var victim : Character = state.get_unit(attack_pos)
+	if aggressor == null or victim == null:
+		push_warning("Attack.prepare: missing aggressor or victim at " + str(attack_pos))
+		return
 	
 	result.aggressor = aggressor
 	result.victim = victim
-	
 	
 	if aggressor.state.is_playable():
 		aggressor.state.is_ability_used = true
 	aggressor.state.is_moved = true;
 	
-	
 		#weapons
 	var weapon_damage : int;
 	var weapon_crit : int;
 	var weapon_name : String;
-	
 
 	if aggressor.state.weapon:
 		weapon_damage = aggressor.state.weapon.damage_modifier;
@@ -55,27 +51,19 @@ func prepare(state : GameState, simulate_only: bool = false) -> void:
 			attack_strength *= 2;
 	
 	result.damage = attack_strength
-	
-
-
 
 func apply_damage(state: GameState , simulate_only: bool = false) -> void:
 	var aggressor : Character = result.aggressor;
 	var victim : Character = result.victim;
-	#victim.state.current_health -= attack_strength;
-	#result.damage = attack_strength
-	#result.killed = victim.state.current_health <= 0
-	## Using attack from character.gd so we can use the units abilities
+	if aggressor == null or victim == null:
+		return
 	result.killed = victim.apply_damage(result.damage, simulate_only, aggressor, "Attack")
-	print("Agressor " + str(aggressor.data.unit_name) + " dealt " + str(result.damage) + " to " + str(victim.data.unit_name) + " with " + str(aggressor.state.weapon.weapon_name))
+	print("Aggressor ", aggressor.data.unit_name, " dealt ", result.damage, " to ", victim.data.unit_name, " with ", weapon_name)
 	#sanity
 	if(!simulate_only):
 		pass
 		if aggressor.state.is_playable():
 			pass
-			#if victim.state.current_health > 0:
-				#@warning_ignore("integer_division")
-				#aggressor.state.current_sanity -= victim.data.strength / aggressor.state.stability
 		else:
 			@warning_ignore("integer_division")
 			victim.state.current_sanity -= aggressor.data.mind / victim.state.stability
@@ -87,7 +75,6 @@ func apply_damage(state: GameState , simulate_only: bool = false) -> void:
 	## TODO: Fix below. self instance is not valid
 	#Main.level.emit_signal("character_stats_changed", self)
 	Main.level.emit_signal("character_stats_changed", aggressor)
-
 
 #old, replaced by Prepare and Apply
 #func execute(state : GameState, simulate_only : bool = false) -> void:
