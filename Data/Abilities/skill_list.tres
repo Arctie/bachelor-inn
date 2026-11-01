@@ -2,7 +2,17 @@
 
 [ext_resource type="Script" uid="uid://cewygd8mj876f" path="res://scripts/stats/skill_list.gd" id="1_hg4ao"]
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="2_dylyt"]
+[ext_resource type="Resource" uid="uid://cokhndg82vc8h" path="res://Data/Abilities/bomb_basic.tres" id="3_3lsu7"]
+[ext_resource type="Resource" uid="uid://213btyk7kq4i" path="res://Data/Abilities/defence_basic.tres" id="4_87bxe"]
+[ext_resource type="Resource" uid="uid://c3br4io6tyvpr" path="res://Data/Abilities/divine_cauterizing_heal.tres" id="5_q06bm"]
+[ext_resource type="Resource" uid="uid://x7mbefo655v8" path="res://Data/Abilities/fireball_basic.tres" id="6_p1mvv"]
+[ext_resource type="Resource" uid="uid://lvhavkk1vueb" path="res://Data/Abilities/haste_basic.tres" id="7_0fywy"]
+[ext_resource type="Resource" uid="uid://c8qah7yiks0t" path="res://Data/Abilities/heal_basic.tres" id="8_g5lsh"]
+[ext_resource type="Resource" uid="uid://cqwy7r0vxoxy" path="res://Data/Abilities/melee_sweep.tres" id="9_20lfn"]
+[ext_resource type="Resource" uid="uid://chsedrtl8wrh3" path="res://Data/Abilities/no_skill.tres" id="10_0tqr0"]
+[ext_resource type="Resource" uid="uid://1pglttdkeyam" path="res://Data/Abilities/whirlwind.tres" id="11_2j2lf"]
 
 [resource]
 script = ExtResource("1_hg4ao")
+skills = Array[ExtResource("2_dylyt")]([ExtResource("3_3lsu7"), ExtResource("4_87bxe"), ExtResource("5_q06bm"), ExtResource("6_p1mvv"), ExtResource("7_0fywy"), ExtResource("8_g5lsh"), ExtResource("9_20lfn"), ExtResource("10_0tqr0"), ExtResource("11_2j2lf")])
 metadata/_custom_type_script = "uid://cewygd8mj876f"
