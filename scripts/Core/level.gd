@@ -19,7 +19,7 @@ signal ability_used
 signal character_stats_changed(character: Character)
 signal party_updated(characters: Array[Character])
 signal character_died(character: Character)
-#region end
+#endregion
 
 @onready var combat_vfx : CombatVFXController = $CombatVFXController
 @export var level_name: String
@@ -44,7 +44,7 @@ var state_machine: StateMachine
 @onready var cursor_boot : Texture2D = preload("res://art/textures/cursor_boot.png") #
 @onready var cursor_wand : Texture2D = preload("res://art/textures/cursor_wand.png")
 var _last_hovered_pos: Vector3i = Vector3i(-999, -999, -999)
-#region end
+#endregion
 
 @onready var terrain_map: GridMap = %TerrainGrid
 @onready var occupancy_map: GridMap = %OccupancyOverlay
@@ -110,7 +110,7 @@ var skill_loot_popup : SkillPopup
 var pause_menu: PauseMenu
 var game_over_screen: CanvasLayer
 #var fade_overlay: CanvasLayer
-#region end
+#endregion
 
 var game_state : GameState;
 var animation_path :Array[Vector3];
