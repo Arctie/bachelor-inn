@@ -1,7 +1,7 @@
 extends RefCounted
 class_name SkillOutcome
 
-enum Type { DAMAGE, HEAL, BUFF }
+enum Type { DAMAGE, HEAL, EFFECT }
 
 var target: Character
 var type: Type = Type.DAMAGE
