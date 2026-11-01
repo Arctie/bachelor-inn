@@ -3,6 +3,7 @@ class_name CastSkill
 
 var target_pos: Vector3i
 var skill: Skill
+var _outcomes: Array[SkillOutcome] = []
 
 func _init(inStartPos: Vector3i, inEndPos: Vector3i, inTargetPos: Vector3i, inSkill: Skill) -> void:
 	start_pos = inStartPos
