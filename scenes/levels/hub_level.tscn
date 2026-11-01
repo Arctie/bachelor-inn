@@ -32,9 +32,10 @@ offset_left = -160.0
 offset_right = 160.0
 offset_bottom = 56.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 64
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 88
 text = "HUB CAMP"
+horizontal_alignment = 1
 
 [node name="PlayerUnitContainer" type="PanelContainer" parent="." unique_id=1789842128]
 custom_minimum_size = Vector2(1200, 200)
@@ -44,7 +45,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_top = -204.0
+offset_left = -600.0
+offset_top = -330.0
+offset_right = 600.0
+offset_bottom = -34.0
 grow_horizontal = 2
 grow_vertical = 0
 
@@ -55,7 +59,7 @@ color = Color(0.2822526, 0, 0.12729862, 1)
 [node name="UnitRows" type="VBoxContainer" parent="PlayerUnitContainer" unique_id=906557925]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PlayerUnitContainer/UnitRows" unique_id=870894649]
+[node name="GarrisonLabel" type="Label" parent="PlayerUnitContainer/UnitRows" unique_id=870894649]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
 text = "GARRISON"
@@ -66,10 +70,10 @@ layout_mode = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="Label2" type="Label" parent="PlayerUnitContainer/UnitRows" unique_id=1197554971]
+[node name="PartyLabel" type="Label" parent="PlayerUnitContainer/UnitRows" unique_id=1197554971]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-text = "ROSTER"
+text = "PARTY"
 
 [node name="RosterRow" type="HBoxContainer" parent="PlayerUnitContainer/UnitRows" unique_id=37820832]
 custom_minimum_size = Vector2(0, 110)
@@ -82,9 +86,10 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -250.0
-offset_bottom = 250.0
+offset_left = -245.0
+offset_top = -265.0
+offset_right = -33.0
+offset_bottom = 235.0
 grow_horizontal = 0
 grow_vertical = 2
 
