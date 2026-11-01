@@ -115,6 +115,7 @@ func apply_skill_effect(skill: Skill) -> void:
 	if skill == null:
 		return
 	var mods: Dictionary = {}
+	## TODO: Add Damage Type Icon to Dictionary 
 	if skill.effect_mods != null:
 		for k:String in skill.effect_mods.keys():
 			if k in ["damage", "dot_tick_damage"]:

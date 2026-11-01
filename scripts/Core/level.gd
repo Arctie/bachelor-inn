@@ -1116,19 +1116,7 @@ func tick_all_units_end_round() -> void:
 		if not (c is Character):
 			continue
 		if c.state and c.state.is_alive == false:
-			continue 	
-	#var c : Character = null
-	#for index : int in range(characters.size()):
-		#if(characters.get(index) == null):
-			#push_warning("Character with index %d in characters array was null at end of tick" % index)
-			#continue
-		#c = characters.get(index)
-		#if not is_instance_valid(c):
-			#continue
-		#if not (c is Character):
-			#continue
-		#if c.state and c.state.is_alive == false:
-			#continue
+			continue 
 		
 		var health_before := c.state.current_health
 		var sanity_before := c.state.current_sanity

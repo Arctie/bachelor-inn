@@ -36,6 +36,7 @@ var max_level : int = 5
 ## Add new Dict -> New Key: StringName, New Value: Int
 ## Key names MUST match the variable name inside character_state.gd, or variable name used in runtime!!!
 @export var damage_type: DamageType = DamageType.PHYSICAL
+@export var damage_type_icon: PackedScene
 @export var scaling: Dictionary = {}    # If we want skills to scale with stats like {"mind": 0.5}
 @export var effect_mods : Dictionary = {}
 @export_range(0,100) var min_range: int = 1
