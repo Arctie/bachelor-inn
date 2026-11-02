@@ -3,8 +3,45 @@
 [ext_resource type="Script" uid="uid://dmu6y0plvja88" path="res://scripts/Core/hub_level.gd" id="1_lictt"]
 [ext_resource type="PackedScene" uid="uid://b0rpwot0fbt6t" path="res://scenes/states/UnitCard.tscn" id="2_lictt"]
 [ext_resource type="Texture2D" uid="uid://diut3grmm6et0" path="res://art/textures/StoryCards/camp_campfire (1).png" id="2_wggnu"]
-[ext_resource type="Script" uid="uid://bygnr26ertum8" path="res://scripts/ui/UnitSlotCamp.gd" id="3_rymmw"]
 [ext_resource type="Texture2D" uid="uid://boyi2mqyjqo52" path="res://art/textures/Emil_portrait.png" id="3_wggnu"]
+[ext_resource type="Script" uid="uid://b53v7kneglq1m" path="res://scripts/ui/unit_portrait_slot.gd" id="5_rymmw"]
+
+[sub_resource type="GDScript" id="GDScript_wggnu"]
+script/source = "extends Panel
+class_name UnitSlot
+
+var unit_id: String = \"\"
+@onready var garrison_unit_panel: UnitSlot = $\".\"
+@onready var party_unit_panel: Panel = $\"../../../PartyMarginContainer/PartyGridContainer/PartyUnitPanel\"
+
+@onready var garrison_unit_portrait: TextureRect = $GarrisonUnitPortrait
+@onready var party_unit_portrait: TextureRect = $\"../../../PartyMarginContainer/PartyGridContainer/PartyUnitPanel/PartyUnitPortrait\"
+
+func _ready() -> void:
+	mouse_filter = Control.MOUSE_FILTER_STOP
+	party_unit_portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE 
+
+func _get_drag_data(_at_position: Vector2) -> Variant:
+	if party_unit_portrait.texture == null:
+		print(\"PartyUnitPortrait is null.\")
+		return
+	var preview: TextureRect = TextureRect.new()
+	preview.texutre = party_unit_portrait.texture
+	preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	preview.custom_minimum_size = Vector2(90,90)
+	preview.size = Vector2(90,90)
+	preview.modulate = Color(1,1,1, 0.7)
+	preview.positoin = -preview.size * 0.5
+	print(\"Initiated drag with texture \", party_unit_portrait)
+	set_drag_preview(preview)
+	return party_unit_portrait
+
+func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
+	return true
+
+func _drop_data(at_position: Vector2, data: Variant) -> void:
+	party_unit_portrait.texture = data.texture
+"
 
 [node name="HubLevel" type="Control" unique_id=1070308301]
 layout_mode = 3
@@ -30,9 +67,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -160.0
-offset_right = 160.0
-offset_bottom = 56.0
+offset_left = -184.5
+offset_top = 50.0
+offset_right = 184.5
+offset_bottom = 128.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 88
@@ -91,7 +129,7 @@ columns = 6
 [node name="GarrisonUnitPanel" type="Panel" parent="PlayerUnitsContainer/UnitRows/MarginContainer/GarrisonGridContainer" unique_id=856148469]
 custom_minimum_size = Vector2(90, 90)
 layout_mode = 2
-script = ExtResource("3_rymmw")
+script = SubResource("GDScript_wggnu")
 
 [node name="GarrisonUnitPortrait" type="TextureRect" parent="PlayerUnitsContainer/UnitRows/MarginContainer/GarrisonGridContainer/GarrisonUnitPanel" unique_id=666164915]
 layout_mode = 1
@@ -333,6 +371,58 @@ offset_right = 100.0
 offset_bottom = 351.5
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="UnitsPanel" type="Panel" parent="." unique_id=2095215731]
+custom_minimum_size = Vector2(850, 430)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -200.0
+offset_right = 400.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UnitsPanel" unique_id=387319815]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="UnitsPanel/VBoxContainer" unique_id=236338078]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="GridContainer" type="GridContainer" parent="UnitsPanel/VBoxContainer/MarginContainer" unique_id=939530791]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 4
+
+[node name="UnitSlot" type="Panel" parent="UnitsPanel/VBoxContainer/MarginContainer/GridContainer" unique_id=551061243]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+script = ExtResource("5_rymmw")
+
+[node name="UnitPortrait" type="TextureRect" parent="UnitsPanel/VBoxContainer/MarginContainer/GridContainer/UnitSlot" unique_id=1007483426]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_wggnu")
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="ButtonContainer/VBoxContainer/NextLevelButton" to="." method="_on_next_level_button_pressed"]
 [connection signal="pressed" from="ButtonContainer/VBoxContainer/SaveAndQuitButton" to="." method="_on_save_and_quit_button_pressed"]
