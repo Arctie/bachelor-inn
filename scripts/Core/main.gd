@@ -23,6 +23,7 @@ const WORLD = preload("res://scenes/World/world.tscn")
 var selected_starting_character: String = "alfred" ## Default as alfred, if something goes wrong. 
 var full_roster: Array[String]
 var active_party: Array[String]
+var current_garrison: Array[String]
 var characters: Array[Character]
 var divine: DivineData = DivineData.new()
 var divine_turn_unlocked: bool = false
