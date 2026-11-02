@@ -30,6 +30,7 @@ func set_unit_id(id: String) -> void:
 	unit_id = id
 	var def: CharacterDefinition = Main.save.registry.characters.get(id)
 	print(id, " base_data: ", def.base_data, " script: ", def.base_data.get_script().resource_path if def.base_data else "none")
+	print("  properties: ", def.base_data.get_property_list().map(func(p: Dictionary) -> String: return p["name"]))
 	if def != null and def.base_data != null:
 		unit_portrait.texture = def.base_data.portrait
 	else:
