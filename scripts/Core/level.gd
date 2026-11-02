@@ -687,6 +687,9 @@ func try_select_unit(unit: Character) -> void:
 		return
 	if state_machine.current is StateFreeRoaming:
 		(state_machine.current as StateFreeRoaming).set_leader(unit)
+		last_selected_unit = unit
+		state_machine.transition_to(StateFreeRoaming.new())
+		#select_unit(unit)
 		return
 	if state_machine.current is StateFreeRoamAnimating:
 		return          # ignore portrait clicks while the party is walking

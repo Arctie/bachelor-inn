@@ -57,6 +57,10 @@ func _pick_leader() -> Character:
 			return c
 	return null
 
+func set_leader(leader: Character) -> Character:
+	var _leader: Character = leader
+	return leader
+
 func _next_leader() -> void:
 	var party: Array[Character] = []
 	for c: Character in _level.player_characters:
