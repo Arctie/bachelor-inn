@@ -5,8 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://diut3grmm6et0" path="res://art/textures/StoryCards/camp_campfire (1).png" id="2_wggnu"]
 [ext_resource type="Texture2D" uid="uid://boyi2mqyjqo52" path="res://art/textures/Emil_portrait.png" id="3_wggnu"]
 [ext_resource type="Script" uid="uid://b53v7kneglq1m" path="res://scripts/ui/unit_portrait_slot.gd" id="5_rymmw"]
-[ext_resource type="Texture2D" uid="uid://bcxj1w684sehr" path="res://art/textures/portrait_lucy.png" id="6_ny5ni"]
-[ext_resource type="Texture2D" uid="uid://d3dyy3u5fy86d" path="res://art/textures/portrait_alfred.png" id="7_f6ncv"]
 
 [sub_resource type="GDScript" id="GDScript_wggnu"]
 script/source = "extends Panel
@@ -422,7 +420,6 @@ anchor_right = 0.9
 anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_wggnu")
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
@@ -440,7 +437,6 @@ anchor_right = 0.9
 anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("6_ny5ni")
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
@@ -458,7 +454,6 @@ anchor_right = 0.9
 anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("7_f6ncv")
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 

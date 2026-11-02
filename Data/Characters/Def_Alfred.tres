@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://b10bf6hwaqddg" path="res://scenes/Characters/Player/alfred.tscn" id="5_bfdei"]
 [ext_resource type="AudioStream" uid="uid://cm3hqys15xllp" path="res://audio/CharacterSounds/Unit_on_spawned_in.wav" id="5_njq3j"]
 [ext_resource type="Script" uid="uid://csv21vgg7ba7q" path="res://scripts/Characters/CharacterDefinition.gd" id="6_8me3j"]
+[ext_resource type="Texture2D" uid="uid://d3dyy3u5fy86d" path="res://art/textures/portrait_alfred.png" id="6_neahe"]
 [ext_resource type="Resource" uid="uid://cokhndg82vc8h" path="res://Data/Abilities/bomb_basic.tres" id="10_ix6uy"]
 [ext_resource type="Resource" uid="uid://cqwy7r0vxoxy" path="res://Data/Abilities/melee_sweep.tres" id="11_neahe"]
 
@@ -24,6 +25,7 @@ mind = 6
 speed = 6
 focus = 5
 endurance = 5
+portrait = ExtResource("6_neahe")
 audio_hurt = ExtResource("2_njq3j")
 audio_death = ExtResource("1_bfdei")
 audio_move = ExtResource("1_dn4p7")

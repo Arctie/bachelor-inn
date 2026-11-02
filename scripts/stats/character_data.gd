@@ -53,10 +53,11 @@ enum Personality
 #endregion
 
 #region Unit Stats
+@export_category("Specifications")
 @export var unit_name := "Empty"
 @export var speciality : Speciality = Speciality.Generic
 @export var personality : Personality = Personality.Normal
-
+@export_category("Stats")
 @export var strength : int = 4
 @export var mind : int = 4
 @export var speed : int = 4
