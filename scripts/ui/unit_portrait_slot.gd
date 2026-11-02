@@ -16,4 +16,6 @@ func _can_drop_data(_at_position: Vector2, _data: Variant) -> bool:
 	return true
 
 func _drop_data(at_position: Vector2, data: Variant) -> void:
+	var temp: Texture2D = unit_portrait.texture
 	unit_portrait.texture = data.texture
+	data.texture = temp
