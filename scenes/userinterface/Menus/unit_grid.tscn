@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://bxogp7qt3e1ab"]
+
+[node name="UnitGrid" type="MarginContainer" unique_id=1623281041]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1675857390]
+layout_mode = 2
+
+[node name="TitleBackground" type="ColorRect" parent="VBoxContainer" unique_id=408299647]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TitleBackground" unique_id=87078714]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 14.0
+text = "TITLE"
+
+[node name="GarrisonGridContainer" type="GridContainer" parent="VBoxContainer" unique_id=2106500837]
+layout_mode = 2
+
+[node name="TitleBackground2" type="ColorRect" parent="VBoxContainer" unique_id=2109252148]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TitleBackground2" unique_id=338631304]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 14.0
+text = "TITLE"
+
+[node name="PartyGridContainer" type="GridContainer" parent="VBoxContainer" unique_id=786625123]
+layout_mode = 2

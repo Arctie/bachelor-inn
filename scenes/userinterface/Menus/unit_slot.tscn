@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://ce35v1i5le0bc"]
+
+[node name="UnitSlot" type="Panel" unique_id=1754310864]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1733827872]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
