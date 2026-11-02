@@ -64,6 +64,9 @@ enum Personality
 @export var focus : int = 4
 @export var endurance : int = 4
 #region end
+@export_category("Textures")
+@export var portrait: Texture2D
+@export var portrait_big: Texture2D
 @export_category("Audio")
 @export var audio_hurt: AudioStream
 @export var audio_death: AudioStream

@@ -1,0 +1,478 @@
+[gd_scene format=3 uid="uid://cc2f7gp6w2q8o"]
+
+[ext_resource type="Script" uid="uid://dmu6y0plvja88" path="res://scripts/Core/hub_level.gd" id="1_lictt"]
+[ext_resource type="PackedScene" uid="uid://b0rpwot0fbt6t" path="res://scenes/states/UnitCard.tscn" id="2_lictt"]
+[ext_resource type="Texture2D" uid="uid://diut3grmm6et0" path="res://art/textures/StoryCards/camp_campfire (1).png" id="2_wggnu"]
+[ext_resource type="Texture2D" uid="uid://boyi2mqyjqo52" path="res://art/textures/Emil_portrait.png" id="3_wggnu"]
+[ext_resource type="Script" uid="uid://b53v7kneglq1m" path="res://scripts/ui/unit_portrait_slot.gd" id="5_rymmw"]
+
+[sub_resource type="GDScript" id="GDScript_wggnu"]
+script/source = "extends Panel
+class_name UnitSlot
+
+var unit_id: String = \"\"
+@onready var garrison_unit_panel: UnitSlot = $\".\"
+@onready var party_unit_panel: Panel = $\"../../../PartyMarginContainer/PartyGridContainer/PartyUnitPanel\"
+
+@onready var garrison_unit_portrait: TextureRect = $GarrisonUnitPortrait
+@onready var party_unit_portrait: TextureRect = $\"../../../PartyMarginContainer/PartyGridContainer/PartyUnitPanel/PartyUnitPortrait\"
+
+func _ready() -> void:
+	mouse_filter = Control.MOUSE_FILTER_STOP
+	party_unit_portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE 
+
+func _get_drag_data(_at_position: Vector2) -> Variant:
+	if party_unit_portrait.texture == null:
+		print(\"PartyUnitPortrait is null.\")
+		return
+	var preview: TextureRect = TextureRect.new()
+	preview.texutre = party_unit_portrait.texture
+	preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	preview.custom_minimum_size = Vector2(90,90)
+	preview.size = Vector2(90,90)
+	preview.modulate = Color(1,1,1, 0.7)
+	preview.positoin = -preview.size * 0.5
+	print(\"Initiated drag with texture \", party_unit_portrait)
+	set_drag_preview(preview)
+	return party_unit_portrait
+
+func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
+	return true
+
+func _drop_data(at_position: Vector2, data: Variant) -> void:
+	party_unit_portrait.texture = data.texture
+"
+
+[node name="HubLevel" type="Control" unique_id=1070308301]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lictt")
+
+[node name="Background" type="TextureRect" parent="." unique_id=262875502]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_wggnu")
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Background" unique_id=1471621847]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -184.5
+offset_top = 50.0
+offset_right = 184.5
+offset_bottom = 128.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 88
+text = "HUB CAMP"
+horizontal_alignment = 1
+
+[node name="PlayerUnitsContainer" type="PanelContainer" parent="." unique_id=1789842128]
+visible = false
+custom_minimum_size = Vector2(1200, 200)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -600.0
+offset_top = -330.0
+offset_right = 600.0
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ColorRect" type="ColorRect" parent="PlayerUnitsContainer" unique_id=838073606]
+layout_mode = 2
+color = Color(0.5956086, 1.0829419e-06, 0.2930877, 1)
+
+[node name="UnitRows" type="VBoxContainer" parent="PlayerUnitsContainer" unique_id=906557925]
+layout_mode = 2
+
+[node name="GarrisonLabelBackground" type="ColorRect" parent="PlayerUnitsContainer/UnitRows" unique_id=929733940]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+color = Color(0.38754183, 0.00011527315, 0.39358848, 1)
+
+[node name="GarrisonLabel" type="Label" parent="PlayerUnitsContainer/UnitRows/GarrisonLabelBackground" unique_id=870894649]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 1200.0
+offset_bottom = 46.0
+theme_override_font_sizes/font_size = 48
+text = "   GARRISON"
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayerUnitsContainer/UnitRows" unique_id=520220675]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="GarrisonGridContainer" type="GridContainer" parent="PlayerUnitsContainer/UnitRows/MarginContainer" unique_id=1299251889]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+columns = 6
+
+[node name="GarrisonUnitPanel" type="Panel" parent="PlayerUnitsContainer/UnitRows/MarginContainer/GarrisonGridContainer" unique_id=856148469]
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+script = SubResource("GDScript_wggnu")
+
+[node name="GarrisonUnitPortrait" type="TextureRect" parent="PlayerUnitsContainer/UnitRows/MarginContainer/GarrisonGridContainer/GarrisonUnitPanel" unique_id=666164915]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+
+[node name="GarrisonUnitPanel2" type="Panel" parent="PlayerUnitsContainer/UnitRows/MarginContainer/GarrisonGridContainer" unique_id=1709418598]
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+
+[node name="GarrisonUnitPortrait" type="TextureRect" parent="PlayerUnitsContainer/UnitRows/MarginContainer/GarrisonGridContainer/GarrisonUnitPanel2" unique_id=1815220613]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+
+[node name="GarrisonUnitPanel3" type="Panel" parent="PlayerUnitsContainer/UnitRows/MarginContainer/GarrisonGridContainer" unique_id=989107132]
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+
+[node name="GarrisonUnitPortrait" type="TextureRect" parent="PlayerUnitsContainer/UnitRows/MarginContainer/GarrisonGridContainer/GarrisonUnitPanel3" unique_id=686854885]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+
+[node name="GarrisonUnitPanel4" type="Panel" parent="PlayerUnitsContainer/UnitRows/MarginContainer/GarrisonGridContainer" unique_id=64001731]
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+
+[node name="GarrisonUnitPortrait" type="TextureRect" parent="PlayerUnitsContainer/UnitRows/MarginContainer/GarrisonGridContainer/GarrisonUnitPanel4" unique_id=1070690296]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+
+[node name="GarrisonUnitPanel5" type="Panel" parent="PlayerUnitsContainer/UnitRows/MarginContainer/GarrisonGridContainer" unique_id=1249545609]
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+
+[node name="GarrisonUnitPortrait" type="TextureRect" parent="PlayerUnitsContainer/UnitRows/MarginContainer/GarrisonGridContainer/GarrisonUnitPanel5" unique_id=1985400738]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+
+[node name="GarrisonUnitPanel6" type="Panel" parent="PlayerUnitsContainer/UnitRows/MarginContainer/GarrisonGridContainer" unique_id=1792335260]
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+
+[node name="GarrisonUnitPortrait" type="TextureRect" parent="PlayerUnitsContainer/UnitRows/MarginContainer/GarrisonGridContainer/GarrisonUnitPanel6" unique_id=1765348681]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+
+[node name="GarrisonRow" type="HBoxContainer" parent="PlayerUnitsContainer/UnitRows" unique_id=1847708169]
+visible = false
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="PartyLabelBackground2" type="ColorRect" parent="PlayerUnitsContainer/UnitRows" unique_id=1959278315]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+color = Color(0.38754183, 0.00011527315, 0.39358848, 1)
+
+[node name="PartyLabel" type="Label" parent="PlayerUnitsContainer/UnitRows/PartyLabelBackground2" unique_id=1488775119]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 1200.0
+offset_bottom = 46.0
+theme_override_font_sizes/font_size = 48
+text = "   PARTY"
+
+[node name="RosterRow" type="HBoxContainer" parent="PlayerUnitsContainer/UnitRows" unique_id=37820832]
+visible = false
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+
+[node name="PartyMarginContainer" type="MarginContainer" parent="PlayerUnitsContainer/UnitRows" unique_id=788737303]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="PartyGridContainer" type="GridContainer" parent="PlayerUnitsContainer/UnitRows/PartyMarginContainer" unique_id=1545320020]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 4
+
+[node name="PartyUnitPanel" type="Panel" parent="PlayerUnitsContainer/UnitRows/PartyMarginContainer/PartyGridContainer" unique_id=948467757]
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+
+[node name="PartyUnitPortrait" type="TextureRect" parent="PlayerUnitsContainer/UnitRows/PartyMarginContainer/PartyGridContainer/PartyUnitPanel" unique_id=1379827513]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_wggnu")
+stretch_mode = 5
+
+[node name="UnitPanel2" type="Panel" parent="PlayerUnitsContainer/UnitRows/PartyMarginContainer/PartyGridContainer" unique_id=1397880502]
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+
+[node name="UnitPortrait" type="TextureRect" parent="PlayerUnitsContainer/UnitRows/PartyMarginContainer/PartyGridContainer/UnitPanel2" unique_id=135065304]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+
+[node name="UnitPanel3" type="Panel" parent="PlayerUnitsContainer/UnitRows/PartyMarginContainer/PartyGridContainer" unique_id=1830007510]
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+
+[node name="UnitPortrait" type="TextureRect" parent="PlayerUnitsContainer/UnitRows/PartyMarginContainer/PartyGridContainer/UnitPanel3" unique_id=1165603032]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+
+[node name="ButtonContainer" type="PanelContainer" parent="." unique_id=1275871928]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -245.0
+offset_top = -265.0
+offset_right = -33.0
+offset_bottom = 235.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="ColorRect2" type="ColorRect" parent="ButtonContainer" unique_id=444837704]
+layout_mode = 2
+color = Color(0.2822526, 0, 0.12729862, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ButtonContainer" unique_id=1676528600]
+custom_minimum_size = Vector2(200, 500)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ButtonContainer/VBoxContainer" unique_id=1773248224]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "BUTTONS"
+horizontal_alignment = 1
+
+[node name="ProgressButton" type="Button" parent="ButtonContainer/VBoxContainer" unique_id=1572212170]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "STORY
+MISSION"
+
+[node name="ProgressButton2" type="Button" parent="ButtonContainer/VBoxContainer" unique_id=1629006100]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "SIDE QUEST"
+
+[node name="NextLevelButton" type="Button" parent="ButtonContainer/VBoxContainer" unique_id=702845273]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "NEXT LEVEL"
+
+[node name="SaveAndQuitButton" type="Button" parent="ButtonContainer/VBoxContainer" unique_id=78865178]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "SAVE AND QUIT
+TO MAIN MENU"
+
+[node name="UnitCard" parent="." unique_id=535593357 instance=ExtResource("2_lictt")]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -351.5
+offset_right = 100.0
+offset_bottom = 351.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UnitsPanel" type="Panel" parent="." unique_id=2095215731]
+custom_minimum_size = Vector2(850, 430)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -200.0
+offset_right = 400.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UnitsPanel" unique_id=387319815]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 4
+
+[node name="PartyMarginContainer" type="MarginContainer" parent="UnitsPanel/VBoxContainer" unique_id=236338078]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PartyGridContainer" type="GridContainer" parent="UnitsPanel/VBoxContainer/PartyMarginContainer" unique_id=939530791]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 4
+
+[node name="UnitSlot" type="Panel" parent="UnitsPanel/VBoxContainer/PartyMarginContainer/PartyGridContainer" unique_id=551061243]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+script = ExtResource("5_rymmw")
+
+[node name="UnitPortrait" type="TextureRect" parent="UnitsPanel/VBoxContainer/PartyMarginContainer/PartyGridContainer/UnitSlot" unique_id=1007483426]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="UnitSlot2" type="Panel" parent="UnitsPanel/VBoxContainer/PartyMarginContainer/PartyGridContainer" unique_id=1944762743]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+script = ExtResource("5_rymmw")
+
+[node name="UnitPortrait" type="TextureRect" parent="UnitsPanel/VBoxContainer/PartyMarginContainer/PartyGridContainer/UnitSlot2" unique_id=421448276]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="UnitSlot3" type="Panel" parent="UnitsPanel/VBoxContainer/PartyMarginContainer/PartyGridContainer" unique_id=1968875124]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+script = ExtResource("5_rymmw")
+
+[node name="UnitPortrait" type="TextureRect" parent="UnitsPanel/VBoxContainer/PartyMarginContainer/PartyGridContainer/UnitSlot3" unique_id=1667189066]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="UnitSlot4" type="Panel" parent="UnitsPanel/VBoxContainer/PartyMarginContainer/PartyGridContainer" unique_id=1063531029]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+script = ExtResource("5_rymmw")
+
+[node name="UnitPortrait" type="TextureRect" parent="UnitsPanel/VBoxContainer/PartyMarginContainer/PartyGridContainer/UnitSlot4" unique_id=121904538]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="ButtonContainer/VBoxContainer/NextLevelButton" to="." method="_on_next_level_button_pressed"]
+[connection signal="pressed" from="ButtonContainer/VBoxContainer/SaveAndQuitButton" to="." method="_on_save_and_quit_button_pressed"]

@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://blpc87ylyoo00" path="res://audio/CharacterSounds/Character_on_hurt.wav" id="2_mg1lp"]
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="3_kwl3d"]
 [ext_resource type="Resource" uid="uid://c8qah7yiks0t" path="res://Data/Abilities/heal_basic.tres" id="4_3b8gc"]
+[ext_resource type="Texture2D" uid="uid://bcxj1w684sehr" path="res://art/textures/portrait_lucy.png" id="4_20pjk"]
 [ext_resource type="Resource" uid="uid://cokhndg82vc8h" path="res://Data/Abilities/bomb_basic.tres" id="5_wpk1a"]
 [ext_resource type="Resource" uid="uid://x7mbefo655v8" path="res://Data/Abilities/fireball_basic.tres" id="6_fxf6a"]
 [ext_resource type="Resource" uid="uid://cegp3wmw3wytm" path="res://Data/Weapons/sword_basic.tres" id="6_mg1lp"]
@@ -22,6 +23,7 @@ mind = 3
 speed = 2
 focus = 3
 endurance = 2
+portrait = ExtResource("4_20pjk")
 audio_hurt = ExtResource("2_mg1lp")
 audio_death = ExtResource("1_wpk1a")
 audio_move = ExtResource("1_kwl3d")

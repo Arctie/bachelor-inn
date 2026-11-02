@@ -380,10 +380,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -200.0
-offset_right = 400.0
-offset_bottom = 200.0
+offset_left = -425.0
+offset_top = 85.0
+offset_right = 425.0
+offset_bottom = 515.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -392,6 +392,91 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 theme_override_constants/separation = 4
+
+[node name="GarrisonMarginContainer" type="MarginContainer" parent="UnitsPanel/VBoxContainer" unique_id=583156666]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="GarrisonGridContainer" type="GridContainer" parent="UnitsPanel/VBoxContainer/GarrisonMarginContainer" unique_id=595707629]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 4
+
+[node name="UnitSlot5" type="Panel" parent="UnitsPanel/VBoxContainer/GarrisonMarginContainer/GarrisonGridContainer" unique_id=2071735046]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+script = ExtResource("5_rymmw")
+slot_kind = 1
+
+[node name="UnitPortrait" type="TextureRect" parent="UnitsPanel/VBoxContainer/GarrisonMarginContainer/GarrisonGridContainer/UnitSlot5" unique_id=349493345]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="UnitSlot6" type="Panel" parent="UnitsPanel/VBoxContainer/GarrisonMarginContainer/GarrisonGridContainer" unique_id=1993261715]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+script = ExtResource("5_rymmw")
+slot_kind = 1
+
+[node name="UnitPortrait" type="TextureRect" parent="UnitsPanel/VBoxContainer/GarrisonMarginContainer/GarrisonGridContainer/UnitSlot6" unique_id=1224704521]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="UnitSlot7" type="Panel" parent="UnitsPanel/VBoxContainer/GarrisonMarginContainer/GarrisonGridContainer" unique_id=514716785]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+script = ExtResource("5_rymmw")
+slot_kind = 1
+
+[node name="UnitPortrait" type="TextureRect" parent="UnitsPanel/VBoxContainer/GarrisonMarginContainer/GarrisonGridContainer/UnitSlot7" unique_id=433892677]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="UnitSlot8" type="Panel" parent="UnitsPanel/VBoxContainer/GarrisonMarginContainer/GarrisonGridContainer" unique_id=1404515839]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+script = ExtResource("5_rymmw")
+slot_kind = 1
+
+[node name="UnitPortrait" type="TextureRect" parent="UnitsPanel/VBoxContainer/GarrisonMarginContainer/GarrisonGridContainer/UnitSlot8" unique_id=449698222]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [node name="PartyMarginContainer" type="MarginContainer" parent="UnitsPanel/VBoxContainer" unique_id=236338078]
 layout_mode = 2

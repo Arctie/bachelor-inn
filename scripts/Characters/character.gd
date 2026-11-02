@@ -16,7 +16,9 @@ class_name Character
 
 @export_category("UI")
 @export var portrait : Texture2D
+	#get: return data.portrait if data != null else null
 @export var portrait_big : Texture2D
+	#get: return data.portrait_big if data != null else null
 
 @export_category("Model")
 @export var data : CharacterData
