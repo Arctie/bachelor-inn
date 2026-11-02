@@ -1,6 +1,23 @@
 [gd_scene format=3 uid="uid://dasvm75b4beit"]
 
 [ext_resource type="Script" uid="uid://bnqrkc2r521f1" path="res://scripts/ui/level_transition.gd" id="1_3hufs"]
+[ext_resource type="Shader" uid="uid://cn0dp5dn5hfo6" path="res://shaders/dark_pixel_background.gdshader" id="2_emkxj"]
+[ext_resource type="Shader" uid="uid://d02p7yhbhrkx7" path="res://shaders/darkness_surrounding.gdshader" id="3_pfc5x"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f1b1r"]
+shader = ExtResource("2_emkxj")
+shader_parameter/bgColor = Vector3(0.01, 0.16, 0.42)
+shader_parameter/rectColor = Vector3(0.01, 0.26, 0.57)
+shader_parameter/resolution = Vector2(1920, 1080)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pfc5x"]
+shader = ExtResource("3_pfc5x")
+shader_parameter/radius = 64.0
+shader_parameter/falloff = 0.05
+shader_parameter/min_brightness = 0.2
+shader_parameter/pixel_size = 1.0
+shader_parameter/center_offset = Vector2(0, 0)
+shader_parameter/darkness_color = Color(0, 0, 0, 1)
 
 [node name="LevelTransition" type="Control" unique_id=363060950]
 layout_mode = 3
@@ -12,6 +29,7 @@ grow_vertical = 2
 script = ExtResource("1_3hufs")
 
 [node name="Background" type="ColorRect" parent="." unique_id=1159155257]
+material = SubResource("ShaderMaterial_f1b1r")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -56,5 +74,9 @@ custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
 text = "Continue"
+
+[node name="ShaderTEst" type="Sprite2D" parent="." unique_id=535202149]
+visible = false
+material = SubResource("ShaderMaterial_pfc5x")
 
 [connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
