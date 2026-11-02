@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dmu6y0plvja88" path="res://scripts/Core/hub_level.gd" id="1_lictt"]
 [ext_resource type="PackedScene" uid="uid://b0rpwot0fbt6t" path="res://scenes/states/UnitCard.tscn" id="2_lictt"]
 [ext_resource type="Texture2D" uid="uid://diut3grmm6et0" path="res://art/textures/StoryCards/camp_campfire (1).png" id="2_wggnu"]
+[ext_resource type="Texture2D" uid="uid://boyi2mqyjqo52" path="res://art/textures/Emil_portrait.png" id="3_wggnu"]
 
 [node name="HubLevel" type="Control" unique_id=1070308301]
 layout_mode = 3
@@ -54,30 +55,134 @@ grow_vertical = 0
 
 [node name="ColorRect" type="ColorRect" parent="PlayerUnitContainer" unique_id=838073606]
 layout_mode = 2
-color = Color(0.2822526, 0, 0.12729862, 1)
+color = Color(0.5956086, 1.0829419e-06, 0.2930877, 1)
 
 [node name="UnitRows" type="VBoxContainer" parent="PlayerUnitContainer" unique_id=906557925]
 layout_mode = 2
 
-[node name="GarrisonLabel" type="Label" parent="PlayerUnitContainer/UnitRows" unique_id=870894649]
+[node name="GarrisonLabelBackground" type="ColorRect" parent="PlayerUnitContainer/UnitRows" unique_id=929733940]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
+color = Color(0.38754183, 0.00011527315, 0.39358848, 1)
+
+[node name="GarrisonLabel" type="Label" parent="PlayerUnitContainer/UnitRows/GarrisonLabelBackground" unique_id=870894649]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 1200.0
+offset_bottom = 46.0
 theme_override_font_sizes/font_size = 48
-text = "GARRISON"
+text = "   GARRISON"
+
+[node name="GarrisonGridContainer" type="GridContainer" parent="PlayerUnitContainer/UnitRows" unique_id=1299251889]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PlayerUnitContainer/UnitRows/GarrisonGridContainer" unique_id=670386700]
+custom_minimum_size = Vector2(85, 85)
+layout_mode = 2
 
 [node name="GarrisonRow" type="HBoxContainer" parent="PlayerUnitContainer/UnitRows" unique_id=1847708169]
+visible = false
 custom_minimum_size = Vector2(0, 90)
 layout_mode = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="PartyLabel" type="Label" parent="PlayerUnitContainer/UnitRows" unique_id=1197554971]
+[node name="PartyLabelBackground2" type="ColorRect" parent="PlayerUnitContainer/UnitRows" unique_id=1959278315]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
+color = Color(0.38754183, 0.00011527315, 0.39358848, 1)
+
+[node name="PartyLabel" type="Label" parent="PlayerUnitContainer/UnitRows/PartyLabelBackground2" unique_id=1488775119]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 1200.0
+offset_bottom = 46.0
 theme_override_font_sizes/font_size = 48
-text = "PARTY"
+text = "   PARTY"
 
 [node name="RosterRow" type="HBoxContainer" parent="PlayerUnitContainer/UnitRows" unique_id=37820832]
+visible = false
 custom_minimum_size = Vector2(0, 110)
 layout_mode = 2
+
+[node name="PartyMarginContainer" type="MarginContainer" parent="PlayerUnitContainer/UnitRows" unique_id=788737303]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="PartyGridContainer" type="GridContainer" parent="PlayerUnitContainer/UnitRows/PartyMarginContainer" unique_id=1545320020]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 4
+
+[node name="UnitPanel" type="Panel" parent="PlayerUnitContainer/UnitRows/PartyMarginContainer/PartyGridContainer" unique_id=948467757]
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+
+[node name="UnitPortrait" type="TextureRect" parent="PlayerUnitContainer/UnitRows/PartyMarginContainer/PartyGridContainer/UnitPanel" unique_id=1379827513]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_wggnu")
+stretch_mode = 5
+
+[node name="UnitPanel2" type="Panel" parent="PlayerUnitContainer/UnitRows/PartyMarginContainer/PartyGridContainer" unique_id=917448448]
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+
+[node name="UnitPortrait" type="TextureRect" parent="PlayerUnitContainer/UnitRows/PartyMarginContainer/PartyGridContainer/UnitPanel2" unique_id=1438679520]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_wggnu")
+stretch_mode = 5
+
+[node name="UnitPanel3" type="Panel" parent="PlayerUnitContainer/UnitRows/PartyMarginContainer/PartyGridContainer" unique_id=1067470292]
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+
+[node name="UnitPortrait" type="TextureRect" parent="PlayerUnitContainer/UnitRows/PartyMarginContainer/PartyGridContainer/UnitPanel3" unique_id=369550872]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_wggnu")
+stretch_mode = 5
+
+[node name="UnitPanel4" type="Panel" parent="PlayerUnitContainer/UnitRows/PartyMarginContainer/PartyGridContainer" unique_id=585544603]
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+
+[node name="UnitPortrait" type="TextureRect" parent="PlayerUnitContainer/UnitRows/PartyMarginContainer/PartyGridContainer/UnitPanel4" unique_id=655020357]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_wggnu")
+stretch_mode = 5
 
 [node name="ButtonContainer" type="PanelContainer" parent="." unique_id=1275871928]
 layout_mode = 1
