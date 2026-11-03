@@ -77,15 +77,15 @@ data = {
 }
 
 [node name="StoryCards" parent="UI_Elements" parent_id_path=PackedInt32Array(134262859) index="2" unique_id=1488155635]
-intro = Array[Texture2D]([ExtResource("2_ytn8h"), ExtResource("3_tuif4")])
-outro = Array[Texture2D]([ExtResource("2_ytn8h"), ExtResource("3_tuif4")])
+intro = Array[Texture2D]([ExtResource("2_ytn8h")])
+outro = Array[Texture2D]([ExtResource("3_tuif4")])
 fade_time = 0.3
 
 [node name="Lights" parent="." index="5" unique_id=38605441]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8169193, 4.232548, -3.0859313)
 
 [node name="Lamp" parent="Lights" index="0" unique_id=286206317]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.803471, 15.515251, 10.36287)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.803471, 15.515251, 6.36287)
 visible = true
 
 [node name="Lamp2" parent="Lights" index="1" unique_id=1926863076]
@@ -93,12 +93,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.443085, 1.9841189, -13.621
 visible = true
 
 [node name="Bird" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="0" unique_id=159367408 instance=ExtResource("3_vbfgb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0.5, -13)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.5, -7)
 data = SubResource("Resource_lxfn4")
 state = SubResource("Resource_e2q1c")
 
 [node name="Ghost_Enemy" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="1" unique_id=1339368304 instance=ExtResource("8_e2q1c")]
-transform = Transform3D(1, 0, 0, 0, 0.99961925, 0.027590152, 0, -0.027590152, 0.99961925, 15, 0.5, -15)
+transform = Transform3D(1, 0, 0, 0, 0.99961925, 0.027590152, 0, -0.027590152, 0.99961925, 5, 0.5, -7)
 data = SubResource("Resource_ruqf1")
 state = SubResource("Resource_ckkav")
 

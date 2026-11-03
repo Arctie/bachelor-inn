@@ -218,6 +218,7 @@ func _place_player_units() -> void:
 		new_unit.camera = get_viewport().get_camera_3d()
 		new_unit.position = grid_to_world(pos)
 		new_unit.state.grid_position = pos
+		new_unit.show()
 		for c: Character in Main.characters:
 			if is_instance_valid(c) and not party.has(c):
 				c.hide()
@@ -957,14 +958,15 @@ func _continue_enemy_turn() -> void:
 	#state_machine.transition_to(StateTurnTransition.new(true))
 
 func check_trigger_conditions() -> void:
+	print("TRIGGER CHECK  selected=", selected_unit, "  state=", state_machine.current)
 	if selected_unit == null:
 		return
-	
 	var pos := selected_unit.state.grid_position
 	var cell_item := occupancy_map.get_cell_item(pos)
-	
-	if cell_item != player_code and cell_item != player_code_done:
-		return
+	print("  pos=", pos, "  cell_item=", cell_item, "  trigger=", get_trigger_name(pos))
+	if not state_machine.current is StateFreeRoaming or state_machine.current is StateFreeRoamAnimating:
+		if cell_item != player_code and cell_item != player_code_done:
+			return
 	
 	## Trigger check if a player has landed ontop of a trigger
 	if get_trigger_name(pos) == "02_Trigger2": ## This is interact trigger
@@ -980,8 +982,8 @@ func check_trigger_conditions() -> void:
 	elif get_trigger_name(pos) == "04_Trigger4":
 		if not selected_unit:
 			return
-		_recruit_neutral_units()
 		print("Recruit trigger activated.")
+		_recruit_neutral_units()
 	elif get_trigger_name(pos) == "00_Victory":
 		print("Victory tile triggered by: ", selected_unit.data.unit_name if selected_unit else "null")
 		if not selected_unit:
@@ -1630,7 +1632,7 @@ func _on_chest_opened(pos: Vector3i) -> void:
 func _recruit_neutral_units() -> void:
 	var player_chars: Array[Character] = []
 	var party_is_full: bool = Main.active_party.size() >= 4
-	for c in characters:
+	for c: Character in characters.duplicate():
 		if c == null:
 			continue
 		if c.state.faction != CharacterState.Faction.NEUTRAL:
@@ -1653,13 +1655,16 @@ func _recruit_neutral_units() -> void:
 			push_error("No definition found for: " + c.data.unit_name)
 		if party_is_full:
 			Main.current_garrison.append(c.scene_id)
+			occupancy_map.set_cell_item(c.state.grid_position, GridMap.INVALID_CELL_ITEM)
 			characters.erase(c)
 			c.hide()
 			c.position = Vector3(0, -100, 0) #hide
 			continue
 		Main.active_party.append(c.scene_id)
 		player_characters.append(c)
-		occupancy_map.set_cell_item(c.state.grid_position, player_code)
+		var roaming: bool = state_machine.current is StateFreeRoaming or state_machine.current is StateFreeRoamAnimating
+		if roaming:
+			occupancy_map.set_cell_item(c.state.grid_position, player_code)
 		Main.level.emit_signal("character_stats_changed", c)
 		print("Recruited: ", c.data.unit_name)
 		
