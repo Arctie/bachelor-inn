@@ -200,6 +200,7 @@ func _set_up_grids() -> void:
 
 func _place_player_units() -> void:
 	print("_place_player_units - Main.characters size: ", Main.characters.size())
+	var party: Array[Character] = get_party_characters()
 	var spawn_points: Array[Vector3i] = occupancy_map.get_used_cells()
 	var characters_placed := 0
 	#print("Loading new level, number of playable characters: ", Main.characters.size())
@@ -209,14 +210,18 @@ func _place_player_units() -> void:
 		if get_unit_name(pos) != "00_Unit":
 			occupancy_map.set_cell_item(pos, GridMap.INVALID_CELL_ITEM)
 			continue
-		if characters_placed >= Main.characters.size():
+		if characters_placed >= party.size():#Main.characters.size():
 			occupancy_map.set_cell_item(pos, GridMap.INVALID_CELL_ITEM)
 			continue
-		var new_unit: Character = Main.characters[characters_placed]
+		var new_unit: Character = party[characters_placed]#Main.characters[characters_placed]
 		characters_placed += 1
 		new_unit.camera = get_viewport().get_camera_3d()
 		new_unit.position = grid_to_world(pos)
 		new_unit.state.grid_position = pos
+		for c: Character in Main.characters:
+			if is_instance_valid(c) and not party.has(c):
+				c.hide()
+				c.position = Vector3(0, -100, 0)
 		new_unit.state.is_moved = false
 		new_unit.state.is_ability_used = false
 		if new_unit.get_parent() != Main.world:
@@ -356,6 +361,14 @@ func get_selectable_characters() -> Array[Character]:
 	#return result
 	return unmoved if not unmoved.is_empty()  else result
 
+func get_party_characters() -> Array[Character]:
+	var out: Array[Character] = []
+	for id: String in Main.active_party:
+		for c: Character in Main.characters:
+			if is_instance_valid(c) and c.scene_id == id:
+				out.append(c)
+				break
+	return out
 
 func select_next_character() -> void:
 	if state_machine.current is StateDivineTurn:
@@ -1045,6 +1058,7 @@ func check_victory_conditions() -> void:
 
 func next_level() -> void:
 	## NOTE: This is a clean up function that moves the level forward
+	var party_ids: Array[String] = []
 	print("next level called.")
 	if _level_complete:
 		print("Level already complete. Cant run next_level() again.")
@@ -1062,12 +1076,21 @@ func next_level() -> void:
 		
 	await get_tree().create_timer(1.0).timeout
 	
-	# Update player units and move to main.character array
-	Main.characters.clear()
+	# Update player units and move them to main.character array
 	for c in player_characters:
 		if is_instance_valid(c):
 			c.calc_derived_stats()
-			Main.characters.append(c)
+			party_ids.append(c.scene_id)
+	var rebuilt: Array[Character] = []
+	for c in Main.characters:
+		if is_instance_valid(c) and c.state.is_alive:
+			rebuilt.append(c)
+	Main.characters = rebuilt
+	#Main.characters.clear()
+	#for c in player_characters:
+		#if is_instance_valid(c):
+			#c.calc_derived_stats()
+			#Main.characters.append(c)
 	
 	#Main.go_to_transition_screen()
 	print("Characters appended to Main. Playing outro.")

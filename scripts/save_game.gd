@@ -201,8 +201,8 @@ func read(save_slot: int) -> bool:
 		var scene_id : String = unit_dict.get("scene")
 		print("Loading unit: ", scene_id, " in active_party: ", Main.active_party.has(scene_id))
 		
-		if not Main.active_party.has(scene_id):
-			continue
+		#if not Main.active_party.has(scene_id):
+			#continue
 		var def: CharacterDefinition = registry.characters.get(scene_id)
 		if def == null:
 			push_error("Unknown character scene_id: " + scene_id)
@@ -343,6 +343,7 @@ func save_progress(save_slot: int, level_index: int) -> void:
 		"divine_turn_unlocked": Main.divine_turn_unlocked,
 		"full_roster": Main.full_roster,
 		"active_party": Main.active_party,
+		"current_garrison": Main.current_garrison,
 		"units": units
 		}
 	
