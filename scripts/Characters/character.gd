@@ -55,12 +55,7 @@ var my_outline_material : ShaderMaterial = null
 #region inferred variables
 var camera : Camera3D
 var health_bar : HealthBar
-#var level_up_popup : LevelUpPopUp
-#var skill_choose_popup : SkillChoose
-#var health_bar_ally : HealthBar
-#var health_bar_enemy : HealthBar
 #endregion
-
 
 func play(anim : SpriteAnim) -> void:
 	if anim == null:
@@ -104,11 +99,9 @@ func play(anim : SpriteAnim) -> void:
 	my_outline_material.set_shader_parameter("frame_columns", current_animation.frame_columns)
 	my_outline_material.set_shader_parameter("frame_rows", current_animation.frame_rows)
 
-
 func pause_anim() -> void:
 	audio_player.stop()
 	play(idle_animation)
-
 
 func clone() -> Character:
 	var c := Character.new()
@@ -120,25 +113,23 @@ func clone() -> Character:
 
 	return c
 
-
 func _on_sanity_changed(_in_sanity : int) -> void:
 	if !(state.current_sanity <= 0 and state.is_alive):
 		return
-	
+	## TODO: Use duplicate() state instead of pre_corrupted lines - if we want to carry over stuff.
 	var pos : Vector3i = state.grid_position
 	var pre_corrupted_data : CharacterData = data
 	var pre_corrupted_state : CharacterState = state
-	die(false);
+	die(false); ## NOTE: This triggers
 	var CorruptedChar : Character = Main.level.spawn_corrupted_character(pos)
 	CorruptedChar.data = pre_corrupted_data
 	CorruptedChar.state = pre_corrupted_state
 	CorruptedChar.state.current_health = CorruptedChar.state.max_health
-	CorruptedChar.state.faction = CorruptedChar.state.Faction.ENEMY;
+	CorruptedChar.state.faction = CharacterState.Faction.ENEMY;
 	CorruptedChar.state.is_alive = true;
 	CorruptedChar.state.is_moved = true;
 	CorruptedChar.state.is_ability_used = false;
 	CorruptedChar.data.unit_name += "'thulhu"
-
 
 func get_random_unaquired_skill(ignore_skill : Skill = null) -> Skill:
 	var new_skill : Skill = null;
@@ -216,7 +207,6 @@ func get_random_unaquired_skill(ignore_skill : Skill = null) -> Skill:
 #	level_up_popup.strength = data.strength;
 #	level_up_popup.endurance = data.endurance;
 
-
 func calc_derived_stats() -> void:
 	if data == null:
 		return
@@ -241,7 +231,6 @@ func calc_derived_stats() -> void:
 	#if state.weapon == null or state.weapon.weapon_id == "unarmed":
 		#var weapon_id := get_default_weapon_id()
 		#state.weapon = WeaponRegistry.get_weapon(weapon_id)
-
 
 func update_derived_stats_after_level_up() -> void:
 	calc_derived_stats()
@@ -287,7 +276,6 @@ func move_to(pos: Vector3i, simulate_only: bool = false) -> void:
 		Main.level.occupancy_map.set_cell_item(state.grid_position, grid_code);
 		Main.level.emit_signal("character_stats_changed", self)
 
-
 func reset() -> void:
 	state.is_alive = true;
 	var keys: Array = state.skill_cooldowns.keys()
@@ -308,7 +296,6 @@ func reset() -> void:
 		if s.cooldown_duration_turns > 0:
 			print("Skill: ", s.skill_id, " cooldown remaining: ", state.skill_cooldowns.get(s.skill_id, 0), "/", s.cooldown_duration_turns)
 	Main.level.emit_signal("character_stats_changed", self)
-
 
 ## TODO: Import this to attack.gd?
 func apply_damage(amount: int, simulate_only: bool = false, 
@@ -375,6 +362,7 @@ func die(simulate_only : bool) -> void:
 		if state.is_playable():
 			Main.characters.erase(self)
 			Main.active_party.erase(scene_id)
+			Main.full_roster.erase(scene_id)
 		Main.level.characters.erase(self)
 		Main.level.aggroed_enemies.erase(self)
 		Main.level.enemy_characters.erase(self)
