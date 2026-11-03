@@ -210,10 +210,10 @@ func _place_player_units() -> void:
 		if get_unit_name(pos) != "00_Unit":
 			occupancy_map.set_cell_item(pos, GridMap.INVALID_CELL_ITEM)
 			continue
-		if characters_placed >= party.size():#Main.characters.size():
+		if characters_placed >= party.size():
 			occupancy_map.set_cell_item(pos, GridMap.INVALID_CELL_ITEM)
 			continue
-		var new_unit: Character = party[characters_placed]#Main.characters[characters_placed]
+		var new_unit: Character = party[characters_placed]
 		characters_placed += 1
 		new_unit.camera = get_viewport().get_camera_3d()
 		new_unit.position = grid_to_world(pos)
@@ -1628,9 +1628,8 @@ func _on_chest_opened(pos: Vector3i) -> void:
 		Tutorial.advance_timeline()
 
 func _recruit_neutral_units() -> void:
-	#print("recruit_neutral_units() triggered")
 	var player_chars: Array[Character] = []
-	
+	var party_is_full: bool = Main.active_party.size() >= 4
 	for c in characters:
 		if c == null:
 			print("null c in characters found.")
@@ -1640,10 +1639,16 @@ func _recruit_neutral_units() -> void:
 		if not c.state.is_recruitable:
 			continue
 		
+		## TODO: Add a check to see if party is already full. if active_party.size() > 3. 
 		c.state.is_recruitable = false  # prevent double recruit
 		c.state.faction = CharacterState.Faction.PLAYER
 		Main.level.emit_signal("character_stats_changed", c)
 		c.scene_id = c.data.unit_name.to_lower()
+		if party_is_full:
+			Main.current_garrison.append(c.scene_id)
+			characters.erase(c)
+			c.position = Vector3(0, -100, 0) #hide
+			continue
 		player_characters.append(c)  # add to dedicated player array
 		if not Main.full_roster.has(c.scene_id):
 			Main.full_roster.append(c.scene_id)
