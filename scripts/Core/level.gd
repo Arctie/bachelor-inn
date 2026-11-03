@@ -958,13 +958,13 @@ func _continue_enemy_turn() -> void:
 	#state_machine.transition_to(StateTurnTransition.new(true))
 
 func check_trigger_conditions() -> void:
-	print("TRIGGER CHECK  selected=", selected_unit, "  state=", state_machine.current)
 	if selected_unit == null:
 		return
 	var pos := selected_unit.state.grid_position
-	var cell_item := occupancy_map.get_cell_item(pos)
-	print("  pos=", pos, "  cell_item=", cell_item, "  trigger=", get_trigger_name(pos))
-	if not state_machine.current is StateFreeRoaming or state_machine.current is StateFreeRoamAnimating:
+	var roaming: bool = state_machine.current is StateFreeRoaming \
+			or state_machine.current is StateFreeRoamAnimating
+	if not roaming:
+		var cell_item := occupancy_map.get_cell_item(pos)
 		if cell_item != player_code and cell_item != player_code_done:
 			return
 	
@@ -992,6 +992,7 @@ func check_trigger_conditions() -> void:
 		if objectives.is_empty():
 			next_level()	# NOTE: If no objectives in level, just trigger victory.
 			return
+		# Manual check for objectives
 		for o in objectives:
 			if o is ObjectiveEscortNpc:
 				if selected_unit.data.unit_name != o.target_npc_name:
@@ -1665,7 +1666,7 @@ func _recruit_neutral_units() -> void:
 		var roaming: bool = state_machine.current is StateFreeRoaming or state_machine.current is StateFreeRoamAnimating
 		if roaming:
 			occupancy_map.set_cell_item(c.state.grid_position, player_code)
-		Main.level.emit_signal("character_stats_changed", c)
+		emit_signal("character_stats_changed", c)
 		print("Recruited: ", c.data.unit_name)
 		
 	game_state = GameState.from_level(self)
