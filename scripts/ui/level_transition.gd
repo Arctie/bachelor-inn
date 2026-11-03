@@ -14,7 +14,7 @@ func _setup_ui() -> void:
 	$VBoxContainer/HBoxContainer/FlavorText.text = entry.flavor_text#Main.level_flavor_texts.get(level_name, "")
 	
 	## TODO: FIll in the "card slots" for each unit
-	for c in Main.characters:
+	for c in Main.get_party():
 		if c == null:
 			continue
 		c.state.unspent_attribute_points += c.state.attribute_points_per_level
@@ -24,7 +24,7 @@ func _setup_ui() -> void:
 
 func _on_continue_button_pressed() -> void:
 	print("Continue pressed")
-	for c in Main.characters:
+	for c in Main.get_party():
 		if c == null:
 			continue
 		if c.state.unspent_attribute_points > 0:
@@ -37,6 +37,6 @@ func _on_continue_button_pressed() -> void:
 	#Main.next_level()
 
 func update_continue_button() -> void:
-	for c in Main.characters:
+	for c in Main.get_party():
 		c.state.level += 1
 		print("Level up! " + c.data.unit_name + " is now level " + str(c.state.level))

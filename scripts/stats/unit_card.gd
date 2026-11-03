@@ -70,7 +70,8 @@ func setup(character: Character) -> void:
 
 ## FUNCTIONS
 func _check_can_continue() -> bool:
-	for c in Main.characters:
+	for c in Main.get_party():
+	#for c in Main.active_party:
 		if c != null and c.state.unspent_attribute_points > 0:
 			return false
 	return true
