@@ -32,5 +32,6 @@ func _on_back_button_pressed() -> void:
 		Main.level = null
 	Main.characters.clear()
 	Main.active_party.clear()
+	Main.current_garrison.clear()
 	Main.full_roster.clear()	
 	get_tree().change_scene_to_file("res://scenes/userinterface/Menus/main_menu.tscn")
