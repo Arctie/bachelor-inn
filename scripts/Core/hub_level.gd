@@ -22,7 +22,9 @@ func _ready() -> void:
 	for grid: GridContainer in [party_grid, garrison_grid]:
 		for slot: UnitPortraitSlot in grid.get_children():
 			slot.unit_dropped.connect(_on_unit_dropped)
-	_fill_grid(party_grid, Main.active_party)
+	_refresh_grids()
+	#_fill_grid(party_grid, Main.active_party)
+	#_fill_grid(garrison_grid, Main.current_garrison)
 
 func _on_next_level_button_pressed() -> void:
 	queue_free()
