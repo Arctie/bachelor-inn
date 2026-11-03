@@ -185,13 +185,17 @@ func read(save_slot: int) -> bool:
 	var units : Array = slot["units"]
 	var raw_roster: Array = slot.get("full_roster", [])
 	var raw_party: Array = slot.get("active_party", [])
+	var raw_garrison: Array = slot.get("current_garrison", [])
 	var location: String = slot.get("location", "level")
 	Main.full_roster.clear()
 	Main.active_party.clear()
+	Main.current_garrison.clear()
 	for id: String in raw_roster:
 		Main.full_roster.append(str(id))
 	for id: String in raw_party:
 		Main.active_party.append(str(id))
+	for id: String in raw_garrison:
+		Main.current_garrison.append(str(id))
 	Main.characters.clear() # Clear before rebuilding, for safety
 	#print("active_party: ", Main.active_party)
 	#print("full_roster: ", Main.full_roster)
@@ -266,7 +270,8 @@ func read(save_slot: int) -> bool:
 		character.state = state
 		character.calc_derived_stats()
 		Main.characters.append(character)
-		
+		print("loaded roster: ", Main.full_roster, " party: ", Main.active_party,
+		" garrison: ", Main.current_garrison, " nodes: ", Main.characters.size())
 	#print("read() called. slot: ", save_slot)
 	#print("Units found in save file: ", units.size())
 	if location == "camp":

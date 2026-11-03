@@ -16,6 +16,7 @@ func init() -> void:
 	_garrison = Main.current_garrison
 	
 func _ready() -> void:
+	print("hub opened. party: ", Main.active_party, " garrison: ", Main.current_garrison)
 	Main.current_game_location = Main.GameLocation.CAMP
 	Main.save.save_progress(Main.current_save_slot, Main.current_level_index)
 	for grid: GridContainer in [party_grid, garrison_grid]:

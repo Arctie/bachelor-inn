@@ -1632,41 +1632,35 @@ func _recruit_neutral_units() -> void:
 	var party_is_full: bool = Main.active_party.size() >= 4
 	for c in characters:
 		if c == null:
-			print("null c in characters found.")
 			continue
 		if c.state.faction != CharacterState.Faction.NEUTRAL:
 			continue
 		if not c.state.is_recruitable:
 			continue
-		
-		## TODO: Add a check to see if party is already full. if active_party.size() > 3. 
 		c.state.is_recruitable = false  # prevent double recruit
 		c.state.faction = CharacterState.Faction.PLAYER
-		Main.level.emit_signal("character_stats_changed", c)
 		c.scene_id = c.data.unit_name.to_lower()
-		if party_is_full:
-			Main.current_garrison.append(c.scene_id)
-			characters.erase(c)
-			c.position = Vector3(0, -100, 0) #hide
-			continue
-		player_characters.append(c)  # add to dedicated player array
-		if not Main.full_roster.has(c.scene_id):
-			Main.full_roster.append(c.scene_id)
-		Main.active_party.append(c.scene_id)
-		Main.characters.append(c)
-		occupancy_map.set_cell_item(c.state.grid_position, player_code)
-		
+		if not Main.full_roster.has(c.scene_id): Main.full_roster.append(c.scene_id)
+		if not Main.characters.has(c): Main.characters.append(c)
 		if c.get_parent() != Main.world:
 			c.get_parent().remove_child(c)
 			Main.world.add_child(c)
-		
 		var def: CharacterDefinition = Main.save.registry.characters.get(c.data.unit_name.to_lower(), null)
 		if def != null:
 			c.state.skills = def.base_state.skills.duplicate()
 			#print("Loaded ", c.state.skills.size(), " skills for: ", c.data.unit_name)
 		else:
 			push_error("No definition found for: " + c.data.unit_name)
-		
+		if party_is_full:
+			Main.current_garrison.append(c.scene_id)
+			characters.erase(c)
+			c.hide()
+			c.position = Vector3(0, -100, 0) #hide
+			continue
+		Main.active_party.append(c.scene_id)
+		player_characters.append(c)
+		occupancy_map.set_cell_item(c.state.grid_position, player_code)
+		Main.level.emit_signal("character_stats_changed", c)
 		print("Recruited: ", c.data.unit_name)
 		
 	game_state = GameState.from_level(self)
