@@ -362,13 +362,7 @@ func get_selectable_characters() -> Array[Character]:
 	return unmoved if not unmoved.is_empty()  else result
 
 func get_party_characters() -> Array[Character]:
-	var out: Array[Character] = []
-	for id: String in Main.active_party:
-		for c: Character in Main.characters:
-			if is_instance_valid(c) and c.scene_id == id:
-				out.append(c)
-				break
-	return out
+	return Main.get_party()
 
 func select_next_character() -> void:
 	if state_machine.current is StateDivineTurn:

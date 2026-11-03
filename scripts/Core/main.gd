@@ -185,6 +185,15 @@ func get_current_entry() -> LevelEntry:
 		return null
 	return levels[current_level_index]
 
+func get_party() -> Array[Character]:
+	var out: Array[Character] = []
+	for id: String in active_party:
+		for c: Character in characters:
+			if is_instance_valid(c) and c.scene_id == id:
+				out.append(c)
+				break
+	return out
+
 func go_to_hub_scene() -> void:
 	if is_instance_valid(Main.level):
 		print("Going to Hub. Instance Main.level is valid.")
