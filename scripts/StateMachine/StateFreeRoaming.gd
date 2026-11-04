@@ -32,7 +32,7 @@ func enter(level: Node) -> void:
 	_level.movement_map.clear()
 	_level.path_map.clear()
 	_level.aoe_preview_map.clear()
-	Main.level.ribbon.set_roaming_attack_visible(true)
+	#Main.level.ribbon.set_roaming_attack_visible(true)
 	#print("Selected unit is: ", _leader, ". And camera is following.")
 
 func exit(level: Node) -> void:
