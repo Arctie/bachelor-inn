@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://cefx11a888rec"]
+
+[ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="1_wdcp1"]
+[ext_resource type="Texture2D" uid="uid://ddogsq0mua2ft" path="res://art/textures/cursor_sword.png" id="1_xyxt2"]
+
+[resource]
+script = ExtResource("1_wdcp1")
+skill_id = "basic_attack"
+skill_name = "Basic Weapon Attack"
+icon = ExtResource("1_xyxt2")
+action_point_cost = 0
+divine_resource_cost = 0
+effect_mods = {
+&"damage": 1
+}
+max_range = 1
+target_faction = 1
+uses_action = false
+metadata/_custom_type_script = "uid://c3p07am3ababr"

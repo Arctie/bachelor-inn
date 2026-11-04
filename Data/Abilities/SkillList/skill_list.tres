@@ -11,8 +11,9 @@
 [ext_resource type="Resource" uid="uid://cqwy7r0vxoxy" path="res://Data/Abilities/melee_sweep.tres" id="9_20lfn"]
 [ext_resource type="Resource" uid="uid://chsedrtl8wrh3" path="res://Data/Abilities/no_skill.tres" id="10_0tqr0"]
 [ext_resource type="Resource" uid="uid://1pglttdkeyam" path="res://Data/Abilities/whirlwind.tres" id="11_2j2lf"]
+[ext_resource type="Resource" uid="uid://cefx11a888rec" path="res://Data/Abilities/basic_attack_roaming.tres" id="12_87bxe"]
 
 [resource]
 script = ExtResource("1_hg4ao")
-skills = Array[ExtResource("2_dylyt")]([ExtResource("3_3lsu7"), ExtResource("4_87bxe"), ExtResource("5_q06bm"), ExtResource("6_p1mvv"), ExtResource("7_0fywy"), ExtResource("8_g5lsh"), ExtResource("9_20lfn"), ExtResource("10_0tqr0"), ExtResource("11_2j2lf")])
+skills = Array[ExtResource("2_dylyt")]([ExtResource("3_3lsu7"), ExtResource("4_87bxe"), ExtResource("5_q06bm"), ExtResource("6_p1mvv"), ExtResource("7_0fywy"), ExtResource("8_g5lsh"), ExtResource("9_20lfn"), ExtResource("10_0tqr0"), ExtResource("11_2j2lf"), ExtResource("12_87bxe")])
 metadata/_custom_type_script = "uid://cewygd8mj876f"

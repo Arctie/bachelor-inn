@@ -2,7 +2,7 @@ extends Node
 
 const S_NO_SKILL: String = "no skill"#preload("res://Data/Abilities/no_skill.tres")
 #const SKILL_LIST: SkillList = preload("res://Data/Abilities/skill_list.tres")
-const SKILL_LIST_PATH: String = "res://Data/Abilities/skill_list.tres"
+const SKILL_LIST_PATH: String = "res://Data/Abilities/SkillList/skill_list.tres"
 var _by_id: Dictionary = {}
 #const S_HEAL_BASIC = preload("res://Data/Abilities/heal_basic.tres")
 #const S_HEAL_SANITY_BASIC = preload("res://Data/Abilities/heal_sanity_basic.tres")

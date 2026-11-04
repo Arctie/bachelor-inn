@@ -2,6 +2,7 @@ extends Control
 class_name Ribbon
 
 signal skill_pressed(skill: Skill)
+signal roam_attack_pressed()
 
 @onready var skills: HBoxContainer = %Skills
 @onready var roaming_attack_button: TextureButton = $NinePatchRect/RoamingAttackButton
@@ -17,7 +18,8 @@ func _ready() -> void:
 
 func set_skills(in_skills: Array[Skill]) -> void:
 	#gray_out_abilities_used(false)
-	for i in range(_skill_buttons.size()):
+	# Set ability six as default
+	for i in range(_skill_buttons.size() -1):
 		var b: TextureButton = _skill_buttons[i]
 		if i < in_skills.size() and in_skills[i] != null:
 			var s: Skill = in_skills[i]
@@ -84,6 +86,9 @@ func gray_out_abilities_used(used: bool) -> void:
 func trigger_skill_by_index(index: int) -> void:
 	if index < 0 or index >= _skill_buttons.size():
 		return
+	## replace show_button_six check with state machine state check?
+	if index == 5 and show_button_six == false:
+		return
 	var button := _skill_buttons[index]
 	if button.disabled or not button.visible:
 		return
@@ -91,8 +96,8 @@ func trigger_skill_by_index(index: int) -> void:
 	if s != null:
 		skill_pressed.emit(s)
 
-func toggle_button_six() -> void:
-	if show_button_six == false:
+func set_roaming_attack_visible(on: bool) -> void:
+	if on:
 		roaming_attack_button.show()
 	else:
 		roaming_attack_button.hide()
