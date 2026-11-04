@@ -30,7 +30,8 @@ func _on_back_button_pressed() -> void:
 	if is_instance_valid(Main.level):
 		Main.level.queue_free()
 		Main.level = null
-	Main.characters.clear()
+	Main.unload_units()
+	#Main.characters.clear()
 	Main.active_party.clear()
 	Main.current_garrison.clear()
 	Main.full_roster.clear()	

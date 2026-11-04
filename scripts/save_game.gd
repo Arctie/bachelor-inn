@@ -36,8 +36,8 @@ func create_new_from_state(slot: int, level: int, state: GameState) -> void:
 
 
 func create_new_save_data() -> void:
+	Main.unload_units()
 	var save_file: Object = FileAccess.open(SAVE_GAME_PATH, FileAccess.WRITE);
-	
 	var units := []
 	Main.full_roster = ["alfred", "emil", "lucy"]
 	Main.active_party = ["alfred", "emil", "lucy"]
@@ -89,6 +89,7 @@ func create_new_save_data() -> void:
 	save_file.close();
 
 func create_new_save_in_slot(save_slot: int) -> void:
+	Main.unload_units()
 	if save_slot == TUTORIAL_SAVE_SLOT:
 		push_error("Cannot overwrite Tutorial save slot")
 		return

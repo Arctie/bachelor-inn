@@ -66,7 +66,7 @@ func _ready() -> void:
 	
 ## Unloads the current level instance
 func unload_level() -> void:
-	unload_units()
+	#unload_units()
 	if is_instance_valid(level):
 		level.queue_free()
 	level = null
