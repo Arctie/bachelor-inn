@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SpriteAnim" format=3 uid="uid://d4h53emjericc"]
+
+[ext_resource type="Script" uid="uid://c876dul20yd5j" path="res://art/WIP/SpriteAnimation.gd" id="1_2ittv"]
+[ext_resource type="Texture2D" uid="uid://t1l4146x15c6" path="res://art/Animations/Characters/Elvy/Elvy_tex/Elvy_basecolour.png" id="1_rbdo3"]
+[ext_resource type="Texture2D" uid="uid://cf1o4hew8auy3" path="res://art/Animations/Characters/Elvy/Elvy_tex/Elvy_mask4.png" id="2_8u6eo"]
+[ext_resource type="Texture2D" uid="uid://07vl3tutauag" path="res://art/Animations/Characters/Elvy/Elvy_tex/Elvy_normals.png" id="3_jlyag"]
+
+[resource]
+script = ExtResource("1_2ittv")
+diffuse_atlas = ExtResource("1_rbdo3")
+normal_atlas = ExtResource("3_jlyag")
+mask_atlas = ExtResource("2_8u6eo")
+frame_columns = 1
+fps = 1.0
+metadata/_custom_type_script = "uid://c876dul20yd5j"

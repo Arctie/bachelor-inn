@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SpriteAnim" format=3 uid="uid://bq7hg8tucp1kk"]
+
+[ext_resource type="Script" uid="uid://c876dul20yd5j" path="res://art/WIP/SpriteAnimation.gd" id="1_2dpix"]
+[ext_resource type="Texture2D" uid="uid://vgbdgdhp3ws1" path="res://art/Animations/Characters/Skjalg/Skjalg_tex/Skjalg_basecolour.png" id="1_xf1r4"]
+[ext_resource type="Texture2D" uid="uid://cplaa0x1vnlbm" path="res://art/Animations/Characters/Skjalg/Skjalg_tex/Skjalg_mask4.png" id="2_dfm6f"]
+[ext_resource type="Texture2D" uid="uid://dewxrtiy4ftxv" path="res://art/Animations/Characters/Skjalg/Skjalg_tex/Skjalg_normals.png" id="3_xfule"]
+
+[resource]
+script = ExtResource("1_2dpix")
+diffuse_atlas = ExtResource("1_xf1r4")
+normal_atlas = ExtResource("3_xfule")
+mask_atlas = ExtResource("2_dfm6f")
+frame_columns = 1
+fps = 1.0
+metadata/_custom_type_script = "uid://c876dul20yd5j"

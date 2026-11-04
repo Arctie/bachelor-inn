@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://wms8tt2uruwp"]
+
+[ext_resource type="PackedScene" uid="uid://wo1fe0qm5jjk" path="res://scenes/Characters/character.tscn" id="1_x2ucq"]
+[ext_resource type="Resource" uid="uid://bq7hg8tucp1kk" path="res://art/Animations/Characters/Skjalg/Skjalg_Idle.tres" id="2_7qcks"]
+[ext_resource type="Texture2D" uid="uid://vgbdgdhp3ws1" path="res://art/Animations/Characters/Skjalg/Skjalg_tex/Skjalg_basecolour.png" id="3_upjxv"]
+
+[node name="Character2" unique_id=7531267 instance=ExtResource("1_x2ucq")]
+run_left_animation = ExtResource("2_7qcks")
+run_right_animation = ExtResource("2_7qcks")
+run_up_animation = ExtResource("2_7qcks")
+run_down_animation = ExtResource("2_7qcks")
+idle_animation = ExtResource("2_7qcks")
+portrait = ExtResource("3_upjxv")
+bloodColor = Color(0.3019608, 0, 0, 1)

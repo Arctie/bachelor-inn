@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://c7vorf7m3sdng"]
+
+[ext_resource type="PackedScene" uid="uid://wo1fe0qm5jjk" path="res://scenes/Characters/character.tscn" id="1_dpqva"]
+[ext_resource type="Resource" uid="uid://cc7ijawgdq7sp" path="res://art/Animations/Characters/Clara/Clara_Idle.tres" id="2_ib3po"]
+[ext_resource type="Texture2D" uid="uid://c3dfw3k3ba4gn" path="res://art/Animations/Characters/Clara/Clara_Tex/Clara_basecolour.png" id="3_6a5a3"]
+
+[node name="Character2" unique_id=7531267 instance=ExtResource("1_dpqva")]
+run_left_animation = ExtResource("2_ib3po")
+run_right_animation = ExtResource("2_ib3po")
+run_up_animation = ExtResource("2_ib3po")
+run_down_animation = ExtResource("2_ib3po")
+idle_animation = ExtResource("2_ib3po")
+portrait = ExtResource("3_6a5a3")
