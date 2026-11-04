@@ -5,7 +5,7 @@ signal skill_pressed(skill: Skill)
 signal roam_attack_pressed()
 
 @onready var skills: HBoxContainer = %Skills
-@onready var roaming_attack_button: TextureButton = $NinePatchRect/RoamingAttackButton
+@onready var roaming_attack_button: TextureButton = $NinePatchRect/Skills/RoamingAttackButton
 var show_button_six: bool = false
 var _skill_buttons: Array[TextureButton] = []
 
