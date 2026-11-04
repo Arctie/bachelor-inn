@@ -10,6 +10,10 @@ func _init(cards: StoryCards, is_outro: bool = false) -> void:
 
 func enter(level: Node) -> void:
 	print("ENTER STATE: StateStoryCards.")
+	if not is_instance_valid(_cards):
+		push_warning("StateStoryCards: no StoryCards node in this level; skipping.")
+		_on_cards_finished(level)
+		return
 	_cards.finished.connect(_on_cards_finished.bind(level), CONNECT_ONE_SHOT)
 	if _is_outro:
 		_cards.play_outro()
