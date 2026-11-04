@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SpriteAnim" format=3 uid="uid://b46mie1y5h54x"]
+
+[ext_resource type="Texture2D" uid="uid://cjxwqf2bqk4hm" path="res://art/Animations/Characters/Emilie/Emilie_Tex/Emilie_basecolour.png" id="1_ccilr"]
+[ext_resource type="Script" uid="uid://c876dul20yd5j" path="res://art/WIP/SpriteAnimation.gd" id="1_y8mgt"]
+[ext_resource type="Texture2D" uid="uid://dj5qbih4ss13p" path="res://art/Animations/Characters/Emilie/Emilie_Tex/Emilie_mask4.png" id="2_mw3o5"]
+[ext_resource type="Texture2D" uid="uid://lrrx8ey3e8f4" path="res://art/Animations/Characters/Emilie/Emilie_Tex/Emilie_normals.png" id="3_tml7g"]
+
+[resource]
+script = ExtResource("1_y8mgt")
+diffuse_atlas = ExtResource("1_ccilr")
+normal_atlas = ExtResource("3_tml7g")
+mask_atlas = ExtResource("2_mw3o5")
+frame_columns = 1
+fps = 1.0
+metadata/_custom_type_script = "uid://c876dul20yd5j"

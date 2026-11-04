@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bqwnvp3705ymn"]
+
+[ext_resource type="PackedScene" uid="uid://wo1fe0qm5jjk" path="res://scenes/Characters/character.tscn" id="1_fb1gd"]
+[ext_resource type="Resource" uid="uid://cui1vpy0pasja" path="res://art/Animations/Characters/Magna/Magna_Idle.tres" id="2_gnyuh"]
+[ext_resource type="Texture2D" uid="uid://dtlmmi6jrsodl" path="res://art/Animations/Characters/Magna/Magna_Tex/Magna_basecolour.png" id="3_mmunu"]
+
+[node name="Character2" unique_id=7531267 instance=ExtResource("1_fb1gd")]
+run_left_animation = ExtResource("2_gnyuh")
+run_right_animation = ExtResource("2_gnyuh")
+run_up_animation = ExtResource("2_gnyuh")
+run_down_animation = ExtResource("2_gnyuh")
+idle_animation = ExtResource("2_gnyuh")
+portrait = ExtResource("3_mmunu")
+bloodColor = Color(0.40784314, 0, 0, 1)

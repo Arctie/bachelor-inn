@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://fxc7eieud215"]
+
+[ext_resource type="PackedScene" uid="uid://wo1fe0qm5jjk" path="res://scenes/Characters/character.tscn" id="1_xntnu"]
+[ext_resource type="Resource" uid="uid://f16vd50mq4m8" path="res://art/Animations/Characters/Peter/Peter_Idle.tres" id="2_vaas8"]
+[ext_resource type="Texture2D" uid="uid://b6u60ea5leuid" path="res://art/Animations/Characters/Peter/Peter_Tex/Peter_basecolour.png" id="3_7jo6d"]
+
+[node name="Character2" unique_id=7531267 instance=ExtResource("1_xntnu")]
+run_left_animation = ExtResource("2_vaas8")
+run_right_animation = ExtResource("2_vaas8")
+run_up_animation = ExtResource("2_vaas8")
+run_down_animation = ExtResource("2_vaas8")
+idle_animation = ExtResource("2_vaas8")
+portrait = ExtResource("3_7jo6d")
+bloodColor = Color(0.2901961, 0, 0.3254902, 1)

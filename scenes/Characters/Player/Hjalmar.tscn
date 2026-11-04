@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://ckflph0cuor4g"]
+
+[ext_resource type="PackedScene" uid="uid://wo1fe0qm5jjk" path="res://scenes/Characters/character.tscn" id="1_lcqv1"]
+[ext_resource type="Resource" uid="uid://qxcok04jv4gr" path="res://art/Animations/Characters/Hjalmar/Hjalmar_Idle.tres" id="2_bc8iu"]
+[ext_resource type="Texture2D" uid="uid://obevclky3jsx" path="res://art/Animations/Characters/Hjalmar/Hjalmar_tex/Hjalmar_basecolour.png" id="3_33g82"]
+
+[node name="Character2" unique_id=7531267 instance=ExtResource("1_lcqv1")]
+run_left_animation = ExtResource("2_bc8iu")
+run_right_animation = ExtResource("2_bc8iu")
+run_up_animation = ExtResource("2_bc8iu")
+run_down_animation = ExtResource("2_bc8iu")
+idle_animation = ExtResource("2_bc8iu")
+portrait = ExtResource("3_33g82")
+bloodColor = Color(0.627451, 0, 0, 1)

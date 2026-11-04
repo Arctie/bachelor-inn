@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SpriteAnim" format=3 uid="uid://f16vd50mq4m8"]
+
+[ext_resource type="Texture2D" uid="uid://b6u60ea5leuid" path="res://art/Animations/Characters/Peter/Peter_Tex/Peter_basecolour.png" id="1_3160d"]
+[ext_resource type="Script" uid="uid://c876dul20yd5j" path="res://art/WIP/SpriteAnimation.gd" id="1_ewk6f"]
+[ext_resource type="Texture2D" uid="uid://dl0ilsnota5ig" path="res://art/Animations/Characters/Peter/Peter_Tex/Peter_mask4.png" id="2_fvude"]
+[ext_resource type="Texture2D" uid="uid://0e72v2p7i7uq" path="res://art/Animations/Characters/Peter/Peter_Tex/Peter_normals.png" id="3_abarg"]
+
+[resource]
+script = ExtResource("1_ewk6f")
+diffuse_atlas = ExtResource("1_3160d")
+normal_atlas = ExtResource("3_abarg")
+mask_atlas = ExtResource("2_fvude")
+frame_columns = 1
+fps = 1.0
+metadata/_custom_type_script = "uid://c876dul20yd5j"

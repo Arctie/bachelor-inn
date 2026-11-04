@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://rqnogtqg328u"]
+
+[ext_resource type="PackedScene" uid="uid://wo1fe0qm5jjk" path="res://scenes/Characters/character.tscn" id="1_dt8ko"]
+[ext_resource type="Resource" uid="uid://b46mie1y5h54x" path="res://art/Animations/Characters/Emilie/Emilie_Idle.tres" id="2_vqxr1"]
+[ext_resource type="Texture2D" uid="uid://cjxwqf2bqk4hm" path="res://art/Animations/Characters/Emilie/Emilie_Tex/Emilie_basecolour.png" id="3_oa8pk"]
+
+[node name="Character2" unique_id=7531267 instance=ExtResource("1_dt8ko")]
+run_left_animation = ExtResource("2_vqxr1")
+run_right_animation = ExtResource("2_vqxr1")
+run_up_animation = ExtResource("2_vqxr1")
+run_down_animation = ExtResource("2_vqxr1")
+idle_animation = ExtResource("2_vqxr1")
+portrait = ExtResource("3_oa8pk")
+bloodColor = Color(0.30980393, 0, 0, 1)
