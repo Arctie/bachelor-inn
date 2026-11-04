@@ -66,9 +66,16 @@ func _ready() -> void:
 	
 ## Unloads the current level instance
 func unload_level() -> void:
+	unload_units()
 	if is_instance_valid(level):
 		level.queue_free()
 	level = null
+
+func unload_units() -> void:
+	for c in Main.characters:
+		if is_instance_valid(c):
+			c.queue_free()
+	characters.clear()
 
 func next_level() -> void:
 	print("next_level() in main.gd triggered!")

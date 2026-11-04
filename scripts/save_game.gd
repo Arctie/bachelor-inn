@@ -158,9 +158,7 @@ func read(save_slot: int) -> bool:
 	#print("read() called for slot: ", save_slot)
 	if not FileAccess.file_exists(SAVE_GAME_PATH):
 		return false
-
 	Main.current_save_slot = save_slot
-	
 	var file := FileAccess.open(SAVE_GAME_PATH, FileAccess.READ)
 	var json_string := file.get_as_text()
 	file.close()
@@ -169,15 +167,12 @@ func read(save_slot: int) -> bool:
 	if json.parse(json_string) != OK:
 		push_error("JSON parse error")
 		return false
-
 	var save : Dictionary = json.data
 
 	var slot_key := "Slot " + str(save_slot + 1)
 	if not save.has(slot_key):
 		return false
-
 	var slot : Dictionary = save[slot_key]
-
 	if not slot.has("level") or not slot.has("units"):
 		return false
 
@@ -196,7 +191,8 @@ func read(save_slot: int) -> bool:
 		Main.active_party.append(str(id))
 	for id: String in raw_garrison:
 		Main.current_garrison.append(str(id))
-	Main.characters.clear() # Clear before rebuilding, for safety
+	Main.unload_units()
+	#Main.characters.clear() # Clear before rebuilding, for safety
 	#print("active_party: ", Main.active_party)
 	#print("full_roster: ", Main.full_roster)
 	#print("units in save: ", units.size())
