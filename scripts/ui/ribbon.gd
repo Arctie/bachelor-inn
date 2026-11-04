@@ -5,7 +5,7 @@ signal skill_pressed(skill: Skill)
 
 @onready var skills: HBoxContainer = %Skills
 @onready var roaming_attack_button: TextureButton = $NinePatchRect/RoamingAttackButton
-
+var show_button_six: bool = false
 var _skill_buttons: Array[TextureButton] = []
 
 func _ready() -> void:
@@ -90,6 +90,12 @@ func trigger_skill_by_index(index: int) -> void:
 	var s: Skill = button.get_meta("skill") as Skill
 	if s != null:
 		skill_pressed.emit(s)
+
+func toggle_button_six() -> void:
+	if show_button_six == false:
+		roaming_attack_button.show()
+	else:
+		roaming_attack_button.hide()
 
 func _debug_print_buttons() -> void:
 	print("=== Ribbon Debug ===")

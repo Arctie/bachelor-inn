@@ -84,13 +84,10 @@ mouse_default_cursor_shape = 2
 texture_normal = ExtResource("3_f3myg")
 stretch_mode = 3
 
-[node name="RoamingAttackButton" type="TextureButton" parent="NinePatchRect" unique_id=118968706]
+[node name="RoamingAttackButton" type="TextureButton" parent="NinePatchRect/Skills" unique_id=118968706]
+visible = false
 custom_minimum_size = Vector2(16, 16)
-layout_mode = 0
-offset_left = 109.66667
-offset_top = -3.0
-offset_right = 125.66667
-offset_bottom = 13.0
+layout_mode = 2
 focus_mode = 0
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("3_f3myg")
