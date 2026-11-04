@@ -4,6 +4,7 @@ class_name Ribbon
 signal skill_pressed(skill: Skill)
 
 @onready var skills: HBoxContainer = %Skills
+@onready var roaming_attack_button: TextureButton = $NinePatchRect/RoamingAttackButton
 
 var _skill_buttons: Array[TextureButton] = []
 
