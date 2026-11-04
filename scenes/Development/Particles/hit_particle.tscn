@@ -1,7 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://ddvscfqfihmwr"]
+[gd_scene format=3 uid="uid://ddvscfqfihmwr"]
 
 [ext_resource type="Script" uid="uid://cdje4jdvfxffu" path="res://scenes/Development/Particles/hit_particle.gd" id="1_drpyy"]
-[ext_resource type="Texture2D" uid="uid://dx86ee3nqgy8l" path="res://art/textures/ParticleTex/LightShaft_Particle.png" id="2_ubdyk"]
+[ext_resource type="Texture2D" uid="uid://ct4w2k1pi2opv" path="res://art/textures/ParticleTex/LightShaft_Particle.png" id="2_ubdyk"]
 [ext_resource type="Texture2D" uid="uid://bx4btrg5mrke8" path="res://art/textures/ParticleTex/FogParticle.png" id="3_drpyy"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_w357l"]
@@ -53,10 +53,10 @@ particles_anim_loop = false
 [sub_resource type="QuadMesh" id="QuadMesh_ft1en"]
 material = SubResource("StandardMaterial3D_8onu1")
 
-[node name="HitFX" type="Node3D"]
+[node name="HitFX" type="Node3D" unique_id=1101654340]
 script = ExtResource("1_drpyy")
 
-[node name="Hit" type="GPUParticles3D" parent="."]
+[node name="Hit" type="GPUParticles3D" parent="." unique_id=532114116]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.610636, 0)
 emitting = false
 amount = 4
@@ -66,7 +66,7 @@ explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_w357l")
 draw_pass_1 = SubResource("QuadMesh_hokb8")
 
-[node name="Hit2" type="GPUParticles3D" parent="."]
+[node name="Hit2" type="GPUParticles3D" parent="." unique_id=382042134]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.851254, 0)
 emitting = false
 amount = 2

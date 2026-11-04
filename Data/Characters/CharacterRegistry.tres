@@ -6,10 +6,14 @@
 [ext_resource type="Resource" uid="uid://siymcuydsw30" path="res://Data/Characters/Def_Emil.tres" id="4_440dy"]
 [ext_resource type="Script" uid="uid://ds4wpawmu15iw" path="res://scripts/Characters/character_registry.gd" id="4_qg64p"]
 [ext_resource type="Resource" uid="uid://02xpmekfymwp" path="res://Data/Characters/Def_Alfredo.tres" id="5_gd4ok"]
+[ext_resource type="Resource" uid="uid://djbx5nf6yr404" path="res://Data/Characters/Def_Elvy.tres" id="6_tviyw"]
+[ext_resource type="Resource" uid="uid://bcanl4wryxqfo" path="res://Data/Characters/Def_Clara.tres" id="7_5y60t"]
 
 [resource]
 script = ExtResource("4_qg64p")
 characters = Dictionary[String, ExtResource("1_far1n")]({
+"Clara": ExtResource("7_5y60t"),
+"Elvy": ExtResource("6_tviyw"),
 "alfred": ExtResource("2_far1n"),
 "alfredo": ExtResource("5_gd4ok"),
 "emil": ExtResource("4_440dy"),

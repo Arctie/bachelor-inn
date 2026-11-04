@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://b7pxxrlhn5e7i" path="res://scenes/userinterface/Menus/story_cards.tscn" id="11_n1m61"]
 [ext_resource type="PackedScene" uid="uid://d4b4a1hbdjh6j" path="res://scenes/utilities/CameraSettings.tscn" id="12_2iq81"]
 [ext_resource type="PackedScene" uid="uid://bgbspd1w6k5uk" path="res://scenes/userinterface/Menus/objective_complete_popup.tscn" id="12_85lyy"]
+[ext_resource type="PackedScene" uid="uid://cbbqog5fc0db" path="res://scenes/Development/Particles/Death_Particle.tscn" id="14_vltbs"]
 [ext_resource type="PackedScene" uid="uid://cxrc33gqig64w" path="res://scripts/Other/CombatVFXController.tscn" id="22_dypiu"]
 
 [node name="Map3d2" type="Node3D" unique_id=656823534]
@@ -149,6 +150,7 @@ light_specular = 3.335
 [node name="Particles" type="Node3D" parent="." unique_id=194722830]
 
 [node name="CombatVFXController" parent="." unique_id=1575126150 instance=ExtResource("22_dypiu")]
+death_particle_scene = ExtResource("14_vltbs")
 
 [node name="CameraSettings" parent="." unique_id=2146881514 instance=ExtResource("12_2iq81")]
 transform = Transform3D(1, 0, 0, 0, 0.34202015, 0.9396926, 0, -0.9396926, 0.34202015, 0, 0, 0)

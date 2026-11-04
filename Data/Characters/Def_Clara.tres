@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="CharacterDefinition" format=3 uid="uid://bcanl4wryxqfo"]
+
+[ext_resource type="AudioStream" uid="uid://btlak07m7wp37" path="res://audio/CharacterSounds/Unit_on_death.wav" id="1_bbrpr"]
+[ext_resource type="Script" uid="uid://csv21vgg7ba7q" path="res://scripts/Characters/CharacterDefinition.gd" id="1_m8bux"]
+[ext_resource type="Texture2D" uid="uid://c3dfw3k3ba4gn" path="res://art/Animations/Characters/Clara/Clara_Tex/Clara_basecolour.png" id="1_q6tt4"]
+[ext_resource type="AudioStream" uid="uid://3u8o3ahy2dfq" path="res://audio/CharacterSounds/Unit_on_hurt.wav" id="2_6n52r"]
+[ext_resource type="Script" uid="uid://cfb66ehlpe84n" path="res://scripts/stats/character_data.gd" id="2_pahfr"]
+[ext_resource type="AudioStream" uid="uid://dhh0v4l6b2lfn" path="res://audio/Effects/Footsteps_ running.wav" id="3_721cv"]
+[ext_resource type="PackedScene" uid="uid://c7vorf7m3sdng" path="res://scenes/Characters/Player/Clara.tscn" id="3_j5wrc"]
+[ext_resource type="AudioStream" uid="uid://cm3hqys15xllp" path="res://audio/CharacterSounds/Unit_on_spawned_in.wav" id="4_pc8uu"]
+[ext_resource type="Script" uid="uid://dnpndvvrnj26q" path="res://scripts/stats/character_state.gd" id="7_x73to"]
+[ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="8_ddqq1"]
+[ext_resource type="Resource" uid="uid://c1b3txa4fyxec" path="res://Data/Weapons/axe_basic.tres" id="9_871r7"]
+
+[sub_resource type="Resource" id="Resource_m8tr7"]
+script = ExtResource("2_pahfr")
+unit_name = "Clara"
+portrait = ExtResource("1_q6tt4")
+metadata/_custom_type_script = "uid://cfb66ehlpe84n"
+
+[sub_resource type="Resource" id="Resource_26osb"]
+script = ExtResource("7_x73to")
+weapon = ExtResource("9_871r7")
+metadata/_custom_type_script = "uid://dnpndvvrnj26q"
+
+[resource]
+script = ExtResource("1_m8bux")
+scene = ExtResource("3_j5wrc")
+base_data = SubResource("Resource_m8tr7")
+base_state = SubResource("Resource_26osb")
+metadata/_custom_type_script = "uid://csv21vgg7ba7q"

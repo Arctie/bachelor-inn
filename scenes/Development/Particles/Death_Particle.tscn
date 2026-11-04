@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://cbbqog5fc0db"]
+
+[ext_resource type="Texture2D" uid="uid://cfgx3cvvb8nly" path="res://art/textures/ParticleTex/Particle_DIed.png" id="1_hg7uc"]
+[ext_resource type="Script" uid="uid://c82yt2lmu0s5c" path="res://scenes/Development/Particles/play_death_particle.gd" id="1_wxl51"]
+
+[sub_resource type="Curve" id="Curve_wxl51"]
+_limits = [-50.0, 50.0, 0.0, 1.0]
+_data = [Vector2(0, 0.6795044), 0.0, -19.406975, 0, 0, Vector2(0.49425286, -11.834648), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_772xq"]
+curve = SubResource("Curve_wxl51")
+
+[sub_resource type="Curve" id="Curve_xoerv"]
+_data = [Vector2(0, 0), 0.0, 6.6447124, 0, 0, Vector2(0.2471264, 0.9852774), 0.0, 0.0, 0, 0, Vector2(0.99999994, 0.0062288046), -3.2398233, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_xjscx"]
+curve = SubResource("Curve_xoerv")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fjrf4"]
+particle_flag_rotate_y = true
+angle_min = -3.6999893
+angle_max = 3.7000108
+angle_curve = SubResource("CurveTexture_772xq")
+gravity = Vector3(0, 1.5, 0)
+scale_curve = SubResource("CurveTexture_xjscx")
+hue_variation_min = -0.04000002
+hue_variation_max = 0.119999975
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iyme5"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_hg7uc")
+texture_filter = 0
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_sxktf"]
+material = SubResource("StandardMaterial3D_iyme5")
+
+[node name="Node3D" type="Node3D" unique_id=1669553480]
+script = ExtResource("1_wxl51")
+
+[node name="SaidParticle" type="GPUParticles3D" parent="." unique_id=1864099456]
+amount = 1
+lifetime = 1.5
+process_material = SubResource("ParticleProcessMaterial_fjrf4")
+draw_pass_1 = SubResource("QuadMesh_sxktf")

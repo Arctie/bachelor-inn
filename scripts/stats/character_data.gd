@@ -68,12 +68,12 @@ enum Personality
 @export var portrait: Texture2D
 @export var portrait_big: Texture2D
 @export_category("Audio")
-@export var audio_hurt: AudioStream
-@export var audio_death: AudioStream
-@export var audio_move: AudioStream
-@export var audio_selected: AudioStream
+@export var audio_hurt: AudioStream = preload("res://audio/CharacterSounds/Unit_on_hurt.wav")
+@export var audio_death: AudioStream = preload("res://audio/CharacterSounds/Unit_on_death.wav")
+@export var audio_move: AudioStream = preload("res://audio/Effects/Footsteps_ running.wav")
+@export var audio_selected: AudioStream = preload("res://audio/CharacterSounds/Unit_on_hurt.wav")
 #@export var audio_voice_attacking: AudioStream # Attack sound moved to weapon
-@export var audio_spawned_in: AudioStream
+@export var audio_spawned_in: AudioStream = preload("res://audio/CharacterSounds/Unit_on_spawned_in.wav")
 
 func duplicate_data() -> CharacterData:
 	return duplicate(true);

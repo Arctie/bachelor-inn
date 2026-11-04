@@ -26,6 +26,7 @@ class_name Character
 @export var scene_id : String = ""
 
 @export var bloodColor : Color
+@export var death_vfx : PackedScene = preload("res://scenes/Development/Particles/Death_Particle.tscn")
 ### SIGNALS
 
 signal sanity_flipped(character: Character)
@@ -331,25 +332,30 @@ func apply_damage(amount: int, simulate_only: bool = false,
 	if killed:
 		play_audio_death()
 		die(simulate_only)
-
+		
 	return killed
 
 func flash_hit(crit : bool) -> void:
 	if my_material == null:
 		return
-
 	#var color := Vector3(1.0, 1.0, 1.0)
 	var strength := 1.0
-
 	if crit:
 		#color = Vector3(1.0, 0.3, 0.3)
 		strength = 1.0
-
 	#my_material.set_shader_parameter("hit_effect_color", color)
 	my_material.set_shader_parameter("hit_effect", strength)
-
 	var tween := create_tween()
 	tween.tween_property(my_material,"shader_parameter/hit_effect",0.0,0.2)
+	
+func _play_death_vfx() -> void:
+	if not death_vfx:
+		return
+	var vfx := death_vfx.instantiate() as Node3D
+	Main.level.add_child(vfx)
+	vfx.global_position = global_position
+	if vfx.has_method("play"):
+		vfx.play()
 
 func die(simulate_only : bool) -> void:
 	state.is_alive = false
@@ -357,6 +363,7 @@ func die(simulate_only : bool) -> void:
 		#AudioManager2d.play_loop(SoundEffect.SOUND_EFFECT_TYPE.UNIT_DEATH)
 		#Main.divine.divine_resource += 10 TODO: make faction check
 		play_audio_death()
+		_play_death_vfx()
 		Main.level.emit_signal("character_stats_changed", self)
 		Main.level.emit_signal("character_died", self)
 		if state.is_playable():
