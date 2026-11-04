@@ -10,9 +10,12 @@
 [ext_resource type="PackedScene" uid="uid://b10bf6hwaqddg" path="res://scenes/Characters/Player/alfred.tscn" id="4_jwc02"]
 [ext_resource type="AudioStream" uid="uid://dow7wohp1kjyd" path="res://audio/CharacterSounds/Unit_on_selected.wav" id="4_s6mqk"]
 [ext_resource type="AudioStream" uid="uid://cm3hqys15xllp" path="res://audio/CharacterSounds/Unit_on_spawned_in.wav" id="5_wcow1"]
+[ext_resource type="Texture2D" uid="uid://d3dyy3u5fy86d" path="res://art/textures/portrait_alfred.png" id="6_wcow1"]
 
 [sub_resource type="Resource" id="Resource_d8tgh"]
 script = ExtResource("1_5gw8k")
+unit_name = "Alfredo"
+portrait = ExtResource("6_wcow1")
 audio_hurt = ExtResource("2_d8tgh")
 audio_death = ExtResource("1_jwc02")
 audio_move = ExtResource("3_s6mqk")

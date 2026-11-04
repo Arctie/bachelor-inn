@@ -5,11 +5,13 @@
 [ext_resource type="Resource" uid="uid://dbkk31say6g4i" path="res://Data/Characters/Def_Lucy.tres" id="3_440dy"]
 [ext_resource type="Resource" uid="uid://siymcuydsw30" path="res://Data/Characters/Def_Emil.tres" id="4_440dy"]
 [ext_resource type="Script" uid="uid://ds4wpawmu15iw" path="res://scripts/Characters/character_registry.gd" id="4_qg64p"]
+[ext_resource type="Resource" uid="uid://02xpmekfymwp" path="res://Data/Characters/Def_Alfredo.tres" id="5_gd4ok"]
 
 [resource]
 script = ExtResource("4_qg64p")
 characters = Dictionary[String, ExtResource("1_far1n")]({
 "alfred": ExtResource("2_far1n"),
+"alfredo": ExtResource("5_gd4ok"),
 "emil": ExtResource("4_440dy"),
 "lucy": ExtResource("3_440dy")
 })

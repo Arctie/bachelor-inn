@@ -1055,41 +1055,25 @@ func check_victory_conditions() -> void:
 
 func next_level() -> void:
 	## NOTE: This is a clean up function that moves the level forward
-	var party_ids: Array[String] = []
 	print("next level called.")
-	if _level_complete:
-		print("Level already complete. Cant run next_level() again.")
-		return
+	if _level_complete: return
 	_level_complete = true
-	
 	var objectives := get_tree().get_nodes_in_group("objectives")
 	for o in objectives:
 		o.disconnect_signals()
-		
 	if Main.is_standalone_test:
 		print("Standalone test complete - returning to menu")
 		get_tree().change_scene_to_file("res://scenes/userinterface/Menus/main_menu.tscn")
 		return
-		
 	await get_tree().create_timer(1.0).timeout
-	
-	# Update player units and move them to main.character array
 	for c in player_characters:
 		if is_instance_valid(c):
 			c.calc_derived_stats()
-			party_ids.append(c.scene_id)
 	var rebuilt: Array[Character] = []
 	for c in Main.characters:
 		if is_instance_valid(c) and c.state.is_alive:
 			rebuilt.append(c)
 	Main.characters = rebuilt
-	#Main.characters.clear()
-	#for c in player_characters:
-		#if is_instance_valid(c):
-			#c.calc_derived_stats()
-			#Main.characters.append(c)
-	
-	#Main.go_to_transition_screen()
 	print("Characters appended to Main. Playing outro.")
 	state_machine.transition_to(StateStoryCards.new(story_cards, true))
 
@@ -1656,6 +1640,7 @@ func _recruit_neutral_units() -> void:
 			push_error("No definition found for: " + c.data.unit_name)
 		if party_is_full:
 			Main.current_garrison.append(c.scene_id)
+			Main.characters.append(c)
 			occupancy_map.set_cell_item(c.state.grid_position, GridMap.INVALID_CELL_ITEM)
 			characters.erase(c)
 			c.hide()
@@ -1664,7 +1649,7 @@ func _recruit_neutral_units() -> void:
 		Main.active_party.append(c.scene_id)
 		player_characters.append(c)
 		var roaming: bool = state_machine.current is StateFreeRoaming or state_machine.current is StateFreeRoamAnimating
-		if roaming:
+		if not roaming:
 			occupancy_map.set_cell_item(c.state.grid_position, player_code)
 		emit_signal("character_stats_changed", c)
 		print("Recruited: ", c.data.unit_name)
