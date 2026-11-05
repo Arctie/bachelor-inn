@@ -137,7 +137,10 @@ func _toggle_tactical_view(event: InputEvent) -> void:
 		_stored_angle = pivot.rotation
 		_pivot_target_transform.basis = Basis.from_euler(_TACTICAL_ANGLE)
 
-func move_camera_free(direction: Vector3i, speed: float) -> void:
+func move_camera_in_freemode(input: Vector3i, speed: float) -> void:
+	#your_camera.get_global_transform().basis.z
+	#Z in basis is your Vector3 forward.
+	#camera.world_position += input * speed
 	pass
 #endregion
 
