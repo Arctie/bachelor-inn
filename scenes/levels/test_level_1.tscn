@@ -87,9 +87,9 @@ fade_time = 0.3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8169193, 4.232548, -3.0859313)
 
 [node name="Lamp" parent="Lights" index="0" unique_id=286206317]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.8034706, 2.6842132, -2.0391502)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0305414, 2.6842132, -2.0391502)
 visible = true
-omni_range = 11.59
+omni_range = 7.857
 omni_attenuation = 1.187
 
 [node name="Lamp2" parent="Lights" index="1" unique_id=1926863076]

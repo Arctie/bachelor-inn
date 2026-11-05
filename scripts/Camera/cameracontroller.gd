@@ -136,6 +136,9 @@ func _toggle_tactical_view(event: InputEvent) -> void:
 		_tactical_view = true
 		_stored_angle = pivot.rotation
 		_pivot_target_transform.basis = Basis.from_euler(_TACTICAL_ANGLE)
+
+func move_camera_free(direction: Vector3i, speed: float) -> void:
+	pass
 #endregion
 
 #region _process

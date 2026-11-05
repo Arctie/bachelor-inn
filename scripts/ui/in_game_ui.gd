@@ -14,6 +14,7 @@ var mission_text: String = ""
 @onready var current_value_divine_visual: ColorRect = $DivineResource/CurrentValueDivine
 @onready var divine_power_current_value_text: Label = $DivineResource/DivinePowerCurrentValueLabel
 @onready var end_turn_button: Button = %End_Turn_Button
+var _is_hidden: bool = false
 
 #build all stats into a dictionary for use in the sub UI items
 func build_character_stats(character: Character) -> Dictionary:
@@ -232,8 +233,15 @@ func update_divine_resource_gui() -> void:
 	current_value_divine_visual.scale.y = percent
 	divine_power_current_value_text.text = str(current, " / ", cap)
 
-func _hide_ui() -> void:
-	self.hide()
+func _hide_ui(is_hidden: bool) -> void:
+	if not is_hidden: 
+		_is_hidden = true
+		if is_instance_valid(self):
+			self.hide() 
+	else:
+		_is_hidden = false
+		if is_instance_valid(self):
+			self.show()
 
 func _show_ui() -> void:
 	self.show()

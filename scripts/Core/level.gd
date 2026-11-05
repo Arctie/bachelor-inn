@@ -835,6 +835,12 @@ func _input(event: InputEvent) -> void:
 					func() -> void: 
 						if is_player_turn and not (state_machine.current is StateAnimating): 
 							game_over_screen._load_retry())
+				#KEY_H:
+					#var ui: Control = get_tree().get_first_node_in_group("ui_controller")
+					#if ui._is_hidden:
+						#ui.hide()
+					#else:
+						#ui.show()
 				KEY_ESCAPE:
 					if _level_complete or has_window_open:
 						print("Pressed ESC while another window is open.")
