@@ -39,7 +39,8 @@ func prepare(state : GameState, simulate_only: bool = false) -> void:
 		weapon_name = aggressor.state.weapon.weapon_name;
 		#result.vfx_scene = aggressor.state.weapon.vfx_scene;
 	@warning_ignore("integer_division")
-	var attack_strength :int = max(1, (aggressor.data.strength + weapon_damage) - (victim.state.defense / 2));
+	var attack_strength :int = max(1, ((aggressor.data.strength + weapon_damage)/weapon_damage) - (victim.state.defense / 2));
+	#var attack_strength :int = max(1, (weapon_damage - (victim.state.defense / 2)));
 
 	# Critical logic
 	if simulate_only == false:
