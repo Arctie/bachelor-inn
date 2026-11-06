@@ -15,9 +15,9 @@ class_name Character
 @onready var audio_player: AudioStreamPlayer3D = $AudioPlayer
 
 @export_category("UI")
-@export var portrait : Texture2D
+@export var portrait : Texture2D #tanker om at denne bare er players tekstur
 	#get: return data.portrait if data != null else null
-@export var portrait_big : Texture2D
+@export var portrait_big : Texture2D #og denne er faktiske big portrait? da kan begge brukes i UI
 	#get: return data.portrait_big if data != null else null
 
 @export_category("Model")
@@ -237,6 +237,8 @@ func update_derived_stats_after_level_up() -> void:
 	calc_derived_stats()
 
 func _ready() -> void:
+	$Outline.visible = true
+	$Sprite.visible = true
 	if placeholder_sprite:
 		placeholder_sprite.hide() # TODO: Remove the placeholder sprite from base scene before release
 	if state:
@@ -308,7 +310,7 @@ func apply_damage(amount: int, simulate_only: bool = false,
 		#print("apply_damage - audio_player: ", audio_player, " audio_hurt: ", data.audio_hurt)
 		play_audio_hurt()
 	
-	# Turn hostile if attacked
+	# Turn hostile if attackedcharacter
 	if not simulate_only and state.hostile_when_attacked:
 		if state.faction == CharacterState.Faction.NEUTRAL:
 			state.faction = CharacterState.Faction.ENEMY

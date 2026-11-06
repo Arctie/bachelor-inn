@@ -8,6 +8,7 @@
 [ext_resource type="Theme" uid="uid://l5nt8aeex4yj" path="res://scenes/userinterface/button_theme.tres" id="6_m5ao7"]
 [ext_resource type="FontFile" uid="uid://bltfi0bh6lptu" path="res://art/Fonts/RetroByte.ttf" id="7_nw6ha"]
 [ext_resource type="Texture2D" uid="uid://bxkugojenvo5a" path="res://art/textures/UI_Spritesheet.png" id="8_6f47u"]
+[ext_resource type="PackedScene" uid="uid://biisesmkbu0xv" path="res://scenes/userinterface/Level/Top_Bar_Characters_Enemies.tscn" id="9_c1gf4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b706j"]
 texture = ExtResource("8_6f47u")
@@ -135,14 +136,22 @@ text = "End Turn"
 icon_alignment = 1
 metadata/_edit_group_ = true
 
+[node name="TopBarCharactersEnemies" parent="Scale" unique_id=1965600289 instance=ExtResource("9_c1gf4")]
+layout_mode = 1
+offset_left = 577.0
+offset_top = 7.0
+offset_right = -1079.3333
+offset_bottom = -1043.0
+
 [node name="ObjectiveLabel" type="Label" parent="." unique_id=758724451]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 14.0
+offset_left = 716.0
+offset_top = 90.0
+offset_right = 926.0
+offset_bottom = 118.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 32
 text = "Placeholder text"

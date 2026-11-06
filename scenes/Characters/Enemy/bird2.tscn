@@ -26,4 +26,5 @@ transform = Transform3D(10, 0, 0, 0, 2.5711505, 3.0641778, 0, -3.0641778, 2.5711
 
 [node name="PlaceholderSprite" parent="." index="3" unique_id=166425312]
 transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 0, 1.0662484, 0)
+texture_filter = 0
 texture = ExtResource("8_0biy3")

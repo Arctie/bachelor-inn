@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://by5d2p83spbsd"]
+
+[ext_resource type="Texture2D" uid="uid://cgrppowt8tutw" path="res://art/textures/UI/UI_Redesign_Assets.png" id="1_c2frs"]
+[ext_resource type="Texture2D" uid="uid://dtlmmi6jrsodl" path="res://art/Animations/Characters/Magna/Magna_Tex/Magna_basecolour.png" id="2_da1dq"]
+
+[node name="Entity" type="Control" unique_id=1738810546]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 159.0
+offset_right = 16.0
+offset_bottom = 175.0
+
+[node name="Selected" type="NinePatchRect" parent="." unique_id=761382768]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = -1.666667
+offset_top = -2.3333282
+offset_right = 18.333332
+offset_bottom = 2.6666718
+texture = ExtResource("1_c2frs")
+region_rect = Rect2(112, 0, 16, 5)
+patch_margin_left = 2
+patch_margin_top = 5
+patch_margin_right = 2
+
+[node name="Background" type="NinePatchRect" parent="." unique_id=756368108]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_c2frs")
+region_rect = Rect2(96, 0, 16, 16)
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 3
+patch_margin_bottom = 4
+
+[node name="Control" type="Control" parent="." unique_id=639511873]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Portrait" type="TextureRect" parent="Control" unique_id=1431889611]
+clip_contents = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.333333
+offset_top = 0.3333323
+offset_right = 9.666668
+offset_bottom = 18.333332
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_da1dq")
+expand_mode = 1
+stretch_mode = 2

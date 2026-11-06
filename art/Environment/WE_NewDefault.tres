@@ -3,15 +3,19 @@
 [resource]
 background_mode = 1
 tonemap_mode = 3
-sdfgi_bounce_feedback = 1.99
+tonemap_exposure = 0.94
+ssil_radius = 11.01
+ssil_intensity = 16.0
+sdfgi_bounce_feedback = 1.32
 sdfgi_cascades = 1
+sdfgi_min_cell_size = 0.00078125
 fog_enabled = true
 fog_light_color = Color(0.02837259, 0.034384977, 0.044885457, 1)
 fog_light_energy = 0.0
 fog_density = 0.0
 fog_sky_affect = 0.0
 fog_height = 0.56
-fog_height_density = 0.602
+fog_height_density = 2.0639
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
 volumetric_fog_albedo = Color(0.24949007, 0.24949007, 0.24949007, 1)

@@ -14,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://cid4ftyh5ubox" path="res://audio/CharacterSounds/Bird_spawn_in.wav" id="6_wpby6"]
 [ext_resource type="Resource" uid="uid://c1b3txa4fyxec" path="res://Data/Weapons/axe_basic.tres" id="7_rfcif"]
 [ext_resource type="PackedScene" uid="uid://c4ugjunruadqr" path="res://scenes/MissionObjectives/objective_kill_specific.tscn" id="8_nwrgp"]
+[ext_resource type="AudioStream" uid="uid://3u8o3ahy2dfq" path="res://audio/CharacterSounds/Unit_on_hurt.wav" id="8_wpby6"]
 
 [sub_resource type="Resource" id="Resource_cr05x"]
 script = ExtResource("4_qd2ch")
@@ -21,7 +22,6 @@ unit_name = "Boss"
 endurance = 10
 audio_hurt = ExtResource("4_yc8cd")
 audio_death = ExtResource("3_cmsp8")
-audio_move = ExtResource("5_4yywq")
 audio_spawned_in = ExtResource("6_wpby6")
 metadata/_custom_type_script = "uid://cfb66ehlpe84n"
 
@@ -65,6 +65,11 @@ visible = true
 [node name="Lamp3" parent="Lights" parent_id_path=PackedInt32Array(38605441) index="2" unique_id=792911881]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.40905, 1.0350356, -33.83152)
 visible = true
+
+[node name="CameraSettings" parent="." index="8" unique_id=2146881514]
+minimum_camera_x = -100.0
+minimum_camera_z = -100.0
+maximum_camera_z = 100.0
 
 [node name="Bird" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="0" unique_id=159367408 instance=ExtResource("3_goahl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 1.5, -25)

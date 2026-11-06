@@ -97,6 +97,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.443085, -0.53111696, 0.593
 visible = true
 omni_range = 18.478
 
+[node name="DirectionalLight3D" parent="Lights" index="3" unique_id=1646267771]
+transform = Transform3D(0.59934443, -0.57991624, 0.5518002, 0.1499218, 0.75844866, 0.63425475, -0.78632677, -0.29741016, 0.541514, 8.183081, 16.736057, -0.9140687)
+light_energy = 1.03
+
 [node name="Bird" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="0" unique_id=159367408 instance=ExtResource("3_vbfgb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.5, -7)
 data = SubResource("Resource_lxfn4")
