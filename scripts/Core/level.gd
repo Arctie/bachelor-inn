@@ -195,7 +195,11 @@ func _set_up_grids() -> void:
 	aoe_preview_map = path_map.duplicate()
 	aoe_preview_map.clear()
 	add_child(aoe_preview_map)
-
+	for c: Character in player_characters:
+		if is_instance_valid(c) and c.state.is_alive:
+			select_unit(c)
+			print("Selected the unit: ", c.data.unit_name, " in level's ready()")
+			break
 	Dialogic.signal_event.connect(_on_dialogic_signal)
 
 func _place_player_units() -> void:

@@ -22,7 +22,6 @@ func enter(level: Node) -> void:
 	
 	if not is_instance_valid(_leader):
 		_leader = _pick_leader()
-		_level.select_unit(_leader)
 	if _leader == null:
 		return # This should not be possible
 	for c: Character in _level.player_characters:
@@ -35,6 +34,8 @@ func enter(level: Node) -> void:
 	_level.movement_map.clear()
 	_level.path_map.clear()
 	_level.aoe_preview_map.clear()
+	_level.select_unit(_leader)
+	print("StateFreeRoam should now have selected ", _leader.data.unit_name)
 	#Main.level.ribbon.set_roaming_attack_visible(true)
 	#print("Selected unit is: ", _leader, ". And camera is following.")
 
