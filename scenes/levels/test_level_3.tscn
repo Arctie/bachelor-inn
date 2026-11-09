@@ -2,9 +2,13 @@
 
 [ext_resource type="PackedScene" uid="uid://bu3kvc2qxcq2w" path="res://scenes/levels/LevelTemplate.tscn" id="1_0854k"]
 [ext_resource type="PackedScene" uid="uid://cs3ahspmvkfod" path="res://scenes/Development/Particles/fire_particle.tscn" id="2_ubi2b"]
+[ext_resource type="AudioStream" uid="uid://btlak07m7wp37" path="res://audio/CharacterSounds/Unit_on_death.wav" id="3_8vb2c"]
 [ext_resource type="PackedScene" uid="uid://bajx21wdflkf8" path="res://scenes/grid_items/chest.tscn" id="3_xcwdp"]
+[ext_resource type="AudioStream" uid="uid://3u8o3ahy2dfq" path="res://audio/CharacterSounds/Unit_on_hurt.wav" id="4_0l3yv"]
 [ext_resource type="PackedScene" uid="uid://b10bf6hwaqddg" path="res://scenes/Characters/Player/alfred.tscn" id="4_ypoxe"]
 [ext_resource type="Script" uid="uid://cfb66ehlpe84n" path="res://scripts/stats/character_data.gd" id="5_46sh2"]
+[ext_resource type="AudioStream" uid="uid://dhh0v4l6b2lfn" path="res://audio/Effects/Footsteps_ running.wav" id="5_hw2jj"]
+[ext_resource type="AudioStream" uid="uid://cm3hqys15xllp" path="res://audio/CharacterSounds/Unit_on_spawned_in.wav" id="6_c0ai1"]
 [ext_resource type="Script" uid="uid://dnpndvvrnj26q" path="res://scripts/stats/character_state.gd" id="6_stub3"]
 [ext_resource type="Resource" uid="uid://cegp3wmw3wytm" path="res://Data/Weapons/sword_basic.tres" id="6_uymkn"]
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="7_uymkn"]

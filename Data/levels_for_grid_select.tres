@@ -31,6 +31,13 @@ scene_path = "res://scenes/levels/test_level_1.tscn"
 flavor_text = "Flavah flavah"
 metadata/_custom_type_script = "uid://clh7qtku5w0x4"
 
+[sub_resource type="Resource" id="Resource_1ye6v"]
+script = ExtResource("1_doxni")
+display_name = "DestroyTheObject"
+scene_path = "res://scenes/levels/test_level_7.tscn"
+flavor_text = "Kill what grows so fast"
+metadata/_custom_type_script = "uid://clh7qtku5w0x4"
+
 [sub_resource type="Resource" id="Resource_o7ag5"]
 script = ExtResource("1_doxni")
 display_name = "Save The Unit"
@@ -72,13 +79,6 @@ scene_path = "res://scenes/levels/waterfallLevel.tscn"
 flavor_text = "Flavah flavah"
 metadata/_custom_type_script = "uid://clh7qtku5w0x4"
 
-[sub_resource type="Resource" id="Resource_1ye6v"]
-script = ExtResource("1_doxni")
-display_name = "DestroyTheObject"
-scene_path = "res://scenes/levels/test_level_7.tscn"
-flavor_text = "Kill what grows so fast"
-metadata/_custom_type_script = "uid://clh7qtku5w0x4"
-
 [sub_resource type="Resource" id="Resource_40shf"]
 script = ExtResource("1_doxni")
 display_name = "Teleporter"
@@ -95,5 +95,5 @@ metadata/_custom_type_script = "uid://clh7qtku5w0x4"
 
 [resource]
 script = ExtResource("2_7i6ev")
-levels = Array[ExtResource("1_doxni")]([SubResource("Resource_5fr2v"), SubResource("Resource_jendm"), SubResource("Resource_mh2pn"), SubResource("Resource_fjq50"), SubResource("Resource_o7ag5"), SubResource("Resource_lpdq8"), SubResource("Resource_t2b0q"), SubResource("Resource_doxni"), SubResource("Resource_7i6ev"), SubResource("Resource_fgg7y"), SubResource("Resource_1ye6v"), SubResource("Resource_40shf"), SubResource("Resource_ensw0")])
+levels = Array[ExtResource("1_doxni")]([SubResource("Resource_5fr2v"), SubResource("Resource_jendm"), SubResource("Resource_mh2pn"), SubResource("Resource_fjq50"), SubResource("Resource_1ye6v"), SubResource("Resource_o7ag5"), SubResource("Resource_lpdq8"), SubResource("Resource_t2b0q"), SubResource("Resource_doxni"), SubResource("Resource_7i6ev"), SubResource("Resource_fgg7y"), SubResource("Resource_40shf"), SubResource("Resource_ensw0")])
 metadata/_custom_type_script = "uid://cxpf6awrsq5lp"

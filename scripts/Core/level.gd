@@ -1242,6 +1242,7 @@ func _start_roam_skill(skill: Skill) -> void:
 	var origin: Array[Vector3i] = [caster.state.grid_position]
 	_show_skill_target_tiles(origin, skill)
 	print("Pressed skill in FreeRoam mode.")
+	print("roam targets: ", valid_skill_target_tiles.keys())
 	state_machine.transition_to(StateChoosingSkillTarget.new(true))
 
 func end_of_roam_action() -> void:
@@ -1325,6 +1326,7 @@ func begin_combat() -> void:
 	var ui := get_tree().get_first_node_in_group("ui_controller")
 	if ui:
 		ui.show_end_turn_button()
+		ui.ribbon.set_roaming_attack_visible(false)
 	# TODO: Add resolved_stacked_units() to move units to free locations
 	for c: Character in player_characters:
 		if not is_instance_valid(c) or not c.state.is_alive:

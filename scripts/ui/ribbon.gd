@@ -14,6 +14,10 @@ func _ready() -> void:
 	_skill_buttons = _collect_buttons(skills)
 	_connect_group(_skill_buttons, _on_skill_button_pressed)
 	#_debug_print_buttons()
+	var attack: Skill = SkillRegistry.get_skill("basic_attack")
+	roaming_attack_button.set_meta("skill", attack)
+	roaming_attack_button.texture_normal = attack.icon
+	roaming_attack_button.tooltip_text = "%s\n%s" % [attack.skill_name, attack.tooltip]
 	set_skills([])
 
 func set_skills(in_skills: Array[Skill]) -> void:
@@ -101,6 +105,13 @@ func set_roaming_attack_visible(on: bool) -> void:
 		roaming_attack_button.show()
 	else:
 		roaming_attack_button.hide()
+
+func trigger_roaming_attack() -> void:
+	if not roaming_attack_button.visible or roaming_attack_button.disabled:
+		return
+	var s: Skill = roaming_attack_button.get_meta("skill") as Skill
+	if s != null:
+		skill_pressed.emit(s)
 
 func _debug_print_buttons() -> void:
 	print("=== Ribbon Debug ===")

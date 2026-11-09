@@ -3,6 +3,7 @@ class_name StateFreeRoaming
 
 var _level: Level
 var _leader: Character
+#var ui: Control
 
 func _init() -> void:
 	# Build array
@@ -17,9 +18,11 @@ func enter(level: Node) -> void:
 	var ui := level.get_tree().get_first_node_in_group("ui_controller")
 	if ui:
 		ui.hide_end_turn_button()
-		
+		ui.ribbon.set_roaming_attack_visible(true)
+	
 	if not is_instance_valid(_leader):
 		_leader = _pick_leader()
+		_level.select_unit(_leader)
 	if _leader == null:
 		return # This should not be possible
 	for c: Character in _level.player_characters:
@@ -77,6 +80,8 @@ func _next_leader() -> void:
 	_level.emit_signal("character_selected", _leader)
 
 func handle_input(level: Node, event: InputEvent) -> void:
+	if not level._can_handle_input(event):
+		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_TAB:
 			_next_leader()
@@ -87,6 +92,12 @@ func handle_input(level: Node, event: InputEvent) -> void:
 			var ui := level.get_tree().get_first_node_in_group("ui_controller")
 			if ui:
 				ui.ribbon.trigger_skill_by_index(index)
+			return
+		if event.keycode == KEY_6:
+			var ui := level.get_tree().get_first_node_in_group("ui_controller")
+			if ui:
+				print("roam key 6 pressed, index: ", index)
+				ui.ribbon.trigger_roaming_attack()
 			return
 	if not (event is InputEventMouseMotion or event is InputEventMouseButton):
 		return

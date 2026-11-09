@@ -170,7 +170,7 @@ target_object_name = "MissionObject"
 
 [node name="GridObjects" type="Node" parent="." unique_id=271717750]
 
-[node name="DestructibleObject" parent="GridObjects" unique_id=1165998711 instance=ExtResource("13_healj")]
+[node name="DestructibleObject2" parent="GridObjects" unique_id=1165998711 instance=ExtResource("13_healj")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 7, 0.5, 5)
 
 [node name="FireParticle" type="Node" parent="." unique_id=336498027]

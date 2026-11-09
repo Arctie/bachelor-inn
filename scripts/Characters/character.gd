@@ -237,8 +237,10 @@ func update_derived_stats_after_level_up() -> void:
 	calc_derived_stats()
 
 func _ready() -> void:
-	$Outline.visible = true
-	$Sprite.visible = true
+	if outline:
+		outline.visible = true #$Outline.visible = true
+	if sprite:
+		sprite.visible = true #$Sprite.visible = true
 	if placeholder_sprite:
 		placeholder_sprite.hide() # TODO: Remove the placeholder sprite from base scene before release
 	if state:
