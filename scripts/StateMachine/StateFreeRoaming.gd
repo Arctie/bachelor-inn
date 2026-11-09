@@ -105,5 +105,6 @@ func handle_input(level: Node, event: InputEvent) -> void:
 		return
 	var pos: Vector3i = level.get_grid_cell_from_mouse()
 	level._update_cursor(pos)
+	## TODO: Add on hover of attackable target
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		_set_path(pos)

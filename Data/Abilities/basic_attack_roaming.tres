@@ -1,10 +1,11 @@
 [gd_resource type="Resource" script_class="Skill" format=3 uid="uid://cefx11a888rec"]
 
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="1_wdcp1"]
-[ext_resource type="Texture2D" uid="uid://ddogsq0mua2ft" path="res://art/textures/cursor_sword.png" id="1_xyxt2"]
+[ext_resource type="Texture2D" uid="uid://davk3as2tq5ut" path="res://art/textures/GUI_Assets.png" id="1_xyxt2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xyxt2"]
 atlas = ExtResource("1_xyxt2")
+region = Rect2(224, 240, 16, 16)
 
 [resource]
 script = ExtResource("1_wdcp1")
