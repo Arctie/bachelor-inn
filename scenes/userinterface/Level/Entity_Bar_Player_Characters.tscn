@@ -1,30 +1,22 @@
 [gd_scene format=3 uid="uid://by5d2p83spbsd"]
 
 [ext_resource type="Texture2D" uid="uid://cgrppowt8tutw" path="res://art/textures/UI/UI_Redesign_Assets.png" id="1_c2frs"]
-[ext_resource type="Texture2D" uid="uid://dtlmmi6jrsodl" path="res://art/Animations/Characters/Magna/Magna_Tex/Magna_basecolour.png" id="2_da1dq"]
+[ext_resource type="Script" uid="uid://biw44bn4h8bf5" path="res://scenes/userinterface/Level/TB_Entity_Controller.gd" id="1_da1dq"]
+[ext_resource type="Texture2D" uid="uid://bb65nig7oniqc" path="res://art/textures/Lucy_portrait.png" id="2_c2frs"]
+[ext_resource type="StyleBox" uid="uid://dly7gpxmaudqk" path="res://scenes/userinterface/Invisible_Button.tres" id="4_fdeow"]
 
 [node name="Entity" type="Control" unique_id=1738810546]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 3
 anchors_preset = 0
 offset_top = 159.0
 offset_right = 16.0
 offset_bottom = 175.0
+script = ExtResource("1_da1dq")
 
-[node name="Selected" type="NinePatchRect" parent="." unique_id=761382768]
+[node name="GoodBG" type="NinePatchRect" parent="." unique_id=756368108]
 unique_name_in_owner = true
 visible = false
-layout_mode = 0
-offset_left = -1.666667
-offset_top = -2.3333282
-offset_right = 18.333332
-offset_bottom = 2.6666718
-texture = ExtResource("1_c2frs")
-region_rect = Rect2(112, 0, 16, 5)
-patch_margin_left = 2
-patch_margin_top = 5
-patch_margin_right = 2
-
-[node name="Background" type="NinePatchRect" parent="." unique_id=756368108]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -33,6 +25,21 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_c2frs")
 region_rect = Rect2(96, 0, 16, 16)
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 3
+patch_margin_bottom = 4
+
+[node name="EvilBG" type="NinePatchRect" parent="." unique_id=264858522]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_c2frs")
+region_rect = Rect2(80, 0, 16, 16)
 patch_margin_left = 4
 patch_margin_top = 4
 patch_margin_right = 3
@@ -52,18 +59,44 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Portrait" type="TextureRect" parent="Control" unique_id=1431889611]
+unique_name_in_owner = true
 clip_contents = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -8.333333
-offset_top = 0.3333323
-offset_right = 9.666668
-offset_bottom = 18.333332
+offset_left = -1.0
+offset_top = -0.99999595
+offset_right = 1.0
+offset_bottom = 1.0000038
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_da1dq")
-expand_mode = 1
+texture = ExtResource("2_c2frs")
 stretch_mode = 2
+
+[node name="Selected" type="NinePatchRect" parent="." unique_id=761382768]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 34.0
+offset_bottom = 3.0
+texture = ExtResource("1_c2frs")
+region_rect = Rect2(112, 0, 16, 5)
+patch_margin_left = 2
+patch_margin_top = 5
+patch_margin_right = 2
+
+[node name="Button" type="Button" parent="." unique_id=1771311794]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+focus_mode = 0
+theme_override_styles/normal = ExtResource("4_fdeow")
+theme_override_styles/pressed = ExtResource("4_fdeow")
+theme_override_styles/hover = ExtResource("4_fdeow")
+theme_override_styles/disabled = ExtResource("4_fdeow")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

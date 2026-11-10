@@ -76,24 +76,7 @@ theme_override_constants/separation = 7
 metadata/_edit_group_ = true
 
 [node name="Entity2" parent="HBoxContainer/Entities/Control/Players" unique_id=1738810546 instance=ExtResource("2_y3qpd")]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="Entity4" parent="HBoxContainer/Entities/Control/Players" unique_id=1617749410 instance=ExtResource("2_y3qpd")]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="Entity5" parent="HBoxContainer/Entities/Control/Players" unique_id=705013815 instance=ExtResource("2_y3qpd")]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="Entity3" parent="HBoxContainer/Entities/Control/Players" unique_id=1384509858 instance=ExtResource("2_y3qpd")]
+visible = false
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -115,24 +98,7 @@ alignment = 2
 metadata/_edit_group_ = true
 
 [node name="Entity" parent="HBoxContainer/Entities/Control/Enemies" unique_id=1958997850 instance=ExtResource("2_y3qpd")]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="Entity2" parent="HBoxContainer/Entities/Control/Enemies" unique_id=333876070 instance=ExtResource("2_y3qpd")]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="Entity3" parent="HBoxContainer/Entities/Control/Enemies" unique_id=1414553329 instance=ExtResource("2_y3qpd")]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="Entity4" parent="HBoxContainer/Entities/Control/Enemies" unique_id=1618999570 instance=ExtResource("2_y3qpd")]
+visible = false
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 size_flags_horizontal = 0

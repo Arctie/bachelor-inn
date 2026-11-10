@@ -8,7 +8,8 @@
 [ext_resource type="Theme" uid="uid://l5nt8aeex4yj" path="res://scenes/userinterface/button_theme.tres" id="6_m5ao7"]
 [ext_resource type="FontFile" uid="uid://bltfi0bh6lptu" path="res://art/Fonts/RetroByte.ttf" id="7_nw6ha"]
 [ext_resource type="Texture2D" uid="uid://bxkugojenvo5a" path="res://art/textures/UI_Spritesheet.png" id="8_6f47u"]
-[ext_resource type="PackedScene" uid="uid://biisesmkbu0xv" path="res://scenes/userinterface/Level/Top_Bar_Characters_Enemies.tscn" id="9_c1gf4"]
+[ext_resource type="Texture2D" uid="uid://cgrppowt8tutw" path="res://art/textures/UI/UI_Redesign_Assets.png" id="10_c1mo8"]
+[ext_resource type="PackedScene" uid="uid://by5d2p83spbsd" path="res://scenes/userinterface/Level/Entity_Bar_Player_Characters.tscn" id="11_m5ao7"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b706j"]
 texture = ExtResource("8_6f47u")
@@ -33,6 +34,14 @@ texture_margin_top = 5.0
 texture_margin_right = 5.0
 texture_margin_bottom = 5.0
 region_rect = Rect2(227, 67, 26, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kt16o"]
+atlas = ExtResource("10_c1mo8")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lwb56"]
+atlas = ExtResource("10_c1mo8")
+region = Rect2(64, 0, 16, 16)
 
 [node name="GUI" type="Control" unique_id=1620263469]
 layout_mode = 3
@@ -136,12 +145,104 @@ text = "End Turn"
 icon_alignment = 1
 metadata/_edit_group_ = true
 
-[node name="TopBarCharactersEnemies" parent="Scale" unique_id=1965600289 instance=ExtResource("9_c1gf4")]
+[node name="TopBarCharactersEnemies" type="Control" parent="Scale" unique_id=1965600289]
 layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_left = 577.0
 offset_top = 7.0
 offset_right = -1079.3333
 offset_bottom = -1043.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3, 3)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Scale/TopBarCharactersEnemies" unique_id=1561245106]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Players" type="TextureRect" parent="Scale/TopBarCharactersEnemies/HBoxContainer" unique_id=1575489195]
+layout_mode = 2
+size_flags_vertical = 0
+texture = SubResource("AtlasTexture_kt16o")
+
+[node name="Entities" type="NinePatchRect" parent="Scale/TopBarCharactersEnemies/HBoxContainer" unique_id=1890399703]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("10_c1mo8")
+region_rect = Rect2(16, 0, 48, 27)
+patch_margin_left = 22
+patch_margin_top = 25
+patch_margin_right = 17
+patch_margin_bottom = 5
+
+[node name="Entity Holder" type="HBoxContainer" parent="Scale/TopBarCharactersEnemies/HBoxContainer/Entities" unique_id=590287981]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.030000001
+anchor_top = 0.15
+anchor_right = 0.97
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="Scale/TopBarCharactersEnemies/HBoxContainer/Entities" unique_id=1082365496]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 1.3330001
+offset_bottom = 0.0099983215
+
+[node name="Players" type="HBoxContainer" parent="Scale/TopBarCharactersEnemies/HBoxContainer/Entities/Control" unique_id=1702587200]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 1.067
+offset_left = 8.666667
+offset_top = 8.666667
+offset_right = 47.666668
+offset_bottom = -0.013332367
+theme_override_constants/separation = 7
+metadata/_edit_group_ = true
+
+[node name="Entity2" parent="Scale/TopBarCharactersEnemies/HBoxContainer/Entities/Control/Players" unique_id=1738810546 instance=ExtResource("11_m5ao7")]
+visible = false
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Enemies" type="HBoxContainer" parent="Scale/TopBarCharactersEnemies/HBoxContainer/Entities/Control" unique_id=856716923]
+unique_name_in_owner = true
+layout_direction = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.067
+offset_left = -24.666656
+offset_top = 8.666667
+offset_right = -8.6666565
+offset_bottom = -0.013332367
+grow_horizontal = 0
+alignment = 2
+metadata/_edit_group_ = true
+
+[node name="Entity" parent="Scale/TopBarCharactersEnemies/HBoxContainer/Entities/Control/Enemies" unique_id=1958997850 instance=ExtResource("11_m5ao7")]
+visible = false
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Enemies" type="TextureRect" parent="Scale/TopBarCharactersEnemies/HBoxContainer" unique_id=495444732]
+layout_mode = 2
+size_flags_vertical = 0
+texture = SubResource("AtlasTexture_lwb56")
 
 [node name="ObjectiveLabel" type="Label" parent="." unique_id=758724451]
 layout_mode = 1

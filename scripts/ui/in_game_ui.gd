@@ -4,9 +4,13 @@ class_name ui_controller
 const RIBBON: PackedScene = preload("res://scenes/userinterface/Level/ribbon.tscn");
 @onready var CharacterPreviewScene: PackedScene = preload("res://scenes/userinterface/Level/CharacterPreview.tscn")
 @onready var preview_container := %Characters_VBOX
+@onready var PlayerContainer := %Players
+@onready var EnemyContainer := %Enemies
+@onready var EntityIcon: PackedScene = preload("res://scenes/userinterface/Level/Entity_Bar_Player_Characters.tscn")
+
 @onready var player_stats: PlayerStatsUI = %Player_Stats
 @onready var enemy_stats: EnemyStatsUI = %Enemy_Stats
-var previews: Dictionary[Character, CharacterPreview] = {}
+var previews: Dictionary[Character, TB_Entity_Controller] = {}
 @onready var ribbon: Ribbon = %Ribbon
 @onready var objective_label: Label = $ObjectiveLabel
 var mission_text: String = ""
@@ -20,6 +24,7 @@ var _is_hidden: bool = false
 func build_character_stats(character: Character) -> Dictionary:
 	return {
 		"portrait": character.portrait,
+		"portrait_big": character.portrait_big,
 		"name": character.data.unit_name,
 
 		"health": character.state.current_health,
@@ -68,9 +73,12 @@ func _clear_previews() -> void:
 func _on_preview_selected(character: Character) -> void:
 	var level := get_tree().get_first_node_in_group("level")
 	if level:
-		level.try_select_unit(character) 
-		ribbon.show()
-		ribbon.set_skills(character.state.skills)
+		if character.state.faction == CharacterState.Faction.PLAYER:
+			level.try_select_unit(character) 
+			ribbon.show()
+			ribbon.set_skills(character.state.skills)
+		else:
+			return
 
 func _connect_to_level(level: Node) -> void:
 	if level == null:
@@ -124,15 +132,51 @@ func add_character_preview(character: Character) -> void:
 	
 	previews[character] = preview
 
+func fill_Topbar(character: Character) -> void:
+	if previews.has(character):
+		return
+		
+	var faction := character.state.faction
+	var Target_Container: Control
+	if faction == CharacterState.Faction.ENEMY:
+		Target_Container = EnemyContainer
+	elif faction == CharacterState.Faction.PLAYER:
+		Target_Container = PlayerContainer
+	else:
+		return
+		
+	var entity_preview := EntityIcon.instantiate()
+	previews[character] = entity_preview
+	Target_Container.add_child(entity_preview)
+	
+	if entity_preview.has_signal("preview_selected"):
+		entity_preview.preview_selected.connect(_on_preview_selected)
+	
+	if entity_preview.has_method("apply_stats"):
+		var stats_data := build_character_stats(character) if faction == CharacterState.Faction.PLAYER else build_enemy_Stats(character)
+		entity_preview.call_deferred(
+			"apply_stats",
+			stats_data,
+			character
+		)
+		
+	
 
 func _on_character_selected(character: Character) -> void:
+	if character == null or not is_instance_valid(character):
+		return
+	if character.state.faction == CharacterState.Faction.ENEMY:
+		_on_enemy_selected(character)
+		return
+	
 	player_stats.apply_stats(build_character_stats(character))
 	player_stats.show()
 	#print("DEBUG SELECT:",character.data.unit_name, "effects", character.state.active_effects)
 	ribbon.show()
 	ribbon.set_skills(character.state.skills)
-
-
+	print("Selected Character passed in: ", character)
+	print("Total previews tracked: ", previews.size())
+	
 	#print("DEBUG SELECT:", character.data.unit_name, "skills:", character.state.skills.size())
 	for c: Character in previews.keys():
 		##This is a quickfix, instead the character should be removed from the dictionary when its 
@@ -141,25 +185,27 @@ func _on_character_selected(character: Character) -> void:
 			continue;
 		previews[c].is_selected = (c == character)
 
+		var entity_ui := previews[c]
+		entity_ui.is_selected = (c == character)
 
 func _on_enemy_selected(enemy: Character) -> void:
 	enemy_stats.apply_stats(build_enemy_Stats(enemy), enemy)
 	enemy_stats.show()
 	#print("a enemy has been selected")
 
-
 func _on_character_deselected() -> void:
 	#player_stats.hide()
 	ribbon.hide()
-	for preview: CharacterPreview in previews.values():
-		preview.is_selected = false
 
+	for entity_ui: TB_Entity_Controller in previews.values():
+		if is_instance_valid(entity_ui):
+			entity_ui.is_selected = false
 
 func _on_character_stats_changed(character: Character) -> void:
 	
 	if !character.state.is_alive \
 	or character.state.faction != CharacterState.Faction.PLAYER:
-		remove_character_preview(character)
+		#remove_character_preview(character)
 		return
 	
 	if previews.has(character):
@@ -171,36 +217,41 @@ func _on_character_stats_changed(character: Character) -> void:
 	if enemy_stats.visible and character.state.faction == CharacterState.Faction.ENEMY:
 		enemy_stats.apply_stats(build_enemy_Stats(character), character)
 		
-	for preview: CharacterPreview in previews.values():
-		preview.update_effects_ui(character)
+	#for preview: CharacterPreview in previews.values():
+		#preview.update_effects_ui(character)
 	
 	if character == Main.level.selected_unit:
 		ribbon.set_skills(character.state.skills)
 
 
 func _on_party_updated(characters: Array[Character]) -> void:
-	#print("UI party_updated count:", characters.size())
+	###print("UI party_updated count:", characters.size())
+	#for character in characters:
+		###If statement in case an enemy dies during playtie, which then makes them null.
+		###Instead we should be moving the null value out of the array.
+		#if (character == null) :
+			#continue;
+		#if character.state.faction != CharacterState.Faction.PLAYER:
+			#continue
+		#add_character_preview(character)
+	#for c: Character in previews.keys():
+		#if not characters.has(c):
+			#remove_character_preview(c)
 	for character in characters:
-		##If statement in case an enemy dies during playtie, which then makes them null.
-		##Instead we should be moving the null value out of the array.
 		if (character == null) :
 			continue;
-		if character.state.faction != CharacterState.Faction.PLAYER:
-			continue
-		add_character_preview(character)
-	for c: Character in previews.keys():
-		if not characters.has(c):
-			remove_character_preview(c)
+		fill_Topbar(character)
 
 
-func remove_character_preview(character: Character) -> void:
-	if previews.has(character):
-		var preview: CharacterPreview = previews[character]
-		preview.queue_free()
-		previews.erase(character)
-		
-	if enemy_stats.current_enemy == character:
-		enemy_stats.hide()
+
+#func remove_character_preview(character: Character) -> void:
+	#if previews.has(character):
+		#var preview: CharacterPreview = previews[character]
+		#preview.queue_free()
+		#previews.erase(character)
+		#
+	#if enemy_stats.current_enemy == character:
+		#enemy_stats.hide()
 
 
 func _on_end_turn_button_pressed() -> void:
