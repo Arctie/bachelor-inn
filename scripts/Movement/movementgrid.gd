@@ -42,6 +42,9 @@ func fill_from_commands(commands : Array[Command], state : GameState) -> void:
 		var weight := state.get_tile_cost(command.end_pos)
 		
 		if command is Attack:
+			var victim: Character = state.get_unit(command.attack_pos)
+			if victim != null and not victim.visible:
+				continue
 			tile = GridTile.new(command.attack_pos, GridTile.Type.ATTACK, 9999999)
 		
 		elif command is Heal:

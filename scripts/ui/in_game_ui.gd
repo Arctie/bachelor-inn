@@ -93,6 +93,7 @@ func _connect_to_level(level: Node) -> void:
 	level.party_updated.connect(_on_party_updated)
 	level.enemy_selected.connect(_on_enemy_selected)
 	ribbon.skill_pressed.connect(level._on_ribbon_skill_pressed)
+	ribbon.roam_attack_pressed.connect(level._on_roam_attack_pressed)
 	#level.enemy_deselected.connect(_on_enemy_deselected)
 	_on_party_updated(level.characters)
 	_update_objective_label()
@@ -202,7 +203,6 @@ func _on_character_deselected() -> void:
 			entity_ui.is_selected = false
 
 func _on_character_stats_changed(character: Character) -> void:
-	
 	if !character.state.is_alive \
 	or character.state.faction != CharacterState.Faction.PLAYER:
 		#remove_character_preview(character)

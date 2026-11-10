@@ -12,7 +12,7 @@ func enter(level: Node) -> void:
 		#level.skill_caster = Main.divine.character
 	print("StateChoosingSkillTarget handle_input - divine char: ", Main.divine.character, " skill_caster: ", level.skill_caster)
 
-func _exit(level: Node) -> void:
+func exit(level: Node) -> void:
 	level.clear_aoe_preview()
 	print("EXIT STATE: StateChoosingSkillTarget.")
 
@@ -39,11 +39,15 @@ func handle_input(level: Node, event: InputEvent) -> void:
 	if event is InputEventKey and not event.echo and event.pressed:
 		match event.keycode:
 			KEY_TAB:
-				level._exit_skill_target_mode()
-				print("Key Input TAB registered in SelectingMove.")
-				level.select_next_character()
-				level.state_machine.transition_to(StateSelectingMove.new())
-				return
+				if from_roaming:
+					_cancel(level)
+					return
+				else:
+					level._exit_skill_target_mode()
+					print("Key Input TAB registered in SelectingMove.")
+					level.select_next_character()
+					level.state_machine.transition_to(StateSelectingMove.new())
+					return
 			KEY_1:
 				var ui := level.get_tree().get_first_node_in_group("ui_controller")
 				if ui:
@@ -81,6 +85,17 @@ func handle_input(level: Node, event: InputEvent) -> void:
 	
 	level.skill_target_pos = pos
 	
+	## If using skills when roaming
+	if from_roaming:
+		var tile: Vector3i = level.skill_caster.state.grid_position
+		var cast := CastSkill.new(tile, tile, pos, level.active_skill)
+		level.moves_stack.append(cast)
+		#level.create_path(pos, pos)
+		level.active_skill = null
+		level.valid_skill_target_tiles.clear()
+		level.state_machine.transition_to(StateAnimating.new(true))
+		return
+		
 	# Divine turn — skip origin selection, cast right away
 	if level.is_divine_turn:
 		level.skill_caster = Main.divine.character
@@ -98,6 +113,13 @@ func handle_input(level: Node, event: InputEvent) -> void:
 	level.state_machine.transition_to(StateChoosingSkillOrigin.new())
 	
 func _cancel(level: Node) -> void:
+	if from_roaming:
+		level.active_skill = null
+		level.skill_caster = null
+		level.valid_skill_target_tiles.clear()
+		level.path_map.clear()
+		level.state_machine.transition_to(StateFreeRoaming.new())
+		return
 	var caster: Character = level.skill_caster
 	level._exit_skill_target_mode()
 	if is_instance_valid(caster):
