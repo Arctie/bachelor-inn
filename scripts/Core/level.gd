@@ -731,6 +731,10 @@ func select_unit(unit: Character) -> void:
 		return
 	if state_machine.current is StateChoosingSkillOrigin:
 		return
+	if state_machine.current is StateFreeRoaming:
+		return
+	if state_machine.current is StateFreeRoamAnimating:
+		return
 	# Switching unit
 	_clear_selection()
 	
