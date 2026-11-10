@@ -4,6 +4,10 @@ class_name StateAnimating
 var _is_processing: bool = false
 var _cancelled: bool = false
 var _move_sound_playing: bool = false
+var _from_roaming: bool = false
+
+func _init(from_roaming: bool = false) -> void:
+	_from_roaming = from_roaming
 
 func enter(level: Node) -> void:
 	print("ENTER STATE: StateAnimating. instance: ", get_instance_id())
@@ -99,7 +103,7 @@ func _process_next_move(level: Node) -> void:
 			await level.get_tree().create_timer(0.3).timeout
 			
 		# Deduct AP for player action
-		if level.is_player_turn and level.selected_unit != null:
+		if level.is_player_turn and level.selected_unit != null and not _from_roaming:
 			level.selected_unit.state.action_points_remaining = 0
 			
 		# Deduct item quantity
@@ -116,6 +120,7 @@ func _process_next_move(level: Node) -> void:
 		
 		if _cancelled:
 			return
+	
 	elif level.active_move is Attack:
 		var weapon: Weapon = level.selected_unit.state.weapon
 		if weapon != null and weapon.audio_attack != null:
@@ -123,7 +128,7 @@ func _process_next_move(level: Node) -> void:
 			level.selected_unit.audio_player.play()
 		await level.combat_vfx.play_attack(level.active_move.result)
 		# Deduct AP for player action
-		if level.is_player_turn and level.selected_unit != null:
+		if level.is_player_turn and level.selected_unit != null and not _from_roaming:
 			level.selected_unit.state.action_points_remaining = 0
 		if _cancelled:
 			return
@@ -132,6 +137,10 @@ func _process_next_move(level: Node) -> void:
 		
 	level.active_move.apply_damage(level.game_state)
 	if _cancelled:
+		return
+	if _from_roaming:
+		level.emit_signal("character_stats_changed", level.selected_unit)
+		_is_processing = false
 		return
 		
 	if level.is_player_turn:
@@ -188,6 +197,9 @@ func _finish_animation(level: Node) -> void:
 	if level._level_complete:
 		return 
 	if level.state_machine.current is StateUIPopup:
+		return
+	if _from_roaming:
+		level.end_of_roam_action()
 		return
 	
 	var teleporters := level.get_tree().get_nodes_in_group("teleporters")

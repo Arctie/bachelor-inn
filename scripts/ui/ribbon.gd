@@ -75,7 +75,6 @@ func _on_skill_button_pressed(button: TextureButton) -> void:
 	if s != null:
 		skill_pressed.emit(s)
 
-
 func _on_ability_used() -> void:
 	print("_on_ability_used() called, but it does nothing.")
 	pass
@@ -86,11 +85,10 @@ func gray_out_abilities_used(used: bool) -> void:
 		b.disabled = used
 		b.modulate = Color(0.4, 0.4, 0.4, 1.0) if used else Color(1, 1, 1, 1)
 
-
 func trigger_skill_by_index(index: int) -> void:
 	if index < 0 or index >= _skill_buttons.size():
 		return
-	## replace show_button_six check with state machine state check?
+	## TODO: replace show_button_six check with state machine state check?
 	if index == 5 and show_button_six == false:
 		return
 	var button := _skill_buttons[index]

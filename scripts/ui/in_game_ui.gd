@@ -124,14 +124,12 @@ func add_character_preview(character: Character) -> void:
 	
 	previews[character] = preview
 
-
 func _on_character_selected(character: Character) -> void:
 	player_stats.apply_stats(build_character_stats(character))
 	player_stats.show()
 	#print("DEBUG SELECT:",character.data.unit_name, "effects", character.state.active_effects)
 	ribbon.show()
 	ribbon.set_skills(character.state.skills)
-
 
 	#print("DEBUG SELECT:", character.data.unit_name, "skills:", character.state.skills.size())
 	for c: Character in previews.keys():
@@ -141,12 +139,9 @@ func _on_character_selected(character: Character) -> void:
 			continue;
 		previews[c].is_selected = (c == character)
 
-
 func _on_enemy_selected(enemy: Character) -> void:
 	enemy_stats.apply_stats(build_enemy_Stats(enemy), enemy)
 	enemy_stats.show()
-	#print("a enemy has been selected")
-
 
 func _on_character_deselected() -> void:
 	#player_stats.hide()
@@ -154,9 +149,7 @@ func _on_character_deselected() -> void:
 	for preview: CharacterPreview in previews.values():
 		preview.is_selected = false
 
-
 func _on_character_stats_changed(character: Character) -> void:
-	
 	if !character.state.is_alive \
 	or character.state.faction != CharacterState.Faction.PLAYER:
 		remove_character_preview(character)
