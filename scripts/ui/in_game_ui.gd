@@ -91,8 +91,8 @@ func _connect_to_level(level: Node) -> void:
 	ribbon.hide()
 	Main.divine.divine_resource_changed.connect(_on_divine_resource_changed)
 	update_divine_resource_gui()
-	#if level.selected_unit != null:
-		#_on_character_selected(level.selected_unit)
+	if level.selected_unit != null and is_instance_valid(level.selected_unit) and level.state_machine != null and level.state_machine.current != null:
+		_on_character_selected(level.selected_unit)
 
 func _update_objective_label() -> void:
 	var objectives := get_tree().get_nodes_in_group("objectives")
