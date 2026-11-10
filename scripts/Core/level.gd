@@ -1791,7 +1791,7 @@ func _get_aoe_tiles(center: Vector3i, skill: Skill, caster: Character = null) ->
 			tiles.append(Vector3i(center.x + 1, center.y, center.z - 1))
 		Skill.AoEShape.THREE_TILES_LINE:
 			## Made for melee swipe attack
-			if skill_caster == null:
+			if caster == null:
 				return tiles
 			var caster_pos := caster.state.grid_position
 			# Attack to the right or left
