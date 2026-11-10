@@ -34,6 +34,7 @@ func enter(level: Node) -> void:
 	_level.movement_map.clear()
 	_level.path_map.clear()
 	_level.aoe_preview_map.clear()
+	print("path_map used cells after clear: ", _level.path_map.get_used_cells().size())
 	_level.select_unit(_leader)
 	print("StateFreeRoam should now have selected ", _leader.data.unit_name)
 	#Main.level.ribbon.set_roaming_attack_visible(true)

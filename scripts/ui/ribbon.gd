@@ -2,7 +2,7 @@ extends Control
 class_name Ribbon
 
 signal skill_pressed(skill: Skill)
-signal roam_attack_pressed()
+signal roam_attack_pressed
 
 @onready var skills: HBoxContainer = %Skills
 @onready var roaming_attack_button: TextureButton = $NinePatchRect/Skills/RoamingAttackButton
@@ -18,6 +18,7 @@ func _ready() -> void:
 	roaming_attack_button.set_meta("skill", attack)
 	roaming_attack_button.texture_normal = attack.icon
 	roaming_attack_button.tooltip_text = "%s\n%s" % [attack.skill_name, attack.tooltip]
+	roaming_attack_button.pressed.connect(trigger_roaming_attack)
 	set_skills([])
 
 func set_skills(in_skills: Array[Skill]) -> void:
@@ -107,9 +108,7 @@ func set_roaming_attack_visible(on: bool) -> void:
 func trigger_roaming_attack() -> void:
 	if not roaming_attack_button.visible or roaming_attack_button.disabled:
 		return
-	var s: Skill = roaming_attack_button.get_meta("skill") as Skill
-	if s != null:
-		skill_pressed.emit(s)
+	roam_attack_pressed.emit()
 
 func _debug_print_buttons() -> void:
 	print("=== Ribbon Debug ===")

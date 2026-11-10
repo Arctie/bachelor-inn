@@ -82,7 +82,8 @@ var skill_caster: Character = null
 var skill_target_pos: Vector3i 
 var is_choosing_skill_target: bool = false
 var is_choosing_skill_attack_origin: bool = false
-var valid_skill_target_tiles: Dictionary = {} 
+var valid_skill_target_tiles: Dictionary = {}
+var valid_attack_tiles: Dictionary = {}
 var completed_moves :Array[Command];
 var triggered_positions: Array[Vector3i] = [] ## NOTE: For avoiding double triggers with TriggerOverlay and Dialogic
 
@@ -464,6 +465,16 @@ func get_trigger_name(pos : Vector3) -> String:
 	
 	return trigger_map.mesh_library.get_item_name(trigger_id)
 
+func get_melee_neighbour_tiles(origin: Vector3i) -> Array[Vector3i]:
+	var out: Array[Vector3i] = []
+	for dx: int in [-1, 0, 1]:
+		for dz: int in [-1, 0, 1]:
+			if dx == 0 and dz == 0:
+				continue
+			for t: Vector3i in game_state.get_tiles_at_xz(origin.x + dx, origin.z + dz):
+				if absi(t.y - origin.y) <= 1:
+					out.append(t)
+	return out
 
 func _show_attack_tiles(pos: Vector3i) -> void:
 	is_choosing_skill_attack_origin = true
@@ -1187,6 +1198,43 @@ func _on_ribbon_skill_pressed(skill: Skill) -> void:
 	_show_skill_target_tiles(reachable, active_skill)
 	#print("Entered skill target mode: ", active_skill.skill_id, ". Caster: ", skill_caster.data.unit_name)
 	state_machine.transition_to(StateChoosingSkillTarget.new())
+
+func _on_roam_attack_pressed() -> void:
+	if not (state_machine.current is StateFreeRoaming):
+		return
+	var attacker: Character = selected_unit
+	if not is_instance_valid(attacker) or not attacker.state.is_alive:
+		return
+	
+	valid_attack_tiles.clear()
+	path_map.clear()
+	var origin: Vector3i = attacker.state.grid_position
+	var weapon: Weapon = attacker.state.weapon
+
+	var candidates: Array[Vector3i] = []
+	if weapon == null or weapon.is_melee:
+		candidates = get_melee_neighbour_tiles(origin)
+	else:
+		candidates = Math._get_tiles_in_manhattan_range(origin, weapon.min_range, weapon.max_range)
+
+	for t: Vector3i in candidates:
+		var target: Character = get_unit(t)
+		if target == null or target == attacker or not target.state.is_alive:
+			continue
+		if target.state.faction == attacker.state.faction:
+			continue 
+		if target.state.faction == CharacterState.Faction.DIVINE:
+			continue
+		if not target.visible:
+			continue
+		if not has_line_of_sight(origin, t):
+			continue
+		valid_attack_tiles[t] = true
+		path_map.set_cell_item(t, skill_target_code)
+
+	if valid_attack_tiles.is_empty():
+		return
+	state_machine.transition_to(StateRoamWeaponAttack.new())
 
 func _show_skill_target_tiles(reachable: Array[Vector3i], skill: Skill) -> void:
 	valid_skill_target_tiles.clear()
