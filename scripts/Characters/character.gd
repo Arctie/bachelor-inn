@@ -149,6 +149,9 @@ func get_random_unaquired_skill(ignore_skill : Skill = null) -> Skill:
 		return ignore_skill;
 	return new_skill;
 
+func _highlight_selected_unit(c : Character, is_selected : bool) -> void:
+	my_material.set_shader_parameter("is_selected", is_selected)
+	print("Highlighted selected unit")
 
 #func _on_experience_changed(in_experience: int) -> void:
 	#pass

@@ -752,6 +752,8 @@ func select_unit(unit: Character) -> void:
 	# Adding 'true' as a 3rd arg in fill_from_commands exludes attacks
 	# current_moves = MoveGenerator.generate(selected_unit, game_state, true)
 	movement_grid.fill_from_commands(current_moves, game_state)
+	#Highlight selected will give them a outline
+	selected_unit._highlight_selected_unit(selected_unit, true)
 	
 	if Main.level.level_name.begins_with("tutorial") == true:
 		#print("Level name matches: ", Main.level.name)
@@ -761,7 +763,8 @@ func select_unit(unit: Character) -> void:
 	#	print("DIALOGIC TEST")
 	#	Dialogic.start_timeline("tutorialpc2")
 	#get_viewport().gui_release_focus()
-
+	# Set character set_shader_parameter("is_selected", True)
+	
 
 func _handle_player_click(pos: Vector3i) -> void:
 	if state_machine.current is StateDivineTurn:
@@ -818,6 +821,7 @@ func _clear_selection() -> void:
 	_exit_skill_target_mode()
 	movement_map.clear()
 	path_map.clear()
+	selected_unit._highlight_selected_unit(selected_unit, false)
 	selected_unit = null
 	cursor.hide()
 

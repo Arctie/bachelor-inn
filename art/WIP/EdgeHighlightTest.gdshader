@@ -13,6 +13,8 @@ uniform int frame_rows = 1;
 group_uniforms Effects;
 uniform bool grey_tint = false;
 
+uniform bool is_selected = false;
+
 uniform float hit_effect = 0.0;
 uniform vec3 hit_effect_color : source_color = vec3(1.0,1.0,1.0);
 uniform bool passive = false; 
@@ -41,6 +43,9 @@ vec2 atlas_uv(vec2 uv) {
     return uv;
 }
 
+vec3 screen(vec3 base, vec3 blend){
+	return 1.0 - (1.0 - base) * (1.0 - blend);
+}
 
 void fragment() {
     vec2 uv = atlas_uv(UV);
@@ -60,6 +65,9 @@ void fragment() {
 	
 	if (passive){
 		d.rgb *= passive_tint;
+	}
+	if (is_selected){
+		d.rgb = screen(d.rgb,texture(mask_atlas,uv).rgb);
 	}
 	
 	if (grey_tint){
