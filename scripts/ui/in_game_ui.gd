@@ -134,6 +134,7 @@ func add_character_preview(character: Character) -> void:
 	previews[character] = preview
 
 func fill_Topbar(character: Character) -> void:
+	#if Main.level.state_machine.current_state
 	if previews.has(character):
 		return
 		
@@ -160,8 +161,6 @@ func fill_Topbar(character: Character) -> void:
 			stats_data,
 			character
 		)
-		
-	
 
 func _on_character_selected(character: Character) -> void:
 	if character == null or not is_instance_valid(character):

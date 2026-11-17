@@ -821,7 +821,8 @@ func _clear_selection() -> void:
 	_exit_skill_target_mode()
 	movement_map.clear()
 	path_map.clear()
-	selected_unit._highlight_selected_unit(selected_unit, false)
+	if is_instance_valid(selected_unit):
+		selected_unit._highlight_selected_unit(selected_unit, false)
 	selected_unit = null
 	cursor.hide()
 
