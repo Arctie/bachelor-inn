@@ -181,12 +181,12 @@ func _on_character_selected(character: Character) -> void:
 	for c: Character in previews.keys():
 		##This is a quickfix, instead the character should be removed from the dictionary when its 
 		##corresponding character dies
-		if (c == null):
-			continue;
-		previews[c].is_selected = (c == character)
-
-		var entity_ui := previews[c]
-		entity_ui.is_selected = (c == character)
+		if is_instance_valid(c):
+			if (c == null):
+				continue;
+			previews[c].is_selected# = (c == character)
+			var entity_ui := previews[c]
+			entity_ui.is_selected# = c #(c == character)
 
 func _on_enemy_selected(enemy: Character) -> void:
 	enemy_stats.apply_stats(build_enemy_Stats(enemy), enemy)
