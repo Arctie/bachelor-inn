@@ -101,6 +101,12 @@ omni_range = 18.478
 transform = Transform3D(0.59934443, -0.57991624, 0.5518002, 0.1499218, 0.75844866, 0.63425475, -0.78632677, -0.29741016, 0.541514, 8.183081, 16.736057, -0.9140687)
 light_energy = 1.03
 
+[node name="CameraSettings" parent="." index="8" unique_id=2146881514]
+minimum_camera_x = -1000.0
+maximum_camera_x = 1000.0
+minimum_camera_z = -1000.0
+maximum_camera_z = 1000.0
+
 [node name="Bird" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="0" unique_id=159367408 instance=ExtResource("3_vbfgb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.5, -7)
 data = SubResource("Resource_lxfn4")
