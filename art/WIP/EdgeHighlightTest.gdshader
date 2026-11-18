@@ -14,6 +14,7 @@ group_uniforms Effects;
 uniform bool grey_tint = false;
 
 uniform bool is_selected = false;
+uniform vec3 selected_color : source_color = vec3(1.0,1.0,1.0);
 
 uniform float hit_effect = 0.0;
 uniform vec3 hit_effect_color : source_color = vec3(1.0,1.0,1.0);
@@ -66,7 +67,13 @@ void fragment() {
 	if (passive){
 		d.rgb *= passive_tint;
 	}
+	
 	if (is_selected){
+		//Brain stuck cuz eepy so ill just make this in comments and fix it tomorrow.
+		//so take d.rgb and use mask_atlas as a mask, use selected_color as the main color for the effect
+		//Use a gradient U or V to control a Sin wave ish, could use bot u and v so that it goes a bit sideways
+		//Either way this will be animated i think, so just add onto it time to move it down, 
+		//maybe use some noise or smth to make it varied. screen that effect onto d.rgb
 		d.rgb = screen(d.rgb,texture(mask_atlas,uv).rgb);
 	}
 	

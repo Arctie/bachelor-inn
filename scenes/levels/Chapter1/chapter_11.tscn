@@ -114,10 +114,7 @@ light_energy = 50.0
 omni_range = 12.475
 
 [node name="CameraSettings" parent="." index="8" unique_id=2146881514]
-minimum_camera_x = -1000.0
-maximum_camera_x = 1000.0
-minimum_camera_z = -1000.0
-maximum_camera_z = 1000.0
+transform = Transform3D(1, 0, 0, 0, 0.6629598, 0.74865496, 0, -0.74865496, 0.6629598, 0, 0, 0)
 
 [node name="Bird" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="0" unique_id=159367408 instance=ExtResource("2_xqbda")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0.5, 9)
@@ -130,17 +127,17 @@ data = SubResource("Resource_ygwax")
 state = SubResource("Resource_3syrr")
 
 [node name="Ghost_Enemy" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="2" unique_id=1339368304 instance=ExtResource("3_ako5r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, 13)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0.54543495, 13)
 data = SubResource("Resource_vndso")
 state = SubResource("Resource_y7ip0")
 
 [node name="Ghost_Enemy2" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="3" unique_id=1730260962 instance=ExtResource("3_ako5r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, 5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0.54543495, 5)
 data = SubResource("Resource_d2wio")
 state = SubResource("Resource_7utpq")
 
 [node name="Ghost_Enemy3" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="4" unique_id=1024155897 instance=ExtResource("3_ako5r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57, 0, -3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57, 0.54543495, -3)
 data = SubResource("Resource_hitwk")
 state = SubResource("Resource_m2d1d")
 
