@@ -162,6 +162,12 @@ func fill_Topbar(character: Character) -> void:
 			stats_data,
 			character
 		)
+	
+	_refresh_topbar_layout()
+
+func _refresh_topbar_layout() -> void:
+	var has_enemies: bool = EnemyContainer.get_child_count() > 0
+	EnemyContainer.get_parent().visible = has_enemies 
 
 func _on_character_selected(character: Character) -> void:
 	if character == null or not is_instance_valid(character):
