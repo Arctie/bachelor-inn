@@ -140,8 +140,9 @@ func fill_Topbar(character: Character) -> void:
 		
 	var faction := character.state.faction
 	var Target_Container: Control
-	if faction == CharacterState.Faction.ENEMY and not CharacterState.AggroState.AGGRESSIVE:# aggro_state.AGGRESSIVE:
+	if faction == CharacterState.Faction.ENEMY and character.state.aggro_state == CharacterState.AggroState.AGGRESSIVE:
 		Target_Container = EnemyContainer
+		print("fill_Topbar: ", character.data.unit_name, " faction ", character.state.faction, " aggro ", character.state.aggro_state, " has icon: ", previews.has(character))
 	elif faction == CharacterState.Faction.PLAYER:
 		Target_Container = PlayerContainer
 	else:
@@ -236,6 +237,7 @@ func _on_party_updated(characters: Array[Character]) -> void:
 	#for c: Character in previews.keys():
 		#if not characters.has(c):
 			#remove_character_preview(c)
+	print("_on_party_updated: ", characters.size())
 	for character in characters:
 		if (character == null) :
 			continue;

@@ -1315,6 +1315,7 @@ func end_of_roam_action() -> void:
 		return
 	camera_controller.end_roaming()
 	hide_inactive_characters()
+	emit_signal("party_updated", characters)
 	state_machine.transition_to(StateAggroAlert.new(alerted, begin_combat))
 
 func _is_valid_target(unit: Character, skill: Skill, caster: Character) -> bool:
@@ -1447,6 +1448,7 @@ func end_of_player_action() -> void:
 			resume_player_turn()
 		return
 	hide_inactive_characters()
+	emit_signal("party_updated", characters)
 	state_machine.transition_to(StateAggroAlert.new(alerted, resume_player_turn))
 
 func resume_player_turn() -> void:

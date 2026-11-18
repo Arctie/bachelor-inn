@@ -169,6 +169,7 @@ func _finish(level: Node) -> void:
 	if _stopping:
 		level.camera_controller.end_roaming()
 		level.hide_inactive_characters()
+		level.emit_signal("party_updated", level.characters)
 		level.state_machine.transition_to(StateAggroAlert.new(_alerted, level.begin_combat))
 	else:
 		level.state_machine.transition_to(StateFreeRoaming.new())
