@@ -140,7 +140,7 @@ func fill_Topbar(character: Character) -> void:
 		
 	var faction := character.state.faction
 	var Target_Container: Control
-	if faction == CharacterState.Faction.ENEMY:
+	if faction == CharacterState.Faction.ENEMY and not CharacterState.AggroState.AGGRESSIVE:# aggro_state.AGGRESSIVE:
 		Target_Container = EnemyContainer
 	elif faction == CharacterState.Faction.PLAYER:
 		Target_Container = PlayerContainer
@@ -178,15 +178,15 @@ func _on_character_selected(character: Character) -> void:
 	print("Total previews tracked: ", previews.size())
 	
 	#print("DEBUG SELECT:", character.data.unit_name, "skills:", character.state.skills.size())
-	for c: Character in previews.keys():
+	for c: Variant in previews.keys():
 		##This is a quickfix, instead the character should be removed from the dictionary when its 
 		##corresponding character dies
-		if is_instance_valid(c):
-			if (c == null):
-				continue;
-			previews[c].is_selected# = (c == character)
-			var entity_ui := previews[c]
-			entity_ui.is_selected# = c #(c == character)
+		if not is_instance_valid(c):
+			previews.erase(c)
+			continue;
+		var entity_ui: TB_Entity_Controller = previews[c]
+		if is_instance_valid(entity_ui):
+			entity_ui.is_selected = (c == character)
 
 func _on_enemy_selected(enemy: Character) -> void:
 	enemy_stats.apply_stats(build_enemy_Stats(enemy), enemy)

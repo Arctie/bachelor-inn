@@ -119,6 +119,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0.5, 7)
 
 [node name="Chest2" parent="Chests" parent_id_path=PackedInt32Array(2019346901) index="1" unique_id=295022470 instance=ExtResource("2_lw4g3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0.5, -11)
+weapon_id = "sword_advanced"
 
 [node name="Chest3" parent="Chests" parent_id_path=PackedInt32Array(2019346901) index="2" unique_id=905152839 instance=ExtResource("2_lw4g3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0.5, -11)
