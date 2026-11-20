@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://su0syavhc4hn"]
 
+[ext_resource type="Script" uid="uid://cpmu3qmorjjpr" path="res://scripts/ui/loot_pop_up_item.gd" id="1_k0r00"]
+
 [node name="LootPopUpItem" type="Control" unique_id=653435287]
 layout_mode = 3
 anchors_preset = 15
@@ -7,6 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_k0r00")
 
 [node name="Background" type="ColorRect" parent="." unique_id=293835725]
 custom_minimum_size = Vector2(700, 700)
@@ -81,10 +84,13 @@ text = "Placeholder text"
 [node name="HBoxContainer" type="HBoxContainer" parent="Background/PanelContainer/VBoxContainer/VBoxContainer" unique_id=1485644571]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="Background/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1603555258]
+[node name="TakeButton" type="Button" parent="Background/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1603555258]
 layout_mode = 2
 text = "SELECT BUTTON"
 
-[node name="Button2" type="Button" parent="Background/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1724507545]
+[node name="LeaveButton" type="Button" parent="Background/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1724507545]
 layout_mode = 2
 text = "SELECT BUTTON"
+
+[connection signal="pressed" from="Background/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/TakeButton" to="." method="_on_take_button_pressed"]
+[connection signal="pressed" from="Background/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/LeaveButton" to="." method="_on_leave_button_pressed"]
