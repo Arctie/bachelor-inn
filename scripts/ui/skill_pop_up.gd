@@ -1,4 +1,4 @@
-extends Control
+extends PopupBase
 class_name  SkillPopup
 
 @onready var skill_name_1: Label = %SkillName1

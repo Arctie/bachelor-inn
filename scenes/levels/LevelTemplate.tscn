@@ -13,10 +13,15 @@
 [ext_resource type="PackedScene" uid="uid://b7pxxrlhn5e7i" path="res://scenes/userinterface/Menus/story_cards.tscn" id="11_n1m61"]
 [ext_resource type="PackedScene" uid="uid://d4b4a1hbdjh6j" path="res://scenes/utilities/CameraSettings.tscn" id="12_2iq81"]
 [ext_resource type="PackedScene" uid="uid://bgbspd1w6k5uk" path="res://scenes/userinterface/Menus/objective_complete_popup.tscn" id="12_85lyy"]
+[ext_resource type="PackedScene" uid="uid://su0syavhc4hn" path="res://scenes/userinterface/Level/LootPopUpItem.tscn" id="13_7o8w5"]
+[ext_resource type="PackedScene" uid="uid://dfpe4abv63jnd" path="res://scenes/userinterface/Level/SkillPopUp.tscn" id="14_khnmn"]
+[ext_resource type="PackedScene" uid="uid://bge25dwwd4pbs" path="res://scenes/userinterface/Level/LootPopUpWeapon.tscn" id="15_khnmn"]
 [ext_resource type="PackedScene" uid="uid://cxrc33gqig64w" path="res://scripts/Other/CombatVFXController.tscn" id="22_dypiu"]
 
 [node name="Map3d2" type="Node3D" unique_id=656823534]
 script = ExtResource("1_yuxmn")
+level_name = null
+level_music = null
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1468916992]
 environment = ExtResource("9_85lyy")
@@ -109,6 +114,15 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 
 [node name="ObjectiveCompletePopup" parent="UI_Elements" unique_id=156968320 instance=ExtResource("12_85lyy")]
+unique_name_in_owner = true
+
+[node name="LootPopUpItem" parent="UI_Elements" unique_id=653435287 instance=ExtResource("13_7o8w5")]
+unique_name_in_owner = true
+
+[node name="SkillPopUp" parent="UI_Elements" unique_id=403461182 instance=ExtResource("14_khnmn")]
+unique_name_in_owner = true
+
+[node name="LootPopUpWeapon" parent="UI_Elements" unique_id=294007816 instance=ExtResource("15_khnmn")]
 unique_name_in_owner = true
 
 [node name="Lights" type="Node3D" parent="." unique_id=38605441]

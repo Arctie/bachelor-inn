@@ -27,6 +27,8 @@ bt_profile = 1
 metadata/_custom_type_script = "uid://dnpndvvrnj26q"
 
 [node name="test_level_6" unique_id=656823534 instance=ExtResource("1_6kedp")]
+level_name = ""
+level_music = 2
 
 [node name="TerrainGrid" parent="GridOverlays" parent_id_path=PackedInt32Array(1515842119) index="0" unique_id=1846160155]
 data = {
@@ -58,6 +60,7 @@ target_unit_name = "Bird1"
 [node name="Chest" parent="Chests" parent_id_path=PackedInt32Array(2019346901) index="0" unique_id=903149754 instance=ExtResource("12_8cl6u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.5, 1)
 loot_type = 2
+skill_id_1 = "fireball_basic"
 item_id = "bomb_basic"
 
 [node name="Teleporter" parent="Teleporters/Pair1" parent_id_path=PackedInt32Array(1313553453) index="0" unique_id=845671447 instance=ExtResource("2_v4rl3")]

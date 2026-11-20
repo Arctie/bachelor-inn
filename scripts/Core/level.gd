@@ -62,6 +62,8 @@ var aoe_preview_map: GridMap
 @onready var player_label: Label = $UI_Elements/TurnTransition/CanvasLayer/VBoxContainer/ColorRect3/playerLabel
 @onready var enemy_label: Label = $UI_Elements/TurnTransition/CanvasLayer/VBoxContainer/ColorRect3/enemyLabel
 @onready var divine_label: Label = $UI_Elements/TurnTransition/CanvasLayer/VBoxContainer/ColorRect3/divineLabel
+#@onready var item_loot_popup: ItemLootPopup = %ItemLootPopup
+@onready var loot_pop_up_item: ItemLootPopup = %LootPopUpItem
 
 var _level_complete: bool = false
 var objectives_met: bool = false
@@ -98,7 +100,7 @@ const GHOST_ENEMY: PackedScene  = preload("res://scenes/Characters/Enemy/Ghost_E
 const HORROR_ENEMY: PackedScene = preload("res://scenes/Characters/Enemy/Horror_Scene.tscn")
 const CORRUPTED_PLAYER_RED: PackedScene = preload("res://scenes/Characters/Enemy/Char_Corrupted_Player_Orange.tscn")
 const PORTRAIT_POPUP = preload("res://scenes/userinterface/Level/PortraitPopUp.tscn")
-const LOOT_POP_UP = preload("res://scenes/userinterface/Level/LootPopUp.tscn")
+const LOOT_POP_UP = preload("res://scenes/userinterface/Level/LootPopUpWeapon.tscn")
 const SKILL_POP_UP = preload("res://scenes/userinterface/Level/SkillPopUp.tscn")
 const GAME_OVER = preload("res://scenes/states/game_over.tscn")
 #const FADE_OVERLAY = preload("res://scenes/userinterface/Level/fade_to_black.tscn")
@@ -1044,14 +1046,14 @@ func check_trigger_conditions() -> void:
 			]
 	
 	## Loop to check if a char landed next to a chest - if we want / need.
-	for adj : Vector3i in adjacent:
-		if get_trigger_name(adj) == "02_Chest":
-			var c : Chest = chests.get(adj, null)
-			if c == null or c.is_looted or c.is_opened:
-				continue
-			if not selected_unit or not selected_unit.state.is_moved:
-				continue
-			_on_chest_opened(adj)
+	#for adj : Vector3i in adjacent:
+		#if get_trigger_name(adj) == "02_Chest":
+			#var c : Chest = chests.get(adj, null)
+			#if c == null or c.is_looted or c.is_opened:
+				#continue
+			#if not selected_unit or not selected_unit.state.is_moved:
+				#continue
+			#_on_chest_opened(adj)
 
 func check_victory_conditions() -> void:
 	# Check for defeat of all player units
@@ -1666,7 +1668,7 @@ func _on_chest_opened(pos: Vector3i) -> void:
 	if c.is_opened or c.is_looted:
 		return
 	c.is_opened = true
-	
+	print("chest opened: ", c.loot_type)
 	match c.loot_type:
 		Chest.LootType.WEAPON:
 			var new_weapon : Weapon = WeaponRegistry.get_weapon(c.weapon_id)
@@ -1695,17 +1697,23 @@ func _on_chest_opened(pos: Vector3i) -> void:
 				push_error(c.item_id + " item in chest not found, or has no quantity.")
 				c.is_opened = false
 				return
-			var unit: Character = selected_unit
-			if unit == null or not unit.state.add_item(item, c.item_amount):
-				c.is_opened = false          # no room: leave the chest closed
-				return
-			c.is_looted = true
-			emit_signal("character_stats_changed", unit)
+			loot_pop_up_item.show_item(item, c.item_amount, selected_unit)
+			state_machine.transition_to(StateUIPopup.new(loot_pop_up_item,
+					func(result: String) -> void: _on_item_loot_choice(result, item, c)))
 			
 	if Tutorial.in_tutorial and Tutorial.chest_open == false:
 		Tutorial.chest_open = true
 		Tutorial.can_advance_timeline = true
 		Tutorial.advance_timeline()
+
+func _on_item_loot_choice(result: String, item: Skill, chest: Chest) -> void:
+	if result == "take" and is_instance_valid(selected_unit) \
+			and selected_unit.state.add_item(item, chest.item_amount):
+		chest.is_looted = true
+		emit_signal("character_stats_changed", selected_unit)
+	else:
+		chest.is_opened = false          # left, or no room: the chest can be opened again
+	state_machine.transition_to(StateFreeRoaming.new())
 
 func _recruit_neutral_units() -> void:
 	var player_chars: Array[Character] = []

@@ -1,23 +1,11 @@
 [gd_scene format=3 uid="uid://b7pxxrlhn5e7i"]
 
 [ext_resource type="Script" uid="uid://coaxu36p6dh4x" path="res://scripts/ui/story_cards.gd" id="1_5cm3t"]
-[ext_resource type="Texture2D" uid="uid://dl3f82h15k0ui" path="res://art/textures/StoryCards/Intro1.png" id="2_dhey8"]
-[ext_resource type="Texture2D" uid="uid://bhu2qeab7qsyh" path="res://art/textures/StoryCards/Intro2.png" id="3_u0b3t"]
-[ext_resource type="Texture2D" uid="uid://m8ahacq8hpee" path="res://art/textures/StoryCards/Intro3.png" id="4_8jkuh"]
-[ext_resource type="Texture2D" uid="uid://bfnvkym33bibo" path="res://art/textures/StoryCards/Intro4.png" id="5_wgowa"]
-[ext_resource type="Texture2D" uid="uid://bttfmuueaqamj" path="res://art/textures/StoryCards/Intro5.png" id="6_84atb"]
-[ext_resource type="Texture2D" uid="uid://cc8eskd1ipp6r" path="res://art/textures/StoryCards/Intro6.png" id="7_trie5"]
-[ext_resource type="Texture2D" uid="uid://4tt5peqe5vv6" path="res://art/textures/StoryCards/Intro7.png" id="8_0dl7g"]
-[ext_resource type="Texture2D" uid="uid://bl74iivp3gwah" path="res://art/textures/StoryCards/Intro8.png" id="9_c36ty"]
-[ext_resource type="Texture2D" uid="uid://dkjbkxlf55l57" path="res://art/textures/StoryCards/Intro9.png" id="10_ouv6l"]
-[ext_resource type="Texture2D" uid="uid://camwlxt1na4gv" path="res://art/textures/StoryCards/Intro10.png" id="11_205ag"]
-[ext_resource type="Texture2D" uid="uid://ch6wj6jf3xm76" path="res://art/textures/StoryCards/Intro11.png" id="12_b6qim"]
 
 [node name="StoryCards" type="CanvasLayer" unique_id=1488155635]
 process_mode = 3
 layer = 90
 script = ExtResource("1_5cm3t")
-intro = Array[Texture2D]([ExtResource("2_dhey8"), ExtResource("3_u0b3t"), ExtResource("4_8jkuh"), ExtResource("5_wgowa"), ExtResource("6_84atb"), ExtResource("7_trie5"), ExtResource("8_0dl7g"), ExtResource("9_c36ty"), ExtResource("10_ouv6l"), ExtResource("11_205ag"), ExtResource("12_b6qim")])
 
 [node name="Control" type="Control" parent="." unique_id=810776412]
 layout_mode = 3

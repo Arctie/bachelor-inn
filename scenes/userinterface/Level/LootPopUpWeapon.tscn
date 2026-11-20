@@ -8,7 +8,8 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ytmkd"]
 
-[node name="LootPopUp" type="Control" unique_id=294007816]
+[node name="LootPopUpWeapon" type="Control" unique_id=294007816]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

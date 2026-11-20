@@ -1,12 +1,13 @@
 [gd_scene format=3 uid="uid://dfpe4abv63jnd"]
 
-[ext_resource type="Script" path="res://scripts/ui/skill_pop_up.gd" id="1_okap0"]
+[ext_resource type="Script" uid="uid://cpkt5mpx71knc" path="res://scripts/ui/skill_pop_up.gd" id="1_okap0"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_44yp1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2knsk"]
 
 [node name="SkillPopUp" type="Control" unique_id=403461182]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

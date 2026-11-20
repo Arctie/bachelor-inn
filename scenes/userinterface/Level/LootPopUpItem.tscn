@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cpmu3qmorjjpr" path="res://scripts/ui/loot_pop_up_item.gd" id="1_k0r00"]
 
 [node name="LootPopUpItem" type="Control" unique_id=653435287]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -63,34 +64,46 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="NameLabel" type="Label" parent="Background/PanelContainer/VBoxContainer/VBoxContainer" unique_id=764947852]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 54
 text = "PLACEHOLDER"
 horizontal_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="Background/PanelContainer/VBoxContainer/VBoxContainer" unique_id=1224226217]
+[node name="IconTexture" type="TextureRect" parent="Background/PanelContainer/VBoxContainer/VBoxContainer" unique_id=1224226217]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="QuantityLabel" type="Label" parent="Background/PanelContainer/VBoxContainer/VBoxContainer" unique_id=665634851]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "QUANTITY LABEL"
 
 [node name="DescriptionLabel" type="Label" parent="Background/PanelContainer/VBoxContainer/VBoxContainer" unique_id=710945864]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Placeholder text"
+autowrap_mode = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Background/PanelContainer/VBoxContainer/VBoxContainer" unique_id=1485644571]
 layout_mode = 2
 
 [node name="TakeButton" type="Button" parent="Background/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1603555258]
+unique_name_in_owner = true
 layout_mode = 2
-text = "SELECT BUTTON"
+focus_mode = 0
+theme_override_font_sizes/font_size = 34
+text = "TAKE"
 
 [node name="LeaveButton" type="Button" parent="Background/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1724507545]
+unique_name_in_owner = true
 layout_mode = 2
-text = "SELECT BUTTON"
+focus_mode = 0
+theme_override_font_sizes/font_size = 32
+text = "LEAVE"
 
 [connection signal="pressed" from="Background/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/TakeButton" to="." method="_on_take_button_pressed"]
 [connection signal="pressed" from="Background/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/LeaveButton" to="." method="_on_leave_button_pressed"]

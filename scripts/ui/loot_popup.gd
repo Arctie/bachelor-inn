@@ -1,4 +1,4 @@
-extends Control
+extends PopupBase
 class_name LootPopup
 
 @onready var current_weapon_icon: TextureRect = %CurrentWeaponIcon
