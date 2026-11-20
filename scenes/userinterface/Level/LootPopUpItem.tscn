@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://su0syavhc4hn"]
+
+[ext_resource type="Script" uid="uid://cpmu3qmorjjpr" path="res://scripts/ui/loot_pop_up_item.gd" id="1_k0r00"]
+
+[node name="LootPopUpItem" type="Control" unique_id=653435287]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_k0r00")
+
+[node name="Background" type="ColorRect" parent="." unique_id=293835725]
+custom_minimum_size = Vector2(700, 700)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.25882354, 0.25882354, 0.25882354, 0.6156863)
+
+[node name="PanelContainer" type="PanelContainer" parent="Background" unique_id=2092869690]
+custom_minimum_size = Vector2(650, 650)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/PanelContainer" unique_id=124314818]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="Background/PanelContainer/VBoxContainer" unique_id=1335222362]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Background/PanelContainer/VBoxContainer" unique_id=1570364794]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "ITEM LOOT"
+horizontal_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="Background/PanelContainer/VBoxContainer" unique_id=1116068986]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/PanelContainer/VBoxContainer" unique_id=1722931629]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="Background/PanelContainer/VBoxContainer/VBoxContainer" unique_id=764947852]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "PLACEHOLDER"
+horizontal_alignment = 1
+
+[node name="IconTexture" type="TextureRect" parent="Background/PanelContainer/VBoxContainer/VBoxContainer" unique_id=1224226217]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="QuantityLabel" type="Label" parent="Background/PanelContainer/VBoxContainer/VBoxContainer" unique_id=665634851]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "QUANTITY LABEL"
+
+[node name="DescriptionLabel" type="Label" parent="Background/PanelContainer/VBoxContainer/VBoxContainer" unique_id=710945864]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Placeholder text"
+autowrap_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Background/PanelContainer/VBoxContainer/VBoxContainer" unique_id=1485644571]
+layout_mode = 2
+
+[node name="TakeButton" type="Button" parent="Background/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1603555258]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 34
+text = "TAKE"
+
+[node name="LeaveButton" type="Button" parent="Background/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1724507545]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 32
+text = "LEAVE"
+
+[connection signal="pressed" from="Background/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/TakeButton" to="." method="_on_take_button_pressed"]
+[connection signal="pressed" from="Background/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/LeaveButton" to="." method="_on_leave_button_pressed"]

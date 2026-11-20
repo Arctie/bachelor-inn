@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c18iq134huxcl"
-path="res://.godot/imported/mountainsforest_screen_big.png-34a2023ac5f4097f063d4906c9b61008.ctex"
+uid="uid://byfnttidoai3a"
+path="res://.godot/imported/eye.png-ccb69990cab52e41db44e45869953447.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/textures/StoryCards/mountainsforest_screen_big.png"
-dest_files=["res://.godot/imported/mountainsforest_screen_big.png-34a2023ac5f4097f063d4906c9b61008.ctex"]
+source_file="res://art/textures/StoryCards/eye.png"
+dest_files=["res://.godot/imported/eye.png-ccb69990cab52e41db44e45869953447.ctex"]
 
 [params]
 
