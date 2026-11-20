@@ -6,7 +6,7 @@
 [resource]
 render_priority = 0
 shader = ExtResource("1_5br4e")
-shader_parameter/color = Color(0.1490956, 0.4252793, 0.39696476, 1)
+shader_parameter/color = Color(0.46215624, 0.7003138, 0.66189766, 1)
 shader_parameter/deep_water = Color(0, 0, 0, 1)
 shader_parameter/roughness = 0.0070000003325
 shader_parameter/metallic = 0.0570000027075
