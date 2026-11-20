@@ -161,12 +161,18 @@ state = SubResource("Resource_m2d1d")
 [node name="Chest" parent="Chests" parent_id_path=PackedInt32Array(2019346901) index="0" unique_id=1661228252 instance=ExtResource("5_wexu5")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 89, 12.5, -41)
 weapon_id = "sword_advanced"
+item_id = "bomb_basic"
+item_amount = 2
 
 [node name="Chest2" parent="Chests" parent_id_path=PackedInt32Array(2019346901) index="1" unique_id=1361334001 instance=ExtResource("5_wexu5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 77, 4.5, -31)
+loot_type = 2
+item_id = "bomb_basic"
 
 [node name="Chest3" parent="Chests" parent_id_path=PackedInt32Array(2019346901) index="2" unique_id=194871430 instance=ExtResource("5_wexu5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61, 5.5, -47)
+loot_type = 2
+item_id = "bomb_basic"
 
 [node name="Chest4" parent="Chests" parent_id_path=PackedInt32Array(2019346901) index="3" unique_id=186109785 instance=ExtResource("5_wexu5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 3.5, 1)
