@@ -1689,7 +1689,19 @@ func _on_chest_opened(pos: Vector3i) -> void:
 			is_in_menu = true
 			has_window_open = true
 			skill_loot_popup.show_skill_loot(new_skills, selected_unit, c)
-	
+		Chest.LootType.ITEM:
+			var item: Skill = SkillRegistry.get_skill(c.item_id)
+			if item == null or not item.has_quantity:
+				push_error(c.item_id + " item in chest not found, or has no quantity.")
+				c.is_opened = false
+				return
+			var unit: Character = selected_unit
+			if unit == null or not unit.state.add_item(item, c.item_amount):
+				c.is_opened = false          # no room: leave the chest closed
+				return
+			c.is_looted = true
+			emit_signal("character_stats_changed", unit)
+			
 	if Tutorial.in_tutorial and Tutorial.chest_open == false:
 		Tutorial.chest_open = true
 		Tutorial.can_advance_timeline = true
