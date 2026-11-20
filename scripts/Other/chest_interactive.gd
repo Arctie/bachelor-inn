@@ -8,12 +8,19 @@ enum LootType {WEAPON, SKILL, ITEM}
 @export var skill_id_1: String = ""
 @export var skill_id_2: String = ""
 @export var skill_id_3: String = ""
-@export var dialogue_timeline: String = "chest_tutorial"
+@export var item_id: String = ""
+@export var item_amount: int = 1
+@export var dialogue_timeline: String = ""
 var is_opened: bool = false
 var is_looted: bool = false
 
+func _ready() -> void:
+	add_to_group("chests")
+	#if not body_entered.is_connected(_on_body_entered):
+		#body_entered.connect(_on_body_entered)
 
-func _on_body_entered(body: Node3D) -> void:
+func _on_area_3d_body_entered(body: Node3D) -> void:
+	print("Chest area entered by: ", body.name)
 	if is_opened or is_looted:
 		return
 	var level: Level = Main.level

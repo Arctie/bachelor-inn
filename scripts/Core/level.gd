@@ -117,6 +117,7 @@ var game_state : GameState;
 var animation_path :Array[Vector3];
 var patrol_paths: Dictionary[String, PatrolPath] = {}
 var chests: Dictionary = {}
+var pending_chest: Chest = null
 #var pending_chest_weapon: Weapon = null
 var is_in_menu: bool = false
 var active_move: Command
@@ -1642,11 +1643,20 @@ func hide_inactive_characters() -> void:
 #region register functions
 ## REGISTER FUNCTIONS
 func _register_chests() -> void:
-	for child in get_children():
-		if child is Chest:
-			var grid_pos := world_to_grid(child.global_position)
-			chests[grid_pos] = child
+	for child in find_children("*", "Chest", true, false):
+		var grid_pos := world_to_grid(child.global_position)
+		chests[grid_pos] = child
+	#for child in get_children():
+		#if child is Chest:
+			#var grid_pos := world_to_grid(child.global_position)
+			#chests[grid_pos] = child
 			#print("Registered chest at: ", grid_pos, " weapon: ", child.weapon_id)
+
+func find_chest_at(tile: Vector3i) -> Chest:
+	var c: Chest = chests.get(tile, null)
+	if c != null and not c.is_opened and not c.is_looted:
+		return c
+	return null
 
 func _on_chest_opened(pos: Vector3i) -> void:
 	var c: Chest = chests.get(pos, null)
@@ -1679,7 +1689,19 @@ func _on_chest_opened(pos: Vector3i) -> void:
 			is_in_menu = true
 			has_window_open = true
 			skill_loot_popup.show_skill_loot(new_skills, selected_unit, c)
-	
+		Chest.LootType.ITEM:
+			var item: Skill = SkillRegistry.get_skill(c.item_id)
+			if item == null or not item.has_quantity:
+				push_error(c.item_id + " item in chest not found, or has no quantity.")
+				c.is_opened = false
+				return
+			var unit: Character = selected_unit
+			if unit == null or not unit.state.add_item(item, c.item_amount):
+				c.is_opened = false          # no room: leave the chest closed
+				return
+			c.is_looted = true
+			emit_signal("character_stats_changed", unit)
+			
 	if Tutorial.in_tutorial and Tutorial.chest_open == false:
 		Tutorial.chest_open = true
 		Tutorial.can_advance_timeline = true

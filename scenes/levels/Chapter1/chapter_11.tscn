@@ -92,10 +92,6 @@ data = {
 "cells": PackedInt32Array(4, 1, 0, 4, 2, 0, 5, 2, 0, 5, 1, 0)
 }
 
-[node name="Chest" parent="GridOverlays" parent_id_path=PackedInt32Array(1515842119) index="7" unique_id=903149754 instance=ExtResource("5_wexu5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0.5, -3)
-weapon_id = "sword_advanced"
-
 [node name="Lamp" parent="Lights" parent_id_path=PackedInt32Array(38605441) index="0" unique_id=286206317]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 9, 0)
 visible = true
@@ -160,6 +156,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61, 5.5, -47)
 
 [node name="Chest4" parent="Chests" parent_id_path=PackedInt32Array(2019346901) index="3" unique_id=186109785 instance=ExtResource("5_wexu5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 3.5, 1)
+
+[node name="Chest5" parent="Chests" parent_id_path=PackedInt32Array(2019346901) index="4" unique_id=903149754 instance=ExtResource("5_wexu5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0.5, -3)
 
 [node name="FireParticle" parent="FireParticles" parent_id_path=PackedInt32Array(1307088819) index="0" unique_id=342538320 instance=ExtResource("5_ako5r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 81, 3, -17)

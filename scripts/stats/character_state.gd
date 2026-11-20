@@ -208,6 +208,19 @@ func tick_effects_end_round(owner: Character) -> void:
 			active_effects.remove_at(i)
 			print("Effect removed: ", effect.get("id", "unknown"))
 
+func add_item(skill: Skill, amount: int = -1) -> bool:
+	if skill == null or not skill.has_quantity:
+		return false
+	var qty: int = amount if amount > 0 else skill.base_quantity
+	if skills.has(skill):
+		item_quantities[skill.skill_id] = int(item_quantities.get(skill.skill_id, 0)) + qty
+		return true
+	if skills.size() >= 5:
+		return false
+	skills.append(skill)
+	item_quantities[skill.skill_id] = qty
+	return true
+
 static func make_active_effect(skill: Skill, caster: Object) -> Dictionary:
 	return {
 		"skill": skill,

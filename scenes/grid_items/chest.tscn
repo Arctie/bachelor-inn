@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://fq2l2nas2itl" path="res://scripts/Other/chest_interactive.gd" id="1_srpob"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_srpob"]
+size = Vector3(1.2939453, 1, 1.1989746)
 
 [node name="Chest" type="Node3D" unique_id=903149754]
 script = ExtResource("1_srpob")
@@ -16,4 +17,4 @@ script = ExtResource("1_srpob")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_srpob")
 
-[connection signal="body_entered" from="Area3D" to="." method="_on_body_entered"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
