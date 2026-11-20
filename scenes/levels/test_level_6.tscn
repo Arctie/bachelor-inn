@@ -12,6 +12,7 @@
 [ext_resource type="Resource" uid="uid://bde3fwobbck4h" path="res://Data/Weapons/unarmed.tres" id="6_abm2o"]
 [ext_resource type="AudioStream" uid="uid://cm3hqys15xllp" path="res://audio/CharacterSounds/Unit_on_spawned_in.wav" id="6_od4kf"]
 [ext_resource type="PackedScene" uid="uid://c4ugjunruadqr" path="res://scenes/MissionObjectives/objective_kill_specific.tscn" id="7_efqj6"]
+[ext_resource type="PackedScene" uid="uid://bajx21wdflkf8" path="res://scenes/grid_items/chest.tscn" id="12_8cl6u"]
 
 [sub_resource type="Resource" id="Resource_3k3va"]
 script = ExtResource("3_efqj6")
@@ -46,12 +47,6 @@ data = {
 [node name="TriggerOverlay" parent="GridOverlays" parent_id_path=PackedInt32Array(1515842119) index="3" unique_id=1471713088]
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
-[node name="CameraSettings" parent="." index="8" unique_id=2146881514]
-minimum_camera_x = -1000.0
-maximum_camera_x = 1000.0
-minimum_camera_z = -1000.0
-maximum_camera_z = 1000.0
-
 [node name="Character" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="0" unique_id=159367408 instance=ExtResource("2_662ky")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0.5, -11)
 data = SubResource("Resource_3k3va")
@@ -59,6 +54,10 @@ state = SubResource("Resource_8cl6u")
 
 [node name="ObjectiveKillSpecific" parent="MissionObjective" parent_id_path=PackedInt32Array(327276810) index="0" unique_id=89127788 instance=ExtResource("7_efqj6")]
 target_unit_name = "Bird1"
+
+[node name="Chest" parent="Chests" parent_id_path=PackedInt32Array(2019346901) index="0" unique_id=903149754 instance=ExtResource("12_8cl6u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.5, 1)
+weapon_id = "sword_basic"
 
 [node name="Teleporter" parent="Teleporters/Pair1" parent_id_path=PackedInt32Array(1313553453) index="0" unique_id=845671447 instance=ExtResource("2_v4rl3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, -3, 3)

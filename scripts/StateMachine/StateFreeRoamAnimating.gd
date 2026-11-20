@@ -172,6 +172,12 @@ func _finish(level: Node) -> void:
 	level.check_victory_conditions()
 	if level._level_complete or level.state_machine.current != self:
 		return
+	if level.pending_chest != null and not _alerted.size() > 0:
+		var chest: Chest = level.pending_chest
+		level.pending_chest = null
+		_stopping = false
+		level._on_chest_opened(level.world_to_grid(chest.global_position))
+		return
 	if _stopping:
 		level.camera_controller.end_roaming()
 		level.hide_inactive_characters()

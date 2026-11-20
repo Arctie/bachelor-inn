@@ -1643,10 +1643,13 @@ func hide_inactive_characters() -> void:
 #region register functions
 ## REGISTER FUNCTIONS
 func _register_chests() -> void:
-	for child in get_children():
-		if child is Chest:
-			var grid_pos := world_to_grid(child.global_position)
-			chests[grid_pos] = child
+	for child in find_children("*", "Chest", true, false):
+		var grid_pos := world_to_grid(child.global_position)
+		chests[grid_pos] = child
+	#for child in get_children():
+		#if child is Chest:
+			#var grid_pos := world_to_grid(child.global_position)
+			#chests[grid_pos] = child
 			#print("Registered chest at: ", grid_pos, " weapon: ", child.weapon_id)
 
 func find_chest_at(tile: Vector3i) -> Chest:

@@ -58,7 +58,7 @@ func _on_button_discard_pressed() -> void:
 	Main.level.has_window_open = false
 	hide()
 	## add signal for discarded weapon
-
+	Main.level.state_machine.transition_to(StateFreeRoaming.new())
 
 func _on_button_keep_pressed() -> void:
 	if _character != null and _new_weapon != null:
@@ -67,4 +67,5 @@ func _on_button_keep_pressed() -> void:
 	Main.level.is_in_menu = false
 	Main.level.has_window_open = false
 	hide()
+	Main.level.state_machine.transition_to(StateFreeRoaming.new())
 	## add singlal and function for keeping new weapon
