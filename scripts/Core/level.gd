@@ -117,6 +117,7 @@ var game_state : GameState;
 var animation_path :Array[Vector3];
 var patrol_paths: Dictionary[String, PatrolPath] = {}
 var chests: Dictionary = {}
+var pending_chest: Chest = null
 #var pending_chest_weapon: Weapon = null
 var is_in_menu: bool = false
 var active_move: Command
@@ -1647,6 +1648,12 @@ func _register_chests() -> void:
 			var grid_pos := world_to_grid(child.global_position)
 			chests[grid_pos] = child
 			#print("Registered chest at: ", grid_pos, " weapon: ", child.weapon_id)
+
+func find_chest_at(tile: Vector3i) -> Chest:
+	var c: Chest = chests.get(tile, null)
+	if c != null and not c.is_opened and not c.is_looted:
+		return c
+	return null
 
 func _on_chest_opened(pos: Vector3i) -> void:
 	var c: Chest = chests.get(pos, null)

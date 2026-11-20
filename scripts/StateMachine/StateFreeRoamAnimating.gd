@@ -94,6 +94,12 @@ func _on_leader_arrived(level: Node, tile: Vector3i) -> void:
 	for i in range (1, _party.size()):
 		_queue_follower(level, i, _trail[i])
 	_check_aggro(level)
+	
+	if not _stopping:
+		var chest: Chest = level.find_chest_at(tile)
+		if chest != null:
+			level.pending_chest = chest
+			_stopping = true
 
 func _queue_follower(level: Node, i: int, destination: Vector3i) -> void:
 	var f: Character = _party[i]
@@ -136,8 +142,8 @@ func _move_follower(level: Node, i: int, delta: float) -> void:
 
 func _count_step(level: Node, unit: Character) -> void:
 	unit.state.roam_steps += 1
-	print("count_step: ", unit.data.unit_name, " steps: ", unit.state.roam_steps,
-			" cooldowns: ", unit.state.skill_cooldowns)
+	#print("count_step: ", unit.data.unit_name, " steps: ", unit.state.roam_steps,
+			#" cooldowns: ", unit.state.skill_cooldowns)
 	if unit.state.roam_steps < roam_steps_per_tick:
 		return
 	unit.state.roam_steps = 0
