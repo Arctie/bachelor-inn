@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bf4ljwcdlbq45" path="res://scripts/Camera/cameracontroller.gd" id="1_wiudl"]
 [ext_resource type="Shader" uid="uid://dbapk0dtj85oy" path="res://art/WIP/Materials and Shaders/ColorCorrection_Mini.tres" id="2_ebp8v"]
+[ext_resource type="Shader" uid="uid://bklkjdj4qu0rm" path="res://scenes/utilities/Outlines_Shader_Canvas.gdshader" id="3_xfa4h"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xfa4h"]
 shader = ExtResource("2_ebp8v")
@@ -10,8 +11,21 @@ shader_parameter/Main_Green_Tint = 1.4901199989481029e-06
 shader_parameter/Main_Brightness = 1.0000000149012
 shader_parameter/Main_Contrast = 1.0
 shader_parameter/Main_Saturation = 1.0000000149012
-shader_parameter/Vignette = 1.55999996513088
-shader_parameter/Color_Filter = Color(1, 0.8901961, 0.8509804, 1)
+shader_parameter/Vignette = 0.499999988824
+shader_parameter/Color_Filter = Color(1, 0.92941177, 0.81960785, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mgwuh"]
+render_priority = 0
+shader = ExtResource("3_xfa4h")
+shader_parameter/shadows_enabled = true
+shader_parameter/highlights_enabled = true
+shader_parameter/shadow_strength = 0.38999999128272
+shader_parameter/highlight_strength = 0.36999999172976
+shader_parameter/highlight_color = Color(1, 1, 1, 1)
+shader_parameter/shadow_color = Color(0, 0, 0, 1)
+shader_parameter/scale = 0.5
+
+[sub_resource type="QuadMesh" id="QuadMesh_pm8pr"]
 
 [node name="CameraScene" type="Node3D" unique_id=1522391800]
 script = ExtResource("1_wiudl")
@@ -40,3 +54,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="PostProcessLayer" type="MeshInstance3D" parent="Pivot/Springarm/Camera" unique_id=724858108]
+transform = Transform3D(1.5440449, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.48349506)
+visible = false
+material_override = SubResource("ShaderMaterial_mgwuh")
+mesh = SubResource("QuadMesh_pm8pr")
