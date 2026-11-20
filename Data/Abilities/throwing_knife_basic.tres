@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="Skill" format=3 uid="uid://b40afrbqt0ybd"]
 
+[ext_resource type="Texture2D" uid="uid://ddogsq0mua2ft" path="res://art/textures/cursor_sword.png" id="1_5mimg"]
 [ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="1_gn5jl"]
 
 [resource]
@@ -7,6 +8,7 @@ script = ExtResource("1_gn5jl")
 skill_id = "throwing_knife_basic"
 skill_name = "Throwing Knife"
 tooltip = "A basic throwing knife that causes a small amount of damage, and causes the target to bleed."
+icon = ExtResource("1_5mimg")
 effect_mods = {
 &"damage": 1,
 &"dot_tick_damage": 1
@@ -14,4 +16,5 @@ effect_mods = {
 min_range = 2
 max_range = 4
 duration_turns = 3
+has_quantity = true
 metadata/_custom_type_script = "uid://c3p07am3ababr"
