@@ -3,16 +3,16 @@
 [ext_resource type="Script" uid="uid://d3jhky6totysk" path="res://scripts/ui/ribbon.gd" id="1_ttxdn"]
 [ext_resource type="Texture2D" uid="uid://davk3as2tq5ut" path="res://art/textures/GUI_Assets.png" id="2_ay41x"]
 [ext_resource type="Texture2D" uid="uid://djweo7xyyks2v" path="res://art/WIP/AbilityUI/GUI_Assets_TINY_MOCK.png" id="3_f3myg"]
+[ext_resource type="Texture2D" uid="uid://cgrppowt8tutw" path="res://art/textures/UI/UI_Redesign_Assets.png" id="4_ay41x"]
+[ext_resource type="FontFile" uid="uid://2iikh1hgclno" path="res://art/Fonts/NotJamNovel13/Not Jam Novel 13.ttf" id="5_f3myg"]
 
 [node name="Ribbon" type="Control" unique_id=1605267152]
 layout_mode = 3
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 198.0
-offset_top = -129.0
-offset_right = 198.0
-offset_bottom = -129.0
+offset_top = -69.0
+offset_bottom = -69.0
 grow_vertical = 0
 scale = Vector2(3, 3)
 size_flags_horizontal = 0
@@ -92,3 +92,209 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("3_f3myg")
 stretch_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1489146452]
+visible = false
+layout_mode = 0
+offset_right = 131.0
+offset_bottom = 23.0
+theme_override_constants/separation = 5
+
+[node name="Control" type="Control" parent="HBoxContainer" unique_id=1827014845]
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+
+[node name="Button1-BG" type="NinePatchRect" parent="HBoxContainer/Control" unique_id=1819689085]
+layout_mode = 0
+offset_right = 23.0
+offset_bottom = 23.0
+texture = ExtResource("4_ay41x")
+region_rect = Rect2(144, 0, 23, 23)
+
+[node name="Button1-Icon" type="TextureRect" parent="HBoxContainer/Control/Button1-BG" unique_id=562746780]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 4.0
+offset_right = 19.0
+offset_bottom = 20.0
+texture = ExtResource("3_f3myg")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Button_1_Selected" type="NinePatchRect" parent="HBoxContainer/Control" unique_id=395099859]
+visible = false
+layout_mode = 0
+offset_left = -2.0
+offset_top = -3.0000203
+offset_right = 26.666672
+offset_bottom = 24.999979
+texture = ExtResource("4_ay41x")
+region_rect = Rect2(142, 29, 28, 28)
+
+[node name="Label" type="Label" parent="HBoxContainer/Control" unique_id=711003206]
+layout_mode = 0
+offset_top = -13.0
+offset_right = 6.0
+offset_bottom = 1.0
+theme_override_fonts/font = ExtResource("5_f3myg")
+theme_override_font_sizes/font_size = 13
+text = "1"
+
+[node name="Control2" type="Control" parent="HBoxContainer" unique_id=881112170]
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+
+[node name="Button2-BG" type="NinePatchRect" parent="HBoxContainer/Control2" unique_id=1508683409]
+layout_mode = 0
+offset_right = 23.0
+offset_bottom = 23.0
+texture = ExtResource("4_ay41x")
+region_rect = Rect2(144, 0, 23, 23)
+
+[node name="Button2-Icon" type="TextureRect" parent="HBoxContainer/Control2/Button2-BG" unique_id=1949129845]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 4.0
+offset_right = 19.0
+offset_bottom = 20.0
+texture = ExtResource("3_f3myg")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Button_2_Selected" type="NinePatchRect" parent="HBoxContainer/Control2" unique_id=908932624]
+layout_mode = 0
+offset_left = -2.0
+offset_top = -3.0000203
+offset_right = 26.666672
+offset_bottom = 24.999979
+texture = ExtResource("4_ay41x")
+region_rect = Rect2(142, 29, 28, 28)
+
+[node name="Label" type="Label" parent="HBoxContainer/Control2" unique_id=1443468899]
+layout_mode = 0
+offset_top = -13.0
+offset_right = 7.0
+offset_bottom = 1.0
+theme_override_fonts/font = ExtResource("5_f3myg")
+theme_override_font_sizes/font_size = 13
+text = "2"
+
+[node name="Control3" type="Control" parent="HBoxContainer" unique_id=515145802]
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+
+[node name="Button3-BG" type="NinePatchRect" parent="HBoxContainer/Control3" unique_id=1332895323]
+layout_mode = 0
+offset_right = 23.0
+offset_bottom = 23.0
+texture = ExtResource("4_ay41x")
+region_rect = Rect2(144, 0, 23, 23)
+
+[node name="Button3-Icon" type="TextureRect" parent="HBoxContainer/Control3/Button3-BG" unique_id=717674466]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 4.0
+offset_right = 19.0
+offset_bottom = 20.0
+texture = ExtResource("3_f3myg")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Button_3_Selected" type="NinePatchRect" parent="HBoxContainer/Control3" unique_id=55687184]
+visible = false
+layout_mode = 0
+offset_left = -2.0
+offset_top = -3.0000203
+offset_right = 26.666672
+offset_bottom = 24.999979
+texture = ExtResource("4_ay41x")
+region_rect = Rect2(142, 29, 28, 28)
+
+[node name="Label" type="Label" parent="HBoxContainer/Control3" unique_id=366106933]
+layout_mode = 0
+offset_top = -13.0
+offset_right = 7.0
+offset_bottom = 1.0
+theme_override_fonts/font = ExtResource("5_f3myg")
+theme_override_font_sizes/font_size = 13
+text = "3"
+
+[node name="Control4" type="Control" parent="HBoxContainer" unique_id=1147705705]
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+
+[node name="Button4-BG" type="NinePatchRect" parent="HBoxContainer/Control4" unique_id=2113235571]
+layout_mode = 0
+offset_right = 23.0
+offset_bottom = 23.0
+texture = ExtResource("4_ay41x")
+region_rect = Rect2(144, 0, 23, 23)
+
+[node name="Button4-Icon" type="TextureRect" parent="HBoxContainer/Control4/Button4-BG" unique_id=905639206]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 4.0
+offset_right = 19.0
+offset_bottom = 20.0
+texture = ExtResource("3_f3myg")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Button_4_Selected" type="NinePatchRect" parent="HBoxContainer/Control4" unique_id=1764210769]
+visible = false
+layout_mode = 0
+offset_left = -2.0
+offset_top = -3.0000203
+offset_right = 26.666672
+offset_bottom = 24.999979
+texture = ExtResource("4_ay41x")
+region_rect = Rect2(142, 29, 28, 28)
+
+[node name="Label" type="Label" parent="HBoxContainer/Control4" unique_id=793919967]
+layout_mode = 0
+offset_top = -13.0
+offset_right = 10.0
+offset_bottom = 1.0
+theme_override_fonts/font = ExtResource("5_f3myg")
+theme_override_font_sizes/font_size = 13
+text = "4"
+
+[node name="Control5" type="Control" parent="HBoxContainer" unique_id=334118532]
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+
+[node name="Button5-BG" type="NinePatchRect" parent="HBoxContainer/Control5" unique_id=2086088081]
+layout_mode = 0
+offset_right = 23.0
+offset_bottom = 23.0
+texture = ExtResource("4_ay41x")
+region_rect = Rect2(176, 0, 23, 23)
+
+[node name="Button5-Icon" type="TextureRect" parent="HBoxContainer/Control5/Button5-BG" unique_id=1369548799]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 4.0
+offset_right = 19.0
+offset_bottom = 20.0
+texture = ExtResource("3_f3myg")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Button_5_Selected" type="NinePatchRect" parent="HBoxContainer/Control5" unique_id=1392534473]
+visible = false
+layout_mode = 0
+offset_left = -2.3333282
+offset_top = -2.6666768
+offset_right = 25.666672
+offset_bottom = 25.333323
+texture = ExtResource("4_ay41x")
+region_rect = Rect2(174, 29, 28, 28)
+
+[node name="Label" type="Label" parent="HBoxContainer/Control5" unique_id=1797582553]
+layout_mode = 0
+offset_top = -13.0
+offset_right = 7.0
+offset_bottom = 1.0
+theme_override_fonts/font = ExtResource("5_f3myg")
+theme_override_font_sizes/font_size = 13
+text = "5"

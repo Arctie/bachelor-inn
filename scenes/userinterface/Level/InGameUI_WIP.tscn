@@ -108,12 +108,12 @@ offset_bottom = 40.0
 
 [node name="Ribbon" parent="Scale" unique_id=2041898346 instance=ExtResource("5_c1mo8")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
-offset_left = 9.0
-offset_top = -297.99994
-offset_right = 9.0
-offset_bottom = -297.99994
+offset_left = 663.0
+offset_top = -97.0
+offset_right = 663.0
+offset_bottom = -97.0
+scale = Vector2(4, 4)
 
 [node name="End_Turn_Button" type="Button" parent="Scale" unique_id=1064894623]
 unique_name_in_owner = true
