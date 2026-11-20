@@ -57,6 +57,7 @@ target_unit_name = "Bird1"
 
 [node name="Chest" parent="Chests" parent_id_path=PackedInt32Array(2019346901) index="0" unique_id=903149754 instance=ExtResource("12_8cl6u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.5, 1)
+loot_type = 2
 item_id = "bomb_basic"
 
 [node name="Teleporter" parent="Teleporters/Pair1" parent_id_path=PackedInt32Array(1313553453) index="0" unique_id=845671447 instance=ExtResource("2_v4rl3")]
