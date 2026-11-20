@@ -3,7 +3,17 @@
 [ext_resource type="PackedScene" uid="uid://ctcbsf1b8tg5x" path="res://art/gltf/Chest.gltf" id="1_6rfxg"]
 [ext_resource type="Script" uid="uid://fq2l2nas2itl" path="res://scripts/Other/chest_interactive.gd" id="1_srpob"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_srpob"]
+
 [node name="Chest" type="Node3D" unique_id=903149754]
 script = ExtResource("1_srpob")
 
 [node name="blockbench_export" parent="." unique_id=865220950 instance=ExtResource("1_6rfxg")]
+
+[node name="Area3D" type="Area3D" parent="." unique_id=714942106]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=271971346]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_srpob")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_body_entered"]
