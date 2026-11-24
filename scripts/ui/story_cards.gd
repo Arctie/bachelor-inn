@@ -16,12 +16,14 @@ signal finished
 @onready var level_title: Label = $Control/LevelTitleLabel
 
 var _playing: bool = false
+var valid: Array[Texture2D] = []
 
 func _ready() -> void:
 	#print("StoryCards ready. intro: ", intro.size(), " outro: ", outro.size(),
 	#" | scene: ", owner.scene_file_path if owner else "no owner")
 	hide()
-	continue_button.disabled = false
+	continue_button.text = "Skip Card"
+	#continue_button.disabled = false
 
 func play_intro() -> void:
 	var title: String = Main.level.level_name if is_instance_valid(Main.level) else ""
@@ -33,11 +35,12 @@ func play_outro() -> void:
 func _play(cards: Array[Texture2D], title: String = "") -> void:
 	if _playing:
 		return
-	var valid: Array[Texture2D] = []
+	
 	for t: Texture2D in cards:
 		if t != null:
 			valid.append(t)
 	if valid.is_empty():
+		continue_button.text = "Continue"
 		print("Valid entries in the image arrays is 0.")
 		finished.emit() #
 		return
@@ -45,7 +48,7 @@ func _play(cards: Array[Texture2D], title: String = "") -> void:
 	_playing = true
 	level_title.text = title
 	level_title.visible = not title.is_empty()
-	continue_button.hide()
+	#continue_button.hide()
 	continue_button.disabled = false
 	root.modulate.a = 1.0
 	card_image.modulate.a = 0.0
@@ -62,11 +65,16 @@ func _play(cards: Array[Texture2D], title: String = "") -> void:
 	
 
 func _on_button_pressed() -> void:
-	continue_button.disabled = true
-	await _fade(root, 0.0)
-	hide()
-	_playing = false
-	finished.emit()
+	if valid.is_empty():
+		continue_button.disabled = true
+		await _fade(root, 0.0)
+		hide()
+		_playing = false
+		finished.emit()
+	else:
+		continue_button.text = "Skip Card"
+		# Skip card
+		
 
 func _fade(node: CanvasItem, target_alpha: float, duration: float = -1.0) -> void:
 	var tween: Tween = create_tween()
