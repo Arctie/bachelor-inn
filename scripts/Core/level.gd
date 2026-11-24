@@ -1939,34 +1939,33 @@ func has_line_of_sight(from: Vector3i, to: Vector3i) -> bool:
 func _execute_teleport(portal: Teleporter, unit: Character) -> void:
 	var destination: Node = portal.get_linked_portal()
 	#print("Teleporter: ", name, " grid pos: ", Main.level.world_to_grid(global_position))
-
 	if destination == null:
 		push_error("TeleportPortal: no linked portal found for " + portal.name)
+		state_machine.transition_to(StateFreeRoaming.new())
 		return
 	
-	var dest_grid_pos: Vector3i = destination.get("teleporter_grid_position")
+	var destination_pos: Vector3i = destination.get("teleporter_grid_position")
 	#print("Teleporting ", unit.data.unit_name, " to grid: ", dest_grid_pos, " world: ", grid_to_world(dest_grid_pos))
 	
 	# Check if destination is occupied
-	if occupancy_map.get_cell_item(dest_grid_pos) != GridMap.INVALID_CELL_ITEM:
+	if occupancy_map.get_cell_item(destination_pos) != GridMap.INVALID_CELL_ITEM:
 		#TODO: Add Destination occupied message — don't teleport
 		unit.state.just_teleported = true  # prevent retry
 		select_unit(unit)
-		state_machine.transition_to(StateSelectingMove.new())
+		state_machine.transition_to(StateFreeRoaming.new())
 		return
 	
-	# Fade out
 	await FadeToBlack.fade_out()
 
 	# Update occupancy map — clear old position
 	occupancy_map.set_cell_item(unit.state.grid_position, GridMap.INVALID_CELL_ITEM)
 
 	# Move unit to destination
-	unit.position = grid_to_world(dest_grid_pos)
-	unit.state.grid_position = dest_grid_pos
+	unit.position = grid_to_world(destination_pos)
+	unit.state.grid_position = destination_pos
 	unit.state.just_teleported = true
 
-	occupancy_map.set_cell_item(dest_grid_pos, player_code)
+	occupancy_map.set_cell_item(destination_pos, player_code)
 
 	camera_controller.free_camera()
 	camera_controller.set_pivot_target_translate(unit.position)

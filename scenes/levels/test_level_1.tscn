@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://bajx21wdflkf8" path="res://scenes/grid_items/chest.tscn" id="2_lw4g3"]
 [ext_resource type="Texture2D" uid="uid://bycgsy1bdsv0k" path="res://art/textures/StoryCards/Moosecolours.png" id="2_ytn8h"]
 [ext_resource type="AudioStream" uid="uid://coi7gb4k867j2" path="res://audio/CharacterSounds/Bird_on_death.wav" id="3_ckkav"]
-[ext_resource type="Texture2D" uid="uid://c18iq134huxcl" path="res://art/textures/StoryCards/mountainsforest_screen_big.png" id="3_tuif4"]
 [ext_resource type="PackedScene" uid="uid://drpd1d805rfy5" path="res://scenes/Characters/Enemy/bird2.tscn" id="3_vbfgb"]
 [ext_resource type="Script" uid="uid://cfb66ehlpe84n" path="res://scripts/stats/character_data.gd" id="4_g58ai"]
 [ext_resource type="AudioStream" uid="uid://d1ncrot3vanmj" path="res://audio/CharacterSounds/Bird_on_hurt.wav" id="4_mxmev"]
@@ -80,7 +79,6 @@ data = {
 
 [node name="StoryCards" parent="UI_Elements" parent_id_path=PackedInt32Array(134262859) index="2" unique_id=1488155635]
 intro = Array[Texture2D]([ExtResource("2_ytn8h")])
-outro = Array[Texture2D]([ExtResource("3_tuif4")])
 fade_time = 0.3
 
 [node name="Lights" parent="." index="5" unique_id=38605441]
@@ -100,12 +98,6 @@ omni_range = 18.478
 [node name="DirectionalLight3D" parent="Lights" index="3" unique_id=1646267771]
 transform = Transform3D(0.59934443, -0.57991624, 0.5518002, 0.1499218, 0.75844866, 0.63425475, -0.78632677, -0.29741016, 0.541514, 8.183081, 16.736057, -0.9140687)
 light_energy = 1.03
-
-[node name="CameraSettings" parent="." index="8" unique_id=2146881514]
-minimum_camera_x = -1000.0
-maximum_camera_x = 1000.0
-minimum_camera_z = -1000.0
-maximum_camera_z = 1000.0
 
 [node name="Bird" parent="Enemies" parent_id_path=PackedInt32Array(1320572048) index="0" unique_id=159367408 instance=ExtResource("3_vbfgb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.5, -7)
