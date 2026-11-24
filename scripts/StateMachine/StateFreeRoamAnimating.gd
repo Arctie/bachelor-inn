@@ -13,6 +13,7 @@ var _alerted: Array[Character] = []
 var _stopping: bool = false
 var _party_confirmed: bool = false
 var roam_steps_per_tick: int = 10
+var _finishing: bool = false
 
 func _init(walker: Character, path: Array[Vector3i]) -> void:
 	_walker = walker
@@ -96,6 +97,11 @@ func _on_leader_arrived(level: Node, tile: Vector3i) -> void:
 	_check_aggro(level)
 	
 	if not _stopping:
+		for portal: Teleporter in level.get_tree().get_nodes_in_group("teleporters"):
+			if portal.teleporter_grid_position == tile and not _walker.state.just_teleported:
+				level.pending_teleporter = portal
+				_stopping = true
+				break
 		var chest: Chest = level.find_chest_at(tile)
 		if chest != null:
 			level.pending_chest = chest
@@ -166,6 +172,9 @@ func _check_aggro(level: Node) -> void:
 			q.resize(1)
 
 func _finish(level: Node) -> void:
+	if _finishing:
+		return
+	_finishing = true
 	if is_instance_valid(_walker):
 		_walker.pause_anim()
 	level.check_trigger_conditions()
@@ -177,6 +186,12 @@ func _finish(level: Node) -> void:
 		level.pending_chest = null
 		_stopping = false
 		level._on_chest_opened(level.world_to_grid(chest.global_position))
+		return
+	if level.pending_teleporter != null and _alerted.is_empty():
+		var portal: Teleporter = level.pending_teleporter
+		level.pending_teleporter = null
+		_stopping = false
+		await level._execute_teleport(portal, _walker)
 		return
 	if _stopping:
 		level.camera_controller.end_roaming()

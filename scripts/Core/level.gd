@@ -120,6 +120,7 @@ var animation_path :Array[Vector3];
 var patrol_paths: Dictionary[String, PatrolPath] = {}
 var chests: Dictionary = {}
 var pending_chest: Chest = null
+var pending_teleporter: Teleporter = null
 #var pending_chest_weapon: Weapon = null
 var is_in_menu: bool = false
 var active_move: Command
@@ -1961,19 +1962,21 @@ func _execute_teleport(portal: Teleporter, unit: Character) -> void:
 	occupancy_map.set_cell_item(unit.state.grid_position, GridMap.INVALID_CELL_ITEM)
 
 	# Move unit to destination
-	unit.position = grid_to_world(destination_pos)
-	unit.state.grid_position = destination_pos
-	unit.state.just_teleported = true
+	for c: Character in player_characters:
+		if is_instance_valid(c) and c.state.is_alive:
+			c.position = grid_to_world(destination_pos)
+			c.state.grid_position = destination_pos
+			c.state.just_teleported = true
 
-	occupancy_map.set_cell_item(destination_pos, player_code)
+	#occupancy_map.set_cell_item(destination_pos, player_code)
 
-	camera_controller.free_camera()
+	#camera_controller.free_camera()
 	camera_controller.set_pivot_target_translate(unit.position)
 
 	await FadeToBlack.fade_in()
-
-	select_unit(unit)
-	state_machine.transition_to(StateSelectingMove.new())
+	end_of_roam_action()
+	#select_unit(unit)
+	#state_machine.transition_to(StateSelectingMove.new())
 
 
 func _play_level_theme_music() -> void:

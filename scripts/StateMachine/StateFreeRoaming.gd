@@ -26,6 +26,7 @@ func enter(level: Node) -> void:
 		return # This should not be possible
 	for c: Character in _level.player_characters:
 		if is_instance_valid(c):
+			c.state.just_teleported = false
 			_level.occupancy_map.set_cell_item(c.state.grid_position, GridMap.INVALID_CELL_ITEM)
 	_level.selected_unit = _leader
 	_level.last_selected_unit = _leader
