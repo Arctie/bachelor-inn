@@ -119,7 +119,7 @@ data = {
 
 [node name="StoryCards" parent="UI_Elements" parent_id_path=PackedInt32Array(134262859) index="2" unique_id=1488155635]
 intro = Array[Texture2D]([ExtResource("2_d2wio"), ExtResource("3_gogcr"), ExtResource("4_eee2i"), ExtResource("5_wlkka"), ExtResource("6_ou7x1"), ExtResource("7_tb544"), ExtResource("8_wbk7d"), ExtResource("9_sydwe"), ExtResource("10_hh35j"), ExtResource("11_q4uma"), ExtResource("12_a8tf1")])
-hold_time = 0.5
+hold_time = 2.0
 
 [node name="Lamp" parent="Lights" parent_id_path=PackedInt32Array(38605441) index="0" unique_id=286206317]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 9, 0)

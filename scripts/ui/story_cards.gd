@@ -16,14 +16,11 @@ signal finished
 @onready var level_title: Label = $Control/LevelTitleLabel
 
 var _playing: bool = false
+var _skip_pressed: bool = false
 var valid: Array[Texture2D] = []
 
 func _ready() -> void:
-	#print("StoryCards ready. intro: ", intro.size(), " outro: ", outro.size(),
-	#" | scene: ", owner.scene_file_path if owner else "no owner")
 	hide()
-	continue_button.text = "Skip Card"
-	#continue_button.disabled = false
 
 func play_intro() -> void:
 	var title: String = Main.level.level_name if is_instance_valid(Main.level) else ""
@@ -35,48 +32,55 @@ func play_outro() -> void:
 func _play(cards: Array[Texture2D], title: String = "") -> void:
 	if _playing:
 		return
-	
+	valid.clear()
 	for t: Texture2D in cards:
 		if t != null:
 			valid.append(t)
 	if valid.is_empty():
-		continue_button.text = "Continue"
-		print("Valid entries in the image arrays is 0.")
 		finished.emit() #
 		return
 	
 	_playing = true
 	level_title.text = title
 	level_title.visible = not title.is_empty()
-	#continue_button.hide()
+	continue_button.text = "Skip Cards"
 	continue_button.disabled = false
 	root.modulate.a = 1.0
 	card_image.modulate.a = 0.0
 	show()
-	#await _fade(root, 1.0)
 
 	for i in valid.size():
+		if _skip_pressed:
+			break
 		card_image.texture = valid[i]
 		await _fade(card_image, 1.0)
-		if i < valid.size() - 1: # -1 because last card stays up until the player continues
-			await get_tree().create_timer(hold_time).timeout
+		if _skip_pressed:
+			break
+		await _hold(hold_time)      # the last card also holds, then closes on its own
+		if _skip_pressed:
+			break
+		if i < valid.size() - 1:
 			await _fade(card_image, 0.0)
-	continue_button.show()  
-	
+	await _close()
+
+func _close() -> void:
+	continue_button.disabled = true
+	await _fade(root, 0.0)
+	hide()
+	_playing = false
+	finished.emit()
+
+func _hold(t: float) -> void:
+	var elapsed: float = 0.0
+	while elapsed < t and not _skip_pressed:
+		await get_tree().process_frame
+		elapsed += get_process_delta_time()
 
 func _on_button_pressed() -> void:
-	if valid.is_empty():
-		continue_button.disabled = true
-		await _fade(root, 0.0)
-		hide()
-		_playing = false
-		finished.emit()
-	else:
-		continue_button.text = "Skip Card"
-		# Skip card
-		
+	_skip_pressed = true
 
 func _fade(node: CanvasItem, target_alpha: float, duration: float = -1.0) -> void:
+	var d: float = fade_time if duration < 0.0 else duration
 	var tween: Tween = create_tween()
-	tween.tween_property(node, "modulate:a", target_alpha, fade_time)
+	tween.tween_property(node, "modulate:a", target_alpha, d)
 	await tween.finished
