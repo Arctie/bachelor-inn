@@ -98,7 +98,7 @@ func _on_leader_arrived(level: Node, tile: Vector3i) -> void:
 	
 	if not _stopping:
 		for portal: Teleporter in level.get_tree().get_nodes_in_group("teleporters"):
-			if portal.teleporter_grid_position == tile and not _walker.state.just_teleported:
+			if portal.teleporter_grid_position == tile and not _walker.state.just_teleported and not level.has_active_threat():
 				level.pending_teleporter = portal
 				_stopping = true
 				break
@@ -187,7 +187,7 @@ func _finish(level: Node) -> void:
 		_stopping = false
 		level._on_chest_opened(level.world_to_grid(chest.global_position))
 		return
-	if level.pending_teleporter != null and _alerted.is_empty():
+	if level.pending_teleporter != null and _alerted.is_empty() and not level.has_active_threat():
 		var portal: Teleporter = level.pending_teleporter
 		level.pending_teleporter = null
 		_stopping = false

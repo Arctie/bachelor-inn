@@ -1938,6 +1938,10 @@ func has_line_of_sight(from: Vector3i, to: Vector3i) -> bool:
 	return true
 
 func _execute_teleport(portal: Teleporter, unit: Character) -> void:
+	if has_active_threat():
+		print("Tried to teleport in combat - thats not allowed")
+		#state_machine.transition_to(StateFreeRoaming.new())
+		return
 	var destination: Node = portal.get_linked_portal()
 	#print("Teleporter: ", name, " grid pos: ", Main.level.world_to_grid(global_position))
 	if destination == null:
