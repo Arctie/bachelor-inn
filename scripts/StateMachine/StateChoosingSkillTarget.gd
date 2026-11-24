@@ -73,6 +73,11 @@ func handle_input(level: Node, event: InputEvent) -> void:
 				if ui:
 					ui.ribbon.trigger_skill_by_index(4)
 				return
+			KEY_ESCAPE:
+				level._exit_skill_target_mode()
+				level.select_next_character()
+				level.state_machine.transition_to(StateSelectingMove.new())
+				return
 	
 	if not event is InputEventMouseButton:
 		return

@@ -879,6 +879,10 @@ func _input(event: InputEvent) -> void:
 						pass
 					elif state_machine.current is StateLevelComplete:
 						pass
+					elif state_machine.current is StateChoosingSkillOrigin:
+						pass
+					elif state_machine.current is StateChoosingSkillTarget:
+						pass
 					else:
 						state_machine.push(StateInPauseMenu.new())
 						get_viewport().set_input_as_handled() ## block multiple instances of input

@@ -25,6 +25,15 @@ func handle_input(level: Node, event: InputEvent) -> void:
 		_cancel(level)
 		return
 	
+	# Key inputs
+	if event is InputEventKey and not event.echo and event.pressed:
+		match event.keycode:
+			KEY_ESCAPE:
+				level._exit_skill_target_mode()
+				level.select_next_character()
+				level.state_machine.transition_to(StateSelectingMove.new())
+				return
+	
 	var caster: Character = level.skill_caster
 	var actual_target_pos: Vector3i = level.skill_target_pos
 	if level.active_skill.aoe_shape == Skill.AoEShape.NONE and level.skill_target_pos == caster.state.grid_position:

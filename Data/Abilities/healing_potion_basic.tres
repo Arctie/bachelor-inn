@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://b6okon5l2nwou"]
+
+[ext_resource type="Script" uid="uid://c3p07am3ababr" path="res://scripts/stats/skill.gd" id="1_hjawq"]
+
+[resource]
+script = ExtResource("1_hjawq")
+skill_id = "healing_potion_basic"
+skill_name = "Small Healing Potion"
+effect_mods = {
+&"current_health": 3
+}
+target_faction = 3
+metadata/_custom_type_script = "uid://c3p07am3ababr"
