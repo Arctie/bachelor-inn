@@ -2,7 +2,11 @@
 
 [resource]
 background_mode = 1
+<<<<<<< Updated upstream
 background_color = Color(0.56240255, 0.73057985, 0.75949275, 1)
+=======
+background_color = Color(0.051238336, 0.08192428, 0.17694429, 1)
+>>>>>>> Stashed changes
 tonemap_mode = 3
 tonemap_exposure = 1.07
 ssil_radius = 11.01
