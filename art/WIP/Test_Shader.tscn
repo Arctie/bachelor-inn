@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://cuf7q0rfy6g6h"]
+
+[ext_resource type="Shader" uid="uid://b835tr2lyyio2" path="res://art/WIP/EdgeHighlightTest.gdshader" id="1_nkym2"]
+[ext_resource type="Texture2D" uid="uid://t1l4146x15c6" path="res://art/Animations/Characters/Elvy/Elvy_tex/Elvy_basecolour.png" id="2_t7v25"]
+[ext_resource type="Texture2D" uid="uid://cf1o4hew8auy3" path="res://art/Animations/Characters/Elvy/Elvy_tex/Elvy_mask4.png" id="3_0dbj1"]
+[ext_resource type="Texture2D" uid="uid://07vl3tutauag" path="res://art/Animations/Characters/Elvy/Elvy_tex/Elvy_normals.png" id="4_tr06y"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jthfc"]
+render_priority = 0
+shader = ExtResource("1_nkym2")
+shader_parameter/diffuse_atlas = ExtResource("2_t7v25")
+shader_parameter/normal_atlas = ExtResource("4_tr06y")
+shader_parameter/mask_atlas = ExtResource("3_0dbj1")
+shader_parameter/frame_index = 1
+shader_parameter/frame_columns = 1
+shader_parameter/frame_rows = 1
+shader_parameter/grey_tint = false
+shader_parameter/is_selected = true
+shader_parameter/selected_color = Color(1, 0.44705883, 0.31764707, 1)
+shader_parameter/hit_effect = 0.0
+shader_parameter/hit_effect_color = Color(1, 1, 1, 1)
+shader_parameter/passive = false
+shader_parameter/passive_tint = Color(0.1, 0.1, 0.1, 1)
+shader_parameter/edge_strength = 1.0
+shader_parameter/edge_tint = Color(1, 1, 1, 1)
+shader_parameter/normal_tilt = 1.0
+shader_parameter/normal_sensitivity = 0.1
+shader_parameter/flip_normal_y = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_2sahv"]
+material = SubResource("ShaderMaterial_jthfc")
+
+[node name="Node3D" type="Node3D" unique_id=853266513]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=115583759]
+transform = Transform3D(1, 0, 0, 0, 0.98265797, 0.18542662, 0, -0.18542662, 0.98265797, 0.12228453, 0.5502503, 0)
+mesh = SubResource("QuadMesh_2sahv")

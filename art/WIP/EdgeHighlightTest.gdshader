@@ -47,6 +47,9 @@ vec2 atlas_uv(vec2 uv) {
 vec3 screen(vec3 base, vec3 blend){
 	return 1.0 - (1.0 - base) * (1.0 - blend);
 }
+float pingpong(float Scale, float Value){
+	return Scale - abs(mod(Value, Scale * 2.0) - Scale);
+}
 
 void fragment() {
     vec2 uv = atlas_uv(UV);
@@ -74,7 +77,12 @@ void fragment() {
 		//Use a gradient U or V to control a Sin wave ish, could use bot u and v so that it goes a bit sideways
 		//Either way this will be animated i think, so just add onto it time to move it down, 
 		//maybe use some noise or smth to make it varied. screen that effect onto d.rgb
-		d.rgb = screen(d.rgb,texture(mask_atlas,uv).rgb);
+		
+		vec3 m = texture(mask_atlas,uv).rgb;
+		float c = pingpong(1.0,uv.y);
+		m = m*vec3(c,c,c);
+		m *= selected_color;
+		d.rgb = screen(d.rgb, m) ;
 	}
 	
 	if (grey_tint){
