@@ -14,6 +14,14 @@ func _exit(level: Node) -> void:
 func handle_input(level: Node, event: InputEvent) -> void:
 	if not level._can_handle_input(event):
 		return
+	
+	# Key inputs
+	if event is InputEventKey and not event.echo and event.pressed:
+		if event.keycode == KEY_ESCAPE:
+			_cancel(level)
+			return
+		return
+	
 	var pos: Vector3i = level.get_grid_cell_from_mouse()
 	level._update_cursor(pos)
 	if not event is InputEventMouseButton:
@@ -25,14 +33,6 @@ func handle_input(level: Node, event: InputEvent) -> void:
 		_cancel(level)
 		return
 	
-	# Key inputs
-	if event is InputEventKey and not event.echo and event.pressed:
-		match event.keycode:
-			KEY_ESCAPE:
-				level._exit_skill_target_mode()
-				level.select_next_character()
-				level.state_machine.transition_to(StateSelectingMove.new())
-				return
 	
 	var caster: Character = level.skill_caster
 	var actual_target_pos: Vector3i = level.skill_target_pos
