@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/Monocraft.ttc-996493a9131127fecfa90c8097b6f44
 [params]
 
 Rendering=null
-antialiasing=2
+antialiasing=0
 generate_mipmaps=false
 disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false

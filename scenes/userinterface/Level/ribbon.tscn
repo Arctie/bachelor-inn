@@ -4,7 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://davk3as2tq5ut" path="res://art/textures/GUI_Assets.png" id="2_ay41x"]
 [ext_resource type="Texture2D" uid="uid://djweo7xyyks2v" path="res://art/WIP/AbilityUI/GUI_Assets_TINY_MOCK.png" id="3_f3myg"]
 [ext_resource type="Texture2D" uid="uid://cgrppowt8tutw" path="res://art/textures/UI/UI_Redesign_Assets.png" id="4_ay41x"]
-[ext_resource type="FontFile" uid="uid://2iikh1hgclno" path="res://art/Fonts/NotJamNovel13/Not Jam Novel 13.ttf" id="5_f3myg"]
+[ext_resource type="FontFile" uid="uid://ctd5pba6pfiqk" path="res://art/Fonts/Monocraft.ttc" id="5_f3myg"]
+[ext_resource type="StyleBox" uid="uid://dly7gpxmaudqk" path="res://scenes/userinterface/Invisible_Button.tres" id="6_72644"]
 
 [node name="Ribbon" type="Control" unique_id=1605267152]
 layout_mode = 3
@@ -20,6 +21,7 @@ size_flags_vertical = 8
 script = ExtResource("1_ttxdn")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1848613638]
+visible = false
 layout_mode = 0
 offset_right = 116.0
 offset_bottom = 18.0
@@ -93,25 +95,25 @@ mouse_default_cursor_shape = 2
 texture_normal = ExtResource("3_f3myg")
 stretch_mode = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1489146452]
-visible = false
+[node name="Button_Container" type="HBoxContainer" parent="." unique_id=1489146452]
 layout_mode = 0
 offset_right = 131.0
 offset_bottom = 23.0
 theme_override_constants/separation = 5
 
-[node name="Control" type="Control" parent="HBoxContainer" unique_id=1827014845]
+[node name="Control" type="Control" parent="Button_Container" unique_id=1827014845]
 custom_minimum_size = Vector2(23, 23)
 layout_mode = 2
 
-[node name="Button1-BG" type="NinePatchRect" parent="HBoxContainer/Control" unique_id=1819689085]
+[node name="Button1-BG" type="NinePatchRect" parent="Button_Container/Control" unique_id=1819689085]
 layout_mode = 0
 offset_right = 23.0
 offset_bottom = 23.0
 texture = ExtResource("4_ay41x")
 region_rect = Rect2(144, 0, 23, 23)
 
-[node name="Button1-Icon" type="TextureRect" parent="HBoxContainer/Control/Button1-BG" unique_id=562746780]
+[node name="Button1-Icon" type="TextureRect" parent="Button_Container/Control/Button1-BG" unique_id=562746780]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 3.0
 offset_top = 4.0
@@ -121,7 +123,8 @@ texture = ExtResource("3_f3myg")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="Button_1_Selected" type="NinePatchRect" parent="HBoxContainer/Control" unique_id=395099859]
+[node name="Button_1_Selected" type="NinePatchRect" parent="Button_Container/Control" unique_id=395099859]
+unique_name_in_owner = true
 visible = false
 layout_mode = 0
 offset_left = -2.0
@@ -131,27 +134,40 @@ offset_bottom = 24.999979
 texture = ExtResource("4_ay41x")
 region_rect = Rect2(142, 29, 28, 28)
 
-[node name="Label" type="Label" parent="HBoxContainer/Control" unique_id=711003206]
+[node name="Label" type="Label" parent="Button_Container/Control" unique_id=711003206]
 layout_mode = 0
-offset_top = -13.0
-offset_right = 6.0
-offset_bottom = 1.0
+offset_left = 1.0
+offset_top = -10.666666
+offset_right = 7.0
+offset_bottom = 3.333334
 theme_override_fonts/font = ExtResource("5_f3myg")
-theme_override_font_sizes/font_size = 13
+theme_override_font_sizes/font_size = 8
 text = "1"
 
-[node name="Control2" type="Control" parent="HBoxContainer" unique_id=881112170]
+[node name="Button1_button" type="Button" parent="Button_Container/Control" unique_id=1195609399]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 23.0
+offset_bottom = 23.0
+theme_override_styles/normal = ExtResource("6_72644")
+theme_override_styles/pressed = ExtResource("6_72644")
+theme_override_styles/hover = ExtResource("6_72644")
+theme_override_styles/disabled = ExtResource("6_72644")
+theme_override_styles/focus = ExtResource("6_72644")
+
+[node name="Control2" type="Control" parent="Button_Container" unique_id=881112170]
 custom_minimum_size = Vector2(23, 23)
 layout_mode = 2
 
-[node name="Button2-BG" type="NinePatchRect" parent="HBoxContainer/Control2" unique_id=1508683409]
+[node name="Button2-BG" type="NinePatchRect" parent="Button_Container/Control2" unique_id=1508683409]
 layout_mode = 0
 offset_right = 23.0
 offset_bottom = 23.0
 texture = ExtResource("4_ay41x")
 region_rect = Rect2(144, 0, 23, 23)
 
-[node name="Button2-Icon" type="TextureRect" parent="HBoxContainer/Control2/Button2-BG" unique_id=1949129845]
+[node name="Button2-Icon" type="TextureRect" parent="Button_Container/Control2/Button2-BG" unique_id=1949129845]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 3.0
 offset_top = 4.0
@@ -161,7 +177,9 @@ texture = ExtResource("3_f3myg")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="Button_2_Selected" type="NinePatchRect" parent="HBoxContainer/Control2" unique_id=908932624]
+[node name="Button_2_Selected" type="NinePatchRect" parent="Button_Container/Control2" unique_id=908932624]
+unique_name_in_owner = true
+visible = false
 layout_mode = 0
 offset_left = -2.0
 offset_top = -3.0000203
@@ -170,27 +188,40 @@ offset_bottom = 24.999979
 texture = ExtResource("4_ay41x")
 region_rect = Rect2(142, 29, 28, 28)
 
-[node name="Label" type="Label" parent="HBoxContainer/Control2" unique_id=1443468899]
+[node name="Label" type="Label" parent="Button_Container/Control2" unique_id=1443468899]
 layout_mode = 0
-offset_top = -13.0
-offset_right = 7.0
-offset_bottom = 1.0
+offset_left = 1.0
+offset_top = -10.666666
+offset_right = 8.0
+offset_bottom = 3.333334
 theme_override_fonts/font = ExtResource("5_f3myg")
-theme_override_font_sizes/font_size = 13
+theme_override_font_sizes/font_size = 8
 text = "2"
 
-[node name="Control3" type="Control" parent="HBoxContainer" unique_id=515145802]
+[node name="Button2_button" type="Button" parent="Button_Container/Control2" unique_id=594262274]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 23.0
+offset_bottom = 23.0
+theme_override_styles/normal = ExtResource("6_72644")
+theme_override_styles/pressed = ExtResource("6_72644")
+theme_override_styles/hover = ExtResource("6_72644")
+theme_override_styles/disabled = ExtResource("6_72644")
+theme_override_styles/focus = ExtResource("6_72644")
+
+[node name="Control3" type="Control" parent="Button_Container" unique_id=515145802]
 custom_minimum_size = Vector2(23, 23)
 layout_mode = 2
 
-[node name="Button3-BG" type="NinePatchRect" parent="HBoxContainer/Control3" unique_id=1332895323]
+[node name="Button3-BG" type="NinePatchRect" parent="Button_Container/Control3" unique_id=1332895323]
 layout_mode = 0
 offset_right = 23.0
 offset_bottom = 23.0
 texture = ExtResource("4_ay41x")
 region_rect = Rect2(144, 0, 23, 23)
 
-[node name="Button3-Icon" type="TextureRect" parent="HBoxContainer/Control3/Button3-BG" unique_id=717674466]
+[node name="Button3-Icon" type="TextureRect" parent="Button_Container/Control3/Button3-BG" unique_id=717674466]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 3.0
 offset_top = 4.0
@@ -200,7 +231,8 @@ texture = ExtResource("3_f3myg")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="Button_3_Selected" type="NinePatchRect" parent="HBoxContainer/Control3" unique_id=55687184]
+[node name="Button_3_Selected" type="NinePatchRect" parent="Button_Container/Control3" unique_id=55687184]
+unique_name_in_owner = true
 visible = false
 layout_mode = 0
 offset_left = -2.0
@@ -210,27 +242,40 @@ offset_bottom = 24.999979
 texture = ExtResource("4_ay41x")
 region_rect = Rect2(142, 29, 28, 28)
 
-[node name="Label" type="Label" parent="HBoxContainer/Control3" unique_id=366106933]
+[node name="Label" type="Label" parent="Button_Container/Control3" unique_id=366106933]
 layout_mode = 0
-offset_top = -13.0
-offset_right = 7.0
-offset_bottom = 1.0
+offset_left = 1.0
+offset_top = -10.666666
+offset_right = 8.0
+offset_bottom = 3.333334
 theme_override_fonts/font = ExtResource("5_f3myg")
-theme_override_font_sizes/font_size = 13
+theme_override_font_sizes/font_size = 8
 text = "3"
 
-[node name="Control4" type="Control" parent="HBoxContainer" unique_id=1147705705]
+[node name="Button3_button" type="Button" parent="Button_Container/Control3" unique_id=1426134240]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 23.0
+offset_bottom = 23.0
+theme_override_styles/normal = ExtResource("6_72644")
+theme_override_styles/pressed = ExtResource("6_72644")
+theme_override_styles/hover = ExtResource("6_72644")
+theme_override_styles/disabled = ExtResource("6_72644")
+theme_override_styles/focus = ExtResource("6_72644")
+
+[node name="Control4" type="Control" parent="Button_Container" unique_id=1147705705]
 custom_minimum_size = Vector2(23, 23)
 layout_mode = 2
 
-[node name="Button4-BG" type="NinePatchRect" parent="HBoxContainer/Control4" unique_id=2113235571]
+[node name="Button4-BG" type="NinePatchRect" parent="Button_Container/Control4" unique_id=2113235571]
 layout_mode = 0
 offset_right = 23.0
 offset_bottom = 23.0
 texture = ExtResource("4_ay41x")
 region_rect = Rect2(144, 0, 23, 23)
 
-[node name="Button4-Icon" type="TextureRect" parent="HBoxContainer/Control4/Button4-BG" unique_id=905639206]
+[node name="Button4-Icon" type="TextureRect" parent="Button_Container/Control4/Button4-BG" unique_id=905639206]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 3.0
 offset_top = 4.0
@@ -240,7 +285,8 @@ texture = ExtResource("3_f3myg")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="Button_4_Selected" type="NinePatchRect" parent="HBoxContainer/Control4" unique_id=1764210769]
+[node name="Button_4_Selected" type="NinePatchRect" parent="Button_Container/Control4" unique_id=1764210769]
+unique_name_in_owner = true
 visible = false
 layout_mode = 0
 offset_left = -2.0
@@ -250,27 +296,40 @@ offset_bottom = 24.999979
 texture = ExtResource("4_ay41x")
 region_rect = Rect2(142, 29, 28, 28)
 
-[node name="Label" type="Label" parent="HBoxContainer/Control4" unique_id=793919967]
+[node name="Label" type="Label" parent="Button_Container/Control4" unique_id=793919967]
 layout_mode = 0
-offset_top = -13.0
-offset_right = 10.0
-offset_bottom = 1.0
+offset_left = 1.0
+offset_top = -10.666666
+offset_right = 11.0
+offset_bottom = 3.333334
 theme_override_fonts/font = ExtResource("5_f3myg")
-theme_override_font_sizes/font_size = 13
+theme_override_font_sizes/font_size = 8
 text = "4"
 
-[node name="Control5" type="Control" parent="HBoxContainer" unique_id=334118532]
+[node name="Button4_button" type="Button" parent="Button_Container/Control4" unique_id=69755694]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 23.0
+offset_bottom = 23.0
+theme_override_styles/normal = ExtResource("6_72644")
+theme_override_styles/pressed = ExtResource("6_72644")
+theme_override_styles/hover = ExtResource("6_72644")
+theme_override_styles/disabled = ExtResource("6_72644")
+theme_override_styles/focus = ExtResource("6_72644")
+
+[node name="Control5" type="Control" parent="Button_Container" unique_id=334118532]
 custom_minimum_size = Vector2(23, 23)
 layout_mode = 2
 
-[node name="Button5-BG" type="NinePatchRect" parent="HBoxContainer/Control5" unique_id=2086088081]
+[node name="Button5-BG" type="NinePatchRect" parent="Button_Container/Control5" unique_id=2086088081]
 layout_mode = 0
 offset_right = 23.0
 offset_bottom = 23.0
 texture = ExtResource("4_ay41x")
 region_rect = Rect2(176, 0, 23, 23)
 
-[node name="Button5-Icon" type="TextureRect" parent="HBoxContainer/Control5/Button5-BG" unique_id=1369548799]
+[node name="Button5-Icon" type="TextureRect" parent="Button_Container/Control5/Button5-BG" unique_id=1369548799]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 3.0
 offset_top = 4.0
@@ -280,7 +339,8 @@ texture = ExtResource("3_f3myg")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="Button_5_Selected" type="NinePatchRect" parent="HBoxContainer/Control5" unique_id=1392534473]
+[node name="Button_5_Selected" type="NinePatchRect" parent="Button_Container/Control5" unique_id=1392534473]
+unique_name_in_owner = true
 visible = false
 layout_mode = 0
 offset_left = -2.3333282
@@ -290,11 +350,23 @@ offset_bottom = 25.333323
 texture = ExtResource("4_ay41x")
 region_rect = Rect2(174, 29, 28, 28)
 
-[node name="Label" type="Label" parent="HBoxContainer/Control5" unique_id=1797582553]
+[node name="Label" type="Label" parent="Button_Container/Control5" unique_id=1797582553]
 layout_mode = 0
-offset_top = -13.0
-offset_right = 7.0
-offset_bottom = 1.0
+offset_left = 1.0
+offset_top = -10.666666
+offset_right = 8.0
+offset_bottom = 3.333334
 theme_override_fonts/font = ExtResource("5_f3myg")
-theme_override_font_sizes/font_size = 13
+theme_override_font_sizes/font_size = 8
 text = "5"
+
+[node name="Button5_button" type="Button" parent="Button_Container/Control5" unique_id=1910948081]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 23.0
+offset_bottom = 23.0
+theme_override_styles/normal = ExtResource("6_72644")
+theme_override_styles/pressed = ExtResource("6_72644")
+theme_override_styles/hover = ExtResource("6_72644")
+theme_override_styles/disabled = ExtResource("6_72644")
+theme_override_styles/focus = ExtResource("6_72644")

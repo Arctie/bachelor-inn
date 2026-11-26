@@ -2,7 +2,7 @@
 
 [resource]
 background_mode = 1
-background_color = Color(0.13035408, 0.18394029, 0.3433216, 1)
+background_color = Color(0.56240255, 0.73057985, 0.75949275, 1)
 tonemap_mode = 3
 tonemap_exposure = 1.07
 ssil_radius = 11.01
