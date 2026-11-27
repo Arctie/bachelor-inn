@@ -7,15 +7,18 @@ const MAX_TIER: int = 5
 @export var weapon_weight: float = 1.0
 @export var skill_weight: float = 1.0
 @export var item_weight: float = 1.0
+@export_range(0.0, 1.0) var luck_chance: float = 0.15
 
-func roll_loot() -> void:
+func roll_loot_quantity() -> void:
 	pass
 
-func _chose_loot_type() -> void:# LootEntry.Type:
+func _roll_loot_type(chapter: int) -> void:# LootEntry.Type:
 	pass
 
-func _chose_loot_tier() -> void:
+func _choose_loot_tier() -> void:
 	pass
 
-func _chose_loot_id() -> void:# LootEntry.Kind:
+func _choose_loot_id() -> void:# LootEntry.Kind:
 	pass
+
+	

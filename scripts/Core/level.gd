@@ -186,6 +186,8 @@ func _ready() -> void:
 	e.type = LootEntry.Type.ITEM
 	e.id = "bomb_basic"
 	print("entry: ", e.type, " ", e.id, " amount ", e.amount, " resolved ", e.resolved)
+	var p: LootPool = load("res://scripts/Other/loot_pool.tres")
+	print("pool: type ", p.type, " tier ", p.tier, " ids ", p.ids)
 	## TESTING END ##
 
 func _set_up_grids() -> void:
