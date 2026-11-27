@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="LootTable" format=3 uid="uid://c0bmswrhc4agu"]
+
+[ext_resource type="Script" uid="uid://byv46sl2j8qog" path="res://scripts/Other/loot_drop.gd" id="1_7bjbc"]
+[ext_resource type="Script" uid="uid://dehnxgks3p7io" path="res://scripts/Other/loot_table.gd" id="2_ngjxk"]
+
+[sub_resource type="Resource" id="Resource_7bjbc"]
+script = ExtResource("1_7bjbc")
+id = "bomb_basic"
+weight = 2.0
+metadata/_custom_type_script = "uid://byv46sl2j8qog"
+
+[sub_resource type="Resource" id="Resource_ngjxk"]
+script = ExtResource("1_7bjbc")
+id = "throwing_knife_basic"
+weight = 2.0
+metadata/_custom_type_script = "uid://byv46sl2j8qog"
+
+[sub_resource type="Resource" id="Resource_mrjqj"]
+script = ExtResource("1_7bjbc")
+type = 0
+id = "sword_basic"
+metadata/_custom_type_script = "uid://byv46sl2j8qog"
+
+[resource]
+script = ExtResource("2_ngjxk")
+loot = Array[ExtResource("1_7bjbc")]([SubResource("Resource_7bjbc"), SubResource("Resource_ngjxk"), SubResource("Resource_mrjqj")])
+metadata/_custom_type_script = "uid://dehnxgks3p7io"

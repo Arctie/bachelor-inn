@@ -182,13 +182,21 @@ func _ready() -> void:
 	#state_machine.transition_to(StateTurnTransition.new(true))
 	
 	## FOR TESTING ##
-	var e: LootEntry = LootEntry.new()
-	e.type = LootEntry.Type.ITEM
-	e.id = "bomb_basic"
-	print("entry: ", e.type, " ", e.id, " amount ", e.amount, " resolved ", e.resolved)
-	var p: LootPool = load("res://scripts/Other/loot_pool.tres")
-	print("pool: type ", p.type, " tier ", p.tier, " ids ", p.ids)
+	_test_loot_table()
 	## TESTING END ##
+
+func _test_loot_table() -> void:
+	var table: LootTable = load("res://Data/Loot/ch_1_loot_table.tres")
+	if table == null:
+		print("LOOT TEST: table not found, check the path")
+		return
+
+	for i in 10:
+		var entries: Array[LootEntry] = table.roll_loot(1)
+		var ids: Array[String] = []
+		for e: LootEntry in entries:
+			ids.append("%d:%s" % [e.type, e.id])
+		print("chest ", i, ": ", ids)
 
 func _set_up_grids() -> void:
 	cursor.hide()
