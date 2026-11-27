@@ -16,6 +16,10 @@ var is_looted: bool = false
 
 func _ready() -> void:
 	add_to_group("chests")
+	#var table: LootTable = load("res://scripts/Other/loot_table.gd")
+	#for i in 20:
+		#var rolled: Array[LootEntry] = table.roll(1)
+		#print(rolled.map(func(e: LootEntry) -> String: return "%d:%s" % [e.kind, e.id]))
 	#if not body_entered.is_connected(_on_body_entered):
 		#body_entered.connect(_on_body_entered)
 

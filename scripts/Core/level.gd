@@ -180,6 +180,13 @@ func _ready() -> void:
 	## Change this to StateStoryCards
 	state_machine.transition_to(StateStoryCards.new(story_cards, false))
 	#state_machine.transition_to(StateTurnTransition.new(true))
+	
+	## FOR TESTING ##
+	var e: LootEntry = LootEntry.new()
+	e.type = LootEntry.Type.ITEM
+	e.id = "bomb_basic"
+	print("entry: ", e.type, " ", e.id, " amount ", e.amount, " resolved ", e.resolved)
+	## TESTING END ##
 
 func _set_up_grids() -> void:
 	cursor.hide()
