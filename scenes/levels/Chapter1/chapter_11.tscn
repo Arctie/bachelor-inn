@@ -29,6 +29,7 @@
 [ext_resource type="Resource" uid="uid://cegp3wmw3wytm" path="res://Data/Weapons/sword_basic.tres" id="12_3syrr"]
 [ext_resource type="Texture2D" uid="uid://ch6wj6jf3xm76" path="res://art/textures/StoryCards/Intro11.png" id="12_a8tf1"]
 [ext_resource type="Resource" uid="uid://dn2eahj1aq85s" path="res://Data/Weapons/bow_basic.tres" id="24_eee2i"]
+[ext_resource type="Resource" uid="uid://c0bmswrhc4agu" path="res://Data/Loot/ch_1_loot_table.tres" id="27_wlkka"]
 
 [sub_resource type="Resource" id="Resource_ghff0"]
 script = ExtResource("7_vndso")
@@ -203,6 +204,8 @@ item_id = "bomb_basic"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0.5, -3)
 loot_type = 2
 item_id = "throwing_knife_basic"
+randomize_loot = true
+loot_table = ExtResource("27_wlkka")
 
 [node name="Chest6" parent="Chests" parent_id_path=PackedInt32Array(2019346901) index="5" unique_id=119395926 instance=ExtResource("5_wexu5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 0.5, -3)
